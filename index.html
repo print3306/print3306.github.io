@@ -160,6 +160,183 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-SQLjdbc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/02/SQLjdbc/">SQLjdbc</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/02/SQLjdbc/" class="archive-article-date">
+  	<time datetime="2020-05-02T10:45:56.157Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="JDBC的学习"><a href="#JDBC的学习" class="headerlink" title="JDBC的学习"></a>JDBC的学习</h1><h2 id="一-概述"><a href="#一-概述" class="headerlink" title="一.概述"></a>一.概述</h2><pre><code>1. 基本概念
+    Java DataBase Connectivity
+    - java数据库连接，java操作数据库，使用同一套java代码操作不同的数据库
+    - 本质：官方定义的操作所有关系型数据库的规则--接口，实现类由各个数据库厂商实现，提供数据库驱动jar包，我们可以使用这套接口（JDBC）编程，但真正执行的是驱动jar包中的实现类。
+        Person接口   Worker类  Person p = new Worker();    p.eat();
+
+2. 快速入门
+    * 步骤：
+        1.导入驱动jar包
+        2.注册驱动
+        3.获取数据库的连接对象 Connection
+        4.定义SQL语句
+        5.获取执行SQL语句的对象 Statement
+        6.处理SQL语句,接受返回结果
+        7.处理结果
+        8.释放资源
+
+    * 代码：
+        `
+        //2.注册驱动
+           Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);
+
+           //3.获取数据库连接对象
+        Connection connection = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/books?serverTimezone=UTC&quot;,&quot;uesrname&quot;,&quot;password&quot;);
+
+        //4.定义SQL语句
+        String sql = &quot;select * from admin&quot;;
+
+        //5.获取执行SQL的对象
+        Statement statement = connection.createStatement();
+
+        //6.执行SQL
+        boolean flag = statement.execute(sql);
+
+        //7.处理
+        System.out.println(flag);
+
+        //8.释放资源
+        statement.close();
+        connection.close();
+        `</code></pre><h2 id="二-对象详解"><a href="#二-对象详解" class="headerlink" title="二.对象详解"></a>二.对象详解</h2><pre><code>1. 详解各个对象
+    1. DriverManager
+        * 驱动管理对象
+        * 功能：
+            1. 注册驱动
+                static void registerDriver(Driver driver):注册给定的驱动程序
+                写代码：Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;)
+                com.mysql.cj.jdbc.Driver,使用静态代码块，调用registerDriver方法注册驱动
+                `
+                static {
+                    try {
+                           DriverManager.registerDriver(new Driver());
+                    } catch (SQLException var1) {
+                        throw new RuntimeException(&quot;Can&apos;t register driver!&quot;);
+                    }
+                    }
+                `
+                PS：mysql5后的驱动jar包可以省略注册驱动的步骤
+
+            2. 连接数据库
+                * 方法：static Connection getConnection(String url, String user, String password)
+                * 参数:
+                    * url:指定连接的路径
+                        * 语法
+                            jdbc:mysql://ip地址(域名)：端口号/数据库名称
+                        * 例子
+                            jdbc:mysql://localhost:3306/books?serverTimezone=UTC
+                        * 细节
+                            如果连接本机的mysql服务器，而且端口号3306，可以简写为jdbc:mysql:///数据库名称
+                    * user:
+                        数据库用户名
+                    * password
+                        密码
+
+    2. Connection
+        * 数据库连接对象
+        * 功能：
+            1. 获取执行SQL的对象
+                * Statement createStatement()
+                * PreparedStatement preparedStatement()
+
+            2. 管理事务
+                * 开启事务
+                    void setAutoCommit(boolean autoCommit) :参数为false,开启事务
+                * 提交事务
+                    commit()
+                * 回滚事务
+                    rollback()
+
+    3. Statement
+        * 执行SQL对象
+        * 功能：
+            1. 执行SQL语句
+                * int executeUpdate(String sql):执行DML(增删改)语句，DDL语句，返回值：影响的行数，判断是否执行成功（&gt;0）
+                * ResultSet executeQuery(String sql):执行查询语句
+
+    4. ResultSet
+        * 结果集对象，封装查询结果
+        * 功能：
+            * boolean next():游标向前移动一行,并判断是否是最后一行，如果是，返回False
+            * getType(参数)：获取数据,一次只能获取一列数据
+                * Type：数据类型，int getInt()
+                * 参数：
+                    1. int 列的编号，getInt(1)
+                    2. String 列名,getString(name)
+            * 使用时：
+                1. 游标向下移动
+                2. 判断是否存在数据
+                3. 获取数据
+                代码：
+                     while(resultSet.next()){
+                        //获取数据
+                     }
+
+    5. PreparedStatement
+        * 执行SQL的对象</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/02/SQLjdbc/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-hello-hexo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -324,7 +501,7 @@
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
-		open_in_new: true,
+		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,

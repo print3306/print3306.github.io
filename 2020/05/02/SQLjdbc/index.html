@@ -6,16 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | 浊酒一杯的博客</title>
+  <title>SQLjdbc | 浊酒一杯的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="后端开发学习">
+  <meta name="description" content="JDBC的学习一.概述1. 基本概念     Java DataBase Connectivity     - java数据库连接，java操作数据库，使用同一套java代码操作不同的数据库     - 本质：官方定义的操作所有关系型数据库的规则--接口，实现类由各个数据库厂商实现，提供数据库驱动jar包，我们可以使用这套接口（JDBC）编程，但真正执行的是驱动jar包中的实现类。">
 <meta name="keywords" content="Java,SQL">
-<meta property="og:type" content="website">
-<meta property="og:title" content="浊酒一杯的博客">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQLjdbc">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;02&#x2F;SQLjdbc&#x2F;index.html">
 <meta property="og:site_name" content="浊酒一杯的博客">
-<meta property="og:description" content="后端开发学习">
+<meta property="og:description" content="JDBC的学习一.概述1. 基本概念     Java DataBase Connectivity     - java数据库连接，java操作数据库，使用同一套java代码操作不同的数据库     - 本质：官方定义的操作所有关系型数据库的规则--接口，实现类由各个数据库厂商实现，提供数据库驱动jar包，我们可以使用这套接口（JDBC）编程，但真正执行的是驱动jar包中的实现类。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-05-06T14:28:15.852Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="浊酒一杯的博客" type="application/atom+xml">
@@ -158,113 +159,270 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-SQLjdbc" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      SQLjdbc
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/02/SQLjdbc/" class="archive-article-date">
+
+        
+        <a href="/2020/05/02/SQLjdbc/" class="archive-article-date">
   	<time datetime="2020-05-02T10:45:56.157Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/02/SQLjdbc/">SQLjdbc</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="JDBC的学习"><a href="#JDBC的学习" class="headerlink" title="JDBC的学习"></a>JDBC的学习</h1><h2 id="一-概述"><a href="#一-概述" class="headerlink" title="一.概述"></a>一.概述</h2><pre><code>1. 基本概念
+    Java DataBase Connectivity
+    - java数据库连接，java操作数据库，使用同一套java代码操作不同的数据库
+    - 本质：官方定义的操作所有关系型数据库的规则--接口，实现类由各个数据库厂商实现，提供数据库驱动jar包，我们可以使用这套接口（JDBC）编程，但真正执行的是驱动jar包中的实现类。
+        Person接口   Worker类  Person p = new Worker();    p.eat();
 
-        <div class="article-info info-on-right">
-          
-          
+2. 快速入门
+    * 步骤：
+        1.导入驱动jar包
+        2.注册驱动
+        3.获取数据库的连接对象 Connection
+        4.定义SQL语句
+        5.获取执行SQL语句的对象 Statement
+        6.处理SQL语句,接受返回结果
+        7.处理结果
+        8.释放资源
 
+    * 代码：
+        `
+        //2.注册驱动
+           Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);
+
+           //3.获取数据库连接对象
+        Connection connection = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/books?serverTimezone=UTC&quot;,&quot;uesrname&quot;,&quot;password&quot;);
+
+        //4.定义SQL语句
+        String sql = &quot;select * from admin&quot;;
+
+        //5.获取执行SQL的对象
+        Statement statement = connection.createStatement();
+
+        //6.执行SQL
+        boolean flag = statement.execute(sql);
+
+        //7.处理
+        System.out.println(flag);
+
+        //8.释放资源
+        statement.close();
+        connection.close();
+        `</code></pre><h2 id="二-对象详解"><a href="#二-对象详解" class="headerlink" title="二.对象详解"></a>二.对象详解</h2><pre><code>1. 详解各个对象
+    1. DriverManager
+        * 驱动管理对象
+        * 功能：
+            1. 注册驱动
+                static void registerDriver(Driver driver):注册给定的驱动程序
+                写代码：Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;)
+                com.mysql.cj.jdbc.Driver,使用静态代码块，调用registerDriver方法注册驱动
+                `
+                static {
+                    try {
+                           DriverManager.registerDriver(new Driver());
+                    } catch (SQLException var1) {
+                        throw new RuntimeException(&quot;Can&apos;t register driver!&quot;);
+                    }
+                    }
+                `
+                PS：mysql5后的驱动jar包可以省略注册驱动的步骤
+
+            2. 连接数据库
+                * 方法：static Connection getConnection(String url, String user, String password)
+                * 参数:
+                    * url:指定连接的路径
+                        * 语法
+                            jdbc:mysql://ip地址(域名)：端口号/数据库名称
+                        * 例子
+                            jdbc:mysql://localhost:3306/books?serverTimezone=UTC
+                        * 细节
+                            如果连接本机的mysql服务器，而且端口号3306，可以简写为jdbc:mysql:///数据库名称
+                    * user:
+                        数据库用户名
+                    * password
+                        密码
+
+    2. Connection
+        * 数据库连接对象
+        * 功能：
+            1. 获取执行SQL的对象
+                * Statement createStatement()
+                * PreparedStatement preparedStatement()
+
+            2. 管理事务
+                * 开启事务
+                    void setAutoCommit(boolean autoCommit) :参数为false,开启事务
+                * 提交事务
+                    commit()
+                * 回滚事务
+                    rollback()
+
+    3. Statement
+        * 执行SQL对象
+        * 功能：
+            1. 执行SQL语句
+                * int executeUpdate(String sql):执行DML(增删改)语句，DDL语句，返回值：影响的行数，判断是否执行成功（&gt;0）
+                * ResultSet executeQuery(String sql):执行查询语句
+
+    4. ResultSet
+        * 结果集对象，封装查询结果
+        * 功能：
+            * boolean next():游标向前移动一行,并判断是否是最后一行，如果是，返回False
+            * getType(参数)：获取数据,一次只能获取一列数据
+                * Type：数据类型，int getInt()
+                * 参数：
+                    1. int 列的编号，getInt(1)
+                    2. String 列名,getString(name)
+            * 使用时：
+                1. 游标向下移动
+                2. 判断是否存在数据
+                3. 获取数据
+                代码：
+                     while(resultSet.next()){
+                        //获取数据
+                     }
+
+    5. PreparedStatement
+        * 执行SQL的对象</code></pre>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" target="_blank" rel="noopener" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" target="_blank" rel="noopener" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/02/SQLjdbc/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/07/hello-hexo/" class="archive-article-date">
-  	<time datetime="2019-12-07T05:20:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-07</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/07/hello-hexo/">hello_hexo</a>
-    </h1>
+  
+    <a href="/2019/12/07/hello-hexo/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">hello_hexo</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/06/hello-world/" class="archive-article-date">
-  	<time datetime="2019-12-06T14:24:11.926Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/06/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -287,8 +445,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
