@@ -356,10 +356,10 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
             state.setString(2,password);
 
     3. 执行语句:
-            ResultSet result = state.executeQuery();</code></pre><h2 id="PreparedStatement类"><a href="#PreparedStatement类" class="headerlink" title="PreparedStatement类"></a>PreparedStatement类</h2><pre><code>填充预编译的参数: 
+            ResultSet result = state.executeQuery();</code></pre><h2 id="PreparedStatement"><a href="#PreparedStatement" class="headerlink" title="PreparedStatement"></a>PreparedStatement</h2><pre><code>填充预编译的参数: 
     * setXxx（问号索引,值）
         向预编译的SQL的?中传递值 
-        参数1. 问号的索引 ,从1开始
+        参数1. 问号的索引,从1开始
         参数2. 填充到? 中的值
 
     * execute()
@@ -483,7 +483,7 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
       
         
           
-            <h1 id="JDBC的学习"><a href="#JDBC的学习" class="headerlink" title="JDBC的学习"></a>JDBC的学习</h1><h2 id="一-概述"><a href="#一-概述" class="headerlink" title="一.概述"></a>一.概述</h2><pre><code>1. 基本概念
+            <h1 id="JDBC的学习"><a href="#JDBC的学习" class="headerlink" title="JDBC的学习"></a>JDBC的学习</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><pre><code>1. 基本概念
     Java DataBase Connectivity
     - java数据库连接，java操作数据库，使用同一套java代码操作不同的数据库
     - 本质：官方定义的操作所有关系型数据库的规则--接口，实现类由各个数据库厂商实现，提供数据库驱动jar包，我们可以使用这套接口（JDBC）编程，但真正执行的是驱动jar包中的实现类。
@@ -523,7 +523,7 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
         //8.释放资源
         statement.close();
         connection.close();
-        `</code></pre><h2 id="二-对象详解"><a href="#二-对象详解" class="headerlink" title="二.对象详解"></a>二.对象详解</h2><pre><code>1. 详解各个对象
+        `</code></pre><h2 id="对象详解"><a href="#对象详解" class="headerlink" title="对象详解"></a>对象详解</h2><pre><code>1. 详解各个对象
     1. DriverManager
         * 驱动管理对象
         * 功能：
@@ -651,7 +651,77 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
 
     * 查询数据表，
         sql = &quot;select * from db where name = &apos;name&apos; and password = &apos;password&apos;&quot;
-        如果存在数据，用户合法</code></pre>
+        如果存在数据，用户合法
+
+3. 注意
+    为了预防SQL注入，导致安全性问题，使用PreparedStatement类，使用预编译SQL,不使用静态拼接SQL,Statement类，效率更高而且更安全。</code></pre><h2 id="JDBC事务控制"><a href="#JDBC事务控制" class="headerlink" title="JDBC事务控制"></a>JDBC事务控制</h2><pre><code>1. 事务：一个包含多个步骤的业务操作，如果业务被事务管理，要么全部成功，要么全部失败
+
+2. 操作
+    1. 开启事务
+    2. 提交事务
+    3. 回滚事务
+
+3. 使用Connection管理事务
+    * 开启事务
+        void setAutoCommit(boolean autoCommit) :参数为false,开启事务
+        执行sql语句之前开启事务
+    * 提交事务
+        commit()
+        SQL执行完毕时提交
+    * 回滚事务
+        rollback
+        try catch中进行回滚，一旦发现异常，将数据回滚</code></pre><h2 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h2><pre><code>1. 概念：
+    * 容器（集合），存放数据库连接的一个容器
+    * 系统初始化后，容器被创建，会申请一些连接对象，在用户访问数据库时，从容器中获取连接对象，使用完毕归还容器资源
+
+2. 优点：
+    * 节约资源：访问时直接获取，不用重复申请资源
+    * 用户访问高效：拿来即用
+
+3. 实现：
+    1. 标准接口：
+        DataSourse javax.sql
+        * 方法:
+            * 获取连接：getConnnection()
+            * 归还连接：如果Connection是从连接池获取的，调用connection.close()方法，不是关闭连接，而时归还连接
+
+    2. 实现技术，由数据库厂商提供
+        * C3P0: 数据库连接池技术
+        * Druid: 
+
+4. C3P0连接池技术
+    * 步骤：
+        1. 导入jar包，jdbc驱动和c3p0包
+        2. 定义配置文件：
+            * 名称：c3p0.properties 或者 c3p0-config.xml
+            * 路径：src目录下
+        3. 创建数据库连接池核心数据对象：ComboPoolDataSourse
+        4. 获取连接对象：getConnection()
+
+5. Druid连接池技术
+    * 步骤：
+        1. 导入jar包：druid-v.jar
+        2. 定义配置文件：
+            * properties形式
+            * 可以叫任意名称，放在任意目录下
+        3. 加载配置文件
+            Properties properties = new Properties();
+            InputStream is = DruidDemo08.class.getClassLoader().getResourceAsStream(&quot;druid.properties&quot;);
+            properties.load(is);
+        3. 创建连接池对象，使用工厂类 DruidDataSourseFactory
+        4. 获取连接对象
+
+    * 定义工具类
+        1. 定义工具类
+        2. 提供静态代码块加载配置文件，初始化连接池对象
+        3. 提供方法
+            1. 获取连接方法，获取连接对象
+            2. 释放资源
+            3. 获取连接池对象</code></pre><h2 id="Spring-JDBC"><a href="#Spring-JDBC" class="headerlink" title="Spring JDBC"></a>Spring JDBC</h2><pre><code>* Spring框架对JDBC的简单封装，提供了JDBCTemplate对象
+* 步骤：
+    1. 导入jar包
+    2. 配置文件
+    3. </code></pre>
           
         
       
