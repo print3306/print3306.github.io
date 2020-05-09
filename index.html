@@ -246,7 +246,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="浊酒一杯">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar1.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -366,7 +366,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="浊酒一杯">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar1.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -537,7 +537,7 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="浊酒一杯">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar1.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -603,7 +603,8 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
       
         
           
-            <h1 id="JDBC的学习"><a href="#JDBC的学习" class="headerlink" title="JDBC的学习"></a>JDBC的学习</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><pre><code>1. 基本概念
+            <hr>
+<h2 id="title-JDBC的学习"><a href="#title-JDBC的学习" class="headerlink" title="title:JDBC的学习"></a>title:JDBC的学习</h2><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><pre><code>1. 基本概念
     Java DataBase Connectivity
     - java数据库连接，java操作数据库，使用同一套java代码操作不同的数据库
     - 本质：官方定义的操作所有关系型数据库的规则--接口，实现类由各个数据库厂商实现，提供数据库驱动jar包，我们可以使用这套接口（JDBC）编程，但真正执行的是驱动jar包中的实现类。
@@ -742,7 +743,8 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
 
     * 使用PreparedStatement对象
         * 防止SQL注入问题
-        * 效率更高</code></pre><h2 id="抽取JDBC工具类：JDBCUtils"><a href="#抽取JDBC工具类：JDBCUtils" class="headerlink" title="抽取JDBC工具类：JDBCUtils"></a>抽取JDBC工具类：JDBCUtils</h2><pre><code>* 目的：简化书写
+        * 效率更高</code></pre><h2 id="抽取JDBC工具类"><a href="#抽取JDBC工具类" class="headerlink" title="抽取JDBC工具类"></a>抽取JDBC工具类</h2><pre><code>- JDBCUtils
+* 目的：简化书写
 * 分析：
     1. 获取连接
         * 不传递参数，并保证工具类的通用性
@@ -840,8 +842,9 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
             3. 获取连接池对象</code></pre><h2 id="Spring-JDBC"><a href="#Spring-JDBC" class="headerlink" title="Spring JDBC"></a>Spring JDBC</h2><pre><code>* Spring框架对JDBC的简单封装，提供了JDBCTemplate对象
 * 步骤：
     1. 导入jar包
-    2. 配置文件
-    3. </code></pre>
+    2. 创建JDBCTemplate对象，依赖与数据源DataSourse
+        JDBCTemplate template = new JDBCTemplate(ds)
+    3. 调用方法完成CRUD的操作</code></pre>
           
         
       
@@ -894,7 +897,7 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="浊酒一杯">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar1.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1013,7 +1016,7 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="浊酒一杯">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar1.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1162,6 +1165,10 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar1.jpg"
+                alt="浊酒一杯" />
+            
               <p class="site-author-name" itemprop="name">浊酒一杯</p>
               <p class="site-description motion-element" itemprop="description">后端开发学习</p>
           </div>
@@ -1205,7 +1212,6 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
           
 
           
-
         </div>
       </section>
 
@@ -1411,5 +1417,7 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
 
   
 
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
 </body>
 </html>
+
