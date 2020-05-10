@@ -199,12 +199,32 @@
         </li>
       
         
-        <li class="menu-item menu-item-something">
-          <a href="/something" rel="section">
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            有料
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
           </a>
         </li>
       
@@ -593,6 +613,16 @@
 
       
       
+
+      <div>
+        <p id="div-border-left-red">
+        <b>本文基于<a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布</b><br/>
+        <span>
+          <b>本文地址: </b><a href="/2020/05/02/SQLjdbc/" title="SQLjdbc">http://yoursite.com/2020/05/02/SQLjdbc/</a><br/><b>转载请注明出处, 谢谢！</b>
+        </span>
+      </p>
+</div>
+
     </footer>
   </div>
   
@@ -656,7 +686,7 @@
                 alt="浊酒一杯" />
             
               <p class="site-author-name" itemprop="name">浊酒一杯</p>
-              <p class="site-description motion-element" itemprop="description">后端开发学习</p>
+              <p class="site-description motion-element" itemprop="description">学习记录</p>
           </div>
 
           <nav class="site-state motion-element">
@@ -735,6 +765,7 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
+  
   <span class="author" itemprop="copyrightHolder">浊酒一杯</span>
 
   
@@ -925,9 +956,16 @@
 
   <!--鼠标点击心形效果-->
   <script type="text/javascript" src="/js/src/clicklove.js"></script>
-  <!--背景动态线条
+
+  <!--mob_share-->
   
-    -->
-</body>
+<script type="text/javascript">
+    //微信二维码点击背景关闭
+    $('body').delegate('.-mob-share-weixin-qrcode-bg','click', function(){
+         $(".-mob-share-weixin-qrcode-close").trigger("click");
+    }); 
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
 
