@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Spring下载</title>
+      <link href="/2020/05/09/Spring%E4%B8%8B%E8%BD%BD/"/>
+      <url>/2020/05/09/Spring%E4%B8%8B%E8%BD%BD/</url>
+      
+        <content type="html"><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="/2020/05/09//1.jpg" alt>    </p><h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Spring </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>SQL注入</title>
+      <link href="/2020/05/08/SQL%E6%B3%A8%E5%85%A5/"/>
+      <url>/2020/05/08/SQL%E6%B3%A8%E5%85%A5/</url>
+      
+        <content type="html"><![CDATA[<h1 id="SQL注入问题"><a href="#SQL注入问题" class="headerlink" title="SQL注入问题"></a>SQL注入问题</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>在拼接sql语句时，有一些特殊的SQL关键字参于字符串的拼接，导致SQL语句的逻辑发生变化，可能会造成安全性问题</code></pre><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre><code>1. 输入 a&apos;or&apos;a&apos;=&apos;a,条件改变2. sql:select * from db where name and password = &apos;a&apos;or&apos;a&apos;=&apos;a&apos;,查询所有数据原SQL语句拼接为:     String sql = &quot;select id from db where username=&apos;&quot;+username+&quot;&apos; and password=&apos;&quot;+password+&quot;&apos;&quot;;用户输入的帐号密码分别为:请输入您的帐号:11111请输入您的密码:a&apos;or&apos;a&apos;=&apos;a组成的SQL语句: select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&apos;=&apos;a；</code></pre><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><pre><code>使用预编译SQL语句,进行参数的传递更改执行环境：Statement使用新的环境: PreparedStatement在通过连接对象，获取一个预编译的SQL环境(PreparedStatement)时, 需要传递一个SQL语句 ! 在这个语句中 可以出现? , ? 表示准备填充的参数值!使用步骤:     1. 通过连接对象, 获得一个预编译的SQL执行环境        PreparedStatement state = conn.prepareStatement(sql);        例如:             String sql = &quot;select id from db where username=? and password=?&quot;;            PreparedStatement state = conn.prepareStatement(sql);        2. 向预编译参数列表中传递值:         预编译的SQL语句中可以包含【多个问号】, 每一个问号表示一个需要传递的值         我们通过PreparedStatement它的setXxx方法,来完成参数的传递            传递参数时, 需要指定问号的索引, 问号的索引从1开始                    例如:            state.setString(1,username);            state.setString(2,password);    3. 执行语句:            ResultSet result = state.executeQuery();</code></pre><h2 id="PreparedStatement"><a href="#PreparedStatement" class="headerlink" title="PreparedStatement"></a>PreparedStatement</h2><pre><code>填充预编译的参数:     * setXxx（问号索引,值）        向预编译的SQL的?中传递值         参数1. 问号的索引,从1开始        参数2. 填充到? 中的值    * execute()    * executeUpdate();    * executeQuery();        </code></pre>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>SQLjdbc</title>
+      <link href="/2020/05/02/SQLjdbc/"/>
+      <url>/2020/05/02/SQLjdbc/</url>
+      
+        <content type="html"><![CDATA[<hr><h2 id="title-JDBC的学习"><a href="#title-JDBC的学习" class="headerlink" title="title:JDBC的学习"></a>title:JDBC的学习</h2><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><pre><code>1. 基本概念    Java DataBase Connectivity    - java数据库连接，java操作数据库，使用同一套java代码操作不同的数据库    - 本质：官方定义的操作所有关系型数据库的规则--接口，实现类由各个数据库厂商实现，提供数据库驱动jar包，我们可以使用这套接口（JDBC）编程，但真正执行的是驱动jar包中的实现类。        Person接口   Worker类  Person p = new Worker();    p.eat();2. 快速入门    * 步骤：        1. 导入驱动jar包        2. 注册驱动        3. 获取数据库的连接对象 Connection        4. 定义SQL语句        5. 获取执行SQL语句的对象 Statement = connection.statement()        6. 处理SQL语句,接受返回结果 statememt.executeQuery(sql)        7. 处理结果        8. 释放资源    * 代码：        `        //2.注册驱动           Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);           //3.获取数据库连接对象        Connection connection = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/books?serverTimezone=UTC&quot;,&quot;uesrname&quot;,&quot;password&quot;);        //4.定义SQL语句        String sql = &quot;select * from admin&quot;;        //5.获取执行SQL的对象        Statement statement = connection.createStatement();        //6.执行SQL        boolean flag = statement.execute(sql);        //7.处理        System.out.println(flag);        //8.释放资源        statement.close();        connection.close();        `</code></pre><h2 id="对象详解"><a href="#对象详解" class="headerlink" title="对象详解"></a>对象详解</h2><pre><code>1. 详解各个对象    1. DriverManager        * 驱动管理对象        * 功能：            1. 注册驱动                static void registerDriver(Driver driver):注册给定的驱动程序                写代码：Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;)                com.mysql.cj.jdbc.Driver,使用静态代码块，调用registerDriver方</code></pre><blockquote><pre><code>注册驱动: static {      try {            DriverManager.registerDriver(new Driver());     } catch (SQLException var1) {         throw new RuntimeException(&quot;Can&apos;t register driver!&quot;);     }     }</code></pre></blockquote><pre><code>            PS：mysql5后的驱动jar包可以省略注册驱动的步骤        2. 连接数据库            * 方法：static Connection getConnection(String url, String user, String password)            * 参数:                * url:指定连接的路径                    * 语法                        jdbc:mysql://ip地址(域名)：端口号/数据库名称                    * 例子                        jdbc:mysql://localhost:3306/books?serverTimezone=UTC                    * 细节                        如果连接本机的mysql服务器，而且端口号3306，可以简写为jdbc:mysql:///数据库名称                * user:                    数据库用户名                * password                    密码2. Connection    * 数据库连接对象    * 功能：        1. 获取执行SQL的对象            * Statement createStatement()            * PreparedStatement preparedStatement()        2. 管理事务            * 开启事务                void setAutoCommit(boolean autoCommit) :参数为false,开启事务            * 提交事务                commit()            * 回滚事务                rollback()3. Statement    * 执行SQL对象    * 功能：        1. 执行SQL语句            * int executeUpdate(String sql):执行DML(增删改)语句，DDL语句，返回值：影响的行数，判断是否执行成功（&gt;0）            * ResultSet executeQuery(String sql):执行查询语句4. ResultSet    * 结果集对象，封装查询结果    * 功能：        * boolean next():游标向前移动一行,并判断是否是最后一行，如果是，返回False        * getType(参数)：获取数据,一次只能获取一列数据            * Type：数据类型，int getInt()            * 参数：                1. int 列的编号，getInt(1)                2. String 列名,getString(name)        * 使用时：            1. 游标向下移动            2. 判断是否存在数据            3. 获取数据            代码：                 while(resultSet.next()){                    //获取数据                 }5. PreparedStatement    * 执行SQL的对象    * SQL注入问题：在拼接sql语句时，有一些特殊的关键字参于字符串的拼接，会造成安全性问题        1. 输入用户随便，输入密码：a&apos;or&apos;a&apos;=&apos;a,条件恒为真，        2. sql:select * from db where name and password,所有的用户名全都查询出来    * 解决SQL注入问题：使用PreparedStatemmet类    * 预编译SQL:参数使用 ？作为占位符    * 步骤：        1. 导入驱动jar包        2. 注册驱动        3. 获取数据库的连接对象 Connection        4. 定义SQL语句        5. 获取执行SQL语句的对象 PreparedStatement = connection.preparedStatement(sql)            * 注意：sql使用?作为占位符， select * from user where name = ? and password = ?;        6. 给？赋值            * 方法：            * setType(参数1，参数2)            * 参数1：传递参数的位置            * 参数2: 值        7. 处理SQL语句,接受返回结果，prearedStatement.executeQuery()        8. 处理结果        9. 释放资源    * 使用PreparedStatement对象        * 防止SQL注入问题        * 效率更高</code></pre><h2 id="抽取JDBC工具类"><a href="#抽取JDBC工具类" class="headerlink" title="抽取JDBC工具类"></a>抽取JDBC工具类</h2><pre><code>- JDBCUtils* 目的：简化书写* 分析：    1. 获取连接        * 不传递参数，并保证工具类的通用性        * 解决：配置文件            jdbc.properties                url=...            1. 创建Properties类            Properties properties = new Properties();            2. 加载properties文件            properties.load(new FileReader(&quot;jdbc.properties&quot;));            3. 获取配置            url = properties.getProperty(&quot;url&quot;);    2. 释放资源</code></pre><h2 id="登陆验证实例"><a href="#登陆验证实例" class="headerlink" title="登陆验证实例"></a>登陆验证实例</h2><pre><code>1. 需求    * 通过键盘输入用户名和密码    * 判断用户是否合法        根据查询结果判断是否合法2. 实现    * 创建表，存储用户名和密码        CREATE TABLE IF NOT EXISTS USER (            id INT PRIMARY KEY AUTO_INCREMENT,            NAME VARCHAR(32) NOT NULL,            PASSWORD VARCHAR(32) NOT NULL        );    * 查询数据表，        sql = &quot;select * from db where name = &apos;name&apos; and password = &apos;password&apos;&quot;        如果存在数据，用户合法3. 注意    为了预防SQL注入，导致安全性问题，使用PreparedStatement类，使用预编译SQL,不使用静态拼接SQL,Statement类，效率更高而且更安全。</code></pre><h2 id="JDBC事务控制"><a href="#JDBC事务控制" class="headerlink" title="JDBC事务控制"></a>JDBC事务控制</h2><pre><code>1. 事务：一个包含多个步骤的业务操作，如果业务被事务管理，要么全部成功，要么全部失败2. 操作    1. 开启事务    2. 提交事务    3. 回滚事务3. 使用Connection管理事务    * 开启事务        void setAutoCommit(boolean autoCommit) :参数为false,开启事务        执行sql语句之前开启事务    * 提交事务        commit()        SQL执行完毕时提交    * 回滚事务        rollback        try catch中进行回滚，一旦发现异常，将数据回滚</code></pre><h2 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h2><pre><code>1. 概念：    * 容器（集合），存放数据库连接的一个容器    * 系统初始化后，容器被创建，会申请一些连接对象，在用户访问数据库时，从容器中获取连接对象，使用完毕归还容器资源2. 优点：    * 节约资源：访问时直接获取，不用重复申请资源    * 用户访问高效：拿来即用3. 实现：    1. 标准接口：        DataSourse javax.sql        * 方法:            * 获取连接：getConnnection()            * 归还连接：如果Connection是从连接池获取的，调用connection.close()方法，不是关闭连接，而时归还连接    2. 实现技术，由数据库厂商提供        * C3P0: 数据库连接池技术        * Druid: 4. C3P0连接池技术    * 步骤：        1. 导入jar包，jdbc驱动和c3p0包        2. 定义配置文件：            * 名称：c3p0.properties 或者 c3p0-config.xml            * 路径：src目录下        3. 创建数据库连接池核心数据对象：ComboPoolDataSourse        4. 获取连接对象：getConnection()5. Druid连接池技术    * 步骤：        1. 导入jar包：druid-v.jar        2. 定义配置文件：            * properties形式            * 可以叫任意名称，放在任意目录下        3. 加载配置文件            Properties properties = new Properties();            InputStream is = DruidDemo08.class.getClassLoader().getResourceAsStream(&quot;druid.properties&quot;);            properties.load(is);        3. 创建连接池对象，使用工厂类 DruidDataSourseFactory        4. 获取连接对象    * 定义工具类        1. 定义工具类        2. 提供静态代码块加载配置文件，初始化连接池对象        3. 提供方法            1. 获取连接方法，获取连接对象            2. 释放资源            3. 获取连接池对象</code></pre><h2 id="Spring-JDBC"><a href="#Spring-JDBC" class="headerlink" title="Spring JDBC"></a>Spring JDBC</h2><pre><code>* Spring框架对JDBC的简单封装，提供了JDBCTemplate对象* 步骤：    1. 导入jar包    2. 创建JDBCTemplate对象，依赖与数据源DataSourse        JDBCTemplate template = new JDBCTemplate(ds)    3. 调用方法完成CRUD的操作</code></pre>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>hello_hexo</title>
+      <link href="/2019/12/07/hello-hexo/"/>
+      <url>/2019/12/07/hello-hexo/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/2019/12/06/hello-world/"/>
+      <url>/2019/12/06/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo server</span></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo generate</span></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
