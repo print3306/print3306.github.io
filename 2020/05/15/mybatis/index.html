@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="概述1. 什么是框架（Framework）？     * 系统中可重用的代码部分，包括一组构件以及构件之间的交互逻辑     * 软件开发中的一种解决方案，不同的框架解决不同的问题     * 框架封装了很多技术细节，使用者可以方便实现功能，提高开发效率  2. 三层架构     * 表现层：         展示数据     * 业务层：         处理业务需求     * 持久层：">
+<meta name="description" content="概述1. 什么是框架（Framework）？     系统中可重用的代码部分，包括一组构件以及构件之间的交互逻辑     软件开发中的一种解决方案，不同的框架解决不同的问题     框架封装了很多技术细节，使用者可以方便实现功能，提高开发效率  2. 三层架构     * 表现层：         展示数据     * 业务层：         处理业务需求     * 持久层：">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MyBatis">
 <meta property="og:url" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;05&#x2F;15&#x2F;mybatis&#x2F;index.html">
 <meta property="og:site_name" content="浊酒一杯的博客">
-<meta property="og:description" content="概述1. 什么是框架（Framework）？     * 系统中可重用的代码部分，包括一组构件以及构件之间的交互逻辑     * 软件开发中的一种解决方案，不同的框架解决不同的问题     * 框架封装了很多技术细节，使用者可以方便实现功能，提高开发效率  2. 三层架构     * 表现层：         展示数据     * 业务层：         处理业务需求     * 持久层：">
+<meta property="og:description" content="概述1. 什么是框架（Framework）？     系统中可重用的代码部分，包括一组构件以及构件之间的交互逻辑     软件开发中的一种解决方案，不同的框架解决不同的问题     框架封装了很多技术细节，使用者可以方便实现功能，提高开发效率  2. 三层架构     * 表现层：         展示数据     * 业务层：         处理业务需求     * 持久层：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-06-12T04:19:18.275Z">
+<meta property="og:updated_time" content="2020-09-03T13:06:37.895Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -356,7 +356,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  723
+                  1.3k
                 </span>
               
 
@@ -382,9 +382,9 @@
 
       
         <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><pre><code>1. 什么是框架（Framework）？
-    * 系统中可重用的代码部分，包括一组构件以及构件之间的交互逻辑
-    * 软件开发中的一种解决方案，不同的框架解决不同的问题
-    * 框架封装了很多技术细节，使用者可以方便实现功能，提高开发效率
+    系统中可重用的代码部分，包括一组构件以及构件之间的交互逻辑
+    软件开发中的一种解决方案，不同的框架解决不同的问题
+    框架封装了很多技术细节，使用者可以方便实现功能，提高开发效率
 
 2. 三层架构
     * 表现层：
@@ -450,7 +450,50 @@
 
     2. 创建SqlSessionFactory工厂
         * 使用了创建者模式：SqlSessionFacotryBuilder builder 构造者 builder.build(in) 建立工厂
-        * 使用了工厂模式：SqlSessionFactory 降低类之间的依赖关系</code></pre>
+        * 使用了工厂模式：SqlSessionFactory 降低类之间的依赖关系
+
+    3. 创建SqlSeccion对象
+    4. 创建接口实现类
+
+4. 使用注解开发MyBatis
+    1. 将UserDao.xml移除，在Dao接口的方法上使用@Select()注解，并且指定sql语句
+    2. 在SqlMapConfig.xml中的Mapper配置时，使用class属性指定Dao接口的全限定类名
+
+5. 自定义MyBatis分析
+    Mybatis在使用代理Dao对象实现增删改查做了什么事？
+        1. 创建代理对象
+        2. 调用selectList()方法</code></pre><blockquote>
+<p><code>&lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;</code><br><code>&lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis_test&quot;/&gt;</code><br><code>&lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;</code><br><code>&lt;property name=&quot;password&quot; value=&quot;root2019&quot;/&gt;</code></p>
+</blockquote>
+<pre><code>连接数据库的语句，可以产生Connnection对象</code></pre><blockquote>
+<p><code>&lt;mappers&gt;</code><br><code>&lt;mapper resource=&quot;com/mybatis_base_03/dao/UserDao.xml&quot;/&gt;</code><br><code>&lt;/mappers&gt;</code></p>
+</blockquote>
+<pre><code>映射配置信息</code></pre><blockquote>
+<p><code>&lt;mapper namespace=&quot;com.mybatis_base_03.dao.UserDao&quot;&gt;</code></p>
+<p><code>&lt;!--配置查询所有--&gt;</code><br><code>&lt;select id=&quot;findAll&quot; resultType=&quot;com.mybatis_base_03.domain.User&quot;&gt;</code><br>   <code>select * from user</code><br><code>&lt;/select&gt;</code></p>
+</blockquote>
+<pre><code>全限定类名，以及执行的SQL语句。
+有了上面的三个信息，可以解析.xml配置文件。
+    1. 根据配置数据库的语句，可以创建Connection对象
+        注册驱动，创建连接对象
+    2. 获取预处理对象PreparedStatement
+        获取SQL语句
+    3. 对结果进行封装
+        根据实体类的全限定类名</code></pre><h3 id=""><a href="#" class="headerlink" title=""></a></h3><pre><code>6.自定义MyBatis中涉及的实体类和接口
+    1. class Resources
+    2. class SqlSessionBuilder
+    3. interface SqlSessionfacotry
+    4. interface SqlSession
+    这个过程完成了两件事：
+        创建代理对象，
+        实现查询语句
+
+MyBatis将JDBC的功能进行封装，形成功能调用。SqlMapConfig.xml,daoInterfaceClass.xml里面包含对数据库的连接与查询的语句以及返回的结果类型。
+
+SqlMapConfig.xml中的&lt;property&gt;标签包含数据库的连接对象，&lt;mappers/mapper&gt;包含接口的文件位置。
+daoInterfaceClass.xml包含数据库语句，返回数据类的全限定类名，以及方法的namespace(根据查查询语句以及namespace确定方法的唯一性)。
+
+根据这两个配置文件，可以通过对.xml文件的解析，获取相应的配置文件信息，由此构建代理对象，g根据返回数据的类型获取数据，实现整个的查询过程。</code></pre><h2 id="MyBatis的CRUD"><a href="#MyBatis的CRUD" class="headerlink" title="MyBatis的CRUD"></a>MyBatis的CRUD</h2><h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3>
       
     </div>
     
@@ -648,7 +691,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MyBatis"><span class="nav-number">2.</span> <span class="nav-text">MyBatis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MyBatis入门"><span class="nav-number">2.1.</span> <span class="nav-text">1. MyBatis入门</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MyBatis"><span class="nav-number">2.</span> <span class="nav-text">MyBatis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MyBatis入门"><span class="nav-number">2.1.</span> <span class="nav-text">1. MyBatis入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.1.1.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis的CRUD"><span class="nav-number">2.2.</span> <span class="nav-text">MyBatis的CRUD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-number">2.2.1.</span> <span class="nav-text"></span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -683,7 +726,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">3.8k</span>
+    <span title="Site words total count">4.4k</span>
   
 </div>
 
