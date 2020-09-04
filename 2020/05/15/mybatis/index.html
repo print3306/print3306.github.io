@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="浊酒一杯的博客">
 <meta property="og:description" content="概述1. 什么是框架（Framework）？     系统中可重用的代码部分，包括一组构件以及构件之间的交互逻辑     软件开发中的一种解决方案，不同的框架解决不同的问题     框架封装了很多技术细节，使用者可以方便实现功能，提高开发效率  2. 三层架构     * 表现层：         展示数据     * 业务层：         处理业务需求     * 持久层：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-03T13:06:37.895Z">
+<meta property="og:updated_time" content="2020-09-04T12:20:59.687Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -356,7 +356,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k
+                  2.9k
                 </span>
               
 
@@ -463,17 +463,23 @@
     Mybatis在使用代理Dao对象实现增删改查做了什么事？
         1. 创建代理对象
         2. 调用selectList()方法</code></pre><blockquote>
-<p><code>&lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;</code><br><code>&lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis_test&quot;/&gt;</code><br><code>&lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;</code><br><code>&lt;property name=&quot;password&quot; value=&quot;root2019&quot;/&gt;</code></p>
-</blockquote>
+<pre><code>&lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
+&lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis_test&quot;/&gt;
+&lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;
+&lt;property name=&quot;password&quot; value=&quot;root2019&quot;/&gt;</code></pre></blockquote>
 <pre><code>连接数据库的语句，可以产生Connnection对象</code></pre><blockquote>
-<p><code>&lt;mappers&gt;</code><br><code>&lt;mapper resource=&quot;com/mybatis_base_03/dao/UserDao.xml&quot;/&gt;</code><br><code>&lt;/mappers&gt;</code></p>
+<mappers>
+<mapper resource="com/mybatis_base_03/dao/UserDao.xml"/>
+</mappers>
 </blockquote>
-<pre><code>映射配置信息</code></pre><blockquote>
-<p><code>&lt;mapper namespace=&quot;com.mybatis_base_03.dao.UserDao&quot;&gt;</code></p>
-<p><code>&lt;!--配置查询所有--&gt;</code><br><code>&lt;select id=&quot;findAll&quot; resultType=&quot;com.mybatis_base_03.domain.User&quot;&gt;</code><br>   <code>select * from user</code><br><code>&lt;/select&gt;</code></p>
-</blockquote>
-<pre><code>全限定类名，以及执行的SQL语句。
-有了上面的三个信息，可以解析.xml配置文件。
+<blockquote>
+<pre><code>&lt;mapper namespace=&quot;com.mybatis_base_03.dao.UserDao&quot;&gt; 
+&lt;!--配置查询所有--&gt;
+&lt;select id=&quot;findAll&quot; resultType=&quot;com.mybatis_base_03.domain.User&quot;&gt;
+   select * from user
+&lt;/select&gt;</code></pre></blockquote>
+<pre><code>映射配置信息 -&gt; 全限定类名，以及执行的SQL语句。
+解析.xml配置文件 -&gt; 有了上面的三个信息
     1. 根据配置数据库的语句，可以创建Connection对象
         注册驱动，创建连接对象
     2. 获取预处理对象PreparedStatement
@@ -485,7 +491,7 @@
     3. interface SqlSessionfacotry
     4. interface SqlSession
     这个过程完成了两件事：
-        创建代理对象，
+        创建接口代理对象，
         实现查询语句
 
 MyBatis将JDBC的功能进行封装，形成功能调用。SqlMapConfig.xml,daoInterfaceClass.xml里面包含对数据库的连接与查询的语句以及返回的结果类型。
@@ -493,7 +499,158 @@ MyBatis将JDBC的功能进行封装，形成功能调用。SqlMapConfig.xml,daoI
 SqlMapConfig.xml中的&lt;property&gt;标签包含数据库的连接对象，&lt;mappers/mapper&gt;包含接口的文件位置。
 daoInterfaceClass.xml包含数据库语句，返回数据类的全限定类名，以及方法的namespace(根据查查询语句以及namespace确定方法的唯一性)。
 
-根据这两个配置文件，可以通过对.xml文件的解析，获取相应的配置文件信息，由此构建代理对象，g根据返回数据的类型获取数据，实现整个的查询过程。</code></pre><h2 id="MyBatis的CRUD"><a href="#MyBatis的CRUD" class="headerlink" title="MyBatis的CRUD"></a>MyBatis的CRUD</h2><h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3>
+根据这两个配置文件，可以通过对.xml文件的解析，获取相应的配置文件信息，由此构建代理对象，g根据返回数据的类型获取数据，实现整个的查询过程。</code></pre><h2 id="MyBatis的CRUD"><a href="#MyBatis的CRUD" class="headerlink" title="MyBatis的CRUD"></a>MyBatis的CRUD</h2><h3 id="MyBatis的配置文件"><a href="#MyBatis的配置文件" class="headerlink" title="MyBatis的配置文件"></a>MyBatis的配置文件</h3><pre><code>1. pom.xml的配置信息
+    * 坐标的导入
+        1.mybatis的坐标导入
+        2.mysql的驱动坐标导入
+        3.log4j的坐标导入
+            log4j.properties配置文件放在资源目录下
+        4.junit单元测试的坐标导入
+
+2. SqlMapConfig.xml的配置
+    1. &lt;environments&gt;:配置数据库
+        1. 数据库连接
+        2. 数据库的事务类型
+        3. 数据库的数据源
+        4. 数据库的连接（driver url username password）</code></pre><blockquote>
+<pre><code>&lt;!--配置环境--&gt;
+&lt;environments default=&quot;mysql&quot;&gt;
+ &lt;!--配置mysql的环境--&gt;
+ &lt;environment id=&quot;mysql&quot;&gt;
+  &lt;!--配置事务--&gt;
+  &lt;transactionManager type=&quot;JDBC&quot;&gt;&lt;/transactionManager&gt;
+  &lt;!--配置连接池--&gt;
+  &lt;dataSource type=&quot;POOLED&quot;&gt;
+    &lt;!--mysql的连接信息--&gt;
+    &lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
+    &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis_test&quot;/&gt;
+    &lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;
+    &lt;property name=&quot;password&quot; value=&quot;root2019&quot;/&gt;
+  &lt;/dataSource&gt;
+ &lt;/environment&gt;
+&lt;/environments&gt;</code></pre></blockquote>
+<pre><code>2. &lt;mappers&gt;:配置dao的数据接口
+    1. recource:表示配置方式为.xml
+    2. class:表示配置方式为注解
+    &lt;!--配置映射文件的位置--&gt;</code></pre><blockquote>
+<pre><code>&lt;mappers&gt;
+    &lt;mapper resource=&quot;com/mybatis_base_04_crud/dao/IUserDao.xml&quot;&gt;&lt;/mapper&gt;
+  &lt;/mappers&gt;</code></pre></blockquote>
+<pre><code>3. DaoInterface.xml
+    1.&lt;mapper&gt;中的namespase 与 &lt;select&gt;中的id构成方法的唯一标识
+    2.&lt;select&gt;中的文本内容为要执行的语句
+    3.&lt;select&gt;中的 resultType 返回值类型</code></pre><blockquote>
+<pre><code>&lt;!--namespace 接口--&gt;
+&lt;mapper namespace=&quot;com.mybatis_base_04_crud.dao.IUserDao&quot;&gt;
+
+ &lt;select id=&quot;finaAll&quot; resultType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+       select * from user
+  &lt;/select&gt;
+&lt;/mapper&gt;</code></pre></blockquote>
+<h3 id="MyBatis的CRUD-1"><a href="#MyBatis的CRUD-1" class="headerlink" title="MyBatis的CRUD"></a>MyBatis的CRUD</h3><h4 id="保存数据-Insert"><a href="#保存数据-Insert" class="headerlink" title="保存数据(Insert)"></a>保存数据(Insert)</h4><pre><code>1. Dao接口的方法
+    在IUserDao.java中添加saveUser方法
+2. daoInterace.xml中的配置
+    在&lt;mapper&gt;中增加&lt;insert&gt;标签，选择参数化类型，对于数据填充，采用#{}方式</code></pre><blockquote>
+<pre><code>&lt;!-- 保存用户 --&gt;
+  &lt;!--参数类型 parameterType--&gt;
+  &lt;insert id=&quot;saveUser&quot; parameterType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+        insert into user(username,address,sex,birthday) value(#{username},#{address},#{sex},#{birthday})
+ &lt;/insert&gt;
+实体类的属性定义与数据库中的列名一致,setter和getter方法自动生成，可以直接使用属性名称来传递参数，否则可以使用.getUsername()来传递参数。    </code></pre></blockquote>
+<pre><code>3. 调用方法
+    在生成数据库的代理对象后，直接调用save方法就可以        
+
+4. 注意事项
+    在使用方法后，需要对数据进行提交，默认自动提交关闭，需要手动打开自动提交
+    session.commit();</code></pre><h5 id="保存数据的同时返回id"><a href="#保存数据的同时返回id" class="headerlink" title="保存数据的同时返回id"></a>保存数据的同时返回id</h5><pre><code>1.daoInterface.xml
+    在原本的&lt;insert&gt;标签内，增加&lt;selectKey&gt;标签</code></pre><blockquote>
+<pre><code>&lt;selectKey keyProperty=&quot;id&quot; keyColumn=&quot;id&quot; resultType=&quot;int&quot; order=&quot;AFTER&quot;&gt;
+  select last_insert_id();
+&lt;/selectKey&gt;
+在执行结束之后，会将id返回到user的id属性之中
+keyProperty=&quot;id&quot; 实体类的属性
+keyColumn=&quot;id&quot; 数据表中的列名</code></pre></blockquote>
+<h4 id="更新数据-Update"><a href="#更新数据-Update" class="headerlink" title="更新数据(Update)"></a>更新数据(Update)</h4><pre><code>1. Dao接口的方法
+    void saveUser(User user);
+2. daoInterace.xml</code></pre><blockquote>
+<pre><code>&lt;!-- 更新 --&gt;
+  &lt;update id=&quot;updateUser&quot; parameterType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+    update user set username = #{username},address=#{address},sex=#{sex},birthday=#{birthday} where id=#{id}
+  &lt;/update&gt;</code></pre></blockquote>
+<h4 id="删除数据-Delete"><a href="#删除数据-Delete" class="headerlink" title="删除数据(Delete)"></a>删除数据(Delete)</h4><pre><code>1. Dao接口的方法
+    void deleteUser(Integer userId);
+2. daoInterface.xml</code></pre><blockquote>
+<pre><code>&lt;!-- 删除数据 --&gt;
+  &lt;delete id=&quot;deleteUser&quot; parameterType=&quot;java.lang.Integer&quot;&gt;
+    delete from user where id=#{uid}
+  &lt;/delete&gt;</code></pre></blockquote>
+<pre><code>3. 注意事项
+    删除数据中只有一个元素，#{}中的元素只是起到一个占位符的作用，与名称无关</code></pre><h4 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h4><h5 id="根据用户id"><a href="#根据用户id" class="headerlink" title="根据用户id"></a>根据用户id</h5><pre><code>1. dao接口的方法
+    User finaById(Integer id);
+2. daoInterface.xml
+    需要传入参数，以及返回值类型</code></pre><blockquote>
+<pre><code>   &lt;!-- 根据id查询一个 --&gt;
+&lt;select id=&quot;findById&quot; parameterType=&quot;Integer&quot; resultType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+   select * from user where id=#{id}
+&lt;/select&gt;</code></pre></blockquote>
+<h5 id="根据用户name"><a href="#根据用户name" class="headerlink" title="根据用户name"></a>根据用户name</h5><pre><code>1. dao接口的方法
+    List&lt;User&gt; findByName(String name);
+2. daoInterface.xml</code></pre><blockquote>
+<pre><code>&lt;!-- 根据名称模糊查询 --&gt;
+&lt;select id=&quot;findByName&quot; parameterType=&quot;string&quot; resultType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+ select * from user where username like #{name}</code></pre>  </select>
+</blockquote>
+<pre><code>3. 注意事项
+    &apos;#{}中没有模糊查询的 “-” “%” 在调用传参数时，需要给出“%王%”,查询语句为预处理SQL语句
+    &apos;%${value}%&apos;,参数为“王”，查询语句为拼接字符串</code></pre><h3 id="MyBatis中的参数-parameterType"><a href="#MyBatis中的参数-parameterType" class="headerlink" title="MyBatis中的参数(parameterType)"></a>MyBatis中的参数(parameterType)</h3><h4 id="参数的类型-parameterType"><a href="#参数的类型-parameterType" class="headerlink" title="参数的类型(parameterType)"></a>参数的类型(parameterType)</h4><pre><code>1. 简单数据类型
+
+
+2. 传递pojo对象
+    OGNL表达式：</code></pre><p><em>Object Graphic Navigation Language</em><br>        (对象图形导航语言)</p>
+<pre><code>    通过对象的取值方法来获取数据，在写法上，将get给忽略了
+    比如：获取用户的名称
+        类中的写法：user.getUsername()
+        OGNL表达式：user.username()
+    mybatis中可以直接使用username,不用书写user.
+        因为在parameterType中已经提供属性所在的类
+
+3. 传递pojo包装对象
+    参数为被封装的数据，查询条件是综合的查询条件</code></pre><blockquote>
+<pre><code>&lt;!-- 根据queryVo查询数据 --&gt;
+&lt;select id=&quot;findByQueryVo&quot; parameterType=&quot;com.mybatis_base_04_crud.domain.QueryVo&quot; resultType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+  select * from user where username like #{user.username}
+&lt;/select&gt;</code></pre></blockquote>
+<pre><code>QueryVo内部封装user对象，在参数传递时#{}，中的参数为 QueryVo.user.username,可以写为 user.username,代表参数为QueryVo中数据对象user中的属性username</code></pre><h4 id="结果集的封装-resultType"><a href="#结果集的封装-resultType" class="headerlink" title="结果集的封装(resultType)"></a>结果集的封装(resultType)</h4><pre><code>实体类的属性名与数据库的列名不相同？
+    1. 给数据库中的列名起别名
+        将所有查询的数据字段的名称别名改为实体类对应的属性名称
+        书写更为复杂，但是查询到的数据在数据库端被处理，效率更高
+    select id as uesrId,username as userName, address as userAddress, sex as userSex,birthday as userBirthday from user;
+
+    2. 使用resultMap进行字段对应</code></pre><blockquote>
+<pre><code>&lt;!-- 配置 查询结果的列名和属性名一致 --&gt;
+&lt;resultMap id=&quot;userMap&quot; type=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+    &lt;!-- 主键字段的一致 --&gt;
+    &lt;id property=&quot;userId&quot; column=&quot;id&quot;/&gt;
+    &lt;!-- 非主键字段的一致 --&gt;
+    &lt;result property=&quot;userName&quot; column=&quot;username&quot;&gt;&lt;/result&gt;
+    &lt;result property=&quot;userAddress&quot; column=&quot;address&quot;&gt;&lt;/result&gt;
+    &lt;result property=&quot;userSex&quot; column=&quot;sex&quot;&gt;&lt;/result&gt;
+    &lt;result property=&quot;userBirthday&quot; column=&quot;birthday&quot;&gt;&lt;/result&gt;
+&lt;/resultMap&gt;
+
+&lt;!--select id as uesrId,username as userName, address as userAddress, sex as userSex,birthday as userBirthday from user;--&gt;
+&lt;select id=&quot;finaAll&quot; resultMap=&quot;userMap&quot;&gt;
+    select * from user;
+&lt;/select&gt;</code></pre></blockquote>
+<pre><code>resultMap中的id为映射标记，返回值必须更改为resultMap=&quot;userMap&quot;，进行绑定
+id 数据库中的主键字段数据绑定
+result 非主键字段的数据绑定
+property 实体类中的属性名称
+column 数据库中的字段名称
+
+    3. 两种方法的不同    
+        直接使用别名，运行效率更高，但编写效率较低
+        使用resultMap，运行效率低，但是编写效率高</code></pre>
       
     </div>
     
@@ -691,7 +848,7 @@ daoInterfaceClass.xml包含数据库语句，返回数据类的全限定类名�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MyBatis"><span class="nav-number">2.</span> <span class="nav-text">MyBatis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MyBatis入门"><span class="nav-number">2.1.</span> <span class="nav-text">1. MyBatis入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.1.1.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis的CRUD"><span class="nav-number">2.2.</span> <span class="nav-text">MyBatis的CRUD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-number">2.2.1.</span> <span class="nav-text"></span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MyBatis"><span class="nav-number">2.</span> <span class="nav-text">MyBatis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MyBatis入门"><span class="nav-number">2.1.</span> <span class="nav-text">1. MyBatis入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.1.1.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis的CRUD"><span class="nav-number">2.2.</span> <span class="nav-text">MyBatis的CRUD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis的配置文件"><span class="nav-number">2.2.1.</span> <span class="nav-text">MyBatis的配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis的CRUD-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">MyBatis的CRUD</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#保存数据-Insert"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">保存数据(Insert)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#保存数据的同时返回id"><span class="nav-number">2.2.2.1.1.</span> <span class="nav-text">保存数据的同时返回id</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新数据-Update"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">更新数据(Update)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除数据-Delete"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">删除数据(Delete)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件查询"><span class="nav-number">2.2.2.4.</span> <span class="nav-text">条件查询</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#根据用户id"><span class="nav-number">2.2.2.4.1.</span> <span class="nav-text">根据用户id</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#根据用户name"><span class="nav-number">2.2.2.4.2.</span> <span class="nav-text">根据用户name</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis中的参数-parameterType"><span class="nav-number">2.2.3.</span> <span class="nav-text">MyBatis中的参数(parameterType)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数的类型-parameterType"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">参数的类型(parameterType)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结果集的封装-resultType"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">结果集的封装(resultType)</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -726,7 +883,7 @@ daoInterfaceClass.xml包含数据库语句，返回数据类的全限定类名�
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">4.4k</span>
+    <span title="Site words total count">6k</span>
   
 </div>
 

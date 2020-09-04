@@ -1,63 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>SQL注入</title>
-    <url>/2020/05/08/SQL%E6%B3%A8%E5%85%A5/</url>
-    <content><![CDATA[<h1 id="SQL注入问题"><a href="#SQL注入问题" class="headerlink" title="SQL注入问题"></a>SQL注入问题</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>在拼接sql语句时，有一些特殊的SQL关键字参于字符串的拼接，导致SQL语句的逻辑发生变化，可能会造成安全性问题</code></pre><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre><code>1. 输入 a&apos;or&apos;a&apos;=&apos;a,条件改变
-2. sql:select * from db where name and password = &apos;a&apos;or&apos;a&apos;=&apos;a&apos;,查询所有数据
-
-原SQL语句拼接为: 
-
-    String sql = &quot;select id from db where username=&apos;&quot;+username+&quot;&apos; and password=&apos;&quot;+password+&quot;&apos;&quot;;
-
-用户输入的帐号密码分别为:
-
-请输入您的帐号:
-11111
-请输入您的密码:
-a&apos;or&apos;a&apos;=&apos;a
-组成的SQL语句: 
-select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&apos;=&apos;a；</code></pre><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><pre><code>使用预编译SQL语句,进行参数的传递
-
-更改执行环境：Statement
-
-使用新的环境: PreparedStatement
-
-在通过连接对象，获取一个预编译的SQL环境(PreparedStatement)时, 需要传递一个SQL语句 ! 
-在这个语句中 可以出现? , ? 表示准备填充的参数值!
-
-使用步骤: 
-    1. 通过连接对象, 获得一个预编译的SQL执行环境
-
-        PreparedStatement state = conn.prepareStatement(sql);
-
-        例如: 
-            String sql = &quot;select id from db where username=? and password=?&quot;;
-
-            PreparedStatement state = conn.prepareStatement(sql);    
-
-    2. 向预编译参数列表中传递值: 
-
-        预编译的SQL语句中可以包含【多个问号】, 每一个问号表示一个需要传递的值 
-        我们通过PreparedStatement它的setXxx方法,来完成参数的传递
-            传递参数时, 需要指定问号的索引, 问号的索引从1开始            
-
-        例如:
-            state.setString(1,username);
-            state.setString(2,password);
-
-    3. 执行语句:
-            ResultSet result = state.executeQuery();</code></pre><h2 id="PreparedStatement"><a href="#PreparedStatement" class="headerlink" title="PreparedStatement"></a>PreparedStatement</h2><pre><code>填充预编译的参数: 
-    * setXxx（问号索引,值）
-        向预编译的SQL的?中传递值 
-        参数1. 问号的索引,从1开始
-        参数2. 填充到? 中的值
-
-    * execute()
-    * executeUpdate();
-    * executeQuery();        </code></pre>]]></content>
-  </entry>
-  <entry>
     <title>hello_hexo</title>
     <url>/2019/12/07/hello-hexo/</url>
     <content><![CDATA[]]></content>
@@ -311,6 +254,63 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
     3. 调用方法完成CRUD的操作</code></pre>]]></content>
   </entry>
   <entry>
+    <title>SQL注入</title>
+    <url>/2020/05/08/SQL%E6%B3%A8%E5%85%A5/</url>
+    <content><![CDATA[<h1 id="SQL注入问题"><a href="#SQL注入问题" class="headerlink" title="SQL注入问题"></a>SQL注入问题</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>在拼接sql语句时，有一些特殊的SQL关键字参于字符串的拼接，导致SQL语句的逻辑发生变化，可能会造成安全性问题</code></pre><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre><code>1. 输入 a&apos;or&apos;a&apos;=&apos;a,条件改变
+2. sql:select * from db where name and password = &apos;a&apos;or&apos;a&apos;=&apos;a&apos;,查询所有数据
+
+原SQL语句拼接为: 
+
+    String sql = &quot;select id from db where username=&apos;&quot;+username+&quot;&apos; and password=&apos;&quot;+password+&quot;&apos;&quot;;
+
+用户输入的帐号密码分别为:
+
+请输入您的帐号:
+11111
+请输入您的密码:
+a&apos;or&apos;a&apos;=&apos;a
+组成的SQL语句: 
+select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&apos;=&apos;a；</code></pre><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><pre><code>使用预编译SQL语句,进行参数的传递
+
+更改执行环境：Statement
+
+使用新的环境: PreparedStatement
+
+在通过连接对象，获取一个预编译的SQL环境(PreparedStatement)时, 需要传递一个SQL语句 ! 
+在这个语句中 可以出现? , ? 表示准备填充的参数值!
+
+使用步骤: 
+    1. 通过连接对象, 获得一个预编译的SQL执行环境
+
+        PreparedStatement state = conn.prepareStatement(sql);
+
+        例如: 
+            String sql = &quot;select id from db where username=? and password=?&quot;;
+
+            PreparedStatement state = conn.prepareStatement(sql);    
+
+    2. 向预编译参数列表中传递值: 
+
+        预编译的SQL语句中可以包含【多个问号】, 每一个问号表示一个需要传递的值 
+        我们通过PreparedStatement它的setXxx方法,来完成参数的传递
+            传递参数时, 需要指定问号的索引, 问号的索引从1开始            
+
+        例如:
+            state.setString(1,username);
+            state.setString(2,password);
+
+    3. 执行语句:
+            ResultSet result = state.executeQuery();</code></pre><h2 id="PreparedStatement"><a href="#PreparedStatement" class="headerlink" title="PreparedStatement"></a>PreparedStatement</h2><pre><code>填充预编译的参数: 
+    * setXxx（问号索引,值）
+        向预编译的SQL的?中传递值 
+        参数1. 问号的索引,从1开始
+        参数2. 填充到? 中的值
+
+    * execute()
+    * executeUpdate();
+    * executeQuery();        </code></pre>]]></content>
+  </entry>
+  <entry>
     <title>Spring下载</title>
     <url>/2020/05/09/Spring%E4%B8%8B%E8%BD%BD/</url>
     <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt=""></p>
@@ -412,17 +412,23 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
     Mybatis在使用代理Dao对象实现增删改查做了什么事？
         1. 创建代理对象
         2. 调用selectList()方法</code></pre><blockquote>
-<p><code>&lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;</code><br><code>&lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis_test&quot;/&gt;</code><br><code>&lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;</code><br><code>&lt;property name=&quot;password&quot; value=&quot;root2019&quot;/&gt;</code></p>
-</blockquote>
+<pre><code>&lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
+&lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis_test&quot;/&gt;
+&lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;
+&lt;property name=&quot;password&quot; value=&quot;root2019&quot;/&gt;</code></pre></blockquote>
 <pre><code>连接数据库的语句，可以产生Connnection对象</code></pre><blockquote>
-<p><code>&lt;mappers&gt;</code><br><code>&lt;mapper resource=&quot;com/mybatis_base_03/dao/UserDao.xml&quot;/&gt;</code><br><code>&lt;/mappers&gt;</code></p>
+<mappers>
+<mapper resource="com/mybatis_base_03/dao/UserDao.xml"/>
+</mappers>
 </blockquote>
-<pre><code>映射配置信息</code></pre><blockquote>
-<p><code>&lt;mapper namespace=&quot;com.mybatis_base_03.dao.UserDao&quot;&gt;</code></p>
-<p><code>&lt;!--配置查询所有--&gt;</code><br><code>&lt;select id=&quot;findAll&quot; resultType=&quot;com.mybatis_base_03.domain.User&quot;&gt;</code><br>   <code>select * from user</code><br><code>&lt;/select&gt;</code></p>
-</blockquote>
-<pre><code>全限定类名，以及执行的SQL语句。
-有了上面的三个信息，可以解析.xml配置文件。
+<blockquote>
+<pre><code>&lt;mapper namespace=&quot;com.mybatis_base_03.dao.UserDao&quot;&gt; 
+&lt;!--配置查询所有--&gt;
+&lt;select id=&quot;findAll&quot; resultType=&quot;com.mybatis_base_03.domain.User&quot;&gt;
+   select * from user
+&lt;/select&gt;</code></pre></blockquote>
+<pre><code>映射配置信息 -&gt; 全限定类名，以及执行的SQL语句。
+解析.xml配置文件 -&gt; 有了上面的三个信息
     1. 根据配置数据库的语句，可以创建Connection对象
         注册驱动，创建连接对象
     2. 获取预处理对象PreparedStatement
@@ -434,7 +440,7 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
     3. interface SqlSessionfacotry
     4. interface SqlSession
     这个过程完成了两件事：
-        创建代理对象，
+        创建接口代理对象，
         实现查询语句
 
 MyBatis将JDBC的功能进行封装，形成功能调用。SqlMapConfig.xml,daoInterfaceClass.xml里面包含对数据库的连接与查询的语句以及返回的结果类型。
@@ -442,7 +448,158 @@ MyBatis将JDBC的功能进行封装，形成功能调用。SqlMapConfig.xml,daoI
 SqlMapConfig.xml中的&lt;property&gt;标签包含数据库的连接对象，&lt;mappers/mapper&gt;包含接口的文件位置。
 daoInterfaceClass.xml包含数据库语句，返回数据类的全限定类名，以及方法的namespace(根据查查询语句以及namespace确定方法的唯一性)。
 
-根据这两个配置文件，可以通过对.xml文件的解析，获取相应的配置文件信息，由此构建代理对象，g根据返回数据的类型获取数据，实现整个的查询过程。</code></pre><h2 id="MyBatis的CRUD"><a href="#MyBatis的CRUD" class="headerlink" title="MyBatis的CRUD"></a>MyBatis的CRUD</h2><h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3>]]></content>
+根据这两个配置文件，可以通过对.xml文件的解析，获取相应的配置文件信息，由此构建代理对象，g根据返回数据的类型获取数据，实现整个的查询过程。</code></pre><h2 id="MyBatis的CRUD"><a href="#MyBatis的CRUD" class="headerlink" title="MyBatis的CRUD"></a>MyBatis的CRUD</h2><h3 id="MyBatis的配置文件"><a href="#MyBatis的配置文件" class="headerlink" title="MyBatis的配置文件"></a>MyBatis的配置文件</h3><pre><code>1. pom.xml的配置信息
+    * 坐标的导入
+        1.mybatis的坐标导入
+        2.mysql的驱动坐标导入
+        3.log4j的坐标导入
+            log4j.properties配置文件放在资源目录下
+        4.junit单元测试的坐标导入
+
+2. SqlMapConfig.xml的配置
+    1. &lt;environments&gt;:配置数据库
+        1. 数据库连接
+        2. 数据库的事务类型
+        3. 数据库的数据源
+        4. 数据库的连接（driver url username password）</code></pre><blockquote>
+<pre><code>&lt;!--配置环境--&gt;
+&lt;environments default=&quot;mysql&quot;&gt;
+ &lt;!--配置mysql的环境--&gt;
+ &lt;environment id=&quot;mysql&quot;&gt;
+  &lt;!--配置事务--&gt;
+  &lt;transactionManager type=&quot;JDBC&quot;&gt;&lt;/transactionManager&gt;
+  &lt;!--配置连接池--&gt;
+  &lt;dataSource type=&quot;POOLED&quot;&gt;
+    &lt;!--mysql的连接信息--&gt;
+    &lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
+    &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis_test&quot;/&gt;
+    &lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;
+    &lt;property name=&quot;password&quot; value=&quot;root2019&quot;/&gt;
+  &lt;/dataSource&gt;
+ &lt;/environment&gt;
+&lt;/environments&gt;</code></pre></blockquote>
+<pre><code>2. &lt;mappers&gt;:配置dao的数据接口
+    1. recource:表示配置方式为.xml
+    2. class:表示配置方式为注解
+    &lt;!--配置映射文件的位置--&gt;</code></pre><blockquote>
+<pre><code>&lt;mappers&gt;
+    &lt;mapper resource=&quot;com/mybatis_base_04_crud/dao/IUserDao.xml&quot;&gt;&lt;/mapper&gt;
+  &lt;/mappers&gt;</code></pre></blockquote>
+<pre><code>3. DaoInterface.xml
+    1.&lt;mapper&gt;中的namespase 与 &lt;select&gt;中的id构成方法的唯一标识
+    2.&lt;select&gt;中的文本内容为要执行的语句
+    3.&lt;select&gt;中的 resultType 返回值类型</code></pre><blockquote>
+<pre><code>&lt;!--namespace 接口--&gt;
+&lt;mapper namespace=&quot;com.mybatis_base_04_crud.dao.IUserDao&quot;&gt;
+
+ &lt;select id=&quot;finaAll&quot; resultType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+       select * from user
+  &lt;/select&gt;
+&lt;/mapper&gt;</code></pre></blockquote>
+<h3 id="MyBatis的CRUD-1"><a href="#MyBatis的CRUD-1" class="headerlink" title="MyBatis的CRUD"></a>MyBatis的CRUD</h3><h4 id="保存数据-Insert"><a href="#保存数据-Insert" class="headerlink" title="保存数据(Insert)"></a>保存数据(Insert)</h4><pre><code>1. Dao接口的方法
+    在IUserDao.java中添加saveUser方法
+2. daoInterace.xml中的配置
+    在&lt;mapper&gt;中增加&lt;insert&gt;标签，选择参数化类型，对于数据填充，采用#{}方式</code></pre><blockquote>
+<pre><code>&lt;!-- 保存用户 --&gt;
+  &lt;!--参数类型 parameterType--&gt;
+  &lt;insert id=&quot;saveUser&quot; parameterType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+        insert into user(username,address,sex,birthday) value(#{username},#{address},#{sex},#{birthday})
+ &lt;/insert&gt;
+实体类的属性定义与数据库中的列名一致,setter和getter方法自动生成，可以直接使用属性名称来传递参数，否则可以使用.getUsername()来传递参数。    </code></pre></blockquote>
+<pre><code>3. 调用方法
+    在生成数据库的代理对象后，直接调用save方法就可以        
+
+4. 注意事项
+    在使用方法后，需要对数据进行提交，默认自动提交关闭，需要手动打开自动提交
+    session.commit();</code></pre><h5 id="保存数据的同时返回id"><a href="#保存数据的同时返回id" class="headerlink" title="保存数据的同时返回id"></a>保存数据的同时返回id</h5><pre><code>1.daoInterface.xml
+    在原本的&lt;insert&gt;标签内，增加&lt;selectKey&gt;标签</code></pre><blockquote>
+<pre><code>&lt;selectKey keyProperty=&quot;id&quot; keyColumn=&quot;id&quot; resultType=&quot;int&quot; order=&quot;AFTER&quot;&gt;
+  select last_insert_id();
+&lt;/selectKey&gt;
+在执行结束之后，会将id返回到user的id属性之中
+keyProperty=&quot;id&quot; 实体类的属性
+keyColumn=&quot;id&quot; 数据表中的列名</code></pre></blockquote>
+<h4 id="更新数据-Update"><a href="#更新数据-Update" class="headerlink" title="更新数据(Update)"></a>更新数据(Update)</h4><pre><code>1. Dao接口的方法
+    void saveUser(User user);
+2. daoInterace.xml</code></pre><blockquote>
+<pre><code>&lt;!-- 更新 --&gt;
+  &lt;update id=&quot;updateUser&quot; parameterType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+    update user set username = #{username},address=#{address},sex=#{sex},birthday=#{birthday} where id=#{id}
+  &lt;/update&gt;</code></pre></blockquote>
+<h4 id="删除数据-Delete"><a href="#删除数据-Delete" class="headerlink" title="删除数据(Delete)"></a>删除数据(Delete)</h4><pre><code>1. Dao接口的方法
+    void deleteUser(Integer userId);
+2. daoInterface.xml</code></pre><blockquote>
+<pre><code>&lt;!-- 删除数据 --&gt;
+  &lt;delete id=&quot;deleteUser&quot; parameterType=&quot;java.lang.Integer&quot;&gt;
+    delete from user where id=#{uid}
+  &lt;/delete&gt;</code></pre></blockquote>
+<pre><code>3. 注意事项
+    删除数据中只有一个元素，#{}中的元素只是起到一个占位符的作用，与名称无关</code></pre><h4 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h4><h5 id="根据用户id"><a href="#根据用户id" class="headerlink" title="根据用户id"></a>根据用户id</h5><pre><code>1. dao接口的方法
+    User finaById(Integer id);
+2. daoInterface.xml
+    需要传入参数，以及返回值类型</code></pre><blockquote>
+<pre><code>   &lt;!-- 根据id查询一个 --&gt;
+&lt;select id=&quot;findById&quot; parameterType=&quot;Integer&quot; resultType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+   select * from user where id=#{id}
+&lt;/select&gt;</code></pre></blockquote>
+<h5 id="根据用户name"><a href="#根据用户name" class="headerlink" title="根据用户name"></a>根据用户name</h5><pre><code>1. dao接口的方法
+    List&lt;User&gt; findByName(String name);
+2. daoInterface.xml</code></pre><blockquote>
+<pre><code>&lt;!-- 根据名称模糊查询 --&gt;
+&lt;select id=&quot;findByName&quot; parameterType=&quot;string&quot; resultType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+ select * from user where username like #{name}</code></pre>  </select>
+</blockquote>
+<pre><code>3. 注意事项
+    &apos;#{}中没有模糊查询的 “-” “%” 在调用传参数时，需要给出“%王%”,查询语句为预处理SQL语句
+    &apos;%${value}%&apos;,参数为“王”，查询语句为拼接字符串</code></pre><h3 id="MyBatis中的参数-parameterType"><a href="#MyBatis中的参数-parameterType" class="headerlink" title="MyBatis中的参数(parameterType)"></a>MyBatis中的参数(parameterType)</h3><h4 id="参数的类型-parameterType"><a href="#参数的类型-parameterType" class="headerlink" title="参数的类型(parameterType)"></a>参数的类型(parameterType)</h4><pre><code>1. 简单数据类型
+
+
+2. 传递pojo对象
+    OGNL表达式：</code></pre><p><em>Object Graphic Navigation Language</em><br>        (对象图形导航语言)</p>
+<pre><code>    通过对象的取值方法来获取数据，在写法上，将get给忽略了
+    比如：获取用户的名称
+        类中的写法：user.getUsername()
+        OGNL表达式：user.username()
+    mybatis中可以直接使用username,不用书写user.
+        因为在parameterType中已经提供属性所在的类
+
+3. 传递pojo包装对象
+    参数为被封装的数据，查询条件是综合的查询条件</code></pre><blockquote>
+<pre><code>&lt;!-- 根据queryVo查询数据 --&gt;
+&lt;select id=&quot;findByQueryVo&quot; parameterType=&quot;com.mybatis_base_04_crud.domain.QueryVo&quot; resultType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+  select * from user where username like #{user.username}
+&lt;/select&gt;</code></pre></blockquote>
+<pre><code>QueryVo内部封装user对象，在参数传递时#{}，中的参数为 QueryVo.user.username,可以写为 user.username,代表参数为QueryVo中数据对象user中的属性username</code></pre><h4 id="结果集的封装-resultType"><a href="#结果集的封装-resultType" class="headerlink" title="结果集的封装(resultType)"></a>结果集的封装(resultType)</h4><pre><code>实体类的属性名与数据库的列名不相同？
+    1. 给数据库中的列名起别名
+        将所有查询的数据字段的名称别名改为实体类对应的属性名称
+        书写更为复杂，但是查询到的数据在数据库端被处理，效率更高
+    select id as uesrId,username as userName, address as userAddress, sex as userSex,birthday as userBirthday from user;
+
+    2. 使用resultMap进行字段对应</code></pre><blockquote>
+<pre><code>&lt;!-- 配置 查询结果的列名和属性名一致 --&gt;
+&lt;resultMap id=&quot;userMap&quot; type=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+    &lt;!-- 主键字段的一致 --&gt;
+    &lt;id property=&quot;userId&quot; column=&quot;id&quot;/&gt;
+    &lt;!-- 非主键字段的一致 --&gt;
+    &lt;result property=&quot;userName&quot; column=&quot;username&quot;&gt;&lt;/result&gt;
+    &lt;result property=&quot;userAddress&quot; column=&quot;address&quot;&gt;&lt;/result&gt;
+    &lt;result property=&quot;userSex&quot; column=&quot;sex&quot;&gt;&lt;/result&gt;
+    &lt;result property=&quot;userBirthday&quot; column=&quot;birthday&quot;&gt;&lt;/result&gt;
+&lt;/resultMap&gt;
+
+&lt;!--select id as uesrId,username as userName, address as userAddress, sex as userSex,birthday as userBirthday from user;--&gt;
+&lt;select id=&quot;finaAll&quot; resultMap=&quot;userMap&quot;&gt;
+    select * from user;
+&lt;/select&gt;</code></pre></blockquote>
+<pre><code>resultMap中的id为映射标记，返回值必须更改为resultMap=&quot;userMap&quot;，进行绑定
+id 数据库中的主键字段数据绑定
+result 非主键字段的数据绑定
+property 实体类中的属性名称
+column 数据库中的字段名称
+
+    3. 两种方法的不同    
+        直接使用别名，运行效率更高，但编写效率较低
+        使用resultMap，运行效率低，但是编写效率高</code></pre>]]></content>
       <tags>
         <tag>java</tag>
       </tags>
