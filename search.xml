@@ -1,9 +1,391 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>hello_hexo</title>
-    <url>/2019/12/07/hello-hexo/</url>
-    <content><![CDATA[]]></content>
+    <title>Spring下载</title>
+    <url>/2020/05/09/Spring%E4%B8%8B%E8%BD%BD/</url>
+    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
+<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
+<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
+<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
+<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
+<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MyBatis</title>
+    <url>/2020/05/15/mybatis/</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><pre><code>1. 什么是框架（Framework）？
+    系统中可重用的代码部分，包括一组构件以及构件之间的交互逻辑
+    软件开发中的一种解决方案，不同的框架解决不同的问题
+    框架封装了很多技术细节，使用者可以方便实现功能，提高开发效率
+
+2. 三层架构
+    * 表现层：
+        展示数据
+    * 业务层：
+        处理业务需求
+    * 持久层：
+        数据库交互
+
+3. 持久层技术解决问题和方案
+    1. 问题
+        数据库的连接和访问，数据查询效率，操作繁琐，不能将注意力聚焦到SQL处理上
+        JDBC,Spring JDBCTemplate，传统的数据库连接方法，一组解决数据库连接的规范
+
+    2. MyBatis概述
+        * 基于Java的持久层框架
+        * 内部封装了jdbc的细节,使用者只需要关注SQL语句，不用关心加载驱动，数据库连接，Statement对象等过程
+        * 使用ORM(Object Relation Mapping)思想实现了结果集的封装
+            PS: ORM
+                数据库表和实体类以及实体类的属性对应起来，可以操作实体类实现操作数据表
+                    user表        User类
+                    id          userId</code></pre><h1 id="MyBatis"><a href="#MyBatis" class="headerlink" title="MyBatis"></a>MyBatis</h1><h2 id="1-MyBatis入门"><a href="#1-MyBatis入门" class="headerlink" title="1. MyBatis入门"></a>1. MyBatis入门</h2><pre><code>1. 环境搭建
+    1. new --&gt; project --&gt; maven 设置名称，导入坐标pom.xml
+    2. 创建实体类和Dao的接口:Dao(data access object 数据访问对象)
+    3. 创建mybatis的主配置文件
+        * SqlMapConfig.xml ：&lt;property &gt; 标签名称需要匹配，ps:username 不是 user
+    4. 创建映射配置文件
+        * UserDao.xml :&lt;mapper namespace=&quot;UserDao的路径&quot;&gt;
+
+    注意事项：
+        1. 创建UserDao.xml UserDao.java，mybatis中将持久层的操作接口名称和映射文件也叫做：Mapper
+            UserDao 和 UserMapper相同
+        2. 在idea创建目录时，和包的创建不同
+            包在创建时，com.mybatis_base_01.dao 三层结构
+            目录：com.mybatis_base_01.dao 一级目录
+        3. 映射配置文件位置必须和dao接口的包结构相同
+        4. 映射配置文件的mapper标签的namespace属性取值为dao接口的全限定类名
+        5. 映射配置文件的操作设置，id取值必须时dao接口的方法名
+
+        在实现3，4，5后，dao的实现类由mybatis实现
+
+2. 使用案例
+    1. 配置文件
+        * InputStream in = Resources.getResourceAsStream(&quot;SqlMapConfig.xml&quot;);
+    2. 创建SqlSessionFactory对象
+        * SqlSessionFacotryBulider builder = new SqlSessionFacotryBuilder();
+        * SqlSessionFacotry facotry = builder.build(in);
+    3. 创建SqlSession对象
+        * SqlSession session = facotry.openSession();
+    4. 创建UserDao代理对象
+        * UserDao userDao = session.getMapper(UserDao.class);
+    5. 使用UserDao代理对象执行操作
+        * List&lt;User&gt; userDao = userDao.findAll();
+    6. 释放资源
+        * session.close();
+        * in.close();
+
+3. 简单分析
+    1. 配置文件
+        Resources.getResourceAsStream(&quot;SqlMapConfig.xml&quot;); 
+        * 使用类加载器，只能读取类路径的配置文件
+        * 使用ServletContext对象的getRealPath()
+
+    2. 创建SqlSessionFactory工厂
+        * 使用了创建者模式：SqlSessionFacotryBuilder builder 构造者 builder.build(in) 建立工厂
+        * 使用了工厂模式：SqlSessionFactory 降低类之间的依赖关系
+
+    3. 创建SqlSeccion对象
+    4. 创建接口实现类
+
+4. 使用注解开发MyBatis
+    1. 将UserDao.xml移除，在Dao接口的方法上使用@Select()注解，并且指定sql语句
+    2. 在SqlMapConfig.xml中的Mapper配置时，使用class属性指定Dao接口的全限定类名
+
+5. 自定义MyBatis分析
+    Mybatis在使用代理Dao对象实现增删改查做了什么事？
+        1. 创建代理对象
+        2. 调用selectList()方法</code></pre><blockquote>
+<pre><code>&lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
+&lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis_test&quot;/&gt;
+&lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;
+&lt;property name=&quot;password&quot; value=&quot;root2019&quot;/&gt;</code></pre></blockquote>
+<pre><code>连接数据库的语句，可以产生Connnection对象</code></pre><blockquote>
+<mappers>
+<mapper resource="com/mybatis_base_03/dao/UserDao.xml">
+</mapper></mappers>
+</blockquote>
+<blockquote>
+<pre><code>&lt;mapper namespace=&quot;com.mybatis_base_03.dao.UserDao&quot;&gt; 
+&lt;!--配置查询所有--&gt;
+&lt;select id=&quot;findAll&quot; resultType=&quot;com.mybatis_base_03.domain.User&quot;&gt;
+   select * from user
+&lt;/select&gt;</code></pre></blockquote>
+<pre><code>映射配置信息 -&gt; 全限定类名，以及执行的SQL语句。
+解析.xml配置文件 -&gt; 有了上面的三个信息
+    1. 根据配置数据库的语句，可以创建Connection对象
+        注册驱动，创建连接对象
+    2. 获取预处理对象PreparedStatement
+        获取SQL语句
+    3. 对结果进行封装
+        根据实体类的全限定类名</code></pre><h3 id><a href="#" class="headerlink" title></a></h3><pre><code>6.自定义MyBatis中涉及的实体类和接口
+    1. class Resources
+    2. class SqlSessionBuilder
+    3. interface SqlSessionfacotry
+    4. interface SqlSession
+    这个过程完成了两件事：
+        创建接口代理对象，
+        实现查询语句
+
+MyBatis将JDBC的功能进行封装，形成功能调用。SqlMapConfig.xml,daoInterfaceClass.xml里面包含对数据库的连接与查询的语句以及返回的结果类型。
+
+SqlMapConfig.xml中的&lt;property&gt;标签包含数据库的连接对象，&lt;mappers/mapper&gt;包含接口的文件位置。
+daoInterfaceClass.xml包含数据库语句，返回数据类的全限定类名，以及方法的namespace(根据查查询语句以及namespace确定方法的唯一性)。
+
+根据这两个配置文件，可以通过对.xml文件的解析，获取相应的配置文件信息，由此构建代理对象，g根据返回数据的类型获取数据，实现整个的查询过程。</code></pre><h2 id="MyBatis的CRUD"><a href="#MyBatis的CRUD" class="headerlink" title="MyBatis的CRUD"></a>MyBatis的CRUD</h2><h3 id="MyBatis的配置文件"><a href="#MyBatis的配置文件" class="headerlink" title="MyBatis的配置文件"></a>MyBatis的配置文件</h3><pre><code>1. pom.xml的配置信息
+    * 坐标的导入
+        1.mybatis的坐标导入
+        2.mysql的驱动坐标导入
+        3.log4j的坐标导入
+            log4j.properties配置文件放在资源目录下
+        4.junit单元测试的坐标导入
+
+2. SqlMapConfig.xml的配置
+    1. &lt;environments&gt;:配置数据库
+        1. 数据库连接
+        2. 数据库的事务类型
+        3. 数据库的数据源
+        4. 数据库的连接（driver url username password）</code></pre><blockquote>
+<pre><code>&lt;!--配置环境--&gt;
+&lt;environments default=&quot;mysql&quot;&gt;
+ &lt;!--配置mysql的环境--&gt;
+ &lt;environment id=&quot;mysql&quot;&gt;
+  &lt;!--配置事务--&gt;
+  &lt;transactionManager type=&quot;JDBC&quot;&gt;&lt;/transactionManager&gt;
+  &lt;!--配置连接池--&gt;
+  &lt;dataSource type=&quot;POOLED&quot;&gt;
+    &lt;!--mysql的连接信息--&gt;
+    &lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
+    &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis_test&quot;/&gt;
+    &lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;
+    &lt;property name=&quot;password&quot; value=&quot;root2019&quot;/&gt;
+  &lt;/dataSource&gt;
+ &lt;/environment&gt;
+&lt;/environments&gt;</code></pre></blockquote>
+<pre><code>2. &lt;mappers&gt;:配置dao的数据接口
+    1. recource:表示配置方式为.xml
+    2. class:表示配置方式为注解
+    &lt;!--配置映射文件的位置--&gt;</code></pre><blockquote>
+<pre><code>&lt;mappers&gt;
+    &lt;mapper resource=&quot;com/mybatis_base_04_crud/dao/IUserDao.xml&quot;&gt;&lt;/mapper&gt;
+  &lt;/mappers&gt;</code></pre></blockquote>
+<pre><code>3. DaoInterface.xml
+    1.&lt;mapper&gt;中的namespase 与 &lt;select&gt;中的id构成方法的唯一标识
+    2.&lt;select&gt;中的文本内容为要执行的语句
+    3.&lt;select&gt;中的 resultType 返回值类型</code></pre><blockquote>
+<pre><code>&lt;!--namespace 接口--&gt;
+&lt;mapper namespace=&quot;com.mybatis_base_04_crud.dao.IUserDao&quot;&gt;
+
+ &lt;select id=&quot;finaAll&quot; resultType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+       select * from user
+  &lt;/select&gt;
+&lt;/mapper&gt;</code></pre></blockquote>
+<h3 id="MyBatis的数据操作"><a href="#MyBatis的数据操作" class="headerlink" title="MyBatis的数据操作"></a>MyBatis的数据操作</h3><h4 id="保存数据-Insert"><a href="#保存数据-Insert" class="headerlink" title="保存数据(Insert)"></a>保存数据(Insert)</h4><pre><code>1. Dao接口的方法
+    在IUserDao.java中添加saveUser方法
+2. daoInterace.xml中的配置
+    在&lt;mapper&gt;中增加&lt;insert&gt;标签，选择参数化类型，对于数据填充，采用#{}方式</code></pre><blockquote>
+<pre><code>&lt;!-- 保存用户 --&gt;
+  &lt;!--参数类型 parameterType--&gt;
+  &lt;insert id=&quot;saveUser&quot; parameterType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+        insert into user(username,address,sex,birthday) value(#{username},#{address},#{sex},#{birthday})
+ &lt;/insert&gt;
+实体类的属性定义与数据库中的列名一致,setter和getter方法自动生成，可以直接使用属性名称来传递参数，否则可以使用.getUsername()来传递参数。    </code></pre></blockquote>
+<pre><code>3. 调用方法
+    在生成数据库的代理对象后，直接调用save方法就可以        
+
+4. 注意事项
+    在使用方法后，需要对数据进行提交，默认自动提交关闭，需要手动打开自动提交
+    session.commit();</code></pre><h5 id="保存数据的同时返回id"><a href="#保存数据的同时返回id" class="headerlink" title="保存数据的同时返回id"></a>保存数据的同时返回id</h5><pre><code>1.daoInterface.xml
+    在原本的&lt;insert&gt;标签内，增加&lt;selectKey&gt;标签</code></pre><blockquote>
+<pre><code>&lt;selectKey keyProperty=&quot;id&quot; keyColumn=&quot;id&quot; resultType=&quot;int&quot; order=&quot;AFTER&quot;&gt;
+  select last_insert_id();
+&lt;/selectKey&gt;
+在执行结束之后，会将id返回到user的id属性之中
+keyProperty=&quot;id&quot; 实体类的属性
+keyColumn=&quot;id&quot; 数据表中的列名</code></pre></blockquote>
+<h4 id="更新数据-Update"><a href="#更新数据-Update" class="headerlink" title="更新数据(Update)"></a>更新数据(Update)</h4><pre><code>1. Dao接口的方法
+    void saveUser(User user);
+2. daoInterace.xml</code></pre><blockquote>
+<pre><code>&lt;!-- 更新 --&gt;
+  &lt;update id=&quot;updateUser&quot; parameterType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+    update user set username = #{username},address=#{address},sex=#{sex},birthday=#{birthday} where id=#{id}
+  &lt;/update&gt;</code></pre></blockquote>
+<h4 id="删除数据-Delete"><a href="#删除数据-Delete" class="headerlink" title="删除数据(Delete)"></a>删除数据(Delete)</h4><pre><code>1. Dao接口的方法
+    void deleteUser(Integer userId);
+2. daoInterface.xml</code></pre><blockquote>
+<pre><code>&lt;!-- 删除数据 --&gt;
+  &lt;delete id=&quot;deleteUser&quot; parameterType=&quot;java.lang.Integer&quot;&gt;
+    delete from user where id=#{uid}
+  &lt;/delete&gt;</code></pre></blockquote>
+<pre><code>3. 注意事项
+    删除数据中只有一个元素，#{}中的元素只是起到一个占位符的作用，与名称无关</code></pre><h4 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h4><h5 id="根据用户id"><a href="#根据用户id" class="headerlink" title="根据用户id"></a>根据用户id</h5><pre><code>1. dao接口的方法
+    User finaById(Integer id);
+2. daoInterface.xml
+    需要传入参数，以及返回值类型</code></pre><blockquote>
+<pre><code>   &lt;!-- 根据id查询一个 --&gt;
+&lt;select id=&quot;findById&quot; parameterType=&quot;Integer&quot; resultType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+   select * from user where id=#{id}
+&lt;/select&gt;</code></pre></blockquote>
+<h5 id="根据用户name"><a href="#根据用户name" class="headerlink" title="根据用户name"></a>根据用户name</h5><pre><code>1. dao接口的方法
+    List&lt;User&gt; findByName(String name);
+2. daoInterface.xml</code></pre><blockquote>
+<pre><code>&lt;!-- 根据名称模糊查询 --&gt;
+&lt;select id=&quot;findByName&quot; parameterType=&quot;string&quot; resultType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+ select * from user where username like #{name}</code></pre>  
+</blockquote>
+<pre><code>3. 注意事项
+    &apos;#{}中没有模糊查询的 “-” “%” 在调用传参数时，需要给出“%王%”,查询语句为预处理SQL语句
+    &apos;%${value}%&apos;,参数为“王”，查询语句为拼接字符串</code></pre><h3 id="MyBatis中的参数-parameterType"><a href="#MyBatis中的参数-parameterType" class="headerlink" title="MyBatis中的参数(parameterType)"></a>MyBatis中的参数(parameterType)</h3><h4 id="参数的类型-parameterType"><a href="#参数的类型-parameterType" class="headerlink" title="参数的类型(parameterType)"></a>参数的类型(parameterType)</h4><pre><code>1. 简单数据类型
+    int String ...
+
+2. 传递pojo对象
+    OGNL表达式：</code></pre><p><em>Object Graphic Navigation Language</em><br>        (对象图形导航语言)</p>
+<pre><code>    通过对象的取值方法来获取数据，在写法上，将get给忽略了
+    比如：获取用户的名称
+        类中的写法：user.getUsername()
+        OGNL表达式：user.username()
+    mybatis中可以直接使用username,不用书写user.
+        因为在parameterType中已经提供属性所在的类
+
+3. 传递pojo包装对象
+    参数为被封装的数据，查询条件是综合的查询条件</code></pre><blockquote>
+<pre><code>&lt;!-- 根据queryVo查询数据 --&gt;
+&lt;select id=&quot;findByQueryVo&quot; parameterType=&quot;com.mybatis_base_04_crud.domain.QueryVo&quot; resultType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+  select * from user where username like #{user.username}
+&lt;/select&gt;</code></pre></blockquote>
+<pre><code>QueryVo内部封装user对象，在参数传递时#{}，中的参数为 QueryVo.user.username,可以写为 user.username,代表参数为QueryVo中数据对象user中的属性username</code></pre><h4 id="结果集的封装-resultType"><a href="#结果集的封装-resultType" class="headerlink" title="结果集的封装(resultType)"></a>结果集的封装(resultType)</h4><pre><code>实体类的属性名与数据库的列名不相同？
+    1. 给数据库中的列名起别名
+        将所有查询的数据字段的名称别名改为实体类对应的属性名称
+        书写更为复杂，但是查询到的数据在数据库端被处理，效率更高
+    select id as uesrId,username as userName, address as userAddress, sex as userSex,birthday as userBirthday from user;
+
+    2. 使用resultMap进行字段对应</code></pre><blockquote>
+<pre><code>&lt;!-- 配置 查询结果的列名和属性名一致 --&gt;
+&lt;resultMap id=&quot;userMap&quot; type=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
+    &lt;!-- 主键字段的一致 --&gt;
+    &lt;id property=&quot;userId&quot; column=&quot;id&quot;/&gt;
+    &lt;!-- 非主键字段的一致 --&gt;
+    &lt;result property=&quot;userName&quot; column=&quot;username&quot;&gt;&lt;/result&gt;
+    &lt;result property=&quot;userAddress&quot; column=&quot;address&quot;&gt;&lt;/result&gt;
+    &lt;result property=&quot;userSex&quot; column=&quot;sex&quot;&gt;&lt;/result&gt;
+    &lt;result property=&quot;userBirthday&quot; column=&quot;birthday&quot;&gt;&lt;/result&gt;
+&lt;/resultMap&gt;
+
+&lt;!--select id as uesrId,username as userName, address as userAddress, sex as userSex,birthday as userBirthday from user;--&gt;
+&lt;select id=&quot;finaAll&quot; resultMap=&quot;userMap&quot;&gt;
+    select * from user;
+&lt;/select&gt;</code></pre></blockquote>
+<pre><code>resultMap中的id为映射标记，返回值必须更改为resultMap=&quot;userMap&quot;，进行绑定
+id 数据库中的主键字段数据绑定
+result 非主键字段的数据绑定
+property 实体类中的属性名称
+column 数据库中的字段名称
+
+    3. 两种方法的不同    
+        直接使用别名，运行效率更高，但编写效率较低
+        使用resultMap，运行效率低，但是编写效率高</code></pre><h3 id="MyBatis实现DAO开发"><a href="#MyBatis实现DAO开发" class="headerlink" title="MyBatis实现DAO开发"></a>MyBatis实现DAO开发</h3><h4 id="使用Dao的实现类"><a href="#使用Dao的实现类" class="headerlink" title="使用Dao的实现类"></a>使用Dao的实现类</h4><pre><code>1. 创建IUserDaoImpl.java
+2. 在实现类中实现方法
+    创建Sqlsession对象，在方法中调用相应的查询语句</code></pre><blockquote>
+<pre><code>@Override
+public List&lt;UserfinaAll() {
+    //生成SqlSession对象
+    SqlSession session = factory.openSession();
+    //调用session的selectList方法，实现查询列表
+    List&lt;Userusers = session.selectList(&quot;com.mybatis_base_04_DAO.dao.IUserDao.finaAll&quot;);
+    //方法中的参数 能获取到信息的key namespace + methodName
+    //释放资源
+    session.close();
+    return users;
+}    </code></pre></blockquote>
+<pre><code>* MyBatis实际上使用代理Dao的方式，将创建Dao实现类的过程给隐藏，用户无法感知到创建Dao实现类的过程。
+* 自己使用Dao实现类实际上就是创建SqlSession对象，通过调用session.selectList()方法查询数据。
+* 方法中的参数：（namaspace+methodName , 外部传入的参数）</code></pre><h3 id="执行过程分析"><a href="#执行过程分析" class="headerlink" title="执行过程分析"></a>执行过程分析</h3><h4 id="dao实现类的执行过程分析"><a href="#dao实现类的执行过程分析" class="headerlink" title="dao实现类的执行过程分析"></a>dao实现类的执行过程分析</h4><pre><code>1. selectList
+
+
+2. insert update delete
+    insert update delete最终调用的都是update方法
+
+3. selectOne
+    selectOne内部调用selectList方法，返回值为列表的第一个元素</code></pre><h4 id="代理Dao实现类的执行过程分析"><a href="#代理Dao实现类的执行过程分析" class="headerlink" title="代理Dao实现类的执行过程分析"></a>代理Dao实现类的执行过程分析</h4><h3 id="SqlMapConfig-xml中的标签属性"><a href="#SqlMapConfig-xml中的标签属性" class="headerlink" title="SqlMapConfig.xml中的标签属性"></a>SqlMapConfig.xml中的标签属性</h3><pre><code>1. &lt;properties&gt;标签
+    * 配置properties 可以在标签内部配置数据库的连接信息，也可以引用外部配置文件信息
+    * 使用&lt;properties&gt;标签，在环境的数据源中的对应数据使用 ${名称} 可以引用
+
+    resource属性：
+          用于指定配置文件的位置，按照类路径的写法来写，必须存放于类路径下
+
+    url属性：
+          要求按照url的写法来书写地址
+          url Uniform Resource Locator 统一资源定位符
+          写法：
+            http://localhost:8080/mybatisserver/demo1Serelet
+            协议 主机 端口 URI
+           URI Uniform Resource Identifier 统一资源标识符 应用中唯一定位的资源</code></pre><blockquote>
+<pre><code>&lt;properties url=&quot;file:///D:/2017217796/java_program/MyCode/mybatis_base_04_crud/src/main/resources/jdbcConfig.properties&quot;&gt;
+
+&lt;/properties&gt;
+
+&lt;!--mysql的连接信息--&gt;
+&lt;property name=&quot;driver&quot; value=&quot;${jdbc.driver}&quot;/&gt;
+&lt;property name=&quot;url&quot; value=&quot;${jdbc.url}&quot;/&gt;
+&lt;property name=&quot;username&quot; value=&quot;${jdbc.username}&quot;/&gt;
+&lt;property name=&quot;password&quot; value=&quot;${jdbc.password}&quot;/&gt;        </code></pre></blockquote>
+<pre><code>2. &lt;typeAliases&gt;标签
+    1). &lt;typeAlias&gt;标签
+        * typeAlias配置别名，只能配置domain中的实体类
+        * type指定全限定属性名 alias指定别名 不在区分大小写</code></pre><blockquote>
+<pre><code>&lt;typeAlias type=&quot;com.mybatis_base_04_crud.domain.User&quot; alias=&quot;user&quot;&gt;&lt;/typeAlias&gt;</code></pre></blockquote>
+<pre><code>2). &lt;package&gt;标签
+    * 用于指定要配置别名的包，当指定后，该包中的所有实体类都会被注册别名，且类名就是别名，不再区分大小写</code></pre><blockquote>
+<pre><code>&lt;package name=&quot;com.mybatis_base_04_crud.domain&quot;/&gt;</code></pre></blockquote>
+<pre><code>3. &lt;mappers&gt;标签
+    * package指定接口所在的包，一但指定，就不需要写resource和class以及mapper</code></pre><blockquote>
+<pre><code>&lt;package name=&quot;com.mybatis_base_04_crud.dao&quot;/&gt;</code></pre></blockquote>
+]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>七牛云_Hexo</title>
+    <url>/2020/05/12/%E4%B8%83%E7%89%9B%E4%BA%91-Hexo/</url>
+    <content><![CDATA[<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h2><pre><code>1. 注册七牛云,完成之后就可以进行创建空间，
+2. 注意我们添加的资源为对象存储，访问控制为公开空间
+3. 点击右上角进入密钥管理，复制当前使用的AK和SK，配置的时候会用得到</code></pre><h2 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2. 步骤"></a>2. 步骤</h2><h3 id="2-1-安装插件，进入Hexo主目录，执行："><a href="#2-1-安装插件，进入Hexo主目录，执行：" class="headerlink" title="2.1. 安装插件，进入Hexo主目录，执行："></a>2.1. 安装插件，进入Hexo主目录，执行：</h3><pre><code>`npm install hexo-qiniu-sync --save`</code></pre><h3 id="2-2-配置站点文件-config-yml"><a href="#2-2-配置站点文件-config-yml" class="headerlink" title="2.2. 配置站点文件_config.yml:"></a>2.2. 配置站点文件_config.yml:</h3><blockquote>
+<p>  #plugins:<br>      #- hexo-qiniu-sync<br>    qiniu:<br>      offline: false<br>      sync: true<br>      bucket: bucket_name<br>      access_key: AccessKey<br>      secret_key: SecretKey<br>      dirPrefix:<br>      urlPrefix: <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a><br>      local_dir: cdn<br>      update_exist: true<br>      image:<br>        folder: images<br>        extend:<br>      js:<br>        folder: js<br>      css:<br>        folder: css</p>
+</blockquote>
+<h3 id="2-3-参数"><a href="#2-3-参数" class="headerlink" title="2.3. 参数"></a>2.3. 参数</h3><ul>
+<li><p>bucket ：修改为你刚才申请的七牛空间名称</p>
+</li>
+<li><p>access_key 、 secret_key : 上传密钥AccessKey、SecretKey。即3 第3步复制的AK和SK。</p>
+</li>
+<li><p>urlPrefix : 七牛空间地址的前缀。 重要！必填！ 因为现在七牛已经取消了二级域名，外链前缀类似设置中的 <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a> ，插件不能根据 bucket 自动生成外链前缀了。你可以进入自己创建的空间在域名设置中看到自己的七牛测试域名，也可以查看一个已上传的文件外链地址，确认前缀无误。这个参数的设置是保证解析成网页文件时，外链地址正确的关键之一！<br>  配置参数的说明：</p>
+</li>
+<li><p>offline ：是否离线。设置为 true 将在本地预览时使用本地地址渲染，省流量； false 将使用同步到七牛空间的静态资源渲染，方便检查资源链接是否正确。</p>
+</li>
+<li><p>sync ：是否同步到七牛，一般都是设置 true 啦</p>
+</li>
+<li><p>dirPrefix ：资源将上传到七牛空间的此目录下，可像我一样设置为空。该参数会影响外链的地址，如果设置为非空值，例如默认值 static ，则 urlPrefix 为保持一致需加上目录后缀 /static ，改为 <a href="http://7xqb0u.com1.z0.glb.clouddn.com/static" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com/static</a> 。</p>
+</li>
+<li><p>local_dir ：本地资源储存目录。在本例中，待上传的资源都储存在hexo主目录中的 cdn 文件夹（也就是与 source 目录平级）中。</p>
+</li>
+<li><p>update_exist ：设置为 true ，则会在文件更新之后重新上传并更新七牛空间上中的原有文件。</p>
+</li>
+<li><p>image/js/css ：子参数folder为不同静态资源种类的目录名称，一般不需要改动</p>
+</li>
+<li><p>image.extend ：使用 qnimg 标签引用图片的默认图片处理操作。可以使用 基本图片处理（imageView2）、高级图片处理（imageMogr2）、图片水印处理（watermark） 这三个图片处理接口，多个接口内容之间用 | 间隔。详见 七牛开发者中心-图片处理。</p>
+</li>
+</ul>
+<h2 id="3-使用"><a href="#3-使用" class="headerlink" title="3. 使用"></a>3. 使用</h2><pre><code>1.将图片上传到七牛云，查看照片获取照片的外链
+2.在文章中引用照片外链，markdown格式:*![描述]（外链）*</code></pre><h2 id="4-感谢在使用七牛云时参考的大佬博客："><a href="#4-感谢在使用七牛云时参考的大佬博客：" class="headerlink" title="4. 感谢在使用七牛云时参考的大佬博客："></a>4. 感谢在使用七牛云时参考的大佬博客：</h2><ul>
+<li><a href="http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/" target="_blank" rel="noopener">http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/</a></li>
+</ul>
+]]></content>
       <tags>
         <tag>Hexo</tag>
       </tags>
@@ -309,338 +691,5 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
     * execute()
     * executeUpdate();
     * executeQuery();        </code></pre>]]></content>
-  </entry>
-  <entry>
-    <title>Spring下载</title>
-    <url>/2020/05/09/Spring%E4%B8%8B%E8%BD%BD/</url>
-    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt=""></p>
-<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt=""></p>
-<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt=""></p>
-<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt=""></p>
-<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt=""><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt=""></p>
-<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt=""></p>
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MyBatis</title>
-    <url>/2020/05/15/mybatis/</url>
-    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><pre><code>1. 什么是框架（Framework）？
-    系统中可重用的代码部分，包括一组构件以及构件之间的交互逻辑
-    软件开发中的一种解决方案，不同的框架解决不同的问题
-    框架封装了很多技术细节，使用者可以方便实现功能，提高开发效率
-
-2. 三层架构
-    * 表现层：
-        展示数据
-    * 业务层：
-        处理业务需求
-    * 持久层：
-        数据库交互
-
-3. 持久层技术解决问题和方案
-    1. 问题
-        数据库的连接和访问，数据查询效率，操作繁琐，不能将注意力聚焦到SQL处理上
-        JDBC,Spring JDBCTemplate，传统的数据库连接方法，一组解决数据库连接的规范
-
-    2. MyBatis概述
-        * 基于Java的持久层框架
-        * 内部封装了jdbc的细节,使用者只需要关注SQL语句，不用关心加载驱动，数据库连接，Statement对象等过程
-        * 使用ORM(Object Relation Mapping)思想实现了结果集的封装
-            PS: ORM
-                数据库表和实体类以及实体类的属性对应起来，可以操作实体类实现操作数据表
-                    user表        User类
-                    id          userId</code></pre><h1 id="MyBatis"><a href="#MyBatis" class="headerlink" title="MyBatis"></a>MyBatis</h1><h2 id="1-MyBatis入门"><a href="#1-MyBatis入门" class="headerlink" title="1. MyBatis入门"></a>1. MyBatis入门</h2><pre><code>1. 环境搭建
-    1. new --&gt; project --&gt; maven 设置名称，导入坐标pom.xml
-    2. 创建实体类和Dao的接口:Dao(data access object 数据访问对象)
-    3. 创建mybatis的主配置文件
-        * SqlMapConfig.xml ：&lt;property &gt; 标签名称需要匹配，ps:username 不是 user
-    4. 创建映射配置文件
-        * UserDao.xml :&lt;mapper namespace=&quot;UserDao的路径&quot;&gt;
-
-    注意事项：
-        1. 创建UserDao.xml UserDao.java，mybatis中将持久层的操作接口名称和映射文件也叫做：Mapper
-            UserDao 和 UserMapper相同
-        2. 在idea创建目录时，和包的创建不同
-            包在创建时，com.mybatis_base_01.dao 三层结构
-            目录：com.mybatis_base_01.dao 一级目录
-        3. 映射配置文件位置必须和dao接口的包结构相同
-        4. 映射配置文件的mapper标签的namespace属性取值为dao接口的全限定类名
-        5. 映射配置文件的操作设置，id取值必须时dao接口的方法名
-
-        在实现3，4，5后，dao的实现类由mybatis实现
-
-2. 使用案例
-    1. 配置文件
-        * InputStream in = Resources.getResourceAsStream(&quot;SqlMapConfig.xml&quot;);
-    2. 创建SqlSessionFactory对象
-        * SqlSessionFacotryBulider builder = new SqlSessionFacotryBuilder();
-        * SqlSessionFacotry facotry = builder.build(in);
-    3. 创建SqlSession对象
-        * SqlSession session = facotry.openSession();
-    4. 创建UserDao代理对象
-        * UserDao userDao = session.getMapper(UserDao.class);
-    5. 使用UserDao代理对象执行操作
-        * List&lt;User&gt; userDao = userDao.findAll();
-    6. 释放资源
-        * session.close();
-        * in.close();
-
-3. 简单分析
-    1. 配置文件
-        Resources.getResourceAsStream(&quot;SqlMapConfig.xml&quot;); 
-        * 使用类加载器，只能读取类路径的配置文件
-        * 使用ServletContext对象的getRealPath()
-
-    2. 创建SqlSessionFactory工厂
-        * 使用了创建者模式：SqlSessionFacotryBuilder builder 构造者 builder.build(in) 建立工厂
-        * 使用了工厂模式：SqlSessionFactory 降低类之间的依赖关系
-
-    3. 创建SqlSeccion对象
-    4. 创建接口实现类
-
-4. 使用注解开发MyBatis
-    1. 将UserDao.xml移除，在Dao接口的方法上使用@Select()注解，并且指定sql语句
-    2. 在SqlMapConfig.xml中的Mapper配置时，使用class属性指定Dao接口的全限定类名
-
-5. 自定义MyBatis分析
-    Mybatis在使用代理Dao对象实现增删改查做了什么事？
-        1. 创建代理对象
-        2. 调用selectList()方法</code></pre><blockquote>
-<pre><code>&lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
-&lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis_test&quot;/&gt;
-&lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;
-&lt;property name=&quot;password&quot; value=&quot;root2019&quot;/&gt;</code></pre></blockquote>
-<pre><code>连接数据库的语句，可以产生Connnection对象</code></pre><blockquote>
-<mappers>
-<mapper resource="com/mybatis_base_03/dao/UserDao.xml"/>
-</mappers>
-</blockquote>
-<blockquote>
-<pre><code>&lt;mapper namespace=&quot;com.mybatis_base_03.dao.UserDao&quot;&gt; 
-&lt;!--配置查询所有--&gt;
-&lt;select id=&quot;findAll&quot; resultType=&quot;com.mybatis_base_03.domain.User&quot;&gt;
-   select * from user
-&lt;/select&gt;</code></pre></blockquote>
-<pre><code>映射配置信息 -&gt; 全限定类名，以及执行的SQL语句。
-解析.xml配置文件 -&gt; 有了上面的三个信息
-    1. 根据配置数据库的语句，可以创建Connection对象
-        注册驱动，创建连接对象
-    2. 获取预处理对象PreparedStatement
-        获取SQL语句
-    3. 对结果进行封装
-        根据实体类的全限定类名</code></pre><h3 id=""><a href="#" class="headerlink" title=""></a></h3><pre><code>6.自定义MyBatis中涉及的实体类和接口
-    1. class Resources
-    2. class SqlSessionBuilder
-    3. interface SqlSessionfacotry
-    4. interface SqlSession
-    这个过程完成了两件事：
-        创建接口代理对象，
-        实现查询语句
-
-MyBatis将JDBC的功能进行封装，形成功能调用。SqlMapConfig.xml,daoInterfaceClass.xml里面包含对数据库的连接与查询的语句以及返回的结果类型。
-
-SqlMapConfig.xml中的&lt;property&gt;标签包含数据库的连接对象，&lt;mappers/mapper&gt;包含接口的文件位置。
-daoInterfaceClass.xml包含数据库语句，返回数据类的全限定类名，以及方法的namespace(根据查查询语句以及namespace确定方法的唯一性)。
-
-根据这两个配置文件，可以通过对.xml文件的解析，获取相应的配置文件信息，由此构建代理对象，g根据返回数据的类型获取数据，实现整个的查询过程。</code></pre><h2 id="MyBatis的CRUD"><a href="#MyBatis的CRUD" class="headerlink" title="MyBatis的CRUD"></a>MyBatis的CRUD</h2><h3 id="MyBatis的配置文件"><a href="#MyBatis的配置文件" class="headerlink" title="MyBatis的配置文件"></a>MyBatis的配置文件</h3><pre><code>1. pom.xml的配置信息
-    * 坐标的导入
-        1.mybatis的坐标导入
-        2.mysql的驱动坐标导入
-        3.log4j的坐标导入
-            log4j.properties配置文件放在资源目录下
-        4.junit单元测试的坐标导入
-
-2. SqlMapConfig.xml的配置
-    1. &lt;environments&gt;:配置数据库
-        1. 数据库连接
-        2. 数据库的事务类型
-        3. 数据库的数据源
-        4. 数据库的连接（driver url username password）</code></pre><blockquote>
-<pre><code>&lt;!--配置环境--&gt;
-&lt;environments default=&quot;mysql&quot;&gt;
- &lt;!--配置mysql的环境--&gt;
- &lt;environment id=&quot;mysql&quot;&gt;
-  &lt;!--配置事务--&gt;
-  &lt;transactionManager type=&quot;JDBC&quot;&gt;&lt;/transactionManager&gt;
-  &lt;!--配置连接池--&gt;
-  &lt;dataSource type=&quot;POOLED&quot;&gt;
-    &lt;!--mysql的连接信息--&gt;
-    &lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
-    &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis_test&quot;/&gt;
-    &lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;
-    &lt;property name=&quot;password&quot; value=&quot;root2019&quot;/&gt;
-  &lt;/dataSource&gt;
- &lt;/environment&gt;
-&lt;/environments&gt;</code></pre></blockquote>
-<pre><code>2. &lt;mappers&gt;:配置dao的数据接口
-    1. recource:表示配置方式为.xml
-    2. class:表示配置方式为注解
-    &lt;!--配置映射文件的位置--&gt;</code></pre><blockquote>
-<pre><code>&lt;mappers&gt;
-    &lt;mapper resource=&quot;com/mybatis_base_04_crud/dao/IUserDao.xml&quot;&gt;&lt;/mapper&gt;
-  &lt;/mappers&gt;</code></pre></blockquote>
-<pre><code>3. DaoInterface.xml
-    1.&lt;mapper&gt;中的namespase 与 &lt;select&gt;中的id构成方法的唯一标识
-    2.&lt;select&gt;中的文本内容为要执行的语句
-    3.&lt;select&gt;中的 resultType 返回值类型</code></pre><blockquote>
-<pre><code>&lt;!--namespace 接口--&gt;
-&lt;mapper namespace=&quot;com.mybatis_base_04_crud.dao.IUserDao&quot;&gt;
-
- &lt;select id=&quot;finaAll&quot; resultType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
-       select * from user
-  &lt;/select&gt;
-&lt;/mapper&gt;</code></pre></blockquote>
-<h3 id="MyBatis的CRUD-1"><a href="#MyBatis的CRUD-1" class="headerlink" title="MyBatis的CRUD"></a>MyBatis的CRUD</h3><h4 id="保存数据-Insert"><a href="#保存数据-Insert" class="headerlink" title="保存数据(Insert)"></a>保存数据(Insert)</h4><pre><code>1. Dao接口的方法
-    在IUserDao.java中添加saveUser方法
-2. daoInterace.xml中的配置
-    在&lt;mapper&gt;中增加&lt;insert&gt;标签，选择参数化类型，对于数据填充，采用#{}方式</code></pre><blockquote>
-<pre><code>&lt;!-- 保存用户 --&gt;
-  &lt;!--参数类型 parameterType--&gt;
-  &lt;insert id=&quot;saveUser&quot; parameterType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
-        insert into user(username,address,sex,birthday) value(#{username},#{address},#{sex},#{birthday})
- &lt;/insert&gt;
-实体类的属性定义与数据库中的列名一致,setter和getter方法自动生成，可以直接使用属性名称来传递参数，否则可以使用.getUsername()来传递参数。    </code></pre></blockquote>
-<pre><code>3. 调用方法
-    在生成数据库的代理对象后，直接调用save方法就可以        
-
-4. 注意事项
-    在使用方法后，需要对数据进行提交，默认自动提交关闭，需要手动打开自动提交
-    session.commit();</code></pre><h5 id="保存数据的同时返回id"><a href="#保存数据的同时返回id" class="headerlink" title="保存数据的同时返回id"></a>保存数据的同时返回id</h5><pre><code>1.daoInterface.xml
-    在原本的&lt;insert&gt;标签内，增加&lt;selectKey&gt;标签</code></pre><blockquote>
-<pre><code>&lt;selectKey keyProperty=&quot;id&quot; keyColumn=&quot;id&quot; resultType=&quot;int&quot; order=&quot;AFTER&quot;&gt;
-  select last_insert_id();
-&lt;/selectKey&gt;
-在执行结束之后，会将id返回到user的id属性之中
-keyProperty=&quot;id&quot; 实体类的属性
-keyColumn=&quot;id&quot; 数据表中的列名</code></pre></blockquote>
-<h4 id="更新数据-Update"><a href="#更新数据-Update" class="headerlink" title="更新数据(Update)"></a>更新数据(Update)</h4><pre><code>1. Dao接口的方法
-    void saveUser(User user);
-2. daoInterace.xml</code></pre><blockquote>
-<pre><code>&lt;!-- 更新 --&gt;
-  &lt;update id=&quot;updateUser&quot; parameterType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
-    update user set username = #{username},address=#{address},sex=#{sex},birthday=#{birthday} where id=#{id}
-  &lt;/update&gt;</code></pre></blockquote>
-<h4 id="删除数据-Delete"><a href="#删除数据-Delete" class="headerlink" title="删除数据(Delete)"></a>删除数据(Delete)</h4><pre><code>1. Dao接口的方法
-    void deleteUser(Integer userId);
-2. daoInterface.xml</code></pre><blockquote>
-<pre><code>&lt;!-- 删除数据 --&gt;
-  &lt;delete id=&quot;deleteUser&quot; parameterType=&quot;java.lang.Integer&quot;&gt;
-    delete from user where id=#{uid}
-  &lt;/delete&gt;</code></pre></blockquote>
-<pre><code>3. 注意事项
-    删除数据中只有一个元素，#{}中的元素只是起到一个占位符的作用，与名称无关</code></pre><h4 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h4><h5 id="根据用户id"><a href="#根据用户id" class="headerlink" title="根据用户id"></a>根据用户id</h5><pre><code>1. dao接口的方法
-    User finaById(Integer id);
-2. daoInterface.xml
-    需要传入参数，以及返回值类型</code></pre><blockquote>
-<pre><code>   &lt;!-- 根据id查询一个 --&gt;
-&lt;select id=&quot;findById&quot; parameterType=&quot;Integer&quot; resultType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
-   select * from user where id=#{id}
-&lt;/select&gt;</code></pre></blockquote>
-<h5 id="根据用户name"><a href="#根据用户name" class="headerlink" title="根据用户name"></a>根据用户name</h5><pre><code>1. dao接口的方法
-    List&lt;User&gt; findByName(String name);
-2. daoInterface.xml</code></pre><blockquote>
-<pre><code>&lt;!-- 根据名称模糊查询 --&gt;
-&lt;select id=&quot;findByName&quot; parameterType=&quot;string&quot; resultType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
- select * from user where username like #{name}</code></pre>  </select>
-</blockquote>
-<pre><code>3. 注意事项
-    &apos;#{}中没有模糊查询的 “-” “%” 在调用传参数时，需要给出“%王%”,查询语句为预处理SQL语句
-    &apos;%${value}%&apos;,参数为“王”，查询语句为拼接字符串</code></pre><h3 id="MyBatis中的参数-parameterType"><a href="#MyBatis中的参数-parameterType" class="headerlink" title="MyBatis中的参数(parameterType)"></a>MyBatis中的参数(parameterType)</h3><h4 id="参数的类型-parameterType"><a href="#参数的类型-parameterType" class="headerlink" title="参数的类型(parameterType)"></a>参数的类型(parameterType)</h4><pre><code>1. 简单数据类型
-
-
-2. 传递pojo对象
-    OGNL表达式：</code></pre><p><em>Object Graphic Navigation Language</em><br>        (对象图形导航语言)</p>
-<pre><code>    通过对象的取值方法来获取数据，在写法上，将get给忽略了
-    比如：获取用户的名称
-        类中的写法：user.getUsername()
-        OGNL表达式：user.username()
-    mybatis中可以直接使用username,不用书写user.
-        因为在parameterType中已经提供属性所在的类
-
-3. 传递pojo包装对象
-    参数为被封装的数据，查询条件是综合的查询条件</code></pre><blockquote>
-<pre><code>&lt;!-- 根据queryVo查询数据 --&gt;
-&lt;select id=&quot;findByQueryVo&quot; parameterType=&quot;com.mybatis_base_04_crud.domain.QueryVo&quot; resultType=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
-  select * from user where username like #{user.username}
-&lt;/select&gt;</code></pre></blockquote>
-<pre><code>QueryVo内部封装user对象，在参数传递时#{}，中的参数为 QueryVo.user.username,可以写为 user.username,代表参数为QueryVo中数据对象user中的属性username</code></pre><h4 id="结果集的封装-resultType"><a href="#结果集的封装-resultType" class="headerlink" title="结果集的封装(resultType)"></a>结果集的封装(resultType)</h4><pre><code>实体类的属性名与数据库的列名不相同？
-    1. 给数据库中的列名起别名
-        将所有查询的数据字段的名称别名改为实体类对应的属性名称
-        书写更为复杂，但是查询到的数据在数据库端被处理，效率更高
-    select id as uesrId,username as userName, address as userAddress, sex as userSex,birthday as userBirthday from user;
-
-    2. 使用resultMap进行字段对应</code></pre><blockquote>
-<pre><code>&lt;!-- 配置 查询结果的列名和属性名一致 --&gt;
-&lt;resultMap id=&quot;userMap&quot; type=&quot;com.mybatis_base_04_crud.domain.User&quot;&gt;
-    &lt;!-- 主键字段的一致 --&gt;
-    &lt;id property=&quot;userId&quot; column=&quot;id&quot;/&gt;
-    &lt;!-- 非主键字段的一致 --&gt;
-    &lt;result property=&quot;userName&quot; column=&quot;username&quot;&gt;&lt;/result&gt;
-    &lt;result property=&quot;userAddress&quot; column=&quot;address&quot;&gt;&lt;/result&gt;
-    &lt;result property=&quot;userSex&quot; column=&quot;sex&quot;&gt;&lt;/result&gt;
-    &lt;result property=&quot;userBirthday&quot; column=&quot;birthday&quot;&gt;&lt;/result&gt;
-&lt;/resultMap&gt;
-
-&lt;!--select id as uesrId,username as userName, address as userAddress, sex as userSex,birthday as userBirthday from user;--&gt;
-&lt;select id=&quot;finaAll&quot; resultMap=&quot;userMap&quot;&gt;
-    select * from user;
-&lt;/select&gt;</code></pre></blockquote>
-<pre><code>resultMap中的id为映射标记，返回值必须更改为resultMap=&quot;userMap&quot;，进行绑定
-id 数据库中的主键字段数据绑定
-result 非主键字段的数据绑定
-property 实体类中的属性名称
-column 数据库中的字段名称
-
-    3. 两种方法的不同    
-        直接使用别名，运行效率更高，但编写效率较低
-        使用resultMap，运行效率低，但是编写效率高</code></pre>]]></content>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>七牛云_Hexo</title>
-    <url>/2020/05/12/%E4%B8%83%E7%89%9B%E4%BA%91-Hexo/</url>
-    <content><![CDATA[<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h2><pre><code>1. 注册七牛云,完成之后就可以进行创建空间，
-2. 注意我们添加的资源为对象存储，访问控制为公开空间
-3. 点击右上角进入密钥管理，复制当前使用的AK和SK，配置的时候会用得到</code></pre><h2 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2. 步骤"></a>2. 步骤</h2><h3 id="2-1-安装插件，进入Hexo主目录，执行："><a href="#2-1-安装插件，进入Hexo主目录，执行：" class="headerlink" title="2.1. 安装插件，进入Hexo主目录，执行："></a>2.1. 安装插件，进入Hexo主目录，执行：</h3><pre><code>`npm install hexo-qiniu-sync --save`</code></pre><h3 id="2-2-配置站点文件-config-yml"><a href="#2-2-配置站点文件-config-yml" class="headerlink" title="2.2. 配置站点文件_config.yml:"></a>2.2. 配置站点文件_config.yml:</h3><blockquote>
-<p>  #plugins:<br>      #- hexo-qiniu-sync<br>    qiniu:<br>      offline: false<br>      sync: true<br>      bucket: bucket_name<br>      access_key: AccessKey<br>      secret_key: SecretKey<br>      dirPrefix:<br>      urlPrefix: <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a><br>      local_dir: cdn<br>      update_exist: true<br>      image:<br>        folder: images<br>        extend:<br>      js:<br>        folder: js<br>      css:<br>        folder: css</p>
-</blockquote>
-<h3 id="2-3-参数"><a href="#2-3-参数" class="headerlink" title="2.3. 参数"></a>2.3. 参数</h3><ul>
-<li><p>bucket ：修改为你刚才申请的七牛空间名称</p>
-</li>
-<li><p>access_key 、 secret_key : 上传密钥AccessKey、SecretKey。即3 第3步复制的AK和SK。</p>
-</li>
-<li><p>urlPrefix : 七牛空间地址的前缀。 重要！必填！ 因为现在七牛已经取消了二级域名，外链前缀类似设置中的 <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a> ，插件不能根据 bucket 自动生成外链前缀了。你可以进入自己创建的空间在域名设置中看到自己的七牛测试域名，也可以查看一个已上传的文件外链地址，确认前缀无误。这个参数的设置是保证解析成网页文件时，外链地址正确的关键之一！<br>  配置参数的说明：</p>
-</li>
-<li><p>offline ：是否离线。设置为 true 将在本地预览时使用本地地址渲染，省流量； false 将使用同步到七牛空间的静态资源渲染，方便检查资源链接是否正确。</p>
-</li>
-<li><p>sync ：是否同步到七牛，一般都是设置 true 啦</p>
-</li>
-<li><p>dirPrefix ：资源将上传到七牛空间的此目录下，可像我一样设置为空。该参数会影响外链的地址，如果设置为非空值，例如默认值 static ，则 urlPrefix 为保持一致需加上目录后缀 /static ，改为 <a href="http://7xqb0u.com1.z0.glb.clouddn.com/static" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com/static</a> 。</p>
-</li>
-<li><p>local_dir ：本地资源储存目录。在本例中，待上传的资源都储存在hexo主目录中的 cdn 文件夹（也就是与 source 目录平级）中。</p>
-</li>
-<li><p>update_exist ：设置为 true ，则会在文件更新之后重新上传并更新七牛空间上中的原有文件。</p>
-</li>
-<li><p>image/js/css ：子参数folder为不同静态资源种类的目录名称，一般不需要改动</p>
-</li>
-<li><p>image.extend ：使用 qnimg 标签引用图片的默认图片处理操作。可以使用 基本图片处理（imageView2）、高级图片处理（imageMogr2）、图片水印处理（watermark） 这三个图片处理接口，多个接口内容之间用 | 间隔。详见 七牛开发者中心-图片处理。</p>
-</li>
-</ul>
-<h2 id="3-使用"><a href="#3-使用" class="headerlink" title="3. 使用"></a>3. 使用</h2><pre><code>1.将图片上传到七牛云，查看照片获取照片的外链
-2.在文章中引用照片外链，markdown格式:*![描述]（外链）*</code></pre><h2 id="4-感谢在使用七牛云时参考的大佬博客："><a href="#4-感谢在使用七牛云时参考的大佬博客：" class="headerlink" title="4. 感谢在使用七牛云时参考的大佬博客："></a>4. 感谢在使用七牛云时参考的大佬博客：</h2><ul>
-<li><a href="http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/" target="_blank" rel="noopener">http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
   </entry>
 </search>
