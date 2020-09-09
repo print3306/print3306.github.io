@@ -87,8 +87,19 @@
 <meta property="og:site_name" content="浊酒一杯的博客">
 <meta property="og:description" content="概述1. 什么是框架（Framework）？     系统中可重用的代码部分，包括一组构件以及构件之间的交互逻辑     软件开发中的一种解决方案，不同的框架解决不同的问题     框架封装了很多技术细节，使用者可以方便实现功能，提高开发效率  2. 三层架构     * 表现层：         展示数据     * 业务层：         处理业务需求     * 持久层：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-05T13:14:11.907Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;05&#x2F;15&#x2F;mybatis&#x2F;datasource_0.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;05&#x2F;15&#x2F;mybatis&#x2F;pooled_datasource_1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;05&#x2F;15&#x2F;mybatis&#x2F;pooled_datasource_2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;05&#x2F;15&#x2F;mybatis&#x2F;one2manyxml.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;05&#x2F;15&#x2F;mybatis&#x2F;one2many.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;05&#x2F;15&#x2F;mybatis&#x2F;many2many.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;05&#x2F;15&#x2F;mybatis&#x2F;many2many_1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;05&#x2F;15&#x2F;mybatis&#x2F;lazyload1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;05&#x2F;15&#x2F;mybatis&#x2F;lazyload2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;05&#x2F;15&#x2F;mybatis&#x2F;anno_one2many.png">
+<meta property="og:updated_time" content="2020-09-09T09:38:24.648Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;05&#x2F;15&#x2F;mybatis&#x2F;datasource_0.png">
 
 
 
@@ -356,7 +367,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.6k
+                  7k
                 </span>
               
 
@@ -606,6 +617,9 @@ keyColumn=&quot;id&quot; 数据表中的列名</code></pre></blockquote>
     int String ...
 
 2. 传递pojo对象
+    pojo对象：
+        POJO简单理解为不包含业务逻辑的单纯用来存储数据的java类（实际就是普通JavaBean)
+
     OGNL表达式：</code></pre><p><em>Object Graphic Navigation Language</em><br>        (对象图形导航语言)</p>
 <pre><code>    通过对象的取值方法来获取数据，在写法上，将get给忽略了
     比如：获取用户的名称
@@ -707,6 +721,278 @@ public List&lt;UserfinaAll() {
 <pre><code>3. &lt;mappers&gt;标签
     * package指定接口所在的包，一但指定，就不需要写resource和class以及mapper</code></pre><blockquote>
 <pre><code>&lt;package name=&quot;com.mybatis_base_04_crud.dao&quot;/&gt;</code></pre></blockquote>
+<h2 id="MyBatis的连接池"><a href="#MyBatis的连接池" class="headerlink" title="MyBatis的连接池"></a>MyBatis的连接池</h2><h3 id="连接池的使用与分析"><a href="#连接池的使用与分析" class="headerlink" title="连接池的使用与分析"></a>连接池的使用与分析</h3><h4 id="连接池的含义"><a href="#连接池的含义" class="headerlink" title="连接池的含义"></a>连接池的含义</h4><pre><code>连接池是用于存储连接的一个容器
+容器其实就是一个集合对象，该集合必须是线程安全的，不能两个线程拿到同一个连接
+该集合必须实现队列的特性：先进先出
+
+使用连接池可以减少获取连接的时间</code></pre><h4 id="MyBatis的连接池-1"><a href="#MyBatis的连接池-1" class="headerlink" title="MyBatis的连接池"></a>MyBatis的连接池</h4><pre><code>1. SqlMqpConfig.xml中的datasource标签，type属性表示使用何种连接池方式
+    type的取值：
+        POOLED : 采用传统的javax.sql.DataSource规范的连接池
+        UNPOOLED ：采用传统的获取连接的方式，虽然也实现了javax.sql.DataSource接口，但是没有池的概念，每次使用都获取新的连接
+        JDNI ：采用服务器提供的JNDI实现，获取DataSource对象，不同的服务器拿到的对象不一样，如果不是web或者maven的war工程，不能使用
+        使用tomcat服务器，使用的连接池dbcp连接池</code></pre><blockquote>
+<pre><code>&lt;dataSource type=&quot;POOLED&quot;&gt;
+    &lt;!--mysql的连接信息--&gt;
+    &lt;property name=&quot;driver&quot; value=&quot;${jdbc.driver}&quot;/&gt;
+    &lt;property name=&quot;url&quot; value=&quot;${jdbc.url}&quot;/&gt;
+    &lt;property name=&quot;username&quot; value=&quot;${jdbc.username}&quot;/&gt;
+    &lt;property name=&quot;password&quot; value=&quot;${jdbc.password}&quot;/&gt;
+&lt;/dataSource&gt;</code></pre></blockquote>
+<p><img src="/2020/05/15/mybatis/datasource_0.png" alt="POOLED"><br><img src="/2020/05/15/mybatis/pooled_datasource_1.png" alt="POOLED"><br><img src="/2020/05/15/mybatis/pooled_datasource_2.png" alt="POOLED"></p>
+<h4 id="补充JNDI数据库连接池"><a href="#补充JNDI数据库连接池" class="headerlink" title="补充JNDI数据库连接池"></a>补充JNDI数据库连接池</h4><h4 id="MyBatis中的事务"><a href="#MyBatis中的事务" class="headerlink" title="MyBatis中的事务"></a>MyBatis中的事务</h4><pre><code>1. MyBatis通过commit以及rollback来进行事务控制
+2. 一般不设置自动提交，因为一旦多个事务提交，难以控制</code></pre><h2 id="MyBatis基于XML配置的动态SQL语句使用"><a href="#MyBatis基于XML配置的动态SQL语句使用" class="headerlink" title="MyBatis基于XML配置的动态SQL语句使用"></a>MyBatis基于XML配置的动态SQL语句使用</h2><h4 id="if-标签"><a href="#if-标签" class="headerlink" title="if 标签"></a>if 标签</h4><pre><code>* 根据条件来进行查询，此时条件可能不全，有可能缺少某些项，会根据条件具体生成查询语句
+SQL语句中的名称不区分大小写，但是查询条件需要根据实体类相关，一般来说实体类的属性名与数据库的列名相同。</code></pre><blockquote>
+<pre><code>&lt;!-- 根据条件查询 --&gt;
+&lt;select id=&quot;findUserByCondition&quot; resultMap=&quot;userMap&quot; parameterType=&quot;user&quot;&gt;
+ select * from user where 1=1
+ &lt;if test=&quot;userName != null&quot;&gt;
+   and username like #{userName}
+ &lt;/if&gt;</code></pre>   
+</blockquote>
+<pre><code>* test：判断输入的条件，如果条件满足，查询条件会包含if标签内部的语句
+* 可以多个if标签一起使用
+* 条件同时满足的时候使用 and ，可以在数据库语句中使用</code></pre><h4 id="where标签"><a href="#where标签" class="headerlink" title="where标签"></a>where标签</h4><pre><code>* 使用where标签将if标签包裹起来，在查询条件中就不用书写 where 1 = 1</code></pre><blockquote>
+<pre><code>  &lt;!-- 根据条件查询 --&gt;
+&lt;select id=&quot;findUserByCondition&quot; resultMap=&quot;userMap&quot; parameterType=&quot;user&quot;&gt;
+select * from user
+&lt;where&gt;
+  &lt;if test=&quot;userName != null&quot;&gt;
+    and username like #{userName}
+  &lt;/if&gt;
+  &lt;if test=&quot;userSex != null&quot;&gt;
+    and sex = #{userSex}
+  &lt;/if&gt;
+&lt;/where&gt;</code></pre>  
+</blockquote>
+<h4 id="foreach标签"><a href="#foreach标签" class="headerlink" title="foreach标签"></a>foreach标签</h4><blockquote>
+<pre><code>&lt;!-- 根据QueryVo中的ids进行查询，集合尽心查询列表 --&gt;
+&lt;select id=&quot;findUserInIds&quot; parameterType=&quot;queryvo&quot; resultMap=&quot;userMap&quot;&gt;
+select * from user
+&lt;where&gt;
+  &lt;if test=&quot;ids != null and ids.size() 0&quot;&gt;
+    &lt;foreach collection=&quot;ids&quot; open=&quot;and id in (&quot; close=&quot;)&quot; item=&quot;id&quot; separator=&quot;,&quot;&gt;
+      #{id}
+    &lt;/foreach&gt;
+  &lt;/if&gt;
+&lt;/where&gt;</code></pre>  
+</blockquote>
+<pre><code>* 查询满足条件的集合元素:select * from user where id in (?)
+* foreach:
+* collection:代表要遍历的集合元素
+* open:语句的开始部分
+* close:语句的结束部分
+* item:遍历的每个元素，生成的变量名
+* separtor:分割符
+
+其中&lt;foreach&gt;中的语句 #{}中的名称，需要与item一致
+
+在进行多个数据一起插入的时候，可以使用foreach进行 values()的赋值</code></pre><h4 id="sql标签"><a href="#sql标签" class="headerlink" title="sql标签"></a>sql标签</h4><pre><code>* 抽取重复的SQL语句，避免重复书写语句
+* 然后在语句中使用&lt;include&gt;来引用抽取的语句
+* 如果后面还有需要拼接的条件，不能 书写分号</code></pre><blockquote>
+<pre><code>&lt;!-- 抽取重复的语句 --&gt;
+&lt;sql id=&quot;defaultUser&quot;&gt;
+  select * from user
+&lt;/sql&gt;
+
+&lt;!--select id as uesrId,username as userName, address as userAddress, sex as userSex,birthday as userBirthday from user;--&gt;
+&lt;select id=&quot;finaAll&quot; resultMap=&quot;userMap&quot;&gt;
+  &lt;include refid=&quot;defaultUser&quot;&gt;&lt;/include&gt;
+&lt;/select&gt;</code></pre></blockquote>
+<h2 id="Mybatis的多表操作"><a href="#Mybatis的多表操作" class="headerlink" title="Mybatis的多表操作"></a>Mybatis的多表操作</h2><pre><code>表之间的关系：
+    一对一
+    多对一
+    一对多
+    多对多
+
+举例：
+    用户对于订单：一对多
+    订单对于用户：多对一
+        一个用户可能有多个订单
+        多个订单属于一个用户
+
+    一对一：
+        一个人只能有一身份证号
+        一个身份证号属于一个人
+
+    多对多：
+        一个学生被多个老师交过
+        一个老师交过多个学生
+
+在MyBatis中，认为订单与用户之间的关系，每拿出一个订单，只能属于一个用户
+所以，所有的多对一，全都为一对一
+
+案例：
+    使用用户与账户之间的关系
+        一个用户可以有多个账户
+        一个账户只能属于一个用户(多个账户也是一个用户)
+
+步骤：
+    1. 建立两张表：用户表 账户表
+        用户与账户具有关系：使用外键
+    2. 建立两个实体类：用户实体 账户实体
+    3. 建立两个配置文件
+        用户配置文件
+        账户配置文件
+    4. 实现配置
+        当查询用户时，可以出现账户信息
+        查询账户时，可以显示出对应的用户信息</code></pre><h3 id="一对一查询的结果封装《association》"><a href="#一对一查询的结果封装《association》" class="headerlink" title="一对一查询的结果封装《association》"></a>一对一查询的结果封装《association》</h3><pre><code>1. 通过书写子类来进行配置查询
+    * 建立新的结果集的封装类，将查询到的结果进行封装
+    * 每次查询不同的数据需要书写不同的字类，太过于麻烦
+
+2. 建立实体类之间的关系来进行数据封装
+    * 主表与从表之间存在联系，主表实体和从表实体之间也存在联系
+    * 从表包含主表实体的引用
+    * 据此，创建resultMap，进行结果封装
+    * 使用 association 进行一对一的结果封装</code></pre><blockquote>
+<pre><code> &lt;!-- 定义封装account和user的resultMap --&gt;
+&lt;resultMap id=&quot;accountuser&quot; type=&quot;account&quot;&gt;
+&lt;id property=&quot;id&quot; column=&quot;aid&quot;&gt;&lt;/id&gt;
+&lt;result property=&quot;uid&quot; column=&quot;uid&quot;&gt;&lt;/result&gt;
+&lt;result property=&quot;money&quot; column=&quot;money&quot;&gt;&lt;/result&gt;
+  &lt;!-- 一对一的关系映射:配置封装user的信息 --&gt;
+  &lt;association property=&quot;user&quot; column=&quot;uid&quot; javaType=&quot;user&quot;&gt;
+  &lt;id property=&quot;id&quot; column=&quot;id&quot;&gt;&lt;/id&gt;
+  &lt;result property=&quot;username&quot; column=&quot;username&quot;&gt;&lt;/result&gt;
+  &lt;result property=&quot;address&quot; column=&quot;address&quot;/&gt;
+  &lt;result property=&quot;sex&quot; column=&quot;sex&quot;/&gt;
+  &lt;result property=&quot;birthday&quot; column=&quot;birthday&quot;/&gt;
+&lt;/association&gt;</code></pre>  
+</blockquote>
+<pre><code>在association中，如果不写javaType,报错：空指针异常
+javatype:将数据封装到实体对象中</code></pre><h3 id="一对多查询"><a href="#一对多查询" class="headerlink" title="一对多查询"></a>一对多查询<collection></collection></h3><pre><code>* 一对多连接，主表的实体类需要包含从表实体类的集合引用，在配置文件中，使用collection标签来封装数据集合</code></pre><p><img src="/2020/05/15/mybatis/one2manyxml.png" alt="主体的配置文件"><br>        数据查询结果<br><img src="/2020/05/15/mybatis/one2many.png" alt="主体的配置文件"></p>
+<pre><code>* 数据查询结果显示，数据为一对多情况，MyBatis将属于同一个用户的账户，封装到了账户的集合之中</code></pre><h3 id="多对多查询"><a href="#多对多查询" class="headerlink" title="多对多查询"></a>多对多查询</h3><pre><code>示例：用户与角色之间的关系
+    一个用户可以拥有多个角色
+    一个角色可以赋予多个用户
+
+    典型的多对多
+
+    1. 建立两张表：用户表 角色表
+    2. 两者具有多对多的关系
+        建立中间表，主键为两者的联合主键，中间表中是外键
+    3. 建立两个实体类
+        让用户和角色实体类能体现出多对多的关系
+        两者分别包含对象集合引用
+    4. 建立两个配置文件
+    5. 实现配置
+        查询用户时，同时得到包含的角色信息
+        查询角色时，同时得到包含的用户信息</code></pre><p><img src="/2020/05/15/mybatis/many2many.png" alt="many2many的配置文件"><br><img src="/2020/05/15/mybatis/many2many_1.png" alt="many2many的配置文件"></p>
+<pre><code>* 一个用户包含的所有角色信息，因为要包括所有的用户，不能使用内连接，应该使用外连接，在使用user_role表的时候，有可能列名相同,需要别名，在写配置resultMap时，注意别名</code></pre><h2 id="MyBatis延迟加载"><a href="#MyBatis延迟加载" class="headerlink" title="MyBatis延迟加载"></a>MyBatis延迟加载</h2><h3 id="延迟加载"><a href="#延迟加载" class="headerlink" title="延迟加载"></a>延迟加载</h3><pre><code>在一对多的数据查询的时候，一个用户，100个账户
+    在查询用户信息的时候，要不要将账户的信息查询出来
+    在查询账户信息的时候，要不要将用户的信息查询出来
+
+    在查询账户的时侯，用户下的账户的信息应该是，什么时候使用，什么时候查询
+    在查询用户的时候，账户下的用户的信息应该是，随着账户的信息一起查询出来
+
+1. 延迟加载
+    在真正使用数据的时侯，才将数据查询出来；不使用的时候，不进行查询
+
+2. 立即加载
+    无论数据是否使用，一旦调用方法，马上进行查询
+
+3. 使用时机
+    一对一，多对一：立即加载（一般需要立刻看到信息）
+    一对多，多对多：延迟加载（一般不需要立刻看到信息）</code></pre><h4 id="实现延迟加载"><a href="#实现延迟加载" class="headerlink" title="实现延迟加载"></a>实现延迟加载</h4><pre><code>1. 在一对一的时候实现延迟加载
+    * 更改查询语句
+        在此时，不需要将所有的数据全都查询出来，只需要将所有的账户查询出来，不需要带着用户信息
+    * 修改结果集
+        由于不需要用户信息，结果集的封装可以删除
+    * 修改级联查询语句
+        在&lt;association&gt;语句中，增加select属性，指明查询的唯一标识</code></pre><blockquote>
+<pre><code>&lt;!-- 定义封装account和user的resultMap --&gt;
+&lt;resultMap id=&quot;accountuserMap&quot; type=&quot;account&quot;&gt;
+  &lt;id property=&quot;id&quot; column=&quot;id&quot;&gt;&lt;/id&gt;
+  &lt;result property=&quot;uid&quot; column=&quot;uid&quot;&gt;&lt;/result&gt;
+  &lt;result property=&quot;money&quot; column=&quot;money&quot;&gt;&lt;/result&gt;
+
+&lt;!-- 一对一的关系映射:配置封装user的信息,
+select 查询用户的唯一标识,在接口文件中，根据id查询用户的方法
+column 用户根据id查询时，所需要的参数的值，此地将查询出来的uid作为参数传入
+ --&gt;
+&lt;association property=&quot;user&quot; column=&quot;uid&quot; javaType=&quot;user&quot; select=&quot;com.mybatis_base_06_lazyload.dao.IUserDao.findById&quot;&gt;
+
+&lt;/association&gt;</code></pre>  
+</blockquote>
+<pre><code>* 修改SqlMapConfig.xml,打开延迟加载开关
+    打开延迟加载的开关，关闭立即加载的开关</code></pre><blockquote>
+<pre><code>&lt;!-- 配置参数。延迟加载 --&gt;
+&lt;settings&gt;
+  &lt;!-- 开启延迟加载的全局开关 --&gt;
+  &lt;setting name=&quot;lazyLoadingEnabled&quot; value=&quot;true&quot;/&gt;
+  &lt;!-- 立即加载 --&gt;
+  &lt;setting name=&quot;aggressiveLazyLoading&quot; value=&quot;false&quot;/&gt;
+&lt;/settings&gt;</code></pre></blockquote>
+<p><img src="/2020/05/15/mybatis/lazyload1.png" alt="一对一的延迟加载"></p>
+<pre><code>2. 什么是按需？
+    1. 在进行单独数据查询，或者是数据遍历时，才会将所有数据显示出来
+    2. 根据用户的id，或者其他的要求进行数据查询
+
+3. 一对多的数据查询    
+    与一对一的延迟加载相似,查询语句，结果集，以及账户实体类中的按照id查询</code></pre><p><img src="/2020/05/15/mybatis/lazyload2.png" alt></p>
+<h2 id="MyBatis的缓存"><a href="#MyBatis的缓存" class="headerlink" title="MyBatis的缓存"></a>MyBatis的缓存</h2><h3 id="缓存基本概念"><a href="#缓存基本概念" class="headerlink" title="缓存基本概念"></a>缓存基本概念</h3><pre><code>存在内存中的临时数据
+
+1. 为什么使用缓存？
+    减少和数据库的交互次数，提高执行效率
+
+2. 什么数据能使用缓存，什么数据不能使用？
+    1. 适用于缓存：
+        经常查询并且不经常改变的
+        数据的正确性对最终结果影响不大的
+
+    2. 不适用缓存：
+        经常改变的数据
+        数据的正确性对最终结果影响很大的
+            （商品的库存，银行的汇率，股市的股价）</code></pre><h3 id="MyBatis的缓存-1"><a href="#MyBatis的缓存-1" class="headerlink" title="MyBatis的缓存"></a>MyBatis的缓存</h3><pre><code>1. 一级缓存：
+    它是指Mybatis中的SqlSession对象的缓存
+    当我们执行查询的时候，查询的结果会同时存入到SqlSession为我们提供的一块区域内
+    该区域的结构是一个Map。当我们再次查询同样的数据，mybatis会先去SqlSession中查询是否存在，有的话，直接拿来使用
+    当SqlSession对象消失时，一级缓存同时消失
+
+    1. 缓存同步问题
+        如果调用session的insert update delete close() commit() clearcache()方法，会自动放弃当前的一级缓存，直接从数据库中查询数据
+
+2. 二级缓存
+    由MyBatis中SqlSessionFactory对象的缓存，同一个SqlSessionFactory对象创建的SqlSession对象共享其缓存。
+
+    1. 二级缓存的使用步骤
+        1. 让MyBatis支持二级缓存 SqlMapConfig.xml配置
+        2. 让当前的映射文件支持二级缓存，IUserDao.xml
+        3. 让当前的操作支持二级缓存，select标签</code></pre><h2 id="MyBatis注解开发"><a href="#MyBatis注解开发" class="headerlink" title="MyBatis注解开发"></a>MyBatis注解开发</h2><h3 id="初步使用"><a href="#初步使用" class="headerlink" title="初步使用"></a>初步使用</h3><pre><code>1. 在SqlMapConfig.xml中的mapper中，使用class,导入接口资源文件
+2. 在接口类上，使用注解进行开发
+3. 其余步骤与使用xml开发一致
+
+注意：
+    如果在与接口类的相同路径下的资源路径下，建立IUserDao.xml文件，不管有没有使用.xml文件，都会产生错误。</code></pre><h3 id="名称不一致"><a href="#名称不一致" class="headerlink" title="名称不一致"></a>名称不一致</h3><pre><code>1. 实体类名与数据库列名不一致
+    1. 使用别名，将数据库中查询出来的数据进行设置别名
+    2. 使用@Results注解，进行配置</code></pre><blockquote>
+<pre><code>/**
+ * 查询所有,获取所有的账户信息
+ */
+@Select(&quot;select * from user&quot;)
+@Results(id= &quot;userMap&quot;,value = {
+        @Result(id=true,column = &quot;id&quot;,property = &quot;userId&quot;),
+        @Result(column = &quot;username&quot;,property = &quot;userName&quot;),
+        @Result(column = &quot;address&quot;,property = &quot;userAddress&quot;),
+        @Result(column = &quot;sex&quot;,property = &quot;userSex&quot;),
+        @Result(column = &quot;birthday&quot;,property = &quot;userBirthday&quot;)
+})
+List&lt;UserfindAll();
+
+@Select(&quot;select * from user where id=#{id}&quot;)
+@ResultMap(value = {&quot;userMap&quot;})
+User findById(Integer id);</code></pre></blockquote>
+<pre><code>    * @Results中id是唯一标识，定义之后，可以在别的位置使用
+        values代表结果对应的封装数组
+
+    * @Result中，id代表是否为唯一标识，默认为false
+        column:数据库列名
+        property:实体类属性名
+
+2. 定义了@Results注解
+    想在别的地方使用，使用@resultMap注解
+            @ResultMap(value = {&quot;userMap&quot;}) //完整写法
+    values已经定义好的结果集封装</code></pre><h3 id="一对多查询注解版"><a href="#一对多查询注解版" class="headerlink" title="一对多查询注解版"></a>一对多查询注解版</h3><h4 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h4><pre><code>结果集的封装，主要关注@Result中的属性：one many
+一对一：使用one 
+一对多：使用many</code></pre><p><img src="/2020/05/15/mybatis/anno_one2many.png" alt="注解配置"></p>
 
       
     </div>
@@ -905,7 +1191,7 @@ public List&lt;UserfinaAll() {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MyBatis"><span class="nav-number">2.</span> <span class="nav-text">MyBatis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MyBatis入门"><span class="nav-number">2.1.</span> <span class="nav-text">1. MyBatis入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.1.1.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis的CRUD"><span class="nav-number">2.2.</span> <span class="nav-text">MyBatis的CRUD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis的配置文件"><span class="nav-number">2.2.1.</span> <span class="nav-text">MyBatis的配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis的数据操作"><span class="nav-number">2.2.2.</span> <span class="nav-text">MyBatis的数据操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#保存数据-Insert"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">保存数据(Insert)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#保存数据的同时返回id"><span class="nav-number">2.2.2.1.1.</span> <span class="nav-text">保存数据的同时返回id</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新数据-Update"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">更新数据(Update)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除数据-Delete"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">删除数据(Delete)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件查询"><span class="nav-number">2.2.2.4.</span> <span class="nav-text">条件查询</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#根据用户id"><span class="nav-number">2.2.2.4.1.</span> <span class="nav-text">根据用户id</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#根据用户name"><span class="nav-number">2.2.2.4.2.</span> <span class="nav-text">根据用户name</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis中的参数-parameterType"><span class="nav-number">2.2.3.</span> <span class="nav-text">MyBatis中的参数(parameterType)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数的类型-parameterType"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">参数的类型(parameterType)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结果集的封装-resultType"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">结果集的封装(resultType)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis实现DAO开发"><span class="nav-number">2.2.4.</span> <span class="nav-text">MyBatis实现DAO开发</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用Dao的实现类"><span class="nav-number">2.2.4.1.</span> <span class="nav-text">使用Dao的实现类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行过程分析"><span class="nav-number">2.2.5.</span> <span class="nav-text">执行过程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#dao实现类的执行过程分析"><span class="nav-number">2.2.5.1.</span> <span class="nav-text">dao实现类的执行过程分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代理Dao实现类的执行过程分析"><span class="nav-number">2.2.5.2.</span> <span class="nav-text">代理Dao实现类的执行过程分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SqlMapConfig-xml中的标签属性"><span class="nav-number">2.2.6.</span> <span class="nav-text">SqlMapConfig.xml中的标签属性</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MyBatis"><span class="nav-number">2.</span> <span class="nav-text">MyBatis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MyBatis入门"><span class="nav-number">2.1.</span> <span class="nav-text">1. MyBatis入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.1.1.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis的CRUD"><span class="nav-number">2.2.</span> <span class="nav-text">MyBatis的CRUD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis的配置文件"><span class="nav-number">2.2.1.</span> <span class="nav-text">MyBatis的配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis的数据操作"><span class="nav-number">2.2.2.</span> <span class="nav-text">MyBatis的数据操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#保存数据-Insert"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">保存数据(Insert)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#保存数据的同时返回id"><span class="nav-number">2.2.2.1.1.</span> <span class="nav-text">保存数据的同时返回id</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新数据-Update"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">更新数据(Update)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除数据-Delete"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">删除数据(Delete)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件查询"><span class="nav-number">2.2.2.4.</span> <span class="nav-text">条件查询</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#根据用户id"><span class="nav-number">2.2.2.4.1.</span> <span class="nav-text">根据用户id</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#根据用户name"><span class="nav-number">2.2.2.4.2.</span> <span class="nav-text">根据用户name</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis中的参数-parameterType"><span class="nav-number">2.2.3.</span> <span class="nav-text">MyBatis中的参数(parameterType)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数的类型-parameterType"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">参数的类型(parameterType)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结果集的封装-resultType"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">结果集的封装(resultType)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis实现DAO开发"><span class="nav-number">2.2.4.</span> <span class="nav-text">MyBatis实现DAO开发</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用Dao的实现类"><span class="nav-number">2.2.4.1.</span> <span class="nav-text">使用Dao的实现类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行过程分析"><span class="nav-number">2.2.5.</span> <span class="nav-text">执行过程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#dao实现类的执行过程分析"><span class="nav-number">2.2.5.1.</span> <span class="nav-text">dao实现类的执行过程分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代理Dao实现类的执行过程分析"><span class="nav-number">2.2.5.2.</span> <span class="nav-text">代理Dao实现类的执行过程分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SqlMapConfig-xml中的标签属性"><span class="nav-number">2.2.6.</span> <span class="nav-text">SqlMapConfig.xml中的标签属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis的连接池"><span class="nav-number">2.3.</span> <span class="nav-text">MyBatis的连接池</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#连接池的使用与分析"><span class="nav-number">2.3.1.</span> <span class="nav-text">连接池的使用与分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#连接池的含义"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">连接池的含义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MyBatis的连接池-1"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">MyBatis的连接池</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#补充JNDI数据库连接池"><span class="nav-number">2.3.1.3.</span> <span class="nav-text">补充JNDI数据库连接池</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MyBatis中的事务"><span class="nav-number">2.3.1.4.</span> <span class="nav-text">MyBatis中的事务</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis基于XML配置的动态SQL语句使用"><span class="nav-number">2.4.</span> <span class="nav-text">MyBatis基于XML配置的动态SQL语句使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#if-标签"><span class="nav-number">2.4.0.1.</span> <span class="nav-text">if 标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#where标签"><span class="nav-number">2.4.0.2.</span> <span class="nav-text">where标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#foreach标签"><span class="nav-number">2.4.0.3.</span> <span class="nav-text">foreach标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sql标签"><span class="nav-number">2.4.0.4.</span> <span class="nav-text">sql标签</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mybatis的多表操作"><span class="nav-number">2.5.</span> <span class="nav-text">Mybatis的多表操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一对一查询的结果封装《association》"><span class="nav-number">2.5.1.</span> <span class="nav-text">一对一查询的结果封装《association》</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一对多查询"><span class="nav-number">2.5.2.</span> <span class="nav-text">一对多查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多对多查询"><span class="nav-number">2.5.3.</span> <span class="nav-text">多对多查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis延迟加载"><span class="nav-number">2.6.</span> <span class="nav-text">MyBatis延迟加载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#延迟加载"><span class="nav-number">2.6.1.</span> <span class="nav-text">延迟加载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实现延迟加载"><span class="nav-number">2.6.1.1.</span> <span class="nav-text">实现延迟加载</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis的缓存"><span class="nav-number">2.7.</span> <span class="nav-text">MyBatis的缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存基本概念"><span class="nav-number">2.7.1.</span> <span class="nav-text">缓存基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis的缓存-1"><span class="nav-number">2.7.2.</span> <span class="nav-text">MyBatis的缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis注解开发"><span class="nav-number">2.8.</span> <span class="nav-text">MyBatis注解开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初步使用"><span class="nav-number">2.8.1.</span> <span class="nav-text">初步使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#名称不一致"><span class="nav-number">2.8.2.</span> <span class="nav-text">名称不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一对多查询注解版"><span class="nav-number">2.8.3.</span> <span class="nav-text">一对多查询注解版</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查询"><span class="nav-number">2.8.3.1.</span> <span class="nav-text">查询</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -940,7 +1226,7 @@ public List&lt;UserfinaAll() {
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">6.7k</span>
+    <span title="Site words total count">10.1k</span>
   
 </div>
 
