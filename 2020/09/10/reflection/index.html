@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="Java Reflection（java反射机制）概述1. 反射（reflection）：动态语言的关键     * 反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性和方法     * 加载完类之后，在堆内存的方法区产生一个Class对象（一个类只有一个Class对象），这个对象就包含完整的类的信息，可以通过这个Class对象看到类的">
+<meta name="description" content="概述1. 反射（reflection）：动态语言的关键     * 反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性和方法     * 加载完类之后，在堆内存的方法区产生一个Class对象（一个类只有一个Class对象），这个对象就包含完整的类的信息，可以通过这个Class对象看到类的结构，通过对象看到类的结构的过程，叫做反射  2.">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="reflection">
+<meta property="og:title" content="Java Reflection（java反射机制）">
 <meta property="og:url" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;10&#x2F;reflection&#x2F;index.html">
 <meta property="og:site_name" content="浊酒一杯的博客">
-<meta property="og:description" content="Java Reflection（java反射机制）概述1. 反射（reflection）：动态语言的关键     * 反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性和方法     * 加载完类之后，在堆内存的方法区产生一个Class对象（一个类只有一个Class对象），这个对象就包含完整的类的信息，可以通过这个Class对象看到类的">
+<meta property="og:description" content="概述1. 反射（reflection）：动态语言的关键     * 反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性和方法     * 加载完类之后，在堆内存的方法区产生一个Class对象（一个类只有一个Class对象），这个对象就包含完整的类的信息，可以通过这个Class对象看到类的结构，通过对象看到类的结构的过程，叫做反射  2.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-10T13:07:21.434Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;10&#x2F;reflection&#x2F;fields.png">
+<meta property="og:updated_time" content="2020-09-11T08:59:48.571Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;10&#x2F;reflection&#x2F;fields.png">
 
 
 
@@ -124,7 +126,7 @@
 
 
 
-  <title>reflection | 浊酒一杯的博客</title>
+  <title>Java Reflection（java反射机制） | 浊酒一杯的博客</title>
   
 
 
@@ -312,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">reflection</h1>
+          <h1 class="post-title" itemprop="name headline">Java Reflection（java反射机制）</h1>
         
 
         <div class="post-meta">
@@ -356,7 +358,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k
+                  2.3k
                 </span>
               
 
@@ -381,7 +383,7 @@
       
 
       
-        <h2 id="Java-Reflection（java反射机制）"><a href="#Java-Reflection（java反射机制）" class="headerlink" title="Java Reflection（java反射机制）"></a>Java Reflection（java反射机制）</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><pre><code>1. 反射（reflection）：动态语言的关键
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><pre><code>1. 反射（reflection）：动态语言的关键
     * 反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性和方法
     * 加载完类之后，在堆内存的方法区产生一个Class对象（一个类只有一个Class对象），这个对象就包含完整的类的信息，可以通过这个Class对象看到类的结构，通过对象看到类的结构的过程，叫做反射
 
@@ -390,6 +392,10 @@
     * 在运行时构造任意一个类的对象
     * 在运行时获取泛型的信息
     * 在运行时获取私有属性，私有方法
+    * 在运行时父类的信息，父类上的泛型
+    * 在运行时获取接口
+    * 在运行时获取所在包，注解
+    * 。。。
 
 3. 相干的API
     * java.lang.Class
@@ -462,7 +468,149 @@ System.out.println(classLoader2);</code></pre></blockquote>
 
 2. 满足两个条件
     * 运行时类必须提供空参的构造器
-    * 访问权限不能为private,通常设置为public</code></pre><h2 id="获取运行时类的完整结构"><a href="#获取运行时类的完整结构" class="headerlink" title="获取运行时类的完整结构"></a>获取运行时类的完整结构</h2><h3 id><a href="#" class="headerlink" title></a></h3>
+    * 访问权限不能为private,通常设置为public</code></pre><h2 id="获取运行时类的完整结构"><a href="#获取运行时类的完整结构" class="headerlink" title="获取运行时类的完整结构"></a>获取运行时类的完整结构</h2><h3 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h3><pre><code>修饰符 返回类型 变量名；
+
+1. 获取所有属性
+    1. 获取当前运行时类的所有属性（getDeclaredFileds）
+        * 不考虑权限问题，不会获取父类的属性</code></pre><blockquote>
+<pre><code>Field[] fields1 = clazz.getDeclaredFields();
+for(Field field:fields1){
+    System.out.println(field);
+}</code></pre></blockquote>
+<pre><code>2. 获取属性包含父类的属性（getFileds）
+    * 获取当前运行时类以及父类的所有权限为public的属性</code></pre><blockquote>
+<pre><code>Field[] fields = clazz.getFields();
+for(Field field:fields){
+    System.out.println(field);
+}        </code></pre></blockquote>
+<pre><code>2. 获取属性的修饰符,数据类型，变量名</code></pre><blockquote>
+<pre><code>Class clazz = Person.class;
+
+//获取当前运行时类的所有属性
+Field[] fields = clazz.getDeclaredFields();
+
+for(Field field:fields){
+//修饰符
+//权限被分配了 整型数据,使用Modifier的方法可以翻译为字符串
+int modifiers = field.getModifiers();
+System.out.print(Modifier.toString(modifiers)+&quot;\t&quot;);
+//数据类型
+Class&lt;?type = field.getType();
+System.out.print(type.getName()+&quot;\t&quot;);
+//属性名
+System.out.println(field.getName());
+}</code></pre></blockquote>
+<p><img src="/2020/09/10/reflection/fields.png" alt="运行时类的属性"></p>
+<h3 id="获取方法"><a href="#获取方法" class="headerlink" title="获取方法"></a>获取方法</h3><pre><code>1. 获取当前运行类声明的所有方法</code></pre><blockquote>
+<pre><code>Method[] methods = clazz.getMethods();
+for(Method method:methods){
+    System.out.println(method);
+}</code></pre></blockquote>
+<pre><code>2. 获取当前运行时类以及所有父类的声明为public权限的方法</code></pre><blockquote>
+<pre><code>Method[] declaredMethods = clazz.getDeclaredMethods();
+for(Method method:declaredMethods){
+    System.out.println(method);
+}</code></pre></blockquote>
+<pre><code>3. 获取方法的修饰符，数据类型，方法名
+    * @Anno
+    * 权限修饰符 返回值类型 方法名(形参列表) Throws Exception{}
+
+    Method[] declaredMethods = clazz.getDeclaredMethods();
+    for(Method method:declaredMethods){
+        System.out.println(&quot;-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+&quot;);
+        //1.注解获取
+        Annotation[] methodAnnotations = method.getAnnotations();
+        for(Annotation anno:methodAnnotations){
+            System.out.print(anno+&quot;\t&quot;);
+        }
+
+        //2.权限修饰符
+        System.out.print(Modifier.toString(method.getModifiers())+&quot;\t&quot;);
+        //3.返回值类型
+        System.out.print(method.getReturnType()+&quot;\t&quot;);
+        //4.方法名
+        System.out.print(method.getName());
+        System.out.print(&quot;(&quot;);
+        //5.形参列表参数
+        Class[] parameterTypes = method.getParameterTypes();
+        if(parameterTypes.length 0){
+            for(int i = 0;i &lt; parameterTypes.length;i++){
+                if(i == parameterTypes.length-1){
+                    System.out.print(parameterTypes[i].getName()+&quot; args_&quot;+i);
+                    break;
+                }
+                System.out.print(parameterTypes[i].getName()+&quot; args_&quot;+i+&quot; , &quot;);
+            }
+        }
+        System.out.print(&quot;)&quot;);
+        //6.获取抛出的异常
+        Class[] exceptionTypes = method.getExceptionTypes();
+        if(exceptionTypes.length 0){
+            System.out.print(&quot; throws &quot;);
+            for(int i = 0;i &lt; exceptionTypes.length;i++){
+                if(i == exceptionTypes.length-1){
+                    System.out.print(exceptionTypes[i].getName());
+                    break;
+                }
+                System.out.print(exceptionTypes[i].getName()+&quot; , &quot;);
+            }
+        }
+        System.out.println(&quot;{&quot;+&quot;\n&quot;+&quot;}&quot;);
+    }</code></pre><h3 id="获取构造器的结构"><a href="#获取构造器的结构" class="headerlink" title="获取构造器的结构"></a>获取构造器的结构</h3><pre><code>1. 当前运行时类的所有的构造器</code></pre><blockquote>
+<pre><code>Constructor&lt;?&gt;[] constructors = clazz.getConstructors();
+for(Constructor c:constructors){
+    System.out.println(c);
+}</code></pre></blockquote>
+<pre><code>2. 当前运行时类的所有public的构造器</code></pre><blockquote>
+<pre><code>Constructor&lt;?&gt;[] constructors = clazz.getDeclaredConstructors();
+for(Constructor c:constructors){
+    System.out.println(c);
+}</code></pre></blockquote>
+<h3 id="获取运行时类的父类"><a href="#获取运行时类的父类" class="headerlink" title="获取运行时类的父类"></a>获取运行时类的父类</h3><pre><code>1. getSuperClass():获取父类
+2. getGenericSuperClass()：获取带有泛型的父类</code></pre><h2 id="调用运行时类的指定结构（方法和属性）"><a href="#调用运行时类的指定结构（方法和属性）" class="headerlink" title="调用运行时类的指定结构（方法和属性）"></a>调用运行时类的指定结构（方法和属性）</h2><pre><code>1. 获取指定的属性
+    方法：
+        getFiled():
+            属性声明必须为public
+        getDeclaredFiled()
+            可以访问，但是如果想要访问私有属性，必须显式
+            &lt;属性名&gt;.setAccessible(true);                
+
+    1. 步骤
+        * 获取Class对象
+        * 创建Class对象的实例
+        * 获取指定的属性
+        * set方法
+            * set(obj,value):obj：指明设置哪个对象的属性 value:设置的值
+        * get方法
+            * get(obj):obj：指明获取那个对象的属性
+
+    2. 实例
+        Class clazz = Person.class;
+        Person p = (Person)clazz.newInstance();
+        Filed filed = clazz.getDeclaredFiled(&quot;age&quot;);
+        filed.setAccessible(true);
+        filed.set(p,&quot;11111&quot;);
+
+2. 获取指定的方法
+    方法：
+        getDeclaredMethod(name,param): 参数1：获取的方法的名称，参数2：获取的方法的形参列表
+            可以访问，但是如果想要访问私有属性，必须显式
+            &lt;方法名&gt;.setAccessible(true);
+
+        &lt;方法名&gt;.invoke(obj,value):参数1:方法的调用者，参数2(可变形参)：赋值的实参
+            invoke()方法的返回值为类中调用方法的返回值，
+                如果调用的方法没有返回值，那么返回值为null
+
+    1. 实例</code></pre><blockquote>
+<pre><code>//1.获取指定的方法名
+Method method = clazz.getDeclaredMethod(&quot;compareTo&quot;, String.class);
+//2.确定当前方法是可以访问的
+method.setAccessible(true);
+//3.调用方法
+method.invoke(p,&quot;HHHHH&quot;);   //p.show(&quot;HHHHH&quot;)</code></pre></blockquote>
+<pre><code>2. 调用静态方法
+    invoke(null)
+    invoke(Person.class)</code></pre>
       
     </div>
     
@@ -528,7 +676,7 @@ System.out.println(classLoader2);</code></pre></blockquote>
         <p id="div-border-left-red">
         <b>本文基于<a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布</b><br/>
         <span>
-          <b>本文地址: </b><a href="/2020/09/10/reflection/" title="reflection">http://print3306.github.io/2020/09/10/reflection/</a><br/><b>转载请注明出处, 谢谢！</b>
+          <b>本文地址: </b><a href="/2020/09/10/reflection/" title="Java Reflection（java反射机制）">http://print3306.github.io/2020/09/10/reflection/</a><br/><b>转载请注明出处, 谢谢！</b>
         </span>
       </p>
 </div>
@@ -660,7 +808,7 @@ System.out.println(classLoader2);</code></pre></blockquote>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-Reflection（java反射机制）"><span class="nav-number">1.</span> <span class="nav-text">Java Reflection（java反射机制）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class类"><span class="nav-number">2.</span> <span class="nav-text">Class类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#java-lang-Class的理解"><span class="nav-number">2.1.</span> <span class="nav-text">java.lang.Class的理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取Class的实例方式"><span class="nav-number">2.2.</span> <span class="nav-text">获取Class的实例方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Class对象的范围"><span class="nav-number">2.3.</span> <span class="nav-text">Class对象的范围</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ClassLoader-类加载器"><span class="nav-number">3.</span> <span class="nav-text">ClassLoader(类加载器)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类的加载"><span class="nav-number">3.1.</span> <span class="nav-text">类的加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ClassLoader"><span class="nav-number">3.2.</span> <span class="nav-text">ClassLoader</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建运行时类的对象"><span class="nav-number">4.</span> <span class="nav-text">创建运行时类的对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#反射创建运行时类的对象"><span class="nav-number">4.1.</span> <span class="nav-text">反射创建运行时类的对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取运行时类的完整结构"><span class="nav-number">5.</span> <span class="nav-text">获取运行时类的完整结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">5.1.</span> <span class="nav-text"></span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class类"><span class="nav-number"></span> <span class="nav-text">Class类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#java-lang-Class的理解"><span class="nav-number">1.</span> <span class="nav-text">java.lang.Class的理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取Class的实例方式"><span class="nav-number">2.</span> <span class="nav-text">获取Class的实例方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Class对象的范围"><span class="nav-number">3.</span> <span class="nav-text">Class对象的范围</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ClassLoader-类加载器"><span class="nav-number"></span> <span class="nav-text">ClassLoader(类加载器)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类的加载"><span class="nav-number">1.</span> <span class="nav-text">类的加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ClassLoader"><span class="nav-number">2.</span> <span class="nav-text">ClassLoader</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建运行时类的对象"><span class="nav-number"></span> <span class="nav-text">创建运行时类的对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#反射创建运行时类的对象"><span class="nav-number">1.</span> <span class="nav-text">反射创建运行时类的对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取运行时类的完整结构"><span class="nav-number"></span> <span class="nav-text">获取运行时类的完整结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取属性"><span class="nav-number">1.</span> <span class="nav-text">获取属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取方法"><span class="nav-number">2.</span> <span class="nav-text">获取方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取构造器的结构"><span class="nav-number">3.</span> <span class="nav-text">获取构造器的结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取运行时类的父类"><span class="nav-number">4.</span> <span class="nav-text">获取运行时类的父类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调用运行时类的指定结构（方法和属性）"><span class="nav-number"></span> <span class="nav-text">调用运行时类的指定结构（方法和属性）</span></a></div>
             
 
           </div>
@@ -695,7 +843,7 @@ System.out.println(classLoader2);</code></pre></blockquote>
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">11.8k</span>
+    <span title="Site words total count">12.8k</span>
   
 </div>
 
