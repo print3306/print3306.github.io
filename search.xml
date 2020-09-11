@@ -246,241 +246,6 @@
     3. 调用方法完成CRUD的操作</code></pre>]]></content>
   </entry>
   <entry>
-    <title>Java Reflection（java反射机制）</title>
-    <url>/2020/09/10/reflection/</url>
-    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><pre><code>1. 反射（reflection）：动态语言的关键
-    * 反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性和方法
-    * 加载完类之后，在堆内存的方法区产生一个Class对象（一个类只有一个Class对象），这个对象就包含完整的类的信息，可以通过这个Class对象看到类的结构，通过对象看到类的结构的过程，叫做反射
-
-2. 使用反射的应用
-    * 在运行时判断一个对象所属的类
-    * 在运行时构造任意一个类的对象
-    * 在运行时获取泛型的信息
-    * 在运行时获取私有属性，私有方法
-    * 在运行时父类的信息，父类上的泛型
-    * 在运行时获取接口
-    * 在运行时获取所在包，注解
-    * 。。。
-
-3. 相干的API
-    * java.lang.Class
-    * java.lang.reflect.Method    //方法
-    * java.lang.reflect.Filed    //成员变量    
-    * java.lang.reflect.Constructor        //构造器
-
-4. 反射和封装性
-    * 通过直接new对象，或反射的方式都可以调用公共的结构，具体使用位置？
-        1. 建议直接使用new方式，编译的时候可以确定创建哪个对象
-        2. 编译的时候无法确定创建哪个对象，根据传入的参数进行对象的创建，使用反射的方式：
-            反射机制具有动态性
-
-    * 有了反射机制，与对象的封装性，如何看待两种技术？
-        1. 不矛盾
-        2. 封装性：将对象的属性和方法进行权限限定，暴露出的接口表现用户可以使用的方法，建议用户使用的方法和属性，不建议使用私有方法[建不建议]
-        3. 反射：可以使用的方法，用户强制使用私有的属性和方法[能不能]</code></pre><h2 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h2><h3 id="java-lang-Class的理解"><a href="#java-lang-Class的理解" class="headerlink" title="java.lang.Class的理解"></a>java.lang.Class的理解</h3><pre><code>1. 类的加载过程
-    程序在经过javac.exe命令之后，会生成一个或多个字节码文件（.class）文件，
-    接着使用java.exe命令对某个字节码文件进行解释运行。相当于将字节码文件加载到内存，此过程叫做类的加载。
-    加载到内存中的类，我们称为运行时类，此运行时类，就作为Class类的一个实例。
-
-2. 换句话说，Class的实例就是一个运行时类的对象
-3. 加载到内存的运行时类，会缓存一定的时间。在此时间之内，可以通过不同的方法获取运行时类</code></pre><h3 id="获取Class的实例方式"><a href="#获取Class的实例方式" class="headerlink" title="获取Class的实例方式"></a>获取Class的实例方式</h3><pre><code>1. 方式一：通过运行时类的.class属性获取Class实例
-    Class clazz1 = Person.class();
-    System.Out.Println(clazz1);
-
-2. 方式二：通过运行时类的对象的.getClass()方法获取实例
-    Person person = new Person();
-    Class clazz2 = person.getClass();
-
-3. 方式三：通过Class的.forName(&quot;运行时类的全限定类名&quot;)获取实例
-    Class clazz3 = Class.forName(&quot;全限定类名&quot;)；
-
-4. 方式四：通过类的加载器获取实例
-     ClassLoader classLoader = Reflection.class.getClassLoader();
-    Class clazz4 = classLoader.loadClass(&quot;全限定类名&quot;);
-
-上述的四种Class实例的获取方式，方式一和方式二，都与具体的实现类绑定，在开发中一般使用Class类的.forName()方法获取Class实例对象。</code></pre><h3 id="Class对象的范围"><a href="#Class对象的范围" class="headerlink" title="Class对象的范围"></a>Class对象的范围</h3><pre><code>1. class:各种类对象
-2. interface
-3. []:数组 只要数组的类型和维度相同，就是一个Class对象
-4. enum:枚举
-5. annotation
-6. 基本数据类型
-7. void</code></pre><h2 id="ClassLoader-类加载器"><a href="#ClassLoader-类加载器" class="headerlink" title="ClassLoader(类加载器)"></a>ClassLoader(类加载器)</h2><h3 id="类的加载"><a href="#类的加载" class="headerlink" title="类的加载"></a>类的加载</h3><pre><code>1. 加载：将类的字节码文件读入内存，并为其创建一个java.lang.Class对象，实现类的加载过程
-2. 链接：静态变量初始化为默认值
-3. 初始化：JVM使用构造器方法完成类变量的赋值和静态代码块的语句顺序合并产生数据</code></pre><h3 id="ClassLoader"><a href="#ClassLoader" class="headerlink" title="ClassLoader"></a>ClassLoader</h3><pre><code>1. 将.class加载到内存，将这些静态数据转换成方法区运行时的数据结构，生成Class对象，作为方法区中类数据的访问入口
-2. 类缓存：一旦某个类被加载到类加载器，会在类加载器中维持一段时间，JVM的垃圾回收机制可以回收Class对象
-
-3. 分类
-    * 引导类加载器：C++编写的，主要加载Java的核心类库，用户无法获取到该加载器
-    * 扩展类加载器：加载java/lib/ect中的jar包
-    * 系统类加载器：加载当前程序中的类</code></pre><blockquote>
-<pre><code>//1.对于自定义类，使用系统级类加载器
-ClassLoader classLoader = ClassLoaderTest.class.getClassLoader();
-System.out.println(classLoader);
-
-//2.调用系统类加载器的getParent()，获取扩展类加载器
-ClassLoader classLoader1 = classLoader.getParent();
-System.out.println(classLoader1);
-
-//3.调用扩展类加载器getParent()，无法获取引导类加载器
-//引导类加载器加载java的核心类库
-ClassLoader classLoader2 = classLoader1.getParent();
-System.out.println(classLoader2);</code></pre></blockquote>
-<h2 id="创建运行时类的对象"><a href="#创建运行时类的对象" class="headerlink" title="创建运行时类的对象"></a>创建运行时类的对象</h2><h3 id="反射创建运行时类的对象"><a href="#反射创建运行时类的对象" class="headerlink" title="反射创建运行时类的对象"></a>反射创建运行时类的对象</h3><pre><code>1. 使用.newInstance()方法创建运行时类的对象
-    newInstance:
-        * 调用此方法，创建运行时类的方法
-        * 内部调用运行时类的空参构造器
-        * 如果没有空参构造器，产生异常
-
-2. 满足两个条件
-    * 运行时类必须提供空参的构造器
-    * 访问权限不能为private,通常设置为public</code></pre><h2 id="获取运行时类的完整结构"><a href="#获取运行时类的完整结构" class="headerlink" title="获取运行时类的完整结构"></a>获取运行时类的完整结构</h2><h3 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h3><pre><code>修饰符 返回类型 变量名；
-
-1. 获取所有属性
-    1. 获取当前运行时类的所有属性（getDeclaredFileds）
-        * 不考虑权限问题，不会获取父类的属性</code></pre><blockquote>
-<pre><code>Field[] fields1 = clazz.getDeclaredFields();
-for(Field field:fields1){
-    System.out.println(field);
-}</code></pre></blockquote>
-<pre><code>2. 获取属性包含父类的属性（getFileds）
-    * 获取当前运行时类以及父类的所有权限为public的属性</code></pre><blockquote>
-<pre><code>Field[] fields = clazz.getFields();
-for(Field field:fields){
-    System.out.println(field);
-}        </code></pre></blockquote>
-<pre><code>2. 获取属性的修饰符,数据类型，变量名</code></pre><blockquote>
-<pre><code>Class clazz = Person.class;
-
-//获取当前运行时类的所有属性
-Field[] fields = clazz.getDeclaredFields();
-
-for(Field field:fields){
-//修饰符
-//权限被分配了 整型数据,使用Modifier的方法可以翻译为字符串
-int modifiers = field.getModifiers();
-System.out.print(Modifier.toString(modifiers)+&quot;\t&quot;);
-//数据类型
-Class&lt;?type = field.getType();
-System.out.print(type.getName()+&quot;\t&quot;);
-//属性名
-System.out.println(field.getName());
-}</code></pre></blockquote>
-<p><img src="/2020/09/10/reflection/fields.png" alt="运行时类的属性"></p>
-<h3 id="获取方法"><a href="#获取方法" class="headerlink" title="获取方法"></a>获取方法</h3><pre><code>1. 获取当前运行类声明的所有方法</code></pre><blockquote>
-<pre><code>Method[] methods = clazz.getMethods();
-for(Method method:methods){
-    System.out.println(method);
-}</code></pre></blockquote>
-<pre><code>2. 获取当前运行时类以及所有父类的声明为public权限的方法</code></pre><blockquote>
-<pre><code>Method[] declaredMethods = clazz.getDeclaredMethods();
-for(Method method:declaredMethods){
-    System.out.println(method);
-}</code></pre></blockquote>
-<pre><code>3. 获取方法的修饰符，数据类型，方法名
-    * @Anno
-    * 权限修饰符 返回值类型 方法名(形参列表) Throws Exception{}
-
-    Method[] declaredMethods = clazz.getDeclaredMethods();
-    for(Method method:declaredMethods){
-        System.out.println(&quot;-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+&quot;);
-        //1.注解获取
-        Annotation[] methodAnnotations = method.getAnnotations();
-        for(Annotation anno:methodAnnotations){
-            System.out.print(anno+&quot;\t&quot;);
-        }
-
-        //2.权限修饰符
-        System.out.print(Modifier.toString(method.getModifiers())+&quot;\t&quot;);
-        //3.返回值类型
-        System.out.print(method.getReturnType()+&quot;\t&quot;);
-        //4.方法名
-        System.out.print(method.getName());
-        System.out.print(&quot;(&quot;);
-        //5.形参列表参数
-        Class[] parameterTypes = method.getParameterTypes();
-        if(parameterTypes.length 0){
-            for(int i = 0;i &lt; parameterTypes.length;i++){
-                if(i == parameterTypes.length-1){
-                    System.out.print(parameterTypes[i].getName()+&quot; args_&quot;+i);
-                    break;
-                }
-                System.out.print(parameterTypes[i].getName()+&quot; args_&quot;+i+&quot; , &quot;);
-            }
-        }
-        System.out.print(&quot;)&quot;);
-        //6.获取抛出的异常
-        Class[] exceptionTypes = method.getExceptionTypes();
-        if(exceptionTypes.length 0){
-            System.out.print(&quot; throws &quot;);
-            for(int i = 0;i &lt; exceptionTypes.length;i++){
-                if(i == exceptionTypes.length-1){
-                    System.out.print(exceptionTypes[i].getName());
-                    break;
-                }
-                System.out.print(exceptionTypes[i].getName()+&quot; , &quot;);
-            }
-        }
-        System.out.println(&quot;{&quot;+&quot;\n&quot;+&quot;}&quot;);
-    }</code></pre><h3 id="获取构造器的结构"><a href="#获取构造器的结构" class="headerlink" title="获取构造器的结构"></a>获取构造器的结构</h3><pre><code>1. 当前运行时类的所有的构造器</code></pre><blockquote>
-<pre><code>Constructor&lt;?&gt;[] constructors = clazz.getConstructors();
-for(Constructor c:constructors){
-    System.out.println(c);
-}</code></pre></blockquote>
-<pre><code>2. 当前运行时类的所有public的构造器</code></pre><blockquote>
-<pre><code>Constructor&lt;?&gt;[] constructors = clazz.getDeclaredConstructors();
-for(Constructor c:constructors){
-    System.out.println(c);
-}</code></pre></blockquote>
-<h3 id="获取运行时类的父类"><a href="#获取运行时类的父类" class="headerlink" title="获取运行时类的父类"></a>获取运行时类的父类</h3><pre><code>1. getSuperClass():获取父类
-2. getGenericSuperClass()：获取带有泛型的父类</code></pre><h2 id="调用运行时类的指定结构（方法和属性）"><a href="#调用运行时类的指定结构（方法和属性）" class="headerlink" title="调用运行时类的指定结构（方法和属性）"></a>调用运行时类的指定结构（方法和属性）</h2><pre><code>1. 获取指定的属性
-    方法：
-        getFiled():
-            属性声明必须为public
-        getDeclaredFiled()
-            可以访问，但是如果想要访问私有属性，必须显式
-            &lt;属性名&gt;.setAccessible(true);                
-
-    1. 步骤
-        * 获取Class对象
-        * 创建Class对象的实例
-        * 获取指定的属性
-        * set方法
-            * set(obj,value):obj：指明设置哪个对象的属性 value:设置的值
-        * get方法
-            * get(obj):obj：指明获取那个对象的属性
-
-    2. 实例
-        Class clazz = Person.class;
-        Person p = (Person)clazz.newInstance();
-        Filed filed = clazz.getDeclaredFiled(&quot;age&quot;);
-        filed.setAccessible(true);
-        filed.set(p,&quot;11111&quot;);
-
-2. 获取指定的方法
-    方法：
-        getDeclaredMethod(name,param): 参数1：获取的方法的名称，参数2：获取的方法的形参列表
-            可以访问，但是如果想要访问私有属性，必须显式
-            &lt;方法名&gt;.setAccessible(true);
-
-        &lt;方法名&gt;.invoke(obj,value):参数1:方法的调用者，参数2(可变形参)：赋值的实参
-            invoke()方法的返回值为类中调用方法的返回值，
-                如果调用的方法没有返回值，那么返回值为null
-
-    1. 实例</code></pre><blockquote>
-<pre><code>//1.获取指定的方法名
-Method method = clazz.getDeclaredMethod(&quot;compareTo&quot;, String.class);
-//2.确定当前方法是可以访问的
-method.setAccessible(true);
-//3.调用方法
-method.invoke(p,&quot;HHHHH&quot;);   //p.show(&quot;HHHHH&quot;)</code></pre></blockquote>
-<pre><code>2. 调用静态方法
-    invoke(null)
-    invoke(Person.class)</code></pre>]]></content>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SQL注入</title>
     <url>/2020/05/08/SQL%E6%B3%A8%E5%85%A5/</url>
     <content><![CDATA[<h1 id="SQL注入问题"><a href="#SQL注入问题" class="headerlink" title="SQL注入问题"></a>SQL注入问题</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>在拼接sql语句时，有一些特殊的SQL关键字参于字符串的拼接，导致SQL语句的逻辑发生变化，可能会造成安全性问题</code></pre><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre><code>1. 输入 a&apos;or&apos;a&apos;=&apos;a,条件改变
@@ -538,34 +303,6 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
     * executeQuery();        </code></pre>]]></content>
   </entry>
   <entry>
-    <title>spring</title>
-    <url>/2020/09/09/spring/</url>
-    <content><![CDATA[<h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><h3 id="1-什么是spring："><a href="#1-什么是spring：" class="headerlink" title="1. 什么是spring："></a>1. 什么是spring：</h3><pre><code>1. 分层的Java SE/EE的轻量级开源框架
-2. 提供了展现层Spring MVC 和持久层Spring JDBC以及业务层事务管理的众多技术
-3. 展现层和持久层的中间部分，业务层</code></pre><h3 id="2-spring的核心："><a href="#2-spring的核心：" class="headerlink" title="2. spring的核心："></a>2. spring的核心：</h3><pre><code>1. IoC（Inverse of Control）: 反转控制
-2. AOP（Aspect Oriented Programming）: 面向切面编程</code></pre><h3 id="3-发展历程和优势"><a href="#3-发展历程和优势" class="headerlink" title="3.发展历程和优势"></a>3.发展历程和优势</h3><pre><code>spring优势：
-    1. 方便解耦，简化开发
-    2. AOP编程的支持
-    3. 声明式事务的支持
-    4. 方便程序的测试
-    5. 方便集成各种优秀的框架</code></pre><h2 id="程序的耦合和解耦"><a href="#程序的耦合和解耦" class="headerlink" title="程序的耦合和解耦"></a>程序的耦合和解耦</h2><h4 id="耦合"><a href="#耦合" class="headerlink" title="耦合"></a>耦合</h4><pre><code>1. 什么是耦合：
-    程序之间的依赖关系：
-        * 类之间的依赖关系
-        * 方法之间的依赖关系
-
-2. 开发中的做法：
-    编译期不依赖，运行时依赖
-
-3. 方法：
-    1. 使用反射来创建对象，而不是使用new关键字
-        * 使用反射，如果字符串写死，以后无法再次使用别的数据库配置
-    2. 使用读取配置文件来获取要创建的对象的全限定名称</code></pre><h4 id="解耦"><a href="#解耦" class="headerlink" title="解耦"></a>解耦</h4><pre><code>1. 什么是解耦：
-    降低程序之间的依赖关系</code></pre><h2 id="基于XML的IoC配置"><a href="#基于XML的IoC配置" class="headerlink" title="基于XML的IoC配置"></a>基于XML的IoC配置</h2><h2 id="基于注解的IoC配置"><a href="#基于注解的IoC配置" class="headerlink" title="基于注解的IoC配置"></a>基于注解的IoC配置</h2><h2 id="spring的AOP"><a href="#spring的AOP" class="headerlink" title="spring的AOP"></a>spring的AOP</h2><h2 id="基于XML和注解的AOP配置"><a href="#基于XML和注解的AOP配置" class="headerlink" title="基于XML和注解的AOP配置"></a>基于XML和注解的AOP配置</h2><h2 id="JdbcTemlate"><a href="#JdbcTemlate" class="headerlink" title="JdbcTemlate"></a>JdbcTemlate</h2><h2 id="事务控制"><a href="#事务控制" class="headerlink" title="事务控制"></a>事务控制</h2>]]></content>
-      <tags>
-        <tag>spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Spring下载</title>
     <url>/2020/05/09/SpringLoad/</url>
     <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
@@ -579,7 +316,7 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
         <category>后端</category>
       </categories>
       <tags>
-        <tag>Spring</tag>
+        <tag>spring</tag>
       </tags>
   </entry>
   <entry>
@@ -1189,6 +926,281 @@ User findById(Integer id);</code></pre></blockquote>
 ]]></content>
       <tags>
         <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java Reflection（java反射机制）</title>
+    <url>/2020/09/10/reflection/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><pre><code>1. 反射（reflection）：动态语言的关键
+    * 反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性和方法
+    * 加载完类之后，在堆内存的方法区产生一个Class对象（一个类只有一个Class对象），这个对象就包含完整的类的信息，可以通过这个Class对象看到类的结构，通过对象看到类的结构的过程，叫做反射
+
+2. 使用反射的应用
+    * 在运行时判断一个对象所属的类
+    * 在运行时构造任意一个类的对象
+    * 在运行时获取泛型的信息
+    * 在运行时获取私有属性，私有方法
+    * 在运行时父类的信息，父类上的泛型
+    * 在运行时获取接口
+    * 在运行时获取所在包，注解
+    * 。。。
+
+3. 相干的API
+    * java.lang.Class
+    * java.lang.reflect.Method    //方法
+    * java.lang.reflect.Filed    //成员变量    
+    * java.lang.reflect.Constructor        //构造器
+
+4. 反射和封装性
+    * 通过直接new对象，或反射的方式都可以调用公共的结构，具体使用位置？
+        1. 建议直接使用new方式，编译的时候可以确定创建哪个对象
+        2. 编译的时候无法确定创建哪个对象，根据传入的参数进行对象的创建，使用反射的方式：
+            反射机制具有动态性
+
+    * 有了反射机制，与对象的封装性，如何看待两种技术？
+        1. 不矛盾
+        2. 封装性：将对象的属性和方法进行权限限定，暴露出的接口表现用户可以使用的方法，建议用户使用的方法和属性，不建议使用私有方法[建不建议]
+        3. 反射：可以使用的方法，用户强制使用私有的属性和方法[能不能]</code></pre><h2 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h2><h3 id="java-lang-Class的理解"><a href="#java-lang-Class的理解" class="headerlink" title="java.lang.Class的理解"></a>java.lang.Class的理解</h3><pre><code>1. 类的加载过程
+    程序在经过javac.exe命令之后，会生成一个或多个字节码文件（.class）文件，
+    接着使用java.exe命令对某个字节码文件进行解释运行。相当于将字节码文件加载到内存，此过程叫做类的加载。
+    加载到内存中的类，我们称为运行时类，此运行时类，就作为Class类的一个实例。
+
+2. 换句话说，Class的实例就是一个运行时类的对象
+3. 加载到内存的运行时类，会缓存一定的时间。在此时间之内，可以通过不同的方法获取运行时类</code></pre><h3 id="获取Class的实例方式"><a href="#获取Class的实例方式" class="headerlink" title="获取Class的实例方式"></a>获取Class的实例方式</h3><pre><code>1. 方式一：通过运行时类的.class属性获取Class实例
+    Class clazz1 = Person.class();
+    System.Out.Println(clazz1);
+
+2. 方式二：通过运行时类的对象的.getClass()方法获取实例
+    Person person = new Person();
+    Class clazz2 = person.getClass();
+
+3. 方式三：通过Class的.forName(&quot;运行时类的全限定类名&quot;)获取实例
+    Class clazz3 = Class.forName(&quot;全限定类名&quot;)；
+
+4. 方式四：通过类的加载器获取实例
+     ClassLoader classLoader = Reflection.class.getClassLoader();
+    Class clazz4 = classLoader.loadClass(&quot;全限定类名&quot;);
+
+上述的四种Class实例的获取方式，方式一和方式二，都与具体的实现类绑定，在开发中一般使用Class类的.forName()方法获取Class实例对象。</code></pre><h3 id="Class对象的范围"><a href="#Class对象的范围" class="headerlink" title="Class对象的范围"></a>Class对象的范围</h3><pre><code>1. class:各种类对象
+2. interface
+3. []:数组 只要数组的类型和维度相同，就是一个Class对象
+4. enum:枚举
+5. annotation
+6. 基本数据类型
+7. void</code></pre><h2 id="ClassLoader-类加载器"><a href="#ClassLoader-类加载器" class="headerlink" title="ClassLoader(类加载器)"></a>ClassLoader(类加载器)</h2><h3 id="类的加载"><a href="#类的加载" class="headerlink" title="类的加载"></a>类的加载</h3><pre><code>1. 加载：将类的字节码文件读入内存，并为其创建一个java.lang.Class对象，实现类的加载过程
+2. 链接：静态变量初始化为默认值
+3. 初始化：JVM使用构造器方法完成类变量的赋值和静态代码块的语句顺序合并产生数据</code></pre><h3 id="ClassLoader"><a href="#ClassLoader" class="headerlink" title="ClassLoader"></a>ClassLoader</h3><pre><code>1. 将.class加载到内存，将这些静态数据转换成方法区运行时的数据结构，生成Class对象，作为方法区中类数据的访问入口
+2. 类缓存：一旦某个类被加载到类加载器，会在类加载器中维持一段时间，JVM的垃圾回收机制可以回收Class对象
+
+3. 分类
+    * 引导类加载器：C++编写的，主要加载Java的核心类库，用户无法获取到该加载器
+    * 扩展类加载器：加载java/lib/ect中的jar包
+    * 系统类加载器：加载当前程序中的类</code></pre><blockquote>
+<pre><code>//1.对于自定义类，使用系统级类加载器
+ClassLoader classLoader = ClassLoaderTest.class.getClassLoader();
+System.out.println(classLoader);
+
+//2.调用系统类加载器的getParent()，获取扩展类加载器
+ClassLoader classLoader1 = classLoader.getParent();
+System.out.println(classLoader1);
+
+//3.调用扩展类加载器getParent()，无法获取引导类加载器
+//引导类加载器加载java的核心类库
+ClassLoader classLoader2 = classLoader1.getParent();
+System.out.println(classLoader2);</code></pre></blockquote>
+<h2 id="创建运行时类的对象"><a href="#创建运行时类的对象" class="headerlink" title="创建运行时类的对象"></a>创建运行时类的对象</h2><h3 id="反射创建运行时类的对象"><a href="#反射创建运行时类的对象" class="headerlink" title="反射创建运行时类的对象"></a>反射创建运行时类的对象</h3><pre><code>1. 使用.newInstance()方法创建运行时类的对象
+    newInstance:
+        * 调用此方法，创建运行时类的方法
+        * 内部调用运行时类的空参构造器
+        * 如果没有空参构造器，产生异常
+
+2. 满足两个条件
+    * 运行时类必须提供空参的构造器
+    * 访问权限不能为private,通常设置为public</code></pre><h2 id="获取运行时类的完整结构"><a href="#获取运行时类的完整结构" class="headerlink" title="获取运行时类的完整结构"></a>获取运行时类的完整结构</h2><h3 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h3><pre><code>修饰符 返回类型 变量名；
+
+1. 获取所有属性
+    1. 获取当前运行时类的所有属性（getDeclaredFileds）
+        * 不考虑权限问题，不会获取父类的属性</code></pre><blockquote>
+<pre><code>Field[] fields1 = clazz.getDeclaredFields();
+for(Field field:fields1){
+    System.out.println(field);
+}</code></pre></blockquote>
+<pre><code>2. 获取属性包含父类的属性（getFileds）
+    * 获取当前运行时类以及父类的所有权限为public的属性</code></pre><blockquote>
+<pre><code>Field[] fields = clazz.getFields();
+for(Field field:fields){
+    System.out.println(field);
+}        </code></pre></blockquote>
+<pre><code>2. 获取属性的修饰符,数据类型，变量名</code></pre><blockquote>
+<pre><code>Class clazz = Person.class;
+
+//获取当前运行时类的所有属性
+Field[] fields = clazz.getDeclaredFields();
+
+for(Field field:fields){
+//修饰符
+//权限被分配了 整型数据,使用Modifier的方法可以翻译为字符串
+int modifiers = field.getModifiers();
+System.out.print(Modifier.toString(modifiers)+&quot;\t&quot;);
+//数据类型
+Class&lt;?type = field.getType();
+System.out.print(type.getName()+&quot;\t&quot;);
+//属性名
+System.out.println(field.getName());
+}</code></pre></blockquote>
+<p><img src="/2020/09/10/reflection/fields.png" alt="运行时类的属性"></p>
+<h3 id="获取方法"><a href="#获取方法" class="headerlink" title="获取方法"></a>获取方法</h3><pre><code>1. 获取当前运行类声明的所有方法</code></pre><blockquote>
+<pre><code>Method[] methods = clazz.getMethods();
+for(Method method:methods){
+    System.out.println(method);
+}</code></pre></blockquote>
+<pre><code>2. 获取当前运行时类以及所有父类的声明为public权限的方法</code></pre><blockquote>
+<pre><code>Method[] declaredMethods = clazz.getDeclaredMethods();
+for(Method method:declaredMethods){
+    System.out.println(method);
+}</code></pre></blockquote>
+<pre><code>3. 获取方法的修饰符，数据类型，方法名
+    * @Anno
+    * 权限修饰符 返回值类型 方法名(形参列表) Throws Exception{}
+
+    Method[] declaredMethods = clazz.getDeclaredMethods();
+    for(Method method:declaredMethods){
+        System.out.println(&quot;-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+&quot;);
+        //1.注解获取
+        Annotation[] methodAnnotations = method.getAnnotations();
+        for(Annotation anno:methodAnnotations){
+            System.out.print(anno+&quot;\t&quot;);
+        }
+
+        //2.权限修饰符
+        System.out.print(Modifier.toString(method.getModifiers())+&quot;\t&quot;);
+        //3.返回值类型
+        System.out.print(method.getReturnType()+&quot;\t&quot;);
+        //4.方法名
+        System.out.print(method.getName());
+        System.out.print(&quot;(&quot;);
+        //5.形参列表参数
+        Class[] parameterTypes = method.getParameterTypes();
+        if(parameterTypes.length 0){
+            for(int i = 0;i &lt; parameterTypes.length;i++){
+                if(i == parameterTypes.length-1){
+                    System.out.print(parameterTypes[i].getName()+&quot; args_&quot;+i);
+                    break;
+                }
+                System.out.print(parameterTypes[i].getName()+&quot; args_&quot;+i+&quot; , &quot;);
+            }
+        }
+        System.out.print(&quot;)&quot;);
+        //6.获取抛出的异常
+        Class[] exceptionTypes = method.getExceptionTypes();
+        if(exceptionTypes.length 0){
+            System.out.print(&quot; throws &quot;);
+            for(int i = 0;i &lt; exceptionTypes.length;i++){
+                if(i == exceptionTypes.length-1){
+                    System.out.print(exceptionTypes[i].getName());
+                    break;
+                }
+                System.out.print(exceptionTypes[i].getName()+&quot; , &quot;);
+            }
+        }
+        System.out.println(&quot;{&quot;+&quot;\n&quot;+&quot;}&quot;);
+    }</code></pre><h3 id="获取构造器的结构"><a href="#获取构造器的结构" class="headerlink" title="获取构造器的结构"></a>获取构造器的结构</h3><pre><code>1. 当前运行时类的所有的构造器</code></pre><blockquote>
+<pre><code>Constructor&lt;?&gt;[] constructors = clazz.getConstructors();
+for(Constructor c:constructors){
+    System.out.println(c);
+}</code></pre></blockquote>
+<pre><code>2. 当前运行时类的所有public的构造器</code></pre><blockquote>
+<pre><code>Constructor&lt;?&gt;[] constructors = clazz.getDeclaredConstructors();
+for(Constructor c:constructors){
+    System.out.println(c);
+}</code></pre></blockquote>
+<h3 id="获取运行时类的父类"><a href="#获取运行时类的父类" class="headerlink" title="获取运行时类的父类"></a>获取运行时类的父类</h3><pre><code>1. getSuperClass():获取父类
+2. getGenericSuperClass()：获取带有泛型的父类</code></pre><h2 id="调用运行时类的指定结构（方法和属性）"><a href="#调用运行时类的指定结构（方法和属性）" class="headerlink" title="调用运行时类的指定结构（方法和属性）"></a>调用运行时类的指定结构（方法和属性）</h2><pre><code>1. 获取指定的属性
+    方法：
+        getFiled():
+            属性声明必须为public
+        getDeclaredFiled()
+            可以访问，但是如果想要访问私有属性，必须显式
+            &lt;属性名&gt;.setAccessible(true);                
+
+    1. 步骤
+        * 获取Class对象
+        * 创建Class对象的实例
+        * 获取指定的属性
+        * set方法
+            * set(obj,value):obj：指明设置哪个对象的属性 value:设置的值
+        * get方法
+            * get(obj):obj：指明获取那个对象的属性
+
+    2. 实例
+        Class clazz = Person.class;
+        Person p = (Person)clazz.newInstance();
+        Filed filed = clazz.getDeclaredFiled(&quot;age&quot;);
+        filed.setAccessible(true);
+        filed.set(p,&quot;11111&quot;);
+
+2. 获取指定的方法
+    方法：
+        getDeclaredMethod(name,param): 参数1：获取的方法的名称，参数2：获取的方法的形参列表
+            可以访问，但是如果想要访问私有属性，必须显式
+            &lt;方法名&gt;.setAccessible(true);
+
+        &lt;方法名&gt;.invoke(obj,value):参数1:方法的调用者，参数2(可变形参)：赋值的实参
+            invoke()方法的返回值为类中调用方法的返回值，
+                如果调用的方法没有返回值，那么返回值为null
+
+    1. 实例</code></pre><blockquote>
+<pre><code>//1.获取指定的方法名
+Method method = clazz.getDeclaredMethod(&quot;compareTo&quot;, String.class);
+//2.确定当前方法是可以访问的
+method.setAccessible(true);
+//3.调用方法
+method.invoke(p,&quot;HHHHH&quot;);   //p.show(&quot;HHHHH&quot;)</code></pre></blockquote>
+<pre><code>2. 调用静态方法
+    invoke(null)
+    invoke(Person.class)</code></pre>]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>spring</title>
+    <url>/2020/09/09/spring/</url>
+    <content><![CDATA[<h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><h3 id="1-什么是spring："><a href="#1-什么是spring：" class="headerlink" title="1. 什么是spring："></a>1. 什么是spring：</h3><pre><code>1. 分层的Java SE/EE的轻量级开源框架
+2. 提供了展现层Spring MVC 和持久层Spring JDBC以及业务层事务管理的众多技术
+3. 展现层和持久层的中间部分，业务层</code></pre><h3 id="2-spring的核心："><a href="#2-spring的核心：" class="headerlink" title="2. spring的核心："></a>2. spring的核心：</h3><pre><code>1. IoC（Inverse of Control）: 反转控制
+2. AOP（Aspect Oriented Programming）: 面向切面编程</code></pre><h3 id="3-发展历程和优势"><a href="#3-发展历程和优势" class="headerlink" title="3.发展历程和优势"></a>3.发展历程和优势</h3><pre><code>spring优势：
+    1. 方便解耦，简化开发
+    2. AOP编程的支持
+    3. 声明式事务的支持
+    4. 方便程序的测试
+    5. 方便集成各种优秀的框架</code></pre><h2 id="程序的耦合和解耦"><a href="#程序的耦合和解耦" class="headerlink" title="程序的耦合和解耦"></a>程序的耦合和解耦</h2><h4 id="耦合"><a href="#耦合" class="headerlink" title="耦合"></a>耦合</h4><pre><code>1. 什么是耦合：
+    程序之间的依赖关系：
+        * 类之间的依赖关系
+        * 方法之间的依赖关系
+
+2. 开发中的做法：
+    编译期不依赖，运行时依赖
+
+3. 方法：
+    1. 使用反射（reflection）来创建对象，而不是使用new关键字
+        * 使用反射，如果字符串写死，以后无法再次使用别的数据库配置
+    2. 使用读取配置文件来获取要创建的对象的全限定名称
+        使用类加载器，获取配置文件的输入流</code></pre><h4 id="解耦"><a href="#解耦" class="headerlink" title="解耦"></a>解耦</h4><pre><code>1. 什么是解耦：
+    降低程序之间的依赖关系
+
+2. 解耦的方式：使用工厂模式创建Bean对象
+     * 创建bean对象的工厂
+      * bean: 可重用组件
+      * javaBean &gt; 实体类
+      * javaBean 用java语言编写的可重用组件
+
+3. 如何创建工厂模式
+    1. 读取配置文件来反射bean对象
+    2. 配置文件来创建service和dao
+        唯一标识=全限定类名，key == value，根据对应的value创建实例对象</code></pre><h2 id="基于XML的IoC配置"><a href="#基于XML的IoC配置" class="headerlink" title="基于XML的IoC配置"></a>基于XML的IoC配置</h2><h2 id="基于注解的IoC配置"><a href="#基于注解的IoC配置" class="headerlink" title="基于注解的IoC配置"></a>基于注解的IoC配置</h2><h2 id="spring的AOP"><a href="#spring的AOP" class="headerlink" title="spring的AOP"></a>spring的AOP</h2><h2 id="基于XML和注解的AOP配置"><a href="#基于XML和注解的AOP配置" class="headerlink" title="基于XML和注解的AOP配置"></a>基于XML和注解的AOP配置</h2><h2 id="JdbcTemlate"><a href="#JdbcTemlate" class="headerlink" title="JdbcTemlate"></a>JdbcTemlate</h2><h2 id="事务控制"><a href="#事务控制" class="headerlink" title="事务控制"></a>事务控制</h2>]]></content>
+      <tags>
+        <tag>spring</tag>
       </tags>
   </entry>
   <entry>

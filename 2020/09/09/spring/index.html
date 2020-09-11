@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="浊酒一杯的博客">
 <meta property="og:description" content="一、概述1. 什么是spring：1. 分层的Java SE&#x2F;EE的轻量级开源框架 2. 提供了展现层Spring MVC 和持久层Spring JDBC以及业务层事务管理的众多技术 3. 展现层和持久层的中间部分，业务层2. spring的核心：1. IoC（Inverse of Control）: 反转控制 2. AOP（Aspect Oriented Programming）: 面向切面编程">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-10T13:09:30.011Z">
+<meta property="og:updated_time" content="2020-09-11T13:10:36.840Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -356,7 +356,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  326
+                  446
                 </span>
               
 
@@ -398,10 +398,22 @@
     编译期不依赖，运行时依赖
 
 3. 方法：
-    1. 使用反射来创建对象，而不是使用new关键字
+    1. 使用反射（reflection）来创建对象，而不是使用new关键字
         * 使用反射，如果字符串写死，以后无法再次使用别的数据库配置
-    2. 使用读取配置文件来获取要创建的对象的全限定名称</code></pre><h4 id="解耦"><a href="#解耦" class="headerlink" title="解耦"></a>解耦</h4><pre><code>1. 什么是解耦：
-    降低程序之间的依赖关系</code></pre><h2 id="基于XML的IoC配置"><a href="#基于XML的IoC配置" class="headerlink" title="基于XML的IoC配置"></a>基于XML的IoC配置</h2><h2 id="基于注解的IoC配置"><a href="#基于注解的IoC配置" class="headerlink" title="基于注解的IoC配置"></a>基于注解的IoC配置</h2><h2 id="spring的AOP"><a href="#spring的AOP" class="headerlink" title="spring的AOP"></a>spring的AOP</h2><h2 id="基于XML和注解的AOP配置"><a href="#基于XML和注解的AOP配置" class="headerlink" title="基于XML和注解的AOP配置"></a>基于XML和注解的AOP配置</h2><h2 id="JdbcTemlate"><a href="#JdbcTemlate" class="headerlink" title="JdbcTemlate"></a>JdbcTemlate</h2><h2 id="事务控制"><a href="#事务控制" class="headerlink" title="事务控制"></a>事务控制</h2>
+    2. 使用读取配置文件来获取要创建的对象的全限定名称
+        使用类加载器，获取配置文件的输入流</code></pre><h4 id="解耦"><a href="#解耦" class="headerlink" title="解耦"></a>解耦</h4><pre><code>1. 什么是解耦：
+    降低程序之间的依赖关系
+
+2. 解耦的方式：使用工厂模式创建Bean对象
+     * 创建bean对象的工厂
+      * bean: 可重用组件
+      * javaBean &gt; 实体类
+      * javaBean 用java语言编写的可重用组件
+
+3. 如何创建工厂模式
+    1. 读取配置文件来反射bean对象
+    2. 配置文件来创建service和dao
+        唯一标识=全限定类名，key == value，根据对应的value创建实例对象</code></pre><h2 id="基于XML的IoC配置"><a href="#基于XML的IoC配置" class="headerlink" title="基于XML的IoC配置"></a>基于XML的IoC配置</h2><h2 id="基于注解的IoC配置"><a href="#基于注解的IoC配置" class="headerlink" title="基于注解的IoC配置"></a>基于注解的IoC配置</h2><h2 id="spring的AOP"><a href="#spring的AOP" class="headerlink" title="spring的AOP"></a>spring的AOP</h2><h2 id="基于XML和注解的AOP配置"><a href="#基于XML和注解的AOP配置" class="headerlink" title="基于XML和注解的AOP配置"></a>基于XML和注解的AOP配置</h2><h2 id="JdbcTemlate"><a href="#JdbcTemlate" class="headerlink" title="JdbcTemlate"></a>JdbcTemlate</h2><h2 id="事务控制"><a href="#事务控制" class="headerlink" title="事务控制"></a>事务控制</h2>
       
     </div>
     
@@ -571,7 +583,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -638,7 +650,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">12.8k</span>
+    <span title="Site words total count">12.9k</span>
   
 </div>
 
