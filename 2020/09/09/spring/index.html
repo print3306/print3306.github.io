@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="一、概述1. 什么是spring：1. 分层的Java SE&#x2F;EE的轻量级开源框架 2. 提供了展现层Spring MVC 和持久层Spring JDBC以及业务层事务管理的众多技术 3. 展现层和持久层的中间部分，业务层2. spring的核心：1. IoC（Inverse of Control）: 反转控制 2. AOP（Aspect Oriented Programming）: 面向切面编程">
+<meta name="description" content="一、概述1. 什么是spring：1. 分层的Java SE&#x2F;EE的轻量级开源框架 2. 提供了展现层Spring MVC 和持久层Spring JDBC以及业务层事务管理的众多技术 3. 展现层和持久层的中间部分，业务层2. spring的核心：1. IoC（Inversion of Control）: 控制反转 2. AOP（Aspect Oriented Programming）: 面向切面">
 <meta name="keywords" content="spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring">
 <meta property="og:url" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;09&#x2F;spring&#x2F;index.html">
 <meta property="og:site_name" content="浊酒一杯的博客">
-<meta property="og:description" content="一、概述1. 什么是spring：1. 分层的Java SE&#x2F;EE的轻量级开源框架 2. 提供了展现层Spring MVC 和持久层Spring JDBC以及业务层事务管理的众多技术 3. 展现层和持久层的中间部分，业务层2. spring的核心：1. IoC（Inverse of Control）: 反转控制 2. AOP（Aspect Oriented Programming）: 面向切面编程">
+<meta property="og:description" content="一、概述1. 什么是spring：1. 分层的Java SE&#x2F;EE的轻量级开源框架 2. 提供了展现层Spring MVC 和持久层Spring JDBC以及业务层事务管理的众多技术 3. 展现层和持久层的中间部分，业务层2. spring的核心：1. IoC（Inversion of Control）: 控制反转 2. AOP（Aspect Oriented Programming）: 面向切面">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-11T13:10:36.840Z">
+<meta property="og:updated_time" content="2020-09-12T12:46:44.634Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -335,6 +335,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -356,7 +378,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  446
+                  2.2k
                 </span>
               
 
@@ -383,7 +405,7 @@
       
         <h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><h3 id="1-什么是spring："><a href="#1-什么是spring：" class="headerlink" title="1. 什么是spring："></a>1. 什么是spring：</h3><pre><code>1. 分层的Java SE/EE的轻量级开源框架
 2. 提供了展现层Spring MVC 和持久层Spring JDBC以及业务层事务管理的众多技术
-3. 展现层和持久层的中间部分，业务层</code></pre><h3 id="2-spring的核心："><a href="#2-spring的核心：" class="headerlink" title="2. spring的核心："></a>2. spring的核心：</h3><pre><code>1. IoC（Inverse of Control）: 反转控制
+3. 展现层和持久层的中间部分，业务层</code></pre><h3 id="2-spring的核心："><a href="#2-spring的核心：" class="headerlink" title="2. spring的核心："></a>2. spring的核心：</h3><pre><code>1. IoC（Inversion of Control）: 控制反转
 2. AOP（Aspect Oriented Programming）: 面向切面编程</code></pre><h3 id="3-发展历程和优势"><a href="#3-发展历程和优势" class="headerlink" title="3.发展历程和优势"></a>3.发展历程和优势</h3><pre><code>spring优势：
     1. 方便解耦，简化开发
     2. AOP编程的支持
@@ -398,22 +420,170 @@
     编译期不依赖，运行时依赖
 
 3. 方法：
-    1. 使用反射（reflection）来创建对象，而不是使用new关键字
-        * 使用反射，如果字符串写死，以后无法再次使用别的数据库配置
-    2. 使用读取配置文件来获取要创建的对象的全限定名称
-        使用类加载器，获取配置文件的输入流</code></pre><h4 id="解耦"><a href="#解耦" class="headerlink" title="解耦"></a>解耦</h4><pre><code>1. 什么是解耦：
+    1. 使用读取配置文件来获取要创建的对象的全限定名称
+        使用类加载器，获取配置文件的输入流
+    2. 使用反射（reflection）来创建对象，而不是使用new关键字
+        * 使用反射，如果字符串写死，以后无法再次使用别的数据库配置</code></pre><h4 id="解耦"><a href="#解耦" class="headerlink" title="解耦"></a>解耦</h4><pre><code>1. 什么是解耦：
     降低程序之间的依赖关系
 
 2. 解耦的方式：使用工厂模式创建Bean对象
-     * 创建bean对象的工厂
       * bean: 可重用组件
       * javaBean &gt; 实体类
       * javaBean 用java语言编写的可重用组件
+      * beanfactory：创建bean对象的工厂
 
 3. 如何创建工厂模式
     1. 读取配置文件来反射bean对象
     2. 配置文件来创建service和dao
-        唯一标识=全限定类名，key == value，根据对应的value创建实例对象</code></pre><h2 id="基于XML的IoC配置"><a href="#基于XML的IoC配置" class="headerlink" title="基于XML的IoC配置"></a>基于XML的IoC配置</h2><h2 id="基于注解的IoC配置"><a href="#基于注解的IoC配置" class="headerlink" title="基于注解的IoC配置"></a>基于注解的IoC配置</h2><h2 id="spring的AOP"><a href="#spring的AOP" class="headerlink" title="spring的AOP"></a>spring的AOP</h2><h2 id="基于XML和注解的AOP配置"><a href="#基于XML和注解的AOP配置" class="headerlink" title="基于XML和注解的AOP配置"></a>基于XML和注解的AOP配置</h2><h2 id="JdbcTemlate"><a href="#JdbcTemlate" class="headerlink" title="JdbcTemlate"></a>JdbcTemlate</h2><h2 id="事务控制"><a href="#事务控制" class="headerlink" title="事务控制"></a>事务控制</h2>
+        唯一标识=全限定类名，key = value，根据对应的value创建实例对象</code></pre><h2 id="IoC（Inversion-of-Control）"><a href="#IoC（Inversion-of-Control）" class="headerlink" title="IoC（Inversion of Control）"></a>IoC（Inversion of Control）</h2><pre><code>1. 概念：
+    把创建对象的权力交给框架，是框架的重要特征，包括依赖注入（Dependency Injection,DI）和依赖查找（Dependency Lookup）
+
+2. 作用
+    * 降低程序之间的耦合度
+    * 将类中的对象创建工作交给spring框架来完成，只要获取该对象就可以了
+    * 使用依赖注入进行属性值的填充，在创建对象的同时完成赋值</code></pre><h3 id="基于XML的IoC配置"><a href="#基于XML的IoC配置" class="headerlink" title="基于XML的IoC配置"></a>基于XML的IoC配置</h3><h4 id="初步使用"><a href="#初步使用" class="headerlink" title="初步使用"></a>初步使用</h4><pre><code>1. 步骤
+    * 读取配置文件创建IoC容器（ApplicationContext）
+    * 根据id，获取容器中的文件
+
+2. 配置文件的内容
+    * 主要是&lt;bean&gt;标签，id:查找对象的唯一标识符，class:要创建的对象的全限定类名
+
+3. 读取配置文件创建容器
+    ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;bean.xml&quot;);
+    根据类路径下的xml配置文件创建容器，配置文件需要放置在类路径下
+
+    ApplicationContext ac = new FileSystemXmlApplicationContext(&quot;bean.xml&quot;);
+    可以加载磁盘任意路径下的配置文件
+
+    ApplicationContext ac = new AnnotationConfigApplicationContext(&quot;bean.xml&quot;);
+    根据注解配置创建容器
+
+4. 根据id获取对象
+    as.getBean(&quot;id&quot;);</code></pre><h4 id="BeanFactory和ApplicationContext"><a href="#BeanFactory和ApplicationContext" class="headerlink" title="BeanFactory和ApplicationContext"></a>BeanFactory和ApplicationContext</h4><pre><code>1. Beanfactory接口
+    * 创建核心容器时，创建对象的方式采用延迟加载的方式，什么时候根据ID获取对象的时候，什么时候开始创建真正的对象
+     * 多例模式适用
+
+2. ApplicationContext接口
+    * 创建核心容器时，创建对象的方式采用立即加载的方式，只要一读取完配置文件马上创建配置文件中的对象
+     * 单例模式时适用：只创建一个对象
+
+3. 具体的使用
+    BeanFactory是顶层接口，功能不如ApplicationContext，实际使用的接口为ApplicationContext接口
+
+    ApplicationContext可以根据配置文件的不同，选择合适的加载方式
+    可以感知到对象的单例还是多例，从而选择不同的方式创建对象</code></pre><h4 id="spring对bean对象的管理细节"><a href="#spring对bean对象的管理细节" class="headerlink" title="spring对bean对象的管理细节"></a>spring对bean对象的管理细节</h4><h5 id="1-创建bean的三种方式"><a href="#1-创建bean的三种方式" class="headerlink" title="1. 创建bean的三种方式"></a>1. 创建bean的三种方式</h5><pre><code>1. 使用默认构造函数创建：
+   在spring的配置文件中使用bean标签，配以id 和 class属性，且没有其他的属性和标签时
+   采用的就是默认构造函数创建bean对象(Class类的实例反射)，如果此时没有默认构造函数，则无法创建</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.spring_03_IoC_bean.service.impl.AccountServiceImpl&quot;/&gt;</code></pre></blockquote>
+<pre><code>2. 使用普通工厂中的方法创建对象
+    使用某个类中的方法创建对象，并存入spring容器中</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;instanceFactory&quot; class=&quot;com.spring_03_IoC_bean.factory.InstanceFactory&quot;/&gt;
+&lt;bean id=&quot;accountService&quot; factory-bean=&quot;instanceFactory&quot; factory-method=&quot;getAccountService&quot;/&gt;</code></pre></blockquote>
+<pre><code>3. 使用工厂的静态方法创建对象（
+    使用某个类的静态方法创建对象(可以不创建该对象)，并将其存入spring容器</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.spring_03_IoC_bean.factory.StaticFactory&quot; factory-method=&quot;getAccountService&quot;/&gt;</code></pre></blockquote>
+<h5 id="2-bean对象的作用范围"><a href="#2-bean对象的作用范围" class="headerlink" title="2. bean对象的作用范围"></a>2. bean对象的作用范围</h5><pre><code>1. bean标签的scope属性规定bean对象的范围
+2. 类型
+    * singleton: 单例模式（默认）
+    * prototype：多例模式
+    * requset:web应用的一次请求
+    * session：web应用中的一次会话
+    * global-session：web应用中的全局会话</code></pre><h5 id="3-bean对象的生命周期"><a href="#3-bean对象的生命周期" class="headerlink" title="3. bean对象的生命周期"></a>3. bean对象的生命周期</h5><pre><code>1. 单例对象：singleton
+  出生：当容器创建时，对象出生
+  活着：只要容器还在，对象活着
+  死亡：容器销毁，对象死亡
+2. 多例对象：prototype
+  出生：当使用对象时，spring框架创建
+  活着：只要在使用的时候一直存在
+  死亡：只有在对象长时间不用，且没有其他的对象引用的时候，由垃圾回收机制回收</code></pre><h4 id="依赖注入（dependency-injection-DI）"><a href="#依赖注入（dependency-injection-DI）" class="headerlink" title="依赖注入（dependency injection:DI）"></a>依赖注入（dependency injection:DI）</h4><pre><code>1. 什么是依赖？    
+    当前类中引用到其他类的对象，叫做依赖。
+    在spring框架中，依赖对象由框架提供，我们只需要提供配置文件的说明（IoC方式）
+
+2. spring降低程序之间的依赖关系?
+    IoC控制反转
+    依赖注入
+
+3. 依赖注入的数据类型：
+    1. 基本数据类型和String类型
+    2. 其他bean对象
+    3. 复杂类型（集合类型）
+
+4. 依赖注入的方式：
+    1. 通过默认构造函数注入依赖
+    2. 使用set方法注入 ***
+    3. 通过注解注入</code></pre><h5 id="1-通过默认构造函数注入"><a href="#1-通过默认构造函数注入" class="headerlink" title="1. 通过默认构造函数注入"></a>1. 通过默认构造函数注入</h5><pre><code>标签：constructor-arg
+位置：bean中的内部
+属性含义：
+    type: 指定要注入的数据类型，该数据类型是构造函数的某个或者某些参数的类型
+    index: 指定要注入数据给构造函数的参数指定索引的位置的赋值
+    name: 用于指定给构造函数的指定名称的参数赋值（主要方式）
+    ===================指定给构造函数的那个参数赋值=======================
+
+    value: 提供基本类型和String类型的数据
+    ref: 指定其他的bean类型的数据，在spring的IoC的核心容器中的bean对象
+
+优势：
+    在获取bean对象时，注入数据是必须的操作，否则对象无法创建成功
+缺点：
+    改变了bean对象的实例化方式，在我们创建对象时，即使用不到这些数据，也必须提供数据</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.spring_03_DI.service.impl.AccountServiceImpl&quot;&gt;
+    &lt;constructor-arg name=&quot;name&quot; value=&quot;李某&quot;/&gt;
+    &lt;constructor-arg name=&quot;age&quot; value=&quot;23&quot;/&gt;
+    &lt;constructor-arg name=&quot;birthday&quot; ref=&quot;now&quot;/&gt;
+&lt;/bean&gt;</code></pre></blockquote>
+<blockquote>
+<pre><code>&lt;!-- 配置一个日期对象 --&gt;
+&lt;bean id=&quot;now&quot; class=&quot;java.util.Date&quot;/&gt;</code></pre></blockquote>
+<h5 id="2-使用set进行依赖注入"><a href="#2-使用set进行依赖注入" class="headerlink" title="2. 使用set进行依赖注入"></a>2. 使用set进行依赖注入</h5><pre><code>标签：property
+位置：bean标签内部
+参数：
+    name:    指定注入的时候的方法的名称
+    value:     指定基本数据类型和String类型
+    ref:     指定其他的bean类型的数据，只要是在spring核心容器中的bean对象都可以
+
+优势：创建bean对象的时候，可以直接使用默认构造函数
+   缺点：
+      如果某个成员必须有值，获取对象的set方法可能没有执行</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;accountService2&quot; class=&quot;com.spring_03_DI.service.impl.AccountServiceImpl2&quot;&gt;
+    &lt;property name=&quot;name&quot; value=&quot;test&quot;/&gt;
+    &lt;property name=&quot;age&quot; value=&quot;22&quot;/&gt;
+    &lt;property name=&quot;birthday&quot; ref=&quot;now&quot;/&gt;
+&lt;/bean&gt;</code></pre></blockquote>
+<blockquote>
+<pre><code>&lt;!-- 配置一个日期对象 --&gt;
+&lt;bean id=&quot;now&quot; class=&quot;java.util.Date&quot;/&gt;</code></pre></blockquote>
+<h5 id="3-使用注解进行依赖注入"><a href="#3-使用注解进行依赖注入" class="headerlink" title="3. 使用注解进行依赖注入"></a>3. 使用注解进行依赖注入</h5><h5 id="4-注入复杂数据类型"><a href="#4-注入复杂数据类型" class="headerlink" title="4. 注入复杂数据类型"></a>4. 注入复杂数据类型</h5><pre><code>List Set      
+Map Properties
+
+标签：property
+位置：property内部
+其中：只要数据集合的结构相同，可以使用同一种标签进行依赖注入
+    list set arrsy: 都可以使用&lt;list&gt;,&lt;array&gt;,&lt;set&gt;，序列格式
+    map property:&lt;map&gt;,&lt;pros&gt;，键值对格式</code></pre><blockquote>
+<pre><code>private String[] myStr;
+private List&lt;StringmyList;
+private Set&lt;StringmySet;
+private Map&lt;String,StringmyMap;
+private Properties myProp;</code></pre></blockquote>
+<pre><code>具体的调用方法</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;accountService3&quot; class=&quot;com.spring_03_DI.service.impl.AccountServiceImpl3&quot;&gt;
+&lt;property name=&quot;myStr&quot;&gt;
+  &lt;array&gt;
+    &lt;value&gt;AAA&lt;/value&gt;
+    &lt;value&gt;VVVDDD&lt;/value&gt;
+    &lt;value&gt;SS&lt;/value&gt;
+    &lt;value&gt;SSDDD&lt;/value&gt;
+  &lt;/array&gt;
+&lt;/property&gt;
+&lt;!-- map --&gt;
+&lt;property name=&quot;myMap&quot;&gt;
+  &lt;map&gt;
+    &lt;entry key=&quot;1&quot; value=&quot;11111&quot;/&gt;
+    &lt;entry key=&quot;2&quot; value=&quot;22222&quot;/&gt;
+  &lt;/map&gt;
+&lt;/property&gt;</code></pre>  
+</blockquote>
+<h3 id="基于注解的IoC配置"><a href="#基于注解的IoC配置" class="headerlink" title="基于注解的IoC配置"></a>基于注解的IoC配置</h3><h2 id="spring的AOP"><a href="#spring的AOP" class="headerlink" title="spring的AOP"></a>spring的AOP</h2><h3 id="基于XML和注解的AOP配置"><a href="#基于XML和注解的AOP配置" class="headerlink" title="基于XML和注解的AOP配置"></a>基于XML和注解的AOP配置</h3><h2 id="JdbcTemlate"><a href="#JdbcTemlate" class="headerlink" title="JdbcTemlate"></a>JdbcTemlate</h2><h2 id="事务控制"><a href="#事务控制" class="headerlink" title="事务控制"></a>事务控制</h2>
       
     </div>
     
@@ -572,7 +742,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -615,7 +785,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、概述"><span class="nav-number">1.</span> <span class="nav-text">一、概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是spring："><span class="nav-number">1.1.</span> <span class="nav-text">1. 什么是spring：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-spring的核心："><span class="nav-number">1.2.</span> <span class="nav-text">2. spring的核心：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-发展历程和优势"><span class="nav-number">1.3.</span> <span class="nav-text">3.发展历程和优势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的耦合和解耦"><span class="nav-number">2.</span> <span class="nav-text">程序的耦合和解耦</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#耦合"><span class="nav-number">2.0.1.</span> <span class="nav-text">耦合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解耦"><span class="nav-number">2.0.2.</span> <span class="nav-text">解耦</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于XML的IoC配置"><span class="nav-number">3.</span> <span class="nav-text">基于XML的IoC配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于注解的IoC配置"><span class="nav-number">4.</span> <span class="nav-text">基于注解的IoC配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring的AOP"><span class="nav-number">5.</span> <span class="nav-text">spring的AOP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于XML和注解的AOP配置"><span class="nav-number">6.</span> <span class="nav-text">基于XML和注解的AOP配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JdbcTemlate"><span class="nav-number">7.</span> <span class="nav-text">JdbcTemlate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务控制"><span class="nav-number">8.</span> <span class="nav-text">事务控制</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、概述"><span class="nav-number">1.</span> <span class="nav-text">一、概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是spring："><span class="nav-number">1.1.</span> <span class="nav-text">1. 什么是spring：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-spring的核心："><span class="nav-number">1.2.</span> <span class="nav-text">2. spring的核心：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-发展历程和优势"><span class="nav-number">1.3.</span> <span class="nav-text">3.发展历程和优势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的耦合和解耦"><span class="nav-number">2.</span> <span class="nav-text">程序的耦合和解耦</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#耦合"><span class="nav-number">2.0.1.</span> <span class="nav-text">耦合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解耦"><span class="nav-number">2.0.2.</span> <span class="nav-text">解耦</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IoC（Inversion-of-Control）"><span class="nav-number">3.</span> <span class="nav-text">IoC（Inversion of Control）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于XML的IoC配置"><span class="nav-number">3.1.</span> <span class="nav-text">基于XML的IoC配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初步使用"><span class="nav-number">3.1.1.</span> <span class="nav-text">初步使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BeanFactory和ApplicationContext"><span class="nav-number">3.1.2.</span> <span class="nav-text">BeanFactory和ApplicationContext</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#spring对bean对象的管理细节"><span class="nav-number">3.1.3.</span> <span class="nav-text">spring对bean对象的管理细节</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-创建bean的三种方式"><span class="nav-number">3.1.3.1.</span> <span class="nav-text">1. 创建bean的三种方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-bean对象的作用范围"><span class="nav-number">3.1.3.2.</span> <span class="nav-text">2. bean对象的作用范围</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-bean对象的生命周期"><span class="nav-number">3.1.3.3.</span> <span class="nav-text">3. bean对象的生命周期</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#依赖注入（dependency-injection-DI）"><span class="nav-number">3.1.4.</span> <span class="nav-text">依赖注入（dependency injection:DI）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-通过默认构造函数注入"><span class="nav-number">3.1.4.1.</span> <span class="nav-text">1. 通过默认构造函数注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-使用set进行依赖注入"><span class="nav-number">3.1.4.2.</span> <span class="nav-text">2. 使用set进行依赖注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-使用注解进行依赖注入"><span class="nav-number">3.1.4.3.</span> <span class="nav-text">3. 使用注解进行依赖注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-注入复杂数据类型"><span class="nav-number">3.1.4.4.</span> <span class="nav-text">4. 注入复杂数据类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于注解的IoC配置"><span class="nav-number">3.2.</span> <span class="nav-text">基于注解的IoC配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring的AOP"><span class="nav-number">4.</span> <span class="nav-text">spring的AOP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于XML和注解的AOP配置"><span class="nav-number">4.1.</span> <span class="nav-text">基于XML和注解的AOP配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JdbcTemlate"><span class="nav-number">5.</span> <span class="nav-text">JdbcTemlate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务控制"><span class="nav-number">6.</span> <span class="nav-text">事务控制</span></a></li></ol></div>
             
 
           </div>
@@ -650,7 +820,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">12.9k</span>
+    <span title="Site words total count">14.7k</span>
   
 </div>
 

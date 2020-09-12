@@ -320,6 +320,471 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
       </tags>
   </entry>
   <entry>
+    <title>spring</title>
+    <url>/2020/09/09/spring/</url>
+    <content><![CDATA[<h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><h3 id="1-什么是spring："><a href="#1-什么是spring：" class="headerlink" title="1. 什么是spring："></a>1. 什么是spring：</h3><pre><code>1. 分层的Java SE/EE的轻量级开源框架
+2. 提供了展现层Spring MVC 和持久层Spring JDBC以及业务层事务管理的众多技术
+3. 展现层和持久层的中间部分，业务层</code></pre><h3 id="2-spring的核心："><a href="#2-spring的核心：" class="headerlink" title="2. spring的核心："></a>2. spring的核心：</h3><pre><code>1. IoC（Inversion of Control）: 控制反转
+2. AOP（Aspect Oriented Programming）: 面向切面编程</code></pre><h3 id="3-发展历程和优势"><a href="#3-发展历程和优势" class="headerlink" title="3.发展历程和优势"></a>3.发展历程和优势</h3><pre><code>spring优势：
+    1. 方便解耦，简化开发
+    2. AOP编程的支持
+    3. 声明式事务的支持
+    4. 方便程序的测试
+    5. 方便集成各种优秀的框架</code></pre><h2 id="程序的耦合和解耦"><a href="#程序的耦合和解耦" class="headerlink" title="程序的耦合和解耦"></a>程序的耦合和解耦</h2><h4 id="耦合"><a href="#耦合" class="headerlink" title="耦合"></a>耦合</h4><pre><code>1. 什么是耦合：
+    程序之间的依赖关系：
+        * 类之间的依赖关系
+        * 方法之间的依赖关系
+
+2. 开发中的做法：
+    编译期不依赖，运行时依赖
+
+3. 方法：
+    1. 使用读取配置文件来获取要创建的对象的全限定名称
+        使用类加载器，获取配置文件的输入流
+    2. 使用反射（reflection）来创建对象，而不是使用new关键字
+        * 使用反射，如果字符串写死，以后无法再次使用别的数据库配置</code></pre><h4 id="解耦"><a href="#解耦" class="headerlink" title="解耦"></a>解耦</h4><pre><code>1. 什么是解耦：
+    降低程序之间的依赖关系
+
+2. 解耦的方式：使用工厂模式创建Bean对象
+      * bean: 可重用组件
+      * javaBean &gt; 实体类
+      * javaBean 用java语言编写的可重用组件
+      * beanfactory：创建bean对象的工厂
+
+3. 如何创建工厂模式
+    1. 读取配置文件来反射bean对象
+    2. 配置文件来创建service和dao
+        唯一标识=全限定类名，key = value，根据对应的value创建实例对象</code></pre><h2 id="IoC（Inversion-of-Control）"><a href="#IoC（Inversion-of-Control）" class="headerlink" title="IoC（Inversion of Control）"></a>IoC（Inversion of Control）</h2><pre><code>1. 概念：
+    把创建对象的权力交给框架，是框架的重要特征，包括依赖注入（Dependency Injection,DI）和依赖查找（Dependency Lookup）
+
+2. 作用
+    * 降低程序之间的耦合度
+    * 将类中的对象创建工作交给spring框架来完成，只要获取该对象就可以了
+    * 使用依赖注入进行属性值的填充，在创建对象的同时完成赋值</code></pre><h3 id="基于XML的IoC配置"><a href="#基于XML的IoC配置" class="headerlink" title="基于XML的IoC配置"></a>基于XML的IoC配置</h3><h4 id="初步使用"><a href="#初步使用" class="headerlink" title="初步使用"></a>初步使用</h4><pre><code>1. 步骤
+    * 读取配置文件创建IoC容器（ApplicationContext）
+    * 根据id，获取容器中的文件
+
+2. 配置文件的内容
+    * 主要是&lt;bean&gt;标签，id:查找对象的唯一标识符，class:要创建的对象的全限定类名
+
+3. 读取配置文件创建容器
+    ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;bean.xml&quot;);
+    根据类路径下的xml配置文件创建容器，配置文件需要放置在类路径下
+
+    ApplicationContext ac = new FileSystemXmlApplicationContext(&quot;bean.xml&quot;);
+    可以加载磁盘任意路径下的配置文件
+
+    ApplicationContext ac = new AnnotationConfigApplicationContext(&quot;bean.xml&quot;);
+    根据注解配置创建容器
+
+4. 根据id获取对象
+    as.getBean(&quot;id&quot;);</code></pre><h4 id="BeanFactory和ApplicationContext"><a href="#BeanFactory和ApplicationContext" class="headerlink" title="BeanFactory和ApplicationContext"></a>BeanFactory和ApplicationContext</h4><pre><code>1. Beanfactory接口
+    * 创建核心容器时，创建对象的方式采用延迟加载的方式，什么时候根据ID获取对象的时候，什么时候开始创建真正的对象
+     * 多例模式适用
+
+2. ApplicationContext接口
+    * 创建核心容器时，创建对象的方式采用立即加载的方式，只要一读取完配置文件马上创建配置文件中的对象
+     * 单例模式时适用：只创建一个对象
+
+3. 具体的使用
+    BeanFactory是顶层接口，功能不如ApplicationContext，实际使用的接口为ApplicationContext接口
+
+    ApplicationContext可以根据配置文件的不同，选择合适的加载方式
+    可以感知到对象的单例还是多例，从而选择不同的方式创建对象</code></pre><h4 id="spring对bean对象的管理细节"><a href="#spring对bean对象的管理细节" class="headerlink" title="spring对bean对象的管理细节"></a>spring对bean对象的管理细节</h4><h5 id="1-创建bean的三种方式"><a href="#1-创建bean的三种方式" class="headerlink" title="1. 创建bean的三种方式"></a>1. 创建bean的三种方式</h5><pre><code>1. 使用默认构造函数创建：
+   在spring的配置文件中使用bean标签，配以id 和 class属性，且没有其他的属性和标签时
+   采用的就是默认构造函数创建bean对象(Class类的实例反射)，如果此时没有默认构造函数，则无法创建</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.spring_03_IoC_bean.service.impl.AccountServiceImpl&quot;/&gt;</code></pre></blockquote>
+<pre><code>2. 使用普通工厂中的方法创建对象
+    使用某个类中的方法创建对象，并存入spring容器中</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;instanceFactory&quot; class=&quot;com.spring_03_IoC_bean.factory.InstanceFactory&quot;/&gt;
+&lt;bean id=&quot;accountService&quot; factory-bean=&quot;instanceFactory&quot; factory-method=&quot;getAccountService&quot;/&gt;</code></pre></blockquote>
+<pre><code>3. 使用工厂的静态方法创建对象（
+    使用某个类的静态方法创建对象(可以不创建该对象)，并将其存入spring容器</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.spring_03_IoC_bean.factory.StaticFactory&quot; factory-method=&quot;getAccountService&quot;/&gt;</code></pre></blockquote>
+<h5 id="2-bean对象的作用范围"><a href="#2-bean对象的作用范围" class="headerlink" title="2. bean对象的作用范围"></a>2. bean对象的作用范围</h5><pre><code>1. bean标签的scope属性规定bean对象的范围
+2. 类型
+    * singleton: 单例模式（默认）
+    * prototype：多例模式
+    * requset:web应用的一次请求
+    * session：web应用中的一次会话
+    * global-session：web应用中的全局会话</code></pre><h5 id="3-bean对象的生命周期"><a href="#3-bean对象的生命周期" class="headerlink" title="3. bean对象的生命周期"></a>3. bean对象的生命周期</h5><pre><code>1. 单例对象：singleton
+  出生：当容器创建时，对象出生
+  活着：只要容器还在，对象活着
+  死亡：容器销毁，对象死亡
+2. 多例对象：prototype
+  出生：当使用对象时，spring框架创建
+  活着：只要在使用的时候一直存在
+  死亡：只有在对象长时间不用，且没有其他的对象引用的时候，由垃圾回收机制回收</code></pre><h4 id="依赖注入（dependency-injection-DI）"><a href="#依赖注入（dependency-injection-DI）" class="headerlink" title="依赖注入（dependency injection:DI）"></a>依赖注入（dependency injection:DI）</h4><pre><code>1. 什么是依赖？    
+    当前类中引用到其他类的对象，叫做依赖。
+    在spring框架中，依赖对象由框架提供，我们只需要提供配置文件的说明（IoC方式）
+
+2. spring降低程序之间的依赖关系?
+    IoC控制反转
+    依赖注入
+
+3. 依赖注入的数据类型：
+    1. 基本数据类型和String类型
+    2. 其他bean对象
+    3. 复杂类型（集合类型）
+
+4. 依赖注入的方式：
+    1. 通过默认构造函数注入依赖
+    2. 使用set方法注入 ***
+    3. 通过注解注入</code></pre><h5 id="1-通过默认构造函数注入"><a href="#1-通过默认构造函数注入" class="headerlink" title="1. 通过默认构造函数注入"></a>1. 通过默认构造函数注入</h5><pre><code>标签：constructor-arg
+位置：bean中的内部
+属性含义：
+    type: 指定要注入的数据类型，该数据类型是构造函数的某个或者某些参数的类型
+    index: 指定要注入数据给构造函数的参数指定索引的位置的赋值
+    name: 用于指定给构造函数的指定名称的参数赋值（主要方式）
+    ===================指定给构造函数的那个参数赋值=======================
+
+    value: 提供基本类型和String类型的数据
+    ref: 指定其他的bean类型的数据，在spring的IoC的核心容器中的bean对象
+
+优势：
+    在获取bean对象时，注入数据是必须的操作，否则对象无法创建成功
+缺点：
+    改变了bean对象的实例化方式，在我们创建对象时，即使用不到这些数据，也必须提供数据</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.spring_03_DI.service.impl.AccountServiceImpl&quot;&gt;
+    &lt;constructor-arg name=&quot;name&quot; value=&quot;李某&quot;/&gt;
+    &lt;constructor-arg name=&quot;age&quot; value=&quot;23&quot;/&gt;
+    &lt;constructor-arg name=&quot;birthday&quot; ref=&quot;now&quot;/&gt;
+&lt;/bean&gt;</code></pre></blockquote>
+<blockquote>
+<pre><code>&lt;!-- 配置一个日期对象 --&gt;
+&lt;bean id=&quot;now&quot; class=&quot;java.util.Date&quot;/&gt;</code></pre></blockquote>
+<h5 id="2-使用set进行依赖注入"><a href="#2-使用set进行依赖注入" class="headerlink" title="2. 使用set进行依赖注入"></a>2. 使用set进行依赖注入</h5><pre><code>标签：property
+位置：bean标签内部
+参数：
+    name:    指定注入的时候的方法的名称
+    value:     指定基本数据类型和String类型
+    ref:     指定其他的bean类型的数据，只要是在spring核心容器中的bean对象都可以
+
+优势：创建bean对象的时候，可以直接使用默认构造函数
+   缺点：
+      如果某个成员必须有值，获取对象的set方法可能没有执行</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;accountService2&quot; class=&quot;com.spring_03_DI.service.impl.AccountServiceImpl2&quot;&gt;
+    &lt;property name=&quot;name&quot; value=&quot;test&quot;/&gt;
+    &lt;property name=&quot;age&quot; value=&quot;22&quot;/&gt;
+    &lt;property name=&quot;birthday&quot; ref=&quot;now&quot;/&gt;
+&lt;/bean&gt;</code></pre></blockquote>
+<blockquote>
+<pre><code>&lt;!-- 配置一个日期对象 --&gt;
+&lt;bean id=&quot;now&quot; class=&quot;java.util.Date&quot;/&gt;</code></pre></blockquote>
+<h5 id="3-使用注解进行依赖注入"><a href="#3-使用注解进行依赖注入" class="headerlink" title="3. 使用注解进行依赖注入"></a>3. 使用注解进行依赖注入</h5><h5 id="4-注入复杂数据类型"><a href="#4-注入复杂数据类型" class="headerlink" title="4. 注入复杂数据类型"></a>4. 注入复杂数据类型</h5><pre><code>List Set      
+Map Properties
+
+标签：property
+位置：property内部
+其中：只要数据集合的结构相同，可以使用同一种标签进行依赖注入
+    list set arrsy: 都可以使用&lt;list&gt;,&lt;array&gt;,&lt;set&gt;，序列格式
+    map property:&lt;map&gt;,&lt;pros&gt;，键值对格式</code></pre><blockquote>
+<pre><code>private String[] myStr;
+private List&lt;StringmyList;
+private Set&lt;StringmySet;
+private Map&lt;String,StringmyMap;
+private Properties myProp;</code></pre></blockquote>
+<pre><code>具体的调用方法</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;accountService3&quot; class=&quot;com.spring_03_DI.service.impl.AccountServiceImpl3&quot;&gt;
+&lt;property name=&quot;myStr&quot;&gt;
+  &lt;array&gt;
+    &lt;value&gt;AAA&lt;/value&gt;
+    &lt;value&gt;VVVDDD&lt;/value&gt;
+    &lt;value&gt;SS&lt;/value&gt;
+    &lt;value&gt;SSDDD&lt;/value&gt;
+  &lt;/array&gt;
+&lt;/property&gt;
+&lt;!-- map --&gt;
+&lt;property name=&quot;myMap&quot;&gt;
+  &lt;map&gt;
+    &lt;entry key=&quot;1&quot; value=&quot;11111&quot;/&gt;
+    &lt;entry key=&quot;2&quot; value=&quot;22222&quot;/&gt;
+  &lt;/map&gt;
+&lt;/property&gt;</code></pre>  
+</blockquote>
+<h3 id="基于注解的IoC配置"><a href="#基于注解的IoC配置" class="headerlink" title="基于注解的IoC配置"></a>基于注解的IoC配置</h3><h2 id="spring的AOP"><a href="#spring的AOP" class="headerlink" title="spring的AOP"></a>spring的AOP</h2><h3 id="基于XML和注解的AOP配置"><a href="#基于XML和注解的AOP配置" class="headerlink" title="基于XML和注解的AOP配置"></a>基于XML和注解的AOP配置</h3><h2 id="JdbcTemlate"><a href="#JdbcTemlate" class="headerlink" title="JdbcTemlate"></a>JdbcTemlate</h2><h2 id="事务控制"><a href="#事务控制" class="headerlink" title="事务控制"></a>事务控制</h2>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>七牛云_Hexo</title>
+    <url>/2020/05/12/%E4%B8%83%E7%89%9B%E4%BA%91-Hexo/</url>
+    <content><![CDATA[<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h2><pre><code>1. 注册七牛云,完成之后就可以进行创建空间，
+2. 注意我们添加的资源为对象存储，访问控制为公开空间
+3. 点击右上角进入密钥管理，复制当前使用的AK和SK，配置的时候会用得到</code></pre><h2 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2. 步骤"></a>2. 步骤</h2><h3 id="2-1-安装插件，进入Hexo主目录，执行："><a href="#2-1-安装插件，进入Hexo主目录，执行：" class="headerlink" title="2.1. 安装插件，进入Hexo主目录，执行："></a>2.1. 安装插件，进入Hexo主目录，执行：</h3><pre><code>`npm install hexo-qiniu-sync --save`</code></pre><h3 id="2-2-配置站点文件-config-yml"><a href="#2-2-配置站点文件-config-yml" class="headerlink" title="2.2. 配置站点文件_config.yml:"></a>2.2. 配置站点文件_config.yml:</h3><blockquote>
+<p>  #plugins:<br>      #- hexo-qiniu-sync<br>    qiniu:<br>      offline: false<br>      sync: true<br>      bucket: bucket_name<br>      access_key: AccessKey<br>      secret_key: SecretKey<br>      dirPrefix:<br>      urlPrefix: <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a><br>      local_dir: cdn<br>      update_exist: true<br>      image:<br>        folder: images<br>        extend:<br>      js:<br>        folder: js<br>      css:<br>        folder: css</p>
+</blockquote>
+<h3 id="2-3-参数"><a href="#2-3-参数" class="headerlink" title="2.3. 参数"></a>2.3. 参数</h3><ul>
+<li><p>bucket ：修改为你刚才申请的七牛空间名称</p>
+</li>
+<li><p>access_key 、 secret_key : 上传密钥AccessKey、SecretKey。即3 第3步复制的AK和SK。</p>
+</li>
+<li><p>urlPrefix : 七牛空间地址的前缀。 重要！必填！ 因为现在七牛已经取消了二级域名，外链前缀类似设置中的 <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a> ，插件不能根据 bucket 自动生成外链前缀了。你可以进入自己创建的空间在域名设置中看到自己的七牛测试域名，也可以查看一个已上传的文件外链地址，确认前缀无误。这个参数的设置是保证解析成网页文件时，外链地址正确的关键之一！<br>  配置参数的说明：</p>
+</li>
+<li><p>offline ：是否离线。设置为 true 将在本地预览时使用本地地址渲染，省流量； false 将使用同步到七牛空间的静态资源渲染，方便检查资源链接是否正确。</p>
+</li>
+<li><p>sync ：是否同步到七牛，一般都是设置 true 啦</p>
+</li>
+<li><p>dirPrefix ：资源将上传到七牛空间的此目录下，可像我一样设置为空。该参数会影响外链的地址，如果设置为非空值，例如默认值 static ，则 urlPrefix 为保持一致需加上目录后缀 /static ，改为 <a href="http://7xqb0u.com1.z0.glb.clouddn.com/static" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com/static</a> 。</p>
+</li>
+<li><p>local_dir ：本地资源储存目录。在本例中，待上传的资源都储存在hexo主目录中的 cdn 文件夹（也就是与 source 目录平级）中。</p>
+</li>
+<li><p>update_exist ：设置为 true ，则会在文件更新之后重新上传并更新七牛空间上中的原有文件。</p>
+</li>
+<li><p>image/js/css ：子参数folder为不同静态资源种类的目录名称，一般不需要改动</p>
+</li>
+<li><p>image.extend ：使用 qnimg 标签引用图片的默认图片处理操作。可以使用 基本图片处理（imageView2）、高级图片处理（imageMogr2）、图片水印处理（watermark） 这三个图片处理接口，多个接口内容之间用 | 间隔。详见 七牛开发者中心-图片处理。</p>
+</li>
+</ul>
+<h2 id="3-使用"><a href="#3-使用" class="headerlink" title="3. 使用"></a>3. 使用</h2><pre><code>1.将图片上传到七牛云，查看照片获取照片的外链
+2.在文章中引用照片外链，markdown格式:*![描述]（外链）*</code></pre><h2 id="4-感谢在使用七牛云时参考的大佬博客："><a href="#4-感谢在使用七牛云时参考的大佬博客：" class="headerlink" title="4. 感谢在使用七牛云时参考的大佬博客："></a>4. 感谢在使用七牛云时参考的大佬博客：</h2><ul>
+<li><a href="http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/" target="_blank" rel="noopener">http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java Reflection（java反射机制）</title>
+    <url>/2020/09/10/reflection/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><pre><code>1. 反射（reflection）：动态语言的关键
+    * 反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性和方法
+    * 加载完类之后，在堆内存的方法区产生一个Class对象（一个类只有一个Class对象），这个对象就包含完整的类的信息，可以通过这个Class对象看到类的结构，通过对象看到类的结构的过程，叫做反射
+
+2. 使用反射的应用
+    * 在运行时判断一个对象所属的类
+    * 在运行时构造任意一个类的对象
+    * 在运行时获取泛型的信息
+    * 在运行时获取私有属性，私有方法
+    * 在运行时父类的信息，父类上的泛型
+    * 在运行时获取接口
+    * 在运行时获取所在包，注解
+    * 。。。
+
+3. 相干的API
+    * java.lang.Class
+    * java.lang.reflect.Method    //方法
+    * java.lang.reflect.Filed    //成员变量    
+    * java.lang.reflect.Constructor        //构造器
+
+4. 反射和封装性
+    * 通过直接new对象，或反射的方式都可以调用公共的结构，具体使用位置？
+        1. 建议直接使用new方式，编译的时候可以确定创建哪个对象
+        2. 编译的时候无法确定创建哪个对象，根据传入的参数进行对象的创建，使用反射的方式：
+            反射机制具有动态性
+
+    * 有了反射机制，与对象的封装性，如何看待两种技术？
+        1. 不矛盾
+        2. 封装性：将对象的属性和方法进行权限限定，暴露出的接口表现用户可以使用的方法，建议用户使用的方法和属性，不建议使用私有方法[建不建议]
+        3. 反射：可以使用的方法，用户强制使用私有的属性和方法[能不能]</code></pre><h2 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h2><h3 id="java-lang-Class的理解"><a href="#java-lang-Class的理解" class="headerlink" title="java.lang.Class的理解"></a>java.lang.Class的理解</h3><pre><code>1. 类的加载过程
+    程序在经过javac.exe命令之后，会生成一个或多个字节码文件（.class）文件，
+    接着使用java.exe命令对某个字节码文件进行解释运行。相当于将字节码文件加载到内存，此过程叫做类的加载。
+    加载到内存中的类，我们称为运行时类，此运行时类，就作为Class类的一个实例。
+
+2. 换句话说，Class的实例就是一个运行时类的对象
+3. 加载到内存的运行时类，会缓存一定的时间。在此时间之内，可以通过不同的方法获取运行时类</code></pre><h3 id="获取Class的实例方式"><a href="#获取Class的实例方式" class="headerlink" title="获取Class的实例方式"></a>获取Class的实例方式</h3><pre><code>1. 方式一：通过运行时类的.class属性获取Class实例
+    Class clazz1 = Person.class();
+    System.Out.Println(clazz1);
+
+2. 方式二：通过运行时类的对象的.getClass()方法获取实例
+    Person person = new Person();
+    Class clazz2 = person.getClass();
+
+3. 方式三：通过Class的.forName(&quot;运行时类的全限定类名&quot;)获取实例
+    Class clazz3 = Class.forName(&quot;全限定类名&quot;)；
+
+4. 方式四：通过类的加载器获取实例
+     ClassLoader classLoader = Reflection.class.getClassLoader();
+    Class clazz4 = classLoader.loadClass(&quot;全限定类名&quot;);
+
+上述的四种Class实例的获取方式，方式一和方式二，都与具体的实现类绑定，在开发中一般使用Class类的.forName()方法获取Class实例对象。</code></pre><h3 id="Class对象的范围"><a href="#Class对象的范围" class="headerlink" title="Class对象的范围"></a>Class对象的范围</h3><pre><code>1. class:各种类对象
+2. interface
+3. []:数组 只要数组的类型和维度相同，就是一个Class对象
+4. enum:枚举
+5. annotation
+6. 基本数据类型
+7. void</code></pre><h2 id="ClassLoader-类加载器"><a href="#ClassLoader-类加载器" class="headerlink" title="ClassLoader(类加载器)"></a>ClassLoader(类加载器)</h2><h3 id="类的加载"><a href="#类的加载" class="headerlink" title="类的加载"></a>类的加载</h3><pre><code>1. 加载：将类的字节码文件读入内存，并为其创建一个java.lang.Class对象，实现类的加载过程
+2. 链接：静态变量初始化为默认值
+3. 初始化：JVM使用构造器方法完成类变量的赋值和静态代码块的语句顺序合并产生数据</code></pre><h3 id="ClassLoader"><a href="#ClassLoader" class="headerlink" title="ClassLoader"></a>ClassLoader</h3><pre><code>1. 将.class加载到内存，将这些静态数据转换成方法区运行时的数据结构，生成Class对象，作为方法区中类数据的访问入口
+2. 类缓存：一旦某个类被加载到类加载器，会在类加载器中维持一段时间，JVM的垃圾回收机制可以回收Class对象
+
+3. 分类
+    * 引导类加载器：C++编写的，主要加载Java的核心类库，用户无法获取到该加载器
+    * 扩展类加载器：加载java/lib/ect中的jar包
+    * 系统类加载器：加载当前程序中的类</code></pre><blockquote>
+<pre><code>//1.对于自定义类，使用系统级类加载器
+ClassLoader classLoader = ClassLoaderTest.class.getClassLoader();
+System.out.println(classLoader);
+
+//2.调用系统类加载器的getParent()，获取扩展类加载器
+ClassLoader classLoader1 = classLoader.getParent();
+System.out.println(classLoader1);
+
+//3.调用扩展类加载器getParent()，无法获取引导类加载器
+//引导类加载器加载java的核心类库
+ClassLoader classLoader2 = classLoader1.getParent();
+System.out.println(classLoader2);</code></pre></blockquote>
+<h2 id="创建运行时类的对象"><a href="#创建运行时类的对象" class="headerlink" title="创建运行时类的对象"></a>创建运行时类的对象</h2><h3 id="反射创建运行时类的对象"><a href="#反射创建运行时类的对象" class="headerlink" title="反射创建运行时类的对象"></a>反射创建运行时类的对象</h3><pre><code>1. 使用.newInstance()方法创建运行时类的对象
+    newInstance:
+        * 调用此方法，创建运行时类的方法
+        * 内部调用运行时类的空参构造器
+        * 如果没有空参构造器，产生异常
+
+2. 满足两个条件
+    * 运行时类必须提供空参的构造器
+    * 访问权限不能为private,通常设置为public</code></pre><h2 id="获取运行时类的完整结构"><a href="#获取运行时类的完整结构" class="headerlink" title="获取运行时类的完整结构"></a>获取运行时类的完整结构</h2><h3 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h3><pre><code>修饰符 返回类型 变量名；
+
+1. 获取所有属性
+    1. 获取当前运行时类的所有属性（getDeclaredFileds）
+        * 不考虑权限问题，不会获取父类的属性</code></pre><blockquote>
+<pre><code>Field[] fields1 = clazz.getDeclaredFields();
+for(Field field:fields1){
+    System.out.println(field);
+}</code></pre></blockquote>
+<pre><code>2. 获取属性包含父类的属性（getFileds）
+    * 获取当前运行时类以及父类的所有权限为public的属性</code></pre><blockquote>
+<pre><code>Field[] fields = clazz.getFields();
+for(Field field:fields){
+    System.out.println(field);
+}        </code></pre></blockquote>
+<pre><code>2. 获取属性的修饰符,数据类型，变量名</code></pre><blockquote>
+<pre><code>Class clazz = Person.class;
+
+//获取当前运行时类的所有属性
+Field[] fields = clazz.getDeclaredFields();
+
+for(Field field:fields){
+//修饰符
+//权限被分配了 整型数据,使用Modifier的方法可以翻译为字符串
+int modifiers = field.getModifiers();
+System.out.print(Modifier.toString(modifiers)+&quot;\t&quot;);
+//数据类型
+Class&lt;?type = field.getType();
+System.out.print(type.getName()+&quot;\t&quot;);
+//属性名
+System.out.println(field.getName());
+}</code></pre></blockquote>
+<p><img src="/2020/09/10/reflection/fields.png" alt="运行时类的属性"></p>
+<h3 id="获取方法"><a href="#获取方法" class="headerlink" title="获取方法"></a>获取方法</h3><pre><code>1. 获取当前运行类声明的所有方法</code></pre><blockquote>
+<pre><code>Method[] methods = clazz.getMethods();
+for(Method method:methods){
+    System.out.println(method);
+}</code></pre></blockquote>
+<pre><code>2. 获取当前运行时类以及所有父类的声明为public权限的方法</code></pre><blockquote>
+<pre><code>Method[] declaredMethods = clazz.getDeclaredMethods();
+for(Method method:declaredMethods){
+    System.out.println(method);
+}</code></pre></blockquote>
+<pre><code>3. 获取方法的修饰符，数据类型，方法名
+    * @Anno
+    * 权限修饰符 返回值类型 方法名(形参列表) Throws Exception{}
+
+    Method[] declaredMethods = clazz.getDeclaredMethods();
+    for(Method method:declaredMethods){
+        System.out.println(&quot;-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+&quot;);
+        //1.注解获取
+        Annotation[] methodAnnotations = method.getAnnotations();
+        for(Annotation anno:methodAnnotations){
+            System.out.print(anno+&quot;\t&quot;);
+        }
+
+        //2.权限修饰符
+        System.out.print(Modifier.toString(method.getModifiers())+&quot;\t&quot;);
+        //3.返回值类型
+        System.out.print(method.getReturnType()+&quot;\t&quot;);
+        //4.方法名
+        System.out.print(method.getName());
+        System.out.print(&quot;(&quot;);
+        //5.形参列表参数
+        Class[] parameterTypes = method.getParameterTypes();
+        if(parameterTypes.length 0){
+            for(int i = 0;i &lt; parameterTypes.length;i++){
+                if(i == parameterTypes.length-1){
+                    System.out.print(parameterTypes[i].getName()+&quot; args_&quot;+i);
+                    break;
+                }
+                System.out.print(parameterTypes[i].getName()+&quot; args_&quot;+i+&quot; , &quot;);
+            }
+        }
+        System.out.print(&quot;)&quot;);
+        //6.获取抛出的异常
+        Class[] exceptionTypes = method.getExceptionTypes();
+        if(exceptionTypes.length 0){
+            System.out.print(&quot; throws &quot;);
+            for(int i = 0;i &lt; exceptionTypes.length;i++){
+                if(i == exceptionTypes.length-1){
+                    System.out.print(exceptionTypes[i].getName());
+                    break;
+                }
+                System.out.print(exceptionTypes[i].getName()+&quot; , &quot;);
+            }
+        }
+        System.out.println(&quot;{&quot;+&quot;\n&quot;+&quot;}&quot;);
+    }</code></pre><h3 id="获取构造器的结构"><a href="#获取构造器的结构" class="headerlink" title="获取构造器的结构"></a>获取构造器的结构</h3><pre><code>1. 当前运行时类的所有的构造器</code></pre><blockquote>
+<pre><code>Constructor&lt;?&gt;[] constructors = clazz.getConstructors();
+for(Constructor c:constructors){
+    System.out.println(c);
+}</code></pre></blockquote>
+<pre><code>2. 当前运行时类的所有public的构造器</code></pre><blockquote>
+<pre><code>Constructor&lt;?&gt;[] constructors = clazz.getDeclaredConstructors();
+for(Constructor c:constructors){
+    System.out.println(c);
+}</code></pre></blockquote>
+<h3 id="获取运行时类的父类"><a href="#获取运行时类的父类" class="headerlink" title="获取运行时类的父类"></a>获取运行时类的父类</h3><pre><code>1. getSuperClass():获取父类
+2. getGenericSuperClass()：获取带有泛型的父类</code></pre><h2 id="调用运行时类的指定结构（方法和属性）"><a href="#调用运行时类的指定结构（方法和属性）" class="headerlink" title="调用运行时类的指定结构（方法和属性）"></a>调用运行时类的指定结构（方法和属性）</h2><pre><code>1. 获取指定的属性
+    方法：
+        getFiled():
+            属性声明必须为public
+        getDeclaredFiled()
+            可以访问，但是如果想要访问私有属性，必须显式
+            &lt;属性名&gt;.setAccessible(true);                
+
+    1. 步骤
+        * 获取Class对象
+        * 创建Class对象的实例
+        * 获取指定的属性
+        * set方法
+            * set(obj,value):obj：指明设置哪个对象的属性 value:设置的值
+        * get方法
+            * get(obj):obj：指明获取那个对象的属性
+
+    2. 实例
+        Class clazz = Person.class;
+        Person p = (Person)clazz.newInstance();
+        Filed filed = clazz.getDeclaredFiled(&quot;age&quot;);
+        filed.setAccessible(true);
+        filed.set(p,&quot;11111&quot;);
+
+2. 获取指定的方法
+    方法：
+        getDeclaredMethod(name,param): 参数1：获取的方法的名称，参数2：获取的方法的形参列表
+            可以访问，但是如果想要访问私有属性，必须显式
+            &lt;方法名&gt;.setAccessible(true);
+
+        &lt;方法名&gt;.invoke(obj,value):参数1:方法的调用者，参数2(可变形参)：赋值的实参
+            invoke()方法的返回值为类中调用方法的返回值，
+                如果调用的方法没有返回值，那么返回值为null
+
+    1. 实例</code></pre><blockquote>
+<pre><code>//1.获取指定的方法名
+Method method = clazz.getDeclaredMethod(&quot;compareTo&quot;, String.class);
+//2.确定当前方法是可以访问的
+method.setAccessible(true);
+//3.调用方法
+method.invoke(p,&quot;HHHHH&quot;);   //p.show(&quot;HHHHH&quot;)</code></pre></blockquote>
+<pre><code>2. 调用静态方法
+    invoke(null)
+    invoke(Person.class)</code></pre>]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MyBatis</title>
     <url>/2020/05/15/mybatis/</url>
     <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><pre><code>1. 什么是框架（Framework）？
@@ -926,320 +1391,6 @@ User findById(Integer id);</code></pre></blockquote>
 ]]></content>
       <tags>
         <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java Reflection（java反射机制）</title>
-    <url>/2020/09/10/reflection/</url>
-    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><pre><code>1. 反射（reflection）：动态语言的关键
-    * 反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性和方法
-    * 加载完类之后，在堆内存的方法区产生一个Class对象（一个类只有一个Class对象），这个对象就包含完整的类的信息，可以通过这个Class对象看到类的结构，通过对象看到类的结构的过程，叫做反射
-
-2. 使用反射的应用
-    * 在运行时判断一个对象所属的类
-    * 在运行时构造任意一个类的对象
-    * 在运行时获取泛型的信息
-    * 在运行时获取私有属性，私有方法
-    * 在运行时父类的信息，父类上的泛型
-    * 在运行时获取接口
-    * 在运行时获取所在包，注解
-    * 。。。
-
-3. 相干的API
-    * java.lang.Class
-    * java.lang.reflect.Method    //方法
-    * java.lang.reflect.Filed    //成员变量    
-    * java.lang.reflect.Constructor        //构造器
-
-4. 反射和封装性
-    * 通过直接new对象，或反射的方式都可以调用公共的结构，具体使用位置？
-        1. 建议直接使用new方式，编译的时候可以确定创建哪个对象
-        2. 编译的时候无法确定创建哪个对象，根据传入的参数进行对象的创建，使用反射的方式：
-            反射机制具有动态性
-
-    * 有了反射机制，与对象的封装性，如何看待两种技术？
-        1. 不矛盾
-        2. 封装性：将对象的属性和方法进行权限限定，暴露出的接口表现用户可以使用的方法，建议用户使用的方法和属性，不建议使用私有方法[建不建议]
-        3. 反射：可以使用的方法，用户强制使用私有的属性和方法[能不能]</code></pre><h2 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h2><h3 id="java-lang-Class的理解"><a href="#java-lang-Class的理解" class="headerlink" title="java.lang.Class的理解"></a>java.lang.Class的理解</h3><pre><code>1. 类的加载过程
-    程序在经过javac.exe命令之后，会生成一个或多个字节码文件（.class）文件，
-    接着使用java.exe命令对某个字节码文件进行解释运行。相当于将字节码文件加载到内存，此过程叫做类的加载。
-    加载到内存中的类，我们称为运行时类，此运行时类，就作为Class类的一个实例。
-
-2. 换句话说，Class的实例就是一个运行时类的对象
-3. 加载到内存的运行时类，会缓存一定的时间。在此时间之内，可以通过不同的方法获取运行时类</code></pre><h3 id="获取Class的实例方式"><a href="#获取Class的实例方式" class="headerlink" title="获取Class的实例方式"></a>获取Class的实例方式</h3><pre><code>1. 方式一：通过运行时类的.class属性获取Class实例
-    Class clazz1 = Person.class();
-    System.Out.Println(clazz1);
-
-2. 方式二：通过运行时类的对象的.getClass()方法获取实例
-    Person person = new Person();
-    Class clazz2 = person.getClass();
-
-3. 方式三：通过Class的.forName(&quot;运行时类的全限定类名&quot;)获取实例
-    Class clazz3 = Class.forName(&quot;全限定类名&quot;)；
-
-4. 方式四：通过类的加载器获取实例
-     ClassLoader classLoader = Reflection.class.getClassLoader();
-    Class clazz4 = classLoader.loadClass(&quot;全限定类名&quot;);
-
-上述的四种Class实例的获取方式，方式一和方式二，都与具体的实现类绑定，在开发中一般使用Class类的.forName()方法获取Class实例对象。</code></pre><h3 id="Class对象的范围"><a href="#Class对象的范围" class="headerlink" title="Class对象的范围"></a>Class对象的范围</h3><pre><code>1. class:各种类对象
-2. interface
-3. []:数组 只要数组的类型和维度相同，就是一个Class对象
-4. enum:枚举
-5. annotation
-6. 基本数据类型
-7. void</code></pre><h2 id="ClassLoader-类加载器"><a href="#ClassLoader-类加载器" class="headerlink" title="ClassLoader(类加载器)"></a>ClassLoader(类加载器)</h2><h3 id="类的加载"><a href="#类的加载" class="headerlink" title="类的加载"></a>类的加载</h3><pre><code>1. 加载：将类的字节码文件读入内存，并为其创建一个java.lang.Class对象，实现类的加载过程
-2. 链接：静态变量初始化为默认值
-3. 初始化：JVM使用构造器方法完成类变量的赋值和静态代码块的语句顺序合并产生数据</code></pre><h3 id="ClassLoader"><a href="#ClassLoader" class="headerlink" title="ClassLoader"></a>ClassLoader</h3><pre><code>1. 将.class加载到内存，将这些静态数据转换成方法区运行时的数据结构，生成Class对象，作为方法区中类数据的访问入口
-2. 类缓存：一旦某个类被加载到类加载器，会在类加载器中维持一段时间，JVM的垃圾回收机制可以回收Class对象
-
-3. 分类
-    * 引导类加载器：C++编写的，主要加载Java的核心类库，用户无法获取到该加载器
-    * 扩展类加载器：加载java/lib/ect中的jar包
-    * 系统类加载器：加载当前程序中的类</code></pre><blockquote>
-<pre><code>//1.对于自定义类，使用系统级类加载器
-ClassLoader classLoader = ClassLoaderTest.class.getClassLoader();
-System.out.println(classLoader);
-
-//2.调用系统类加载器的getParent()，获取扩展类加载器
-ClassLoader classLoader1 = classLoader.getParent();
-System.out.println(classLoader1);
-
-//3.调用扩展类加载器getParent()，无法获取引导类加载器
-//引导类加载器加载java的核心类库
-ClassLoader classLoader2 = classLoader1.getParent();
-System.out.println(classLoader2);</code></pre></blockquote>
-<h2 id="创建运行时类的对象"><a href="#创建运行时类的对象" class="headerlink" title="创建运行时类的对象"></a>创建运行时类的对象</h2><h3 id="反射创建运行时类的对象"><a href="#反射创建运行时类的对象" class="headerlink" title="反射创建运行时类的对象"></a>反射创建运行时类的对象</h3><pre><code>1. 使用.newInstance()方法创建运行时类的对象
-    newInstance:
-        * 调用此方法，创建运行时类的方法
-        * 内部调用运行时类的空参构造器
-        * 如果没有空参构造器，产生异常
-
-2. 满足两个条件
-    * 运行时类必须提供空参的构造器
-    * 访问权限不能为private,通常设置为public</code></pre><h2 id="获取运行时类的完整结构"><a href="#获取运行时类的完整结构" class="headerlink" title="获取运行时类的完整结构"></a>获取运行时类的完整结构</h2><h3 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h3><pre><code>修饰符 返回类型 变量名；
-
-1. 获取所有属性
-    1. 获取当前运行时类的所有属性（getDeclaredFileds）
-        * 不考虑权限问题，不会获取父类的属性</code></pre><blockquote>
-<pre><code>Field[] fields1 = clazz.getDeclaredFields();
-for(Field field:fields1){
-    System.out.println(field);
-}</code></pre></blockquote>
-<pre><code>2. 获取属性包含父类的属性（getFileds）
-    * 获取当前运行时类以及父类的所有权限为public的属性</code></pre><blockquote>
-<pre><code>Field[] fields = clazz.getFields();
-for(Field field:fields){
-    System.out.println(field);
-}        </code></pre></blockquote>
-<pre><code>2. 获取属性的修饰符,数据类型，变量名</code></pre><blockquote>
-<pre><code>Class clazz = Person.class;
-
-//获取当前运行时类的所有属性
-Field[] fields = clazz.getDeclaredFields();
-
-for(Field field:fields){
-//修饰符
-//权限被分配了 整型数据,使用Modifier的方法可以翻译为字符串
-int modifiers = field.getModifiers();
-System.out.print(Modifier.toString(modifiers)+&quot;\t&quot;);
-//数据类型
-Class&lt;?type = field.getType();
-System.out.print(type.getName()+&quot;\t&quot;);
-//属性名
-System.out.println(field.getName());
-}</code></pre></blockquote>
-<p><img src="/2020/09/10/reflection/fields.png" alt="运行时类的属性"></p>
-<h3 id="获取方法"><a href="#获取方法" class="headerlink" title="获取方法"></a>获取方法</h3><pre><code>1. 获取当前运行类声明的所有方法</code></pre><blockquote>
-<pre><code>Method[] methods = clazz.getMethods();
-for(Method method:methods){
-    System.out.println(method);
-}</code></pre></blockquote>
-<pre><code>2. 获取当前运行时类以及所有父类的声明为public权限的方法</code></pre><blockquote>
-<pre><code>Method[] declaredMethods = clazz.getDeclaredMethods();
-for(Method method:declaredMethods){
-    System.out.println(method);
-}</code></pre></blockquote>
-<pre><code>3. 获取方法的修饰符，数据类型，方法名
-    * @Anno
-    * 权限修饰符 返回值类型 方法名(形参列表) Throws Exception{}
-
-    Method[] declaredMethods = clazz.getDeclaredMethods();
-    for(Method method:declaredMethods){
-        System.out.println(&quot;-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+&quot;);
-        //1.注解获取
-        Annotation[] methodAnnotations = method.getAnnotations();
-        for(Annotation anno:methodAnnotations){
-            System.out.print(anno+&quot;\t&quot;);
-        }
-
-        //2.权限修饰符
-        System.out.print(Modifier.toString(method.getModifiers())+&quot;\t&quot;);
-        //3.返回值类型
-        System.out.print(method.getReturnType()+&quot;\t&quot;);
-        //4.方法名
-        System.out.print(method.getName());
-        System.out.print(&quot;(&quot;);
-        //5.形参列表参数
-        Class[] parameterTypes = method.getParameterTypes();
-        if(parameterTypes.length 0){
-            for(int i = 0;i &lt; parameterTypes.length;i++){
-                if(i == parameterTypes.length-1){
-                    System.out.print(parameterTypes[i].getName()+&quot; args_&quot;+i);
-                    break;
-                }
-                System.out.print(parameterTypes[i].getName()+&quot; args_&quot;+i+&quot; , &quot;);
-            }
-        }
-        System.out.print(&quot;)&quot;);
-        //6.获取抛出的异常
-        Class[] exceptionTypes = method.getExceptionTypes();
-        if(exceptionTypes.length 0){
-            System.out.print(&quot; throws &quot;);
-            for(int i = 0;i &lt; exceptionTypes.length;i++){
-                if(i == exceptionTypes.length-1){
-                    System.out.print(exceptionTypes[i].getName());
-                    break;
-                }
-                System.out.print(exceptionTypes[i].getName()+&quot; , &quot;);
-            }
-        }
-        System.out.println(&quot;{&quot;+&quot;\n&quot;+&quot;}&quot;);
-    }</code></pre><h3 id="获取构造器的结构"><a href="#获取构造器的结构" class="headerlink" title="获取构造器的结构"></a>获取构造器的结构</h3><pre><code>1. 当前运行时类的所有的构造器</code></pre><blockquote>
-<pre><code>Constructor&lt;?&gt;[] constructors = clazz.getConstructors();
-for(Constructor c:constructors){
-    System.out.println(c);
-}</code></pre></blockquote>
-<pre><code>2. 当前运行时类的所有public的构造器</code></pre><blockquote>
-<pre><code>Constructor&lt;?&gt;[] constructors = clazz.getDeclaredConstructors();
-for(Constructor c:constructors){
-    System.out.println(c);
-}</code></pre></blockquote>
-<h3 id="获取运行时类的父类"><a href="#获取运行时类的父类" class="headerlink" title="获取运行时类的父类"></a>获取运行时类的父类</h3><pre><code>1. getSuperClass():获取父类
-2. getGenericSuperClass()：获取带有泛型的父类</code></pre><h2 id="调用运行时类的指定结构（方法和属性）"><a href="#调用运行时类的指定结构（方法和属性）" class="headerlink" title="调用运行时类的指定结构（方法和属性）"></a>调用运行时类的指定结构（方法和属性）</h2><pre><code>1. 获取指定的属性
-    方法：
-        getFiled():
-            属性声明必须为public
-        getDeclaredFiled()
-            可以访问，但是如果想要访问私有属性，必须显式
-            &lt;属性名&gt;.setAccessible(true);                
-
-    1. 步骤
-        * 获取Class对象
-        * 创建Class对象的实例
-        * 获取指定的属性
-        * set方法
-            * set(obj,value):obj：指明设置哪个对象的属性 value:设置的值
-        * get方法
-            * get(obj):obj：指明获取那个对象的属性
-
-    2. 实例
-        Class clazz = Person.class;
-        Person p = (Person)clazz.newInstance();
-        Filed filed = clazz.getDeclaredFiled(&quot;age&quot;);
-        filed.setAccessible(true);
-        filed.set(p,&quot;11111&quot;);
-
-2. 获取指定的方法
-    方法：
-        getDeclaredMethod(name,param): 参数1：获取的方法的名称，参数2：获取的方法的形参列表
-            可以访问，但是如果想要访问私有属性，必须显式
-            &lt;方法名&gt;.setAccessible(true);
-
-        &lt;方法名&gt;.invoke(obj,value):参数1:方法的调用者，参数2(可变形参)：赋值的实参
-            invoke()方法的返回值为类中调用方法的返回值，
-                如果调用的方法没有返回值，那么返回值为null
-
-    1. 实例</code></pre><blockquote>
-<pre><code>//1.获取指定的方法名
-Method method = clazz.getDeclaredMethod(&quot;compareTo&quot;, String.class);
-//2.确定当前方法是可以访问的
-method.setAccessible(true);
-//3.调用方法
-method.invoke(p,&quot;HHHHH&quot;);   //p.show(&quot;HHHHH&quot;)</code></pre></blockquote>
-<pre><code>2. 调用静态方法
-    invoke(null)
-    invoke(Person.class)</code></pre>]]></content>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>spring</title>
-    <url>/2020/09/09/spring/</url>
-    <content><![CDATA[<h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><h3 id="1-什么是spring："><a href="#1-什么是spring：" class="headerlink" title="1. 什么是spring："></a>1. 什么是spring：</h3><pre><code>1. 分层的Java SE/EE的轻量级开源框架
-2. 提供了展现层Spring MVC 和持久层Spring JDBC以及业务层事务管理的众多技术
-3. 展现层和持久层的中间部分，业务层</code></pre><h3 id="2-spring的核心："><a href="#2-spring的核心：" class="headerlink" title="2. spring的核心："></a>2. spring的核心：</h3><pre><code>1. IoC（Inverse of Control）: 反转控制
-2. AOP（Aspect Oriented Programming）: 面向切面编程</code></pre><h3 id="3-发展历程和优势"><a href="#3-发展历程和优势" class="headerlink" title="3.发展历程和优势"></a>3.发展历程和优势</h3><pre><code>spring优势：
-    1. 方便解耦，简化开发
-    2. AOP编程的支持
-    3. 声明式事务的支持
-    4. 方便程序的测试
-    5. 方便集成各种优秀的框架</code></pre><h2 id="程序的耦合和解耦"><a href="#程序的耦合和解耦" class="headerlink" title="程序的耦合和解耦"></a>程序的耦合和解耦</h2><h4 id="耦合"><a href="#耦合" class="headerlink" title="耦合"></a>耦合</h4><pre><code>1. 什么是耦合：
-    程序之间的依赖关系：
-        * 类之间的依赖关系
-        * 方法之间的依赖关系
-
-2. 开发中的做法：
-    编译期不依赖，运行时依赖
-
-3. 方法：
-    1. 使用反射（reflection）来创建对象，而不是使用new关键字
-        * 使用反射，如果字符串写死，以后无法再次使用别的数据库配置
-    2. 使用读取配置文件来获取要创建的对象的全限定名称
-        使用类加载器，获取配置文件的输入流</code></pre><h4 id="解耦"><a href="#解耦" class="headerlink" title="解耦"></a>解耦</h4><pre><code>1. 什么是解耦：
-    降低程序之间的依赖关系
-
-2. 解耦的方式：使用工厂模式创建Bean对象
-     * 创建bean对象的工厂
-      * bean: 可重用组件
-      * javaBean &gt; 实体类
-      * javaBean 用java语言编写的可重用组件
-
-3. 如何创建工厂模式
-    1. 读取配置文件来反射bean对象
-    2. 配置文件来创建service和dao
-        唯一标识=全限定类名，key == value，根据对应的value创建实例对象</code></pre><h2 id="基于XML的IoC配置"><a href="#基于XML的IoC配置" class="headerlink" title="基于XML的IoC配置"></a>基于XML的IoC配置</h2><h2 id="基于注解的IoC配置"><a href="#基于注解的IoC配置" class="headerlink" title="基于注解的IoC配置"></a>基于注解的IoC配置</h2><h2 id="spring的AOP"><a href="#spring的AOP" class="headerlink" title="spring的AOP"></a>spring的AOP</h2><h2 id="基于XML和注解的AOP配置"><a href="#基于XML和注解的AOP配置" class="headerlink" title="基于XML和注解的AOP配置"></a>基于XML和注解的AOP配置</h2><h2 id="JdbcTemlate"><a href="#JdbcTemlate" class="headerlink" title="JdbcTemlate"></a>JdbcTemlate</h2><h2 id="事务控制"><a href="#事务控制" class="headerlink" title="事务控制"></a>事务控制</h2>]]></content>
-      <tags>
-        <tag>spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>七牛云_Hexo</title>
-    <url>/2020/05/12/%E4%B8%83%E7%89%9B%E4%BA%91-Hexo/</url>
-    <content><![CDATA[<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h2><pre><code>1. 注册七牛云,完成之后就可以进行创建空间，
-2. 注意我们添加的资源为对象存储，访问控制为公开空间
-3. 点击右上角进入密钥管理，复制当前使用的AK和SK，配置的时候会用得到</code></pre><h2 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2. 步骤"></a>2. 步骤</h2><h3 id="2-1-安装插件，进入Hexo主目录，执行："><a href="#2-1-安装插件，进入Hexo主目录，执行：" class="headerlink" title="2.1. 安装插件，进入Hexo主目录，执行："></a>2.1. 安装插件，进入Hexo主目录，执行：</h3><pre><code>`npm install hexo-qiniu-sync --save`</code></pre><h3 id="2-2-配置站点文件-config-yml"><a href="#2-2-配置站点文件-config-yml" class="headerlink" title="2.2. 配置站点文件_config.yml:"></a>2.2. 配置站点文件_config.yml:</h3><blockquote>
-<p>  #plugins:<br>      #- hexo-qiniu-sync<br>    qiniu:<br>      offline: false<br>      sync: true<br>      bucket: bucket_name<br>      access_key: AccessKey<br>      secret_key: SecretKey<br>      dirPrefix:<br>      urlPrefix: <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a><br>      local_dir: cdn<br>      update_exist: true<br>      image:<br>        folder: images<br>        extend:<br>      js:<br>        folder: js<br>      css:<br>        folder: css</p>
-</blockquote>
-<h3 id="2-3-参数"><a href="#2-3-参数" class="headerlink" title="2.3. 参数"></a>2.3. 参数</h3><ul>
-<li><p>bucket ：修改为你刚才申请的七牛空间名称</p>
-</li>
-<li><p>access_key 、 secret_key : 上传密钥AccessKey、SecretKey。即3 第3步复制的AK和SK。</p>
-</li>
-<li><p>urlPrefix : 七牛空间地址的前缀。 重要！必填！ 因为现在七牛已经取消了二级域名，外链前缀类似设置中的 <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a> ，插件不能根据 bucket 自动生成外链前缀了。你可以进入自己创建的空间在域名设置中看到自己的七牛测试域名，也可以查看一个已上传的文件外链地址，确认前缀无误。这个参数的设置是保证解析成网页文件时，外链地址正确的关键之一！<br>  配置参数的说明：</p>
-</li>
-<li><p>offline ：是否离线。设置为 true 将在本地预览时使用本地地址渲染，省流量； false 将使用同步到七牛空间的静态资源渲染，方便检查资源链接是否正确。</p>
-</li>
-<li><p>sync ：是否同步到七牛，一般都是设置 true 啦</p>
-</li>
-<li><p>dirPrefix ：资源将上传到七牛空间的此目录下，可像我一样设置为空。该参数会影响外链的地址，如果设置为非空值，例如默认值 static ，则 urlPrefix 为保持一致需加上目录后缀 /static ，改为 <a href="http://7xqb0u.com1.z0.glb.clouddn.com/static" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com/static</a> 。</p>
-</li>
-<li><p>local_dir ：本地资源储存目录。在本例中，待上传的资源都储存在hexo主目录中的 cdn 文件夹（也就是与 source 目录平级）中。</p>
-</li>
-<li><p>update_exist ：设置为 true ，则会在文件更新之后重新上传并更新七牛空间上中的原有文件。</p>
-</li>
-<li><p>image/js/css ：子参数folder为不同静态资源种类的目录名称，一般不需要改动</p>
-</li>
-<li><p>image.extend ：使用 qnimg 标签引用图片的默认图片处理操作。可以使用 基本图片处理（imageView2）、高级图片处理（imageMogr2）、图片水印处理（watermark） 这三个图片处理接口，多个接口内容之间用 | 间隔。详见 七牛开发者中心-图片处理。</p>
-</li>
-</ul>
-<h2 id="3-使用"><a href="#3-使用" class="headerlink" title="3. 使用"></a>3. 使用</h2><pre><code>1.将图片上传到七牛云，查看照片获取照片的外链
-2.在文章中引用照片外链，markdown格式:*![描述]（外链）*</code></pre><h2 id="4-感谢在使用七牛云时参考的大佬博客："><a href="#4-感谢在使用七牛云时参考的大佬博客：" class="headerlink" title="4. 感谢在使用七牛云时参考的大佬博客："></a>4. 感谢在使用七牛云时参考的大佬博客：</h2><ul>
-<li><a href="http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/" target="_blank" rel="noopener">http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
