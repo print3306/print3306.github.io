@@ -1,6 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>SQLjdbc</title>
+    <url>/2020/05/02/SQLjdbc/</url>
+    <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><pre><code>1. 基本概念
+    Java DataBase Connectivity
+    - java数据库连接，java操作数据库，使用同一套java代码操作不同的数据库
+    - 本质：官方定义的操作所有关系型数据库的规则--接口，实现类由各个数据库厂商实现，提供数据库驱动jar包，我们可以使用这套接口（JDBC）编程，但真正执行的是驱动jar包中的实现类。
+        Person接口   Worker类  Person p = new Worker();    p.eat();
+
+2. 快速入门
+    * 步骤：
+        1. 导入驱动jar包
+        2. 注册驱动
+        3. 获取数据库的连接对象 Connection
+        4. 定义SQL语句
+        5. 获取执行SQL语句的对象 Statement = connection.statement()
+        6. 处理SQL语句,接受返回结果 statememt.executeQuery(sql)
+        7. 处理结果
+        8. 释放资源
+
+    * 代码：
+        `
+        //2.注册驱动
+           Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);
+
+           //3.获取数据库连接对象
+        Connection connection = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/books?serverTimezone=UTC&quot;,&quot;uesrname&quot;,&quot;password&quot;);
+
+        //4.定义SQL语句
+        String sql = &quot;select * from admin&quot;;
+
+        //5.获取执行SQL的对象
+        Statement statement = connection.createStatement();
+
+        //6.执行SQL
+        boolean flag = statement.execute(sql);
+
+        //7.处理
+        System.out.println(flag);
+
+        //8.释放资源
+        statement.close();
+        connection.close();
+        `</code></pre><h2 id="对象详解"><a href="#对象详解" class="headerlink" title="对象详解"></a>对象详解</h2><pre><code>1. 详解各个对象
+    1. DriverManager
+        * 驱动管理对象
+        * 功能：
+            1. 注册驱动
+                static void registerDriver(Driver driver):注册给定的驱动程序
+                写代码：Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;)
+                com.mysql.cj.jdbc.Driver,使用静态代码块，调用registerDriver方</code></pre><blockquote>
+<pre><code>注册驱动:
+ static {
+      try {
+            DriverManager.registerDriver(new Driver());
+     } catch (SQLException var1) {
+         throw new RuntimeException(&quot;Can&apos;t register driver!&quot;);
+     }
+     }</code></pre></blockquote>
+<pre><code>            PS：mysql5后的驱动jar包可以省略注册驱动的步骤
+
+        2. 连接数据库
+            * 方法：static Connection getConnection(String url, String user, String password)
+            * 参数:
+                * url:指定连接的路径
+                    * 语法
+                        jdbc:mysql://ip地址(域名)：端口号/数据库名称
+                    * 例子
+                        jdbc:mysql://localhost:3306/books?serverTimezone=UTC
+                    * 细节
+                        如果连接本机的mysql服务器，而且端口号3306，可以简写为jdbc:mysql:///数据库名称
+                * user:
+                    数据库用户名
+                * password
+                    密码
+
+2. Connection
+    * 数据库连接对象
+    * 功能：
+        1. 获取执行SQL的对象
+            * Statement createStatement()
+            * PreparedStatement preparedStatement()
+
+        2. 管理事务
+            * 开启事务
+                void setAutoCommit(boolean autoCommit) :参数为false,开启事务
+            * 提交事务
+                commit()
+            * 回滚事务
+                rollback()
+
+3. Statement
+    * 执行SQL对象
+    * 功能：
+        1. 执行SQL语句
+            * int executeUpdate(String sql):执行DML(增删改)语句，DDL语句，返回值：影响的行数，判断是否执行成功（&gt;0）
+            * ResultSet executeQuery(String sql):执行查询语句
+
+4. ResultSet
+    * 结果集对象，封装查询结果
+    * 功能：
+        * boolean next():游标向前移动一行,并判断是否是最后一行，如果是，返回False
+        * getType(参数)：获取数据,一次只能获取一列数据
+            * Type：数据类型，int getInt()
+            * 参数：
+                1. int 列的编号，getInt(1)
+                2. String 列名,getString(name)
+        * 使用时：
+            1. 游标向下移动
+            2. 判断是否存在数据
+            3. 获取数据
+            代码：
+                 while(resultSet.next()){
+                    //获取数据
+                 }
+
+5. PreparedStatement
+    * 执行SQL的对象
+    * SQL注入问题：在拼接sql语句时，有一些特殊的关键字参于字符串的拼接，会造成安全性问题
+        1. 输入用户随便，输入密码：a&apos;or&apos;a&apos;=&apos;a,条件恒为真，
+        2. sql:select * from db where name and password,所有的用户名全都查询出来
+
+    * 解决SQL注入问题：使用PreparedStatemmet类
+    * 预编译SQL:参数使用 ？作为占位符
+    * 步骤：
+        1. 导入驱动jar包
+        2. 注册驱动
+        3. 获取数据库的连接对象 Connection
+        4. 定义SQL语句
+        5. 获取执行SQL语句的对象 PreparedStatement = connection.preparedStatement(sql)
+            * 注意：sql使用?作为占位符， select * from user where name = ? and password = ?;
+        6. 给？赋值
+            * 方法：
+            * setType(参数1，参数2)
+            * 参数1：传递参数的位置
+            * 参数2: 值
+        7. 处理SQL语句,接受返回结果，prearedStatement.executeQuery()
+        8. 处理结果
+        9. 释放资源
+
+    * 使用PreparedStatement对象
+        * 防止SQL注入问题
+        * 效率更高</code></pre><h2 id="抽取JDBC工具类"><a href="#抽取JDBC工具类" class="headerlink" title="抽取JDBC工具类"></a>抽取JDBC工具类</h2><pre><code>- JDBCUtils
+* 目的：简化书写
+* 分析：
+    1. 获取连接
+        * 不传递参数，并保证工具类的通用性
+        * 解决：配置文件
+            jdbc.properties
+                url=...
+
+            1. 创建Properties类
+            Properties properties = new Properties();
+            2. 加载properties文件
+            properties.load(new FileReader(&quot;jdbc.properties&quot;));
+            3. 获取配置
+            url = properties.getProperty(&quot;url&quot;);
+    2. 释放资源</code></pre><h2 id="登陆验证实例"><a href="#登陆验证实例" class="headerlink" title="登陆验证实例"></a>登陆验证实例</h2><pre><code>1. 需求
+    * 通过键盘输入用户名和密码
+    * 判断用户是否合法
+        根据查询结果判断是否合法
+
+2. 实现
+    * 创建表，存储用户名和密码
+        CREATE TABLE IF NOT EXISTS USER (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            NAME VARCHAR(32) NOT NULL,
+            PASSWORD VARCHAR(32) NOT NULL
+        );
+
+    * 查询数据表，
+        sql = &quot;select * from db where name = &apos;name&apos; and password = &apos;password&apos;&quot;
+        如果存在数据，用户合法
+
+3. 注意
+    为了预防SQL注入，导致安全性问题，使用PreparedStatement类，使用预编译SQL,不使用静态拼接SQL,Statement类，效率更高而且更安全。</code></pre><h2 id="JDBC事务控制"><a href="#JDBC事务控制" class="headerlink" title="JDBC事务控制"></a>JDBC事务控制</h2><pre><code>1. 事务：一个包含多个步骤的业务操作，如果业务被事务管理，要么全部成功，要么全部失败
+
+2. 操作
+    1. 开启事务
+    2. 提交事务
+    3. 回滚事务
+
+3. 使用Connection管理事务
+    * 开启事务
+        void setAutoCommit(boolean autoCommit) :参数为false,开启事务
+        执行sql语句之前开启事务
+    * 提交事务
+        commit()
+        SQL执行完毕时提交
+    * 回滚事务
+        rollback
+        try catch中进行回滚，一旦发现异常，将数据回滚</code></pre><h2 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h2><pre><code>1. 概念：
+    * 容器（集合），存放数据库连接的一个容器
+    * 系统初始化后，容器被创建，会申请一些连接对象，在用户访问数据库时，从容器中获取连接对象，使用完毕归还容器资源
+
+2. 优点：
+    * 节约资源：访问时直接获取，不用重复申请资源
+    * 用户访问高效：拿来即用
+
+3. 实现：
+    1. 标准接口：
+        DataSourse javax.sql
+        * 方法:
+            * 获取连接：getConnnection()
+            * 归还连接：如果Connection是从连接池获取的，调用connection.close()方法，不是关闭连接，而时归还连接
+
+    2. 实现技术，由数据库厂商提供
+        * C3P0: 数据库连接池技术
+        * Druid: 
+
+4. C3P0连接池技术
+    * 步骤：
+        1. 导入jar包，jdbc驱动和c3p0包
+        2. 定义配置文件：
+            * 名称：c3p0.properties 或者 c3p0-config.xml
+            * 路径：src目录下
+        3. 创建数据库连接池核心数据对象：ComboPoolDataSourse
+        4. 获取连接对象：getConnection()
+
+5. Druid连接池技术
+    * 步骤：
+        1. 导入jar包：druid-v.jar
+        2. 定义配置文件：
+            * properties形式
+            * 可以叫任意名称，放在任意目录下
+        3. 加载配置文件
+            Properties properties = new Properties();
+            InputStream is = DruidDemo08.class.getClassLoader().getResourceAsStream(&quot;druid.properties&quot;);
+            properties.load(is);
+        3. 创建连接池对象，使用工厂类 DruidDataSourseFactory
+        4. 获取连接对象
+
+    * 定义工具类
+        1. 定义工具类
+        2. 提供静态代码块加载配置文件，初始化连接池对象
+        3. 提供方法
+            1. 获取连接方法，获取连接对象
+            2. 释放资源
+            3. 获取连接池对象</code></pre><h2 id="Spring-JDBC"><a href="#Spring-JDBC" class="headerlink" title="Spring JDBC"></a>Spring JDBC</h2><pre><code>* Spring框架对JDBC的简单封装，提供了JDBCTemplate对象
+* 步骤：
+    1. 导入jar包
+    2. 创建JDBCTemplate对象，依赖与数据源DataSourse
+        JDBCTemplate template = new JDBCTemplate(ds)
+    3. 调用方法完成CRUD的操作</code></pre>]]></content>
+  </entry>
+  <entry>
+    <title>Spring下载</title>
+    <url>/2020/05/09/SpringLoad/</url>
+    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
+<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
+<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
+<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
+<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
+<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SQL注入</title>
     <url>/2020/05/08/SQL%E6%B3%A8%E5%85%A5/</url>
     <content><![CDATA[<h1 id="SQL注入问题"><a href="#SQL注入问题" class="headerlink" title="SQL注入问题"></a>SQL注入问题</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>在拼接sql语句时，有一些特殊的SQL关键字参于字符串的拼接，导致SQL语句的逻辑发生变化，可能会造成安全性问题</code></pre><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre><code>1. 输入 a&apos;or&apos;a&apos;=&apos;a,条件改变
@@ -56,6 +318,742 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
     * execute()
     * executeUpdate();
     * executeQuery();        </code></pre>]]></content>
+  </entry>
+  <entry>
+    <title>Java Reflection（java反射机制）</title>
+    <url>/2020/09/10/reflection/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><pre><code>1. 反射（reflection）：动态语言的关键
+    * 反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性和方法
+    * 加载完类之后，在堆内存的方法区产生一个Class对象（一个类只有一个Class对象），这个对象就包含完整的类的信息，可以通过这个Class对象看到类的结构，通过对象看到类的结构的过程，叫做反射
+
+2. 使用反射的应用
+    * 在运行时判断一个对象所属的类
+    * 在运行时构造任意一个类的对象
+    * 在运行时获取泛型的信息
+    * 在运行时获取私有属性，私有方法
+    * 在运行时父类的信息，父类上的泛型
+    * 在运行时获取接口
+    * 在运行时获取所在包，注解
+    * 。。。
+
+3. 相干的API
+    * java.lang.Class
+    * java.lang.reflect.Method    //方法
+    * java.lang.reflect.Filed    //成员变量    
+    * java.lang.reflect.Constructor        //构造器
+
+4. 反射和封装性
+    * 通过直接new对象，或反射的方式都可以调用公共的结构，具体使用位置？
+        1. 建议直接使用new方式，编译的时候可以确定创建哪个对象
+        2. 编译的时候无法确定创建哪个对象，根据传入的参数进行对象的创建，使用反射的方式：
+            反射机制具有动态性
+
+    * 有了反射机制，与对象的封装性，如何看待两种技术？
+        1. 不矛盾
+        2. 封装性：将对象的属性和方法进行权限限定，暴露出的接口表现用户可以使用的方法，建议用户使用的方法和属性，不建议使用私有方法[建不建议]
+        3. 反射：可以使用的方法，用户强制使用私有的属性和方法[能不能]</code></pre><h2 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h2><h3 id="java-lang-Class的理解"><a href="#java-lang-Class的理解" class="headerlink" title="java.lang.Class的理解"></a>java.lang.Class的理解</h3><pre><code>1. 类的加载过程
+    程序在经过javac.exe命令之后，会生成一个或多个字节码文件（.class）文件，
+    接着使用java.exe命令对某个字节码文件进行解释运行。相当于将字节码文件加载到内存，此过程叫做类的加载。
+    加载到内存中的类，我们称为运行时类，此运行时类，就作为Class类的一个实例。
+
+2. 换句话说，Class的实例就是一个运行时类的对象
+3. 加载到内存的运行时类，会缓存一定的时间。在此时间之内，可以通过不同的方法获取运行时类</code></pre><h3 id="获取Class的实例方式"><a href="#获取Class的实例方式" class="headerlink" title="获取Class的实例方式"></a>获取Class的实例方式</h3><pre><code>1. 方式一：通过运行时类的.class属性获取Class实例
+    Class clazz1 = Person.class();
+    System.Out.Println(clazz1);
+
+2. 方式二：通过运行时类的对象的.getClass()方法获取实例
+    Person person = new Person();
+    Class clazz2 = person.getClass();
+
+3. 方式三：通过Class的.forName(&quot;运行时类的全限定类名&quot;)获取实例
+    Class clazz3 = Class.forName(&quot;全限定类名&quot;)；
+
+4. 方式四：通过类的加载器获取实例
+     ClassLoader classLoader = Reflection.class.getClassLoader();
+    Class clazz4 = classLoader.loadClass(&quot;全限定类名&quot;);
+
+上述的四种Class实例的获取方式，方式一和方式二，都与具体的实现类绑定，在开发中一般使用Class类的.forName()方法获取Class实例对象。</code></pre><h3 id="Class对象的范围"><a href="#Class对象的范围" class="headerlink" title="Class对象的范围"></a>Class对象的范围</h3><pre><code>1. class:各种类对象
+2. interface
+3. []:数组 只要数组的类型和维度相同，就是一个Class对象
+4. enum:枚举
+5. annotation
+6. 基本数据类型
+7. void</code></pre><h2 id="ClassLoader-类加载器"><a href="#ClassLoader-类加载器" class="headerlink" title="ClassLoader(类加载器)"></a>ClassLoader(类加载器)</h2><h3 id="类的加载"><a href="#类的加载" class="headerlink" title="类的加载"></a>类的加载</h3><pre><code>1. 加载：将类的字节码文件读入内存，并为其创建一个java.lang.Class对象，实现类的加载过程
+2. 链接：静态变量初始化为默认值
+3. 初始化：JVM使用构造器方法完成类变量的赋值和静态代码块的语句顺序合并产生数据</code></pre><h3 id="ClassLoader"><a href="#ClassLoader" class="headerlink" title="ClassLoader"></a>ClassLoader</h3><pre><code>1. 将.class加载到内存，将这些静态数据转换成方法区运行时的数据结构，生成Class对象，作为方法区中类数据的访问入口
+2. 类缓存：一旦某个类被加载到类加载器，会在类加载器中维持一段时间，JVM的垃圾回收机制可以回收Class对象
+
+3. 分类
+    * 引导类加载器：C++编写的，主要加载Java的核心类库，用户无法获取到该加载器
+    * 扩展类加载器：加载java/lib/ect中的jar包
+    * 系统类加载器：加载当前程序中的类</code></pre><blockquote>
+<pre><code>//1.对于自定义类，使用系统级类加载器
+ClassLoader classLoader = ClassLoaderTest.class.getClassLoader();
+System.out.println(classLoader);
+
+//2.调用系统类加载器的getParent()，获取扩展类加载器
+ClassLoader classLoader1 = classLoader.getParent();
+System.out.println(classLoader1);
+
+//3.调用扩展类加载器getParent()，无法获取引导类加载器
+//引导类加载器加载java的核心类库
+ClassLoader classLoader2 = classLoader1.getParent();
+System.out.println(classLoader2);</code></pre></blockquote>
+<h2 id="创建运行时类的对象"><a href="#创建运行时类的对象" class="headerlink" title="创建运行时类的对象"></a>创建运行时类的对象</h2><h3 id="反射创建运行时类的对象"><a href="#反射创建运行时类的对象" class="headerlink" title="反射创建运行时类的对象"></a>反射创建运行时类的对象</h3><pre><code>1. 使用.newInstance()方法创建运行时类的对象
+    newInstance:
+        * 调用此方法，创建运行时类的方法
+        * 内部调用运行时类的空参构造器
+        * 如果没有空参构造器，产生异常
+
+2. 满足两个条件
+    * 运行时类必须提供空参的构造器
+    * 访问权限不能为private,通常设置为public</code></pre><h2 id="获取运行时类的完整结构"><a href="#获取运行时类的完整结构" class="headerlink" title="获取运行时类的完整结构"></a>获取运行时类的完整结构</h2><h3 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h3><pre><code>修饰符 返回类型 变量名；
+
+1. 获取所有属性
+    1. 获取当前运行时类的所有属性（getDeclaredFileds）
+        * 不考虑权限问题，不会获取父类的属性</code></pre><blockquote>
+<pre><code>Field[] fields1 = clazz.getDeclaredFields();
+for(Field field:fields1){
+    System.out.println(field);
+}</code></pre></blockquote>
+<pre><code>2. 获取属性包含父类的属性（getFileds）
+    * 获取当前运行时类以及父类的所有权限为public的属性</code></pre><blockquote>
+<pre><code>Field[] fields = clazz.getFields();
+for(Field field:fields){
+    System.out.println(field);
+}        </code></pre></blockquote>
+<pre><code>2. 获取属性的修饰符,数据类型，变量名</code></pre><blockquote>
+<pre><code>Class clazz = Person.class;
+
+//获取当前运行时类的所有属性
+Field[] fields = clazz.getDeclaredFields();
+
+for(Field field:fields){
+//修饰符
+//权限被分配了 整型数据,使用Modifier的方法可以翻译为字符串
+int modifiers = field.getModifiers();
+System.out.print(Modifier.toString(modifiers)+&quot;\t&quot;);
+//数据类型
+Class&lt;?type = field.getType();
+System.out.print(type.getName()+&quot;\t&quot;);
+//属性名
+System.out.println(field.getName());
+}</code></pre></blockquote>
+<p><img src="/2020/09/10/reflection/fields.png" alt="运行时类的属性"></p>
+<h3 id="获取方法"><a href="#获取方法" class="headerlink" title="获取方法"></a>获取方法</h3><pre><code>1. 获取当前运行类声明的所有方法</code></pre><blockquote>
+<pre><code>Method[] methods = clazz.getMethods();
+for(Method method:methods){
+    System.out.println(method);
+}</code></pre></blockquote>
+<pre><code>2. 获取当前运行时类以及所有父类的声明为public权限的方法</code></pre><blockquote>
+<pre><code>Method[] declaredMethods = clazz.getDeclaredMethods();
+for(Method method:declaredMethods){
+    System.out.println(method);
+}</code></pre></blockquote>
+<pre><code>3. 获取方法的修饰符，数据类型，方法名
+    * @Anno
+    * 权限修饰符 返回值类型 方法名(形参列表) Throws Exception{}
+
+    Method[] declaredMethods = clazz.getDeclaredMethods();
+    for(Method method:declaredMethods){
+        System.out.println(&quot;-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+&quot;);
+        //1.注解获取
+        Annotation[] methodAnnotations = method.getAnnotations();
+        for(Annotation anno:methodAnnotations){
+            System.out.print(anno+&quot;\t&quot;);
+        }
+
+        //2.权限修饰符
+        System.out.print(Modifier.toString(method.getModifiers())+&quot;\t&quot;);
+        //3.返回值类型
+        System.out.print(method.getReturnType()+&quot;\t&quot;);
+        //4.方法名
+        System.out.print(method.getName());
+        System.out.print(&quot;(&quot;);
+        //5.形参列表参数
+        Class[] parameterTypes = method.getParameterTypes();
+        if(parameterTypes.length 0){
+            for(int i = 0;i &lt; parameterTypes.length;i++){
+                if(i == parameterTypes.length-1){
+                    System.out.print(parameterTypes[i].getName()+&quot; args_&quot;+i);
+                    break;
+                }
+                System.out.print(parameterTypes[i].getName()+&quot; args_&quot;+i+&quot; , &quot;);
+            }
+        }
+        System.out.print(&quot;)&quot;);
+        //6.获取抛出的异常
+        Class[] exceptionTypes = method.getExceptionTypes();
+        if(exceptionTypes.length 0){
+            System.out.print(&quot; throws &quot;);
+            for(int i = 0;i &lt; exceptionTypes.length;i++){
+                if(i == exceptionTypes.length-1){
+                    System.out.print(exceptionTypes[i].getName());
+                    break;
+                }
+                System.out.print(exceptionTypes[i].getName()+&quot; , &quot;);
+            }
+        }
+        System.out.println(&quot;{&quot;+&quot;\n&quot;+&quot;}&quot;);
+    }</code></pre><h3 id="获取构造器的结构"><a href="#获取构造器的结构" class="headerlink" title="获取构造器的结构"></a>获取构造器的结构</h3><pre><code>1. 当前运行时类的所有的构造器</code></pre><blockquote>
+<pre><code>Constructor&lt;?&gt;[] constructors = clazz.getConstructors();
+for(Constructor c:constructors){
+    System.out.println(c);
+}</code></pre></blockquote>
+<pre><code>2. 当前运行时类的所有public的构造器</code></pre><blockquote>
+<pre><code>Constructor&lt;?&gt;[] constructors = clazz.getDeclaredConstructors();
+for(Constructor c:constructors){
+    System.out.println(c);
+}</code></pre></blockquote>
+<h3 id="获取运行时类的父类"><a href="#获取运行时类的父类" class="headerlink" title="获取运行时类的父类"></a>获取运行时类的父类</h3><pre><code>1. getSuperClass():获取父类
+2. getGenericSuperClass()：获取带有泛型的父类</code></pre><h2 id="调用运行时类的指定结构（方法和属性）"><a href="#调用运行时类的指定结构（方法和属性）" class="headerlink" title="调用运行时类的指定结构（方法和属性）"></a>调用运行时类的指定结构（方法和属性）</h2><pre><code>1. 获取指定的属性
+    方法：
+        getFiled():
+            属性声明必须为public
+        getDeclaredFiled()
+            可以访问，但是如果想要访问私有属性，必须显式
+            &lt;属性名&gt;.setAccessible(true);                
+
+    1. 步骤
+        * 获取Class对象
+        * 创建Class对象的实例
+        * 获取指定的属性
+        * set方法
+            * set(obj,value):obj：指明设置哪个对象的属性 value:设置的值
+        * get方法
+            * get(obj):obj：指明获取那个对象的属性
+
+    2. 实例
+        Class clazz = Person.class;
+        Person p = (Person)clazz.newInstance();
+        Filed filed = clazz.getDeclaredFiled(&quot;age&quot;);
+        filed.setAccessible(true);
+        filed.set(p,&quot;11111&quot;);
+
+2. 获取指定的方法
+    方法：
+        getDeclaredMethod(name,param): 参数1：获取的方法的名称，参数2：获取的方法的形参列表
+            可以访问，但是如果想要访问私有属性，必须显式
+            &lt;方法名&gt;.setAccessible(true);
+
+        &lt;方法名&gt;.invoke(obj,value):参数1:方法的调用者，参数2(可变形参)：赋值的实参
+            invoke()方法的返回值为类中调用方法的返回值，
+                如果调用的方法没有返回值，那么返回值为null
+
+    1. 实例</code></pre><blockquote>
+<pre><code>//1.获取指定的方法名
+Method method = clazz.getDeclaredMethod(&quot;compareTo&quot;, String.class);
+//2.确定当前方法是可以访问的
+method.setAccessible(true);
+//3.调用方法
+method.invoke(p,&quot;HHHHH&quot;);   //p.show(&quot;HHHHH&quot;)</code></pre></blockquote>
+<pre><code>2. 调用静态方法
+    invoke(null)
+    invoke(Person.class)</code></pre>]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>spring</title>
+    <url>/2020/09/09/spring/</url>
+    <content><![CDATA[<h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><h3 id="1-什么是spring："><a href="#1-什么是spring：" class="headerlink" title="1. 什么是spring："></a>1. 什么是spring：</h3><pre><code>1. 分层的Java SE/EE的轻量级开源框架
+2. 提供了展现层Spring MVC 和持久层Spring JDBC以及业务层事务管理的众多技术
+3. 展现层和持久层的中间部分，业务层</code></pre><h3 id="2-spring的核心："><a href="#2-spring的核心：" class="headerlink" title="2. spring的核心："></a>2. spring的核心：</h3><pre><code>1. IoC（Inversion of Control）: 控制反转
+2. AOP（Aspect Oriented Programming）: 面向切面编程</code></pre><h3 id="3-发展历程和优势"><a href="#3-发展历程和优势" class="headerlink" title="3.发展历程和优势"></a>3.发展历程和优势</h3><pre><code>spring优势：
+    1. 方便解耦，简化开发
+    2. AOP编程的支持
+    3. 声明式事务的支持
+    4. 方便程序的测试
+    5. 方便集成各种优秀的框架</code></pre><h2 id="程序的耦合和解耦"><a href="#程序的耦合和解耦" class="headerlink" title="程序的耦合和解耦"></a>程序的耦合和解耦</h2><h4 id="耦合"><a href="#耦合" class="headerlink" title="耦合"></a>耦合</h4><pre><code>1. 什么是耦合：
+    程序之间的依赖关系：
+        * 类之间的依赖关系
+        * 方法之间的依赖关系
+
+2. 开发中的做法：
+    编译期不依赖，运行时依赖
+
+3. 方法：
+    1. 使用读取配置文件来获取要创建的对象的全限定名称
+        使用类加载器，获取配置文件的输入流
+    2. 使用反射（reflection）来创建对象，而不是使用new关键字
+        * 使用反射，如果字符串写死，以后无法再次使用别的数据库配置</code></pre><h4 id="解耦"><a href="#解耦" class="headerlink" title="解耦"></a>解耦</h4><pre><code>1. 什么是解耦：
+    降低程序之间的依赖关系
+
+2. 解耦的方式：使用工厂模式创建Bean对象
+      * bean: 可重用组件
+      * javaBean &gt; 实体类
+      * javaBean 用java语言编写的可重用组件
+      * beanfactory：创建bean对象的工厂
+
+3. 如何创建工厂模式
+    1. 读取配置文件来反射bean对象
+    2. 配置文件来创建service和dao
+        唯一标识=全限定类名，key = value，根据对应的value创建实例对象</code></pre><h2 id="IoC（Inversion-of-Control）"><a href="#IoC（Inversion-of-Control）" class="headerlink" title="IoC（Inversion of Control）"></a>IoC（Inversion of Control）</h2><pre><code>1. 概念：
+    把创建对象的权力交给框架，是框架的重要特征，包括依赖注入（Dependency Injection,DI）和依赖查找（Dependency Lookup）
+
+2. 作用
+    * 降低程序之间的耦合度
+    * 将类中的对象创建工作交给spring框架来完成，只要获取该对象就可以了
+    * 使用依赖注入进行属性值的填充，在创建对象的同时完成赋值</code></pre><h3 id="基于XML的IoC配置"><a href="#基于XML的IoC配置" class="headerlink" title="基于XML的IoC配置"></a>基于XML的IoC配置</h3><h4 id="初步使用"><a href="#初步使用" class="headerlink" title="初步使用"></a>初步使用</h4><pre><code>1. 步骤
+    * 读取配置文件创建IoC容器（ApplicationContext）
+    * 根据id，获取容器中的文件
+
+2. 配置文件的内容
+    * 主要是&lt;bean&gt;标签，id:查找对象的唯一标识符，class:要创建的对象的全限定类名
+
+3. 读取配置文件创建容器
+    ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;bean.xml&quot;);
+    根据类路径下的xml配置文件创建容器，配置文件需要放置在类路径下
+
+    ApplicationContext ac = new FileSystemXmlApplicationContext(&quot;bean.xml&quot;);
+    可以加载磁盘任意路径下的配置文件
+
+    ApplicationContext ac = new AnnotationConfigApplicationContext(SpringConfig.class);
+    根据类上有@Configuration的类创建容器
+
+4. 根据id获取对象
+    as.getBean(&quot;id&quot;);</code></pre><h4 id="BeanFactory和ApplicationContext"><a href="#BeanFactory和ApplicationContext" class="headerlink" title="BeanFactory和ApplicationContext"></a>BeanFactory和ApplicationContext</h4><pre><code>1. Beanfactory接口
+    * 创建核心容器时，创建对象的方式采用延迟加载的方式，什么时候根据ID获取对象的时候，什么时候开始创建真正的对象
+     * 多例模式适用
+
+2. ApplicationContext接口
+    * 创建核心容器时，创建对象的方式采用立即加载的方式，只要一读取完配置文件马上创建配置文件中的对象
+     * 单例模式时适用：只创建一个对象
+
+3. 具体的使用
+    BeanFactory是顶层接口，功能不如ApplicationContext，实际使用的接口为ApplicationContext接口
+
+    ApplicationContext可以根据配置文件的不同，选择合适的加载方式
+    可以感知到对象的单例还是多例，从而选择不同的方式创建对象</code></pre><h4 id="spring对bean对象的管理细节"><a href="#spring对bean对象的管理细节" class="headerlink" title="spring对bean对象的管理细节"></a>spring对bean对象的管理细节</h4><h5 id="1-创建bean的三种方式"><a href="#1-创建bean的三种方式" class="headerlink" title="1. 创建bean的三种方式"></a>1. 创建bean的三种方式</h5><pre><code>1. 使用默认构造函数创建：
+   在spring的配置文件中使用bean标签，配以id 和 class属性，且没有其他的属性和标签时
+   采用的就是默认构造函数创建bean对象(Class类的实例反射)，如果此时没有默认构造函数，则无法创建</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.spring_03_IoC_bean.service.impl.AccountServiceImpl&quot;/&gt;</code></pre></blockquote>
+<pre><code>2. 使用普通工厂中的方法创建对象
+    使用某个类中的方法创建对象，并存入spring容器中</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;instanceFactory&quot; class=&quot;com.spring_03_IoC_bean.factory.InstanceFactory&quot;/&gt;
+&lt;bean id=&quot;accountService&quot; factory-bean=&quot;instanceFactory&quot; factory-method=&quot;getAccountService&quot;/&gt;</code></pre></blockquote>
+<pre><code>3. 使用工厂的静态方法创建对象（
+    使用某个类的静态方法创建对象(可以不创建该对象)，并将其存入spring容器</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.spring_03_IoC_bean.factory.StaticFactory&quot; factory-method=&quot;getAccountService&quot;/&gt;</code></pre></blockquote>
+<h5 id="2-bean对象的作用范围"><a href="#2-bean对象的作用范围" class="headerlink" title="2. bean对象的作用范围"></a>2. bean对象的作用范围</h5><pre><code>1. bean标签的scope属性规定bean对象的范围
+2. 类型
+    * singleton: 单例模式（默认）
+    * prototype：多例模式
+    * requset:web应用的一次请求
+    * session：web应用中的一次会话
+    * global-session：web应用中的全局会话</code></pre><h5 id="3-bean对象的生命周期"><a href="#3-bean对象的生命周期" class="headerlink" title="3. bean对象的生命周期"></a>3. bean对象的生命周期</h5><pre><code>1. 单例对象：singleton
+  出生：当容器创建时，对象出生
+  活着：只要容器还在，对象活着
+  死亡：容器销毁，对象死亡
+2. 多例对象：prototype
+  出生：当使用对象时，spring框架创建
+  活着：只要在使用的时候一直存在
+  死亡：只有在对象长时间不用，且没有其他的对象引用的时候，由垃圾回收机制回收</code></pre><h4 id="依赖注入（dependency-injection-DI）"><a href="#依赖注入（dependency-injection-DI）" class="headerlink" title="依赖注入（dependency injection:DI）"></a>依赖注入（dependency injection:DI）</h4><pre><code>1. 什么是依赖？    
+    当前类中引用到其他类的对象，叫做依赖。
+    在spring框架中，依赖对象由框架提供，我们只需要提供配置文件的说明（IoC方式）
+
+2. spring降低程序之间的依赖关系?
+    IoC控制反转
+    依赖注入
+
+3. 依赖注入的数据类型：
+    1. 基本数据类型和String类型
+    2. 其他bean对象
+    3. 复杂类型（集合类型）
+
+4. 依赖注入的方式：
+    1. 通过默认构造函数注入依赖
+    2. 使用set方法注入 ***
+    3. 通过注解注入</code></pre><h5 id="1-通过默认构造函数注入"><a href="#1-通过默认构造函数注入" class="headerlink" title="1. 通过默认构造函数注入"></a>1. 通过默认构造函数注入</h5><pre><code>标签：constructor-arg
+位置：bean中的内部
+属性含义：
+    type: 指定要注入的数据类型，该数据类型是构造函数的某个或者某些参数的类型
+    index: 指定要注入数据给构造函数的参数指定索引的位置的赋值
+    name: 用于指定给构造函数的指定名称的参数赋值（主要方式）
+    ===================指定给构造函数的那个参数赋值=======================
+
+    value: 提供基本类型和String类型的数据
+    ref: 指定其他的bean类型的数据，在spring的IoC的核心容器中的bean对象
+
+优势：
+    在获取bean对象时，注入数据是必须的操作，否则对象无法创建成功
+缺点：
+    改变了bean对象的实例化方式，在我们创建对象时，即使用不到这些数据，也必须提供数据</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.spring_03_DI.service.impl.AccountServiceImpl&quot;&gt;
+    &lt;constructor-arg name=&quot;name&quot; value=&quot;李某&quot;/&gt;
+    &lt;constructor-arg name=&quot;age&quot; value=&quot;23&quot;/&gt;
+    &lt;constructor-arg name=&quot;birthday&quot; ref=&quot;now&quot;/&gt;
+&lt;/bean&gt;</code></pre></blockquote>
+<blockquote>
+<pre><code>&lt;!-- 配置一个日期对象 --&gt;
+&lt;bean id=&quot;now&quot; class=&quot;java.util.Date&quot;/&gt;</code></pre></blockquote>
+<h5 id="2-使用set进行依赖注入"><a href="#2-使用set进行依赖注入" class="headerlink" title="2. 使用set进行依赖注入"></a>2. 使用set进行依赖注入</h5><pre><code>标签：property
+位置：bean标签内部
+参数：
+    name:    指定注入的时候的方法的名称
+    value:     指定基本数据类型和String类型
+    ref:     指定其他的bean类型的数据，只要是在spring核心容器中的bean对象都可以
+
+优势：创建bean对象的时候，可以直接使用默认构造函数
+   缺点：
+      如果某个成员必须有值，获取对象的set方法可能没有执行</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;accountService2&quot; class=&quot;com.spring_03_DI.service.impl.AccountServiceImpl2&quot;&gt;
+    &lt;property name=&quot;name&quot; value=&quot;test&quot;/&gt;
+    &lt;property name=&quot;age&quot; value=&quot;22&quot;/&gt;
+    &lt;property name=&quot;birthday&quot; ref=&quot;now&quot;/&gt;
+&lt;/bean&gt;</code></pre></blockquote>
+<blockquote>
+<pre><code>&lt;!-- 配置一个日期对象 --&gt;
+&lt;bean id=&quot;now&quot; class=&quot;java.util.Date&quot;/&gt;</code></pre></blockquote>
+<h5 id="3-使用注解进行依赖注入"><a href="#3-使用注解进行依赖注入" class="headerlink" title="3. 使用注解进行依赖注入"></a>3. 使用注解进行依赖注入</h5><pre><code>@Autowired
+@Qualifier
+@Resource
+@Value
+进行依赖注入</code></pre><h5 id="4-注入复杂数据类型"><a href="#4-注入复杂数据类型" class="headerlink" title="4. 注入复杂数据类型"></a>4. 注入复杂数据类型</h5><pre><code>List Set      
+Map Properties
+
+标签：property
+位置：property内部
+其中：只要数据集合的结构相同，可以使用同一种标签进行依赖注入
+    list set arrsy: 都可以使用&lt;list&gt;,&lt;array&gt;,&lt;set&gt;，序列格式
+    map property:&lt;map&gt;,&lt;pros&gt;，键值对格式</code></pre><blockquote>
+<pre><code>private String[] myStr;
+private List&lt;StringmyList;
+private Set&lt;StringmySet;
+private Map&lt;String,StringmyMap;
+private Properties myProp;</code></pre></blockquote>
+<pre><code>具体的调用方法</code></pre><blockquote>
+<pre><code>&lt;bean id=&quot;accountService3&quot; class=&quot;com.spring_03_DI.service.impl.AccountServiceImpl3&quot;&gt;
+&lt;property name=&quot;myStr&quot;&gt;
+  &lt;array&gt;
+    &lt;value&gt;AAA&lt;/value&gt;
+    &lt;value&gt;VVVDDD&lt;/value&gt;
+    &lt;value&gt;SS&lt;/value&gt;
+    &lt;value&gt;SSDDD&lt;/value&gt;
+  &lt;/array&gt;
+&lt;/property&gt;
+&lt;!-- map --&gt;
+&lt;property name=&quot;myMap&quot;&gt;
+  &lt;map&gt;
+    &lt;entry key=&quot;1&quot; value=&quot;11111&quot;/&gt;
+    &lt;entry key=&quot;2&quot; value=&quot;22222&quot;/&gt;
+  &lt;/map&gt;
+&lt;/property&gt;</code></pre>  
+</blockquote>
+<h3 id="基于注解的IoC配置"><a href="#基于注解的IoC配置" class="headerlink" title="基于注解的IoC配置"></a>基于注解的IoC配置</h3><pre><code>使用注解和xml开发要实现的功能都是一致的：降低程序之间的耦合，将xml中对应的功能交由注解来实现</code></pre><h4 id="1-用于创建bean对象的注解"><a href="#1-用于创建bean对象的注解" class="headerlink" title="1. 用于创建bean对象的注解"></a>1. 用于创建bean对象的注解</h4><pre><code>* 与xml配置文件中的&lt;bean&gt;标签的作用相同：创建一个bean对象，将其放置在容器中
+* 如果想让spring知道存在组件，需要使用spring中的包扫描，将需要创建bean对象的包传入&lt;context&gt;标签中
+
+1. @Component:组件注解
+    * 作用：将当前对象存入spring容器中(写在类名上)
+    * 属性：value:
+            用于指定获取容器中bean的id，当我们不写时，默认是当前类名，首字母小写    
+
+2. @Controller:一般用于表现层
+3. @Service：一般用于业务层
+4. @Repository:一般用于持久层
+以上的三个注解和@Component的作用和属性完全一致，是spring框架为我们明确提供的三层注解，让我们的三层结构更加清晰</code></pre><h4 id="2-用于数据注入的注解"><a href="#2-用于数据注入的注解" class="headerlink" title="2. 用于数据注入的注解"></a>2. 用于数据注入的注解</h4><pre><code>* 与xml配置文件的&lt;property&gt;作用一致：进行数据注入
+
+1. @Autowired:自动按照类型注入
+     * 只要IoC容器中有唯一的bean对象和要注入的变量类型相同，就可以自动注入
+     * 如果IoC容器中没有任何bean对象和要注入的变量类型相同，无法自动注入
+     * 如果IoC容器中有多个bean对象和要注入的变量类型相同，
+     * 首先圈定类型相同的bean对象的范围，然后会在进行变量名称的比对,如果名称相同，就可以注入数据</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/09/spring/autowired.png" alt="autowired注解">         </p>
+<pre><code>2. @Qualifier
+    * 先按照类型自动注入，如果包含有多个相同类型的bean对象，会按照名称进行数据注入
+    * 在按照类型注入的基础上，再按照名称注入，在给类成员的注入的时候不能单独使用，但是在给方法注入的时候可以，，将@Qualifier()中的名称所对应的Bean对象注入到方法中
+    * 参数：
+        value:用于指定注入的bean的id
+
+3. @Resource
+    * 直接按照bean的id进行注入，可以单独使用
+    * 参数：
+        name:用于指定注入的bean的id
+
+注意：
+     以上的三种注入方式只能注入其他的bean类型的数据，基本类型和String类型无法通过上述方法注入
+          集合类型只能通过xml方式注入
+
+4. @Value
+    * 注入基本数据类型和String类型
+    * 参数：    
+        value:用于指定数据的值，可以使用SpEL（spring的El表达式）                      SpEL的写法：${表达式}</code></pre><h4 id="3-用于改变作用范围的注解"><a href="#3-用于改变作用范围的注解" class="headerlink" title="3. 用于改变作用范围的注解"></a>3. 用于改变作用范围的注解</h4><pre><code>* 与xml文件中的&lt;bean&gt;标签的scope属性作用相同
+
+1. @Scope
+    * 参数：
+        value:singleton prototype</code></pre><h4 id="4-用于改变生命周期的注解"><a href="#4-用于改变生命周期的注解" class="headerlink" title="4. 用于改变生命周期的注解"></a>4. 用于改变生命周期的注解</h4><pre><code>1. @PreDestroy
+    * 销毁容器
+2. @PostConstruct
+    * 初始化容器</code></pre><h3 id="使用IoC的一个简单案例"><a href="#使用IoC的一个简单案例" class="headerlink" title="使用IoC的一个简单案例"></a>使用IoC的一个简单案例</h3><pre><code>1. 环境配置
+    使用DBUtils进行Dao数据交互
+    spring框架
+    mybatis进行JDBC连接
+    c3p0作为数据源</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/09/spring/IoC_exp_pom.png" alt="pom.xml"></p>
+<pre><code>2. bean文件结构
+    1. xml配置</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/09/spring/Ioc_xml_exp.png" alt="xml配置的bean"></p>
+<pre><code>2. annotation配置</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/09/spring/IoC_anno_exp.png" alt="znnotation配置的bean"></p>
+<blockquote>
+<p>注解的形式以及文件结构<br><img src="/2020/09/09/spring/Ioc_structure.png" alt="annotation的结构"></p>
+</blockquote>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><pre><code>在案例中，配置文件存在annotation和xml同时存在，下面将其改造为纯注解方式
+
+1. 改变xml中的组件扫描
+    @Configurtion:
+        * 作用：用于指定当前类是配置类
+         * 当配置类作为AnnotationConfigApplicationContext()的参数时可以不写@Configuration，由扫描器直接扫描该配置类
+         * 如果是子配置类，而且子配置类的字节码没有作为参数传入，必须写@Configuration
+
+    @ComponentScan
+        * 作用：用于指定spring在创建容器是需要扫描的包
+        * 参数：value basePackages作用一样（@Alisafor）    
+                类似&lt;context:component-scan base-package=&quot;com.spring_04_exp&quot;/&gt;
+
+    一旦这个类上写了@Configuration 和@ComponentScan ,spring就会自动扫描配置包，并且创建对象将其放入容器，只需要拿到这个bean对象就可以了。
+
+2. 根据方法的返回值创建Bean对象
+    @Bean
+        * 作用：把当前方法的返回值作为Bean对象存入spring容器中
+        * 参数：name:
+            用于指定bean的id,当不写时，方法名作为默认值
+        * 使用注解配置方法时，spring框架会在容器中查找相对于的bean容器，查找方法与@AutoWired相同
+
+3. 配置文件的读取
+    @PropetySource
+        * 作用：读取配置文件，用于指定properties文件的位置
+        * 参数：value
+            文件的名称:文件的路径
+        * classpath关键字，表示在类路径下
+
+4. 导入其他的配置类
+    @Import
+        * 作用：用于导入其他的配置类
+        * 参数：value
+            用于指定其他配置类的的字节码
+        * 当我们使用Import注解时，拥有Import的配置类就是父配置类，写在value中的就是子配置类</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/09/spring/anno_withoutxml_1.png" alt="配置类"><br><img src="/2020/09/09/spring/anno_withoutxml_2.png" alt="配置类"></p>
+<pre><code>5. spring整合junit
+    1. 程序的入口
+        main方法
+    2. JUnit单元测试
+        没有main方法也能执行，其实junit中集成了main方法
+        该方法就会判断当前测试类中有哪些方法上由@Test方法
+        junit就会让Test注解执行该方法
+    3. junit不知道spring框架
+        在执行测试方法的时候，junit根本不知道由spring框架
+        所以不会读取配置文件/创建spring容器
+
+    4. 当测试方法执行时，没有IoC容器，就算写了@Autowired注解，也无法注入
+
+    5. 解决方式    
+        1. 导入spring整合test的jar包
+        2. 使用junit的main方法替换为spring提供的main方法
+            1. @Runwith
+                * 作用：改变junit的main方法，使用spring框架提供的main方法，可以创建容器
+                * 替换的方法的类的字节码
+        3. 告诉spring运行器，spring和IoC容器的创建基于xml还是注解
+            2. @ContextConfiguration
+                * 作用：指定spring和IoC容器的创建基于xml还是注解
+                * 参数：
+                    locations : 指定xml文件的位置，加上classpath关键字，表示在类路径下
+                    classes: 指定配置类位置，字节码文件
+
+    6. 出现问题
+        1. spring框架的5.x版本整合junit必须在4.12版本以上
+        2. spring-context以及spring-test的版本号要一致
+        3. 如果一直无法导入jar包，可以先将本地maven仓库对应的jar包删除，重新导入坐标</code></pre><h2 id="spring的AOP"><a href="#spring的AOP" class="headerlink" title="spring的AOP"></a>spring的AOP</h2><h3 id="完善account的案例"><a href="#完善account的案例" class="headerlink" title="完善account的案例"></a>完善account的案例</h3><h4 id="进行账户之间的转账"><a href="#进行账户之间的转账" class="headerlink" title="进行账户之间的转账"></a>进行账户之间的转账</h4><pre><code>1. 增加新的转账方法
+2. 防止转账异常，应该在持久层增加事务控制
+3. 将事务控制放在业务层控制
+4. 增加数据库连接工具类
+5. 为了保证每次连接都只有一个事务控制，将连接和线程绑定
+6. 增加事务管理工具类 
+7. 改变连接池对象，增加数据注入
+
+增加很多冗余代码，配置文件变得更为复杂</code></pre><h3 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h3><pre><code>1. 优势
+    * 字节码随用随创建，随用随代理
+    * 在不改变源码的时候对方法进行增强</code></pre><h4 id="基于接口的动态代理"><a href="#基于接口的动态代理" class="headerlink" title="基于接口的动态代理"></a>基于接口的动态代理</h4><pre><code>1. 涉及的类
+    * Proxy类
+    * JDK官方
+
+2. 创建代理对象的方法
+    * Proxy.newProxyInstance()
+
+3. 要求
+    * 被代理对象至少要实现一个接口，如果没有，不能使用
+
+4. newProxyInstance()的参数
+    * ClassLoader:类加载器
+        用于加载代理对象的字节码，和被代理对象使用相同的类加载器：固定写法
+
+    * Class[]:字节码数组
+        用于指定代理和被代理对象实现相同的方法，代理谁就写谁的接口：固定写法
+
+    * InvacationHandler
+        用于指定增强的代码
+        让我们写任何实现代理，一般在某个实现方法上进行改变
+        一般情况下，为匿名内部类，但是不是必须的
+        此接口的实现类，都是谁用谁写
+
+5. InvacationHandler的实现方法的参数</code></pre><blockquote>
+<pre><code>实现类中需要重写invoke方法,执行被代理对象的任何方法都会经过该方法
+@Override
+public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+   return null;
+ }
+    * proxy : 被代理对象的引用
+    * method : 当前执行的方法
+    * args : 当前方法执行的参数
+    * 返回类型：和被代理对象的相同方法有相同的返回值类型</code></pre></blockquote>
+<h4 id="基于字类的动态代理"><a href="#基于字类的动态代理" class="headerlink" title="基于字类的动态代理"></a>基于字类的动态代理</h4><pre><code>1. 导入jar包
+    cglib包
+
+2. 涉及的类
+    * Enhancer类
+    * 第三方cglib库
+
+3. 创建代理对象的方法
+    * Enhancer.create()方法
+
+4. create方法的参数
+    * Class:被代理对象的字节码
+    * Callback:
+        * 用于提供增强的方法
+         * 如何代理对象，该接口的实现类，通常情况下为匿名内部类，但不是必须的
+         * 此接口的方法都是谁用谁写
+         * 实现该接口的子接口的实现类，MethodInterceptor方法拦截器
+
+5. MethodInterceptor方法的参数</code></pre><blockquote>
+<pre><code>方法的重写
+@Override
+public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+    return null;
+}
+参数：
+    * 执行被代理对象的方法都经过该方法
+    * @param o 被代理对象
+    * @param method 当前执行的方法
+    * @param objects 当前方法执行的对象
+    *                和基于接口的方法的invoke参数相同
+    * @param methodProxy 当前执行方法的代理对象
+    * @return 和当前方法的返回值类型相同
+    * @throws Throwable    </code></pre></blockquote>
+<h4 id="动态代理在案例中的使用"><a href="#动态代理在案例中的使用" class="headerlink" title="动态代理在案例中的使用"></a>动态代理在案例中的使用</h4><pre><code>1. 创建代理工厂类，在获取AccountService的基础上，对原有的方法进行增强，增加事务控制</code></pre><blockquote>
+<pre><code>public class BeanFactory {
+    private IAccountService accountService;
+    private TransactionManager transactionManager;</code></pre></blockquote>
+<pre><code>public void setTransactionManager(TransactionManager transactionManager) {
+    this.transactionManager = transactionManager;
+}</code></pre><blockquote>
+</blockquote>
+<pre><code>public final void setAccountService(IAccountService accountService) {
+    this.accountService = accountService;
+}</code></pre><blockquote>
+</blockquote>
+<pre><code>/**
+ * 获取代理对象的返回方法
+ * @return
+ */
+public IAccountService getAccountService(){
+    return (IAccountService) Proxy.newProxyInstance(accountService.getClass().getClassLoader(),
+            accountService.getClass().getInterfaces(), new InvocationHandler() {
+                /**
+                 * 增强方法,对事务进行增强
+                 */
+                @Override
+                public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                    Object rtValue = null;
+                    try {
+                        //1.开启事务
+                        transactionManager.beginTransaction();
+                        //2.执行操作
+                        rtValue = method.invoke(accountService,args);
+                        //3.提交事务
+                        transactionManager.commitTransaction();
+                        //4.返回结果
+                        return rtValue;
+                    } catch (Exception e) {
+                        //5.回滚事务
+                        transactionManager.rollbackTransaction();
+                        throw new RuntimeException(e);
+                    } finally {
+                        //6.释放资源
+                        transactionManager.releaseTransaction();
+                    }
+                }
+           });
+     }
+  }
+
+2. bean.xml的配置
+    * 增加新的bean对象，beanFactory
+    * 使用工厂的方法，创建代理类对象，由于代理类对象的数据类型和被代理对象的数据类型相同，在测试的时候需要对注入的数据进行指定</code></pre><p><img src="/2020/09/09/spring/proxy.png" alt="代理类对象的配置文件"></p>
+<pre><code>3. 测试类</code></pre><p><img src="/2020/09/09/spring/proxy_test.png" alt="动态代理的测试类"></p>
+<h3 id="AOP的概念"><a href="#AOP的概念" class="headerlink" title="AOP的概念"></a>AOP的概念</h3><pre><code>1. Aspect Oriented Programming:面向切面编程
+    通过预编译和运行期动态代理的方式，实现程序功能的统一维护的一种技术。AOP是OOP编程的延续，是函数式编程的一种衍生泛型，可以使用AOP对业务逻辑进行隔离，降低程序之间的耦合性，提高代码的可重用率。
+
+    简单来说，将重复的代码抽取出来，在需要使用的时候，通过动态代理的方式，在不修改源码的基础上，对已有的方法进行增强。
+
+2. AOP的优势
+    1. 作用
+        * 在程序的运行期间不改变源码的基础上，对已有的方法进行增强
+
+    2. 优势
+        * 减少重复代码
+        * 提高开发效率
+        * 方便维护
+
+3. 实现方式
+    动态代理
+    spring会根据是否实现了接口，动态的选择实现代理的方式
+
+4. AOP的相关术语
+    * Joinpoint(连接点)：
+        所谓连接点那些被拦截到的点，在spring中，只支持对方法类型的连接点。
+        （业务层接口中的所有方法），连接业务和增强方法的点
+
+    * Pointcut(切入点)：
+        被增强的方法，叫做切入点，我们对于哪些joinpoint方法进行增强的定义
+
+    切入点都是连接点，但不是所有的连接点都是切入点
+
+    * Advice(通知/增强):
+        拦截到Joinpoint之后所作的事情叫做通知。
+        通知的类型：
+            前置通知，后置通知，异常通知，最后通知，环绕通知</code></pre><p><img src="/2020/09/09/spring/advice.png" alt="advice_types"></p>
+<pre><code>    * Target(目标对象)：
+        代理的目标对象，即被代理对象
+
+    * Weaving(织入)：
+        把增强应用到目标对象来创建新的代理对象的过程。
+        spring采用动态代理技术进行织入
+
+    * Proxy(代理)：
+        一个类被AOP织入后，产生一个代理对象
+
+    * Aspect(切面)：
+        切入点和通知的结合，切入点和通知的
+5. 明确
+    1. 开发阶段：
+        核心业务代码，大部分程序员
+        把公共代码抽取出来，制作成通知（最后才做）
+        在配置文件中，声明切入点和通知的关系，即切面，
+
+    2. 运行阶段：
+        spring框架监控切入点的执行，一旦检测到切入点方法正在执行，使用代理机制，动态创建目标对象的代理对象，根据通知类别，在代理的对应位置，将通知的功能织入，完成代码的逻辑运行。</code></pre><h3 id="基于XML的AOP配置"><a href="#基于XML的AOP配置" class="headerlink" title="基于XML的AOP配置"></a>基于XML的AOP配置</h3><h2 id="JdbcTemlate"><a href="#JdbcTemlate" class="headerlink" title="JdbcTemlate"></a>JdbcTemlate</h2><h2 id="事务控制"><a href="#事务控制" class="headerlink" title="事务控制"></a>事务控制</h2>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
   </entry>
   <entry>
     <title>MyBatis</title>
@@ -667,504 +1665,6 @@ User findById(Integer id);</code></pre></blockquote>
       </tags>
   </entry>
   <entry>
-    <title>spring</title>
-    <url>/2020/09/09/spring/</url>
-    <content><![CDATA[<h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><h3 id="1-什么是spring："><a href="#1-什么是spring：" class="headerlink" title="1. 什么是spring："></a>1. 什么是spring：</h3><pre><code>1. 分层的Java SE/EE的轻量级开源框架
-2. 提供了展现层Spring MVC 和持久层Spring JDBC以及业务层事务管理的众多技术
-3. 展现层和持久层的中间部分，业务层</code></pre><h3 id="2-spring的核心："><a href="#2-spring的核心：" class="headerlink" title="2. spring的核心："></a>2. spring的核心：</h3><pre><code>1. IoC（Inversion of Control）: 控制反转
-2. AOP（Aspect Oriented Programming）: 面向切面编程</code></pre><h3 id="3-发展历程和优势"><a href="#3-发展历程和优势" class="headerlink" title="3.发展历程和优势"></a>3.发展历程和优势</h3><pre><code>spring优势：
-    1. 方便解耦，简化开发
-    2. AOP编程的支持
-    3. 声明式事务的支持
-    4. 方便程序的测试
-    5. 方便集成各种优秀的框架</code></pre><h2 id="程序的耦合和解耦"><a href="#程序的耦合和解耦" class="headerlink" title="程序的耦合和解耦"></a>程序的耦合和解耦</h2><h4 id="耦合"><a href="#耦合" class="headerlink" title="耦合"></a>耦合</h4><pre><code>1. 什么是耦合：
-    程序之间的依赖关系：
-        * 类之间的依赖关系
-        * 方法之间的依赖关系
-
-2. 开发中的做法：
-    编译期不依赖，运行时依赖
-
-3. 方法：
-    1. 使用读取配置文件来获取要创建的对象的全限定名称
-        使用类加载器，获取配置文件的输入流
-    2. 使用反射（reflection）来创建对象，而不是使用new关键字
-        * 使用反射，如果字符串写死，以后无法再次使用别的数据库配置</code></pre><h4 id="解耦"><a href="#解耦" class="headerlink" title="解耦"></a>解耦</h4><pre><code>1. 什么是解耦：
-    降低程序之间的依赖关系
-
-2. 解耦的方式：使用工厂模式创建Bean对象
-      * bean: 可重用组件
-      * javaBean &gt; 实体类
-      * javaBean 用java语言编写的可重用组件
-      * beanfactory：创建bean对象的工厂
-
-3. 如何创建工厂模式
-    1. 读取配置文件来反射bean对象
-    2. 配置文件来创建service和dao
-        唯一标识=全限定类名，key = value，根据对应的value创建实例对象</code></pre><h2 id="IoC（Inversion-of-Control）"><a href="#IoC（Inversion-of-Control）" class="headerlink" title="IoC（Inversion of Control）"></a>IoC（Inversion of Control）</h2><pre><code>1. 概念：
-    把创建对象的权力交给框架，是框架的重要特征，包括依赖注入（Dependency Injection,DI）和依赖查找（Dependency Lookup）
-
-2. 作用
-    * 降低程序之间的耦合度
-    * 将类中的对象创建工作交给spring框架来完成，只要获取该对象就可以了
-    * 使用依赖注入进行属性值的填充，在创建对象的同时完成赋值</code></pre><h3 id="基于XML的IoC配置"><a href="#基于XML的IoC配置" class="headerlink" title="基于XML的IoC配置"></a>基于XML的IoC配置</h3><h4 id="初步使用"><a href="#初步使用" class="headerlink" title="初步使用"></a>初步使用</h4><pre><code>1. 步骤
-    * 读取配置文件创建IoC容器（ApplicationContext）
-    * 根据id，获取容器中的文件
-
-2. 配置文件的内容
-    * 主要是&lt;bean&gt;标签，id:查找对象的唯一标识符，class:要创建的对象的全限定类名
-
-3. 读取配置文件创建容器
-    ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;bean.xml&quot;);
-    根据类路径下的xml配置文件创建容器，配置文件需要放置在类路径下
-
-    ApplicationContext ac = new FileSystemXmlApplicationContext(&quot;bean.xml&quot;);
-    可以加载磁盘任意路径下的配置文件
-
-    ApplicationContext ac = new AnnotationConfigApplicationContext(&quot;bean.xml&quot;);
-    根据注解配置创建容器
-
-4. 根据id获取对象
-    as.getBean(&quot;id&quot;);</code></pre><h4 id="BeanFactory和ApplicationContext"><a href="#BeanFactory和ApplicationContext" class="headerlink" title="BeanFactory和ApplicationContext"></a>BeanFactory和ApplicationContext</h4><pre><code>1. Beanfactory接口
-    * 创建核心容器时，创建对象的方式采用延迟加载的方式，什么时候根据ID获取对象的时候，什么时候开始创建真正的对象
-     * 多例模式适用
-
-2. ApplicationContext接口
-    * 创建核心容器时，创建对象的方式采用立即加载的方式，只要一读取完配置文件马上创建配置文件中的对象
-     * 单例模式时适用：只创建一个对象
-
-3. 具体的使用
-    BeanFactory是顶层接口，功能不如ApplicationContext，实际使用的接口为ApplicationContext接口
-
-    ApplicationContext可以根据配置文件的不同，选择合适的加载方式
-    可以感知到对象的单例还是多例，从而选择不同的方式创建对象</code></pre><h4 id="spring对bean对象的管理细节"><a href="#spring对bean对象的管理细节" class="headerlink" title="spring对bean对象的管理细节"></a>spring对bean对象的管理细节</h4><h5 id="1-创建bean的三种方式"><a href="#1-创建bean的三种方式" class="headerlink" title="1. 创建bean的三种方式"></a>1. 创建bean的三种方式</h5><pre><code>1. 使用默认构造函数创建：
-   在spring的配置文件中使用bean标签，配以id 和 class属性，且没有其他的属性和标签时
-   采用的就是默认构造函数创建bean对象(Class类的实例反射)，如果此时没有默认构造函数，则无法创建</code></pre><blockquote>
-<pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.spring_03_IoC_bean.service.impl.AccountServiceImpl&quot;/&gt;</code></pre></blockquote>
-<pre><code>2. 使用普通工厂中的方法创建对象
-    使用某个类中的方法创建对象，并存入spring容器中</code></pre><blockquote>
-<pre><code>&lt;bean id=&quot;instanceFactory&quot; class=&quot;com.spring_03_IoC_bean.factory.InstanceFactory&quot;/&gt;
-&lt;bean id=&quot;accountService&quot; factory-bean=&quot;instanceFactory&quot; factory-method=&quot;getAccountService&quot;/&gt;</code></pre></blockquote>
-<pre><code>3. 使用工厂的静态方法创建对象（
-    使用某个类的静态方法创建对象(可以不创建该对象)，并将其存入spring容器</code></pre><blockquote>
-<pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.spring_03_IoC_bean.factory.StaticFactory&quot; factory-method=&quot;getAccountService&quot;/&gt;</code></pre></blockquote>
-<h5 id="2-bean对象的作用范围"><a href="#2-bean对象的作用范围" class="headerlink" title="2. bean对象的作用范围"></a>2. bean对象的作用范围</h5><pre><code>1. bean标签的scope属性规定bean对象的范围
-2. 类型
-    * singleton: 单例模式（默认）
-    * prototype：多例模式
-    * requset:web应用的一次请求
-    * session：web应用中的一次会话
-    * global-session：web应用中的全局会话</code></pre><h5 id="3-bean对象的生命周期"><a href="#3-bean对象的生命周期" class="headerlink" title="3. bean对象的生命周期"></a>3. bean对象的生命周期</h5><pre><code>1. 单例对象：singleton
-  出生：当容器创建时，对象出生
-  活着：只要容器还在，对象活着
-  死亡：容器销毁，对象死亡
-2. 多例对象：prototype
-  出生：当使用对象时，spring框架创建
-  活着：只要在使用的时候一直存在
-  死亡：只有在对象长时间不用，且没有其他的对象引用的时候，由垃圾回收机制回收</code></pre><h4 id="依赖注入（dependency-injection-DI）"><a href="#依赖注入（dependency-injection-DI）" class="headerlink" title="依赖注入（dependency injection:DI）"></a>依赖注入（dependency injection:DI）</h4><pre><code>1. 什么是依赖？    
-    当前类中引用到其他类的对象，叫做依赖。
-    在spring框架中，依赖对象由框架提供，我们只需要提供配置文件的说明（IoC方式）
-
-2. spring降低程序之间的依赖关系?
-    IoC控制反转
-    依赖注入
-
-3. 依赖注入的数据类型：
-    1. 基本数据类型和String类型
-    2. 其他bean对象
-    3. 复杂类型（集合类型）
-
-4. 依赖注入的方式：
-    1. 通过默认构造函数注入依赖
-    2. 使用set方法注入 ***
-    3. 通过注解注入</code></pre><h5 id="1-通过默认构造函数注入"><a href="#1-通过默认构造函数注入" class="headerlink" title="1. 通过默认构造函数注入"></a>1. 通过默认构造函数注入</h5><pre><code>标签：constructor-arg
-位置：bean中的内部
-属性含义：
-    type: 指定要注入的数据类型，该数据类型是构造函数的某个或者某些参数的类型
-    index: 指定要注入数据给构造函数的参数指定索引的位置的赋值
-    name: 用于指定给构造函数的指定名称的参数赋值（主要方式）
-    ===================指定给构造函数的那个参数赋值=======================
-
-    value: 提供基本类型和String类型的数据
-    ref: 指定其他的bean类型的数据，在spring的IoC的核心容器中的bean对象
-
-优势：
-    在获取bean对象时，注入数据是必须的操作，否则对象无法创建成功
-缺点：
-    改变了bean对象的实例化方式，在我们创建对象时，即使用不到这些数据，也必须提供数据</code></pre><blockquote>
-<pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.spring_03_DI.service.impl.AccountServiceImpl&quot;&gt;
-    &lt;constructor-arg name=&quot;name&quot; value=&quot;李某&quot;/&gt;
-    &lt;constructor-arg name=&quot;age&quot; value=&quot;23&quot;/&gt;
-    &lt;constructor-arg name=&quot;birthday&quot; ref=&quot;now&quot;/&gt;
-&lt;/bean&gt;</code></pre></blockquote>
-<blockquote>
-<pre><code>&lt;!-- 配置一个日期对象 --&gt;
-&lt;bean id=&quot;now&quot; class=&quot;java.util.Date&quot;/&gt;</code></pre></blockquote>
-<h5 id="2-使用set进行依赖注入"><a href="#2-使用set进行依赖注入" class="headerlink" title="2. 使用set进行依赖注入"></a>2. 使用set进行依赖注入</h5><pre><code>标签：property
-位置：bean标签内部
-参数：
-    name:    指定注入的时候的方法的名称
-    value:     指定基本数据类型和String类型
-    ref:     指定其他的bean类型的数据，只要是在spring核心容器中的bean对象都可以
-
-优势：创建bean对象的时候，可以直接使用默认构造函数
-   缺点：
-      如果某个成员必须有值，获取对象的set方法可能没有执行</code></pre><blockquote>
-<pre><code>&lt;bean id=&quot;accountService2&quot; class=&quot;com.spring_03_DI.service.impl.AccountServiceImpl2&quot;&gt;
-    &lt;property name=&quot;name&quot; value=&quot;test&quot;/&gt;
-    &lt;property name=&quot;age&quot; value=&quot;22&quot;/&gt;
-    &lt;property name=&quot;birthday&quot; ref=&quot;now&quot;/&gt;
-&lt;/bean&gt;</code></pre></blockquote>
-<blockquote>
-<pre><code>&lt;!-- 配置一个日期对象 --&gt;
-&lt;bean id=&quot;now&quot; class=&quot;java.util.Date&quot;/&gt;</code></pre></blockquote>
-<h5 id="3-使用注解进行依赖注入"><a href="#3-使用注解进行依赖注入" class="headerlink" title="3. 使用注解进行依赖注入"></a>3. 使用注解进行依赖注入</h5><h5 id="4-注入复杂数据类型"><a href="#4-注入复杂数据类型" class="headerlink" title="4. 注入复杂数据类型"></a>4. 注入复杂数据类型</h5><pre><code>List Set      
-Map Properties
-
-标签：property
-位置：property内部
-其中：只要数据集合的结构相同，可以使用同一种标签进行依赖注入
-    list set arrsy: 都可以使用&lt;list&gt;,&lt;array&gt;,&lt;set&gt;，序列格式
-    map property:&lt;map&gt;,&lt;pros&gt;，键值对格式</code></pre><blockquote>
-<pre><code>private String[] myStr;
-private List&lt;StringmyList;
-private Set&lt;StringmySet;
-private Map&lt;String,StringmyMap;
-private Properties myProp;</code></pre></blockquote>
-<pre><code>具体的调用方法</code></pre><blockquote>
-<pre><code>&lt;bean id=&quot;accountService3&quot; class=&quot;com.spring_03_DI.service.impl.AccountServiceImpl3&quot;&gt;
-&lt;property name=&quot;myStr&quot;&gt;
-  &lt;array&gt;
-    &lt;value&gt;AAA&lt;/value&gt;
-    &lt;value&gt;VVVDDD&lt;/value&gt;
-    &lt;value&gt;SS&lt;/value&gt;
-    &lt;value&gt;SSDDD&lt;/value&gt;
-  &lt;/array&gt;
-&lt;/property&gt;
-&lt;!-- map --&gt;
-&lt;property name=&quot;myMap&quot;&gt;
-  &lt;map&gt;
-    &lt;entry key=&quot;1&quot; value=&quot;11111&quot;/&gt;
-    &lt;entry key=&quot;2&quot; value=&quot;22222&quot;/&gt;
-  &lt;/map&gt;
-&lt;/property&gt;</code></pre>  
-</blockquote>
-<h3 id="基于注解的IoC配置"><a href="#基于注解的IoC配置" class="headerlink" title="基于注解的IoC配置"></a>基于注解的IoC配置</h3><pre><code>使用注解和xml开发要实现的功能都是一致的：降低程序之间的耦合</code></pre><h4 id="1-用于创建bean对象的注解"><a href="#1-用于创建bean对象的注解" class="headerlink" title="1. 用于创建bean对象的注解"></a>1. 用于创建bean对象的注解</h4><pre><code>* 与xml配置文件中的&lt;bean&gt;标签的作用相同：创建一个bean对象，将其放置在容器中
-* 如果想让spring知道存在组件，需要使用spring中的包扫描，将需要创建bean对象的包传入&lt;context&gt;标签中
-
-1. @Component:组件注解
-    * 作用：将当前对象存入spring容器中(写在类名上)
-    * 属性：value:
-            用于指定获取容器中bean的id，当我们不写时，默认是当前类名，首字母小写    
-
-2. @Controller:一般用于表现层
-3. @Service：一般用于业务层
-4. @Repository:一般用于持久层
-以上的三个注解和@Component的作用和属性完全一致，是spring框架为我们明确提供的三层注解，让我们的三层结构更加清晰</code></pre><h4 id="2-用于数据注入的注解"><a href="#2-用于数据注入的注解" class="headerlink" title="2. 用于数据注入的注解"></a>2. 用于数据注入的注解</h4><pre><code>* 与xml配置文件的&lt;property&gt;作用一致：进行数据注入
-
-1. @Autowired:自动按照类型注入
-     * 只要IoC容器中有唯一的bean对象和要注入的变量类型相同，就可以自动注入
-     * 如果IoC容器中没有任何bean对象和要注入的变量类型相同，无法自动注入
-     * 如果IoC容器中有多个bean对象和要注入的变量类型相同，
-     * 首先圈定类型相同的bean对象的范围，然后会在进行变量名称的比对,如果名称相同，就可以注入数据</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/09/spring/autowired.png" alt="autowired注解">         </p>
-<pre><code>2. @Qualifier
-    * 先按照类型自动注入，如果包含有多个相同类型的bean对象，会按照名称进行数据注入
-    * 在按照类型注入的基础上，再按照名称注入，在给类成员的注入的时候不能单独使用，但是在给方法注入的时候可以
-    * 参数：
-        value:用于指定注入的bean的id
-
-3. @Resource
-    * 直接按照bean的id进行注入，可以单独使用
-    * 参数：
-        name:用于指定注入的bean的id
-
-注意：
-     以上的三种注入方式只能注入其他的bean类型的数据，基本类型和String类型无法通过上述方法注入
-          集合类型只能通过xml方式注入
-
-4. @Value
-    * 注入基本数据类型和String类型
-    * 参数：    
-        value:用于指定数据的值，可以使用SpEL（spring的El表达式）                      SpEL的写法：${表达式}</code></pre><h4 id="3-用于改变作用范围的注解"><a href="#3-用于改变作用范围的注解" class="headerlink" title="3. 用于改变作用范围的注解"></a>3. 用于改变作用范围的注解</h4><pre><code>* 与xml文件中的&lt;bean&gt;标签的scope属性作用相同
-
-1. @Scope
-    * 参数：
-        value:singleton prototype</code></pre><h4 id="4-用于改变生命周期的注解"><a href="#4-用于改变生命周期的注解" class="headerlink" title="4. 用于改变生命周期的注解"></a>4. 用于改变生命周期的注解</h4><pre><code>1. @PreDestroy
-    * 销毁容器
-2. @PostConstruct
-    * 初始化容器</code></pre><h3 id="使用IoC的一个简单案例"><a href="#使用IoC的一个简单案例" class="headerlink" title="使用IoC的一个简单案例"></a>使用IoC的一个简单案例</h3><pre><code>1. 环境配置
-    使用DBUtils进行Dao数据交互
-    spring框架
-    mybatis进行JDBC连接
-    c3p0作为数据源</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/09/spring/Ioc_xml_exp.png" alt="pom.xml"></p>
-<pre><code>2. bean文件结构
-    1. xml配置</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/09/spring/Ioc_xml_exp.png" alt="xml配置的bean"></p>
-<pre><code>2. annotation配置</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/09/spring/IoC_anno_exp.png" alt="znnotation配置的bean"></p>
-<blockquote>
-<p>注解的形式以及文件结构<br><img src="/2020/09/09/spring/Ioc_structure.png" alt="annotation的结构"></p>
-</blockquote>
-<h2 id="spring的AOP"><a href="#spring的AOP" class="headerlink" title="spring的AOP"></a>spring的AOP</h2><h3 id="基于XML和注解的AOP配置"><a href="#基于XML和注解的AOP配置" class="headerlink" title="基于XML和注解的AOP配置"></a>基于XML和注解的AOP配置</h3><h2 id="JdbcTemlate"><a href="#JdbcTemlate" class="headerlink" title="JdbcTemlate"></a>JdbcTemlate</h2><h2 id="事务控制"><a href="#事务控制" class="headerlink" title="事务控制"></a>事务控制</h2>]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SQLjdbc</title>
-    <url>/2020/05/02/SQLjdbc/</url>
-    <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><pre><code>1. 基本概念
-    Java DataBase Connectivity
-    - java数据库连接，java操作数据库，使用同一套java代码操作不同的数据库
-    - 本质：官方定义的操作所有关系型数据库的规则--接口，实现类由各个数据库厂商实现，提供数据库驱动jar包，我们可以使用这套接口（JDBC）编程，但真正执行的是驱动jar包中的实现类。
-        Person接口   Worker类  Person p = new Worker();    p.eat();
-
-2. 快速入门
-    * 步骤：
-        1. 导入驱动jar包
-        2. 注册驱动
-        3. 获取数据库的连接对象 Connection
-        4. 定义SQL语句
-        5. 获取执行SQL语句的对象 Statement = connection.statement()
-        6. 处理SQL语句,接受返回结果 statememt.executeQuery(sql)
-        7. 处理结果
-        8. 释放资源
-
-    * 代码：
-        `
-        //2.注册驱动
-           Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);
-
-           //3.获取数据库连接对象
-        Connection connection = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/books?serverTimezone=UTC&quot;,&quot;uesrname&quot;,&quot;password&quot;);
-
-        //4.定义SQL语句
-        String sql = &quot;select * from admin&quot;;
-
-        //5.获取执行SQL的对象
-        Statement statement = connection.createStatement();
-
-        //6.执行SQL
-        boolean flag = statement.execute(sql);
-
-        //7.处理
-        System.out.println(flag);
-
-        //8.释放资源
-        statement.close();
-        connection.close();
-        `</code></pre><h2 id="对象详解"><a href="#对象详解" class="headerlink" title="对象详解"></a>对象详解</h2><pre><code>1. 详解各个对象
-    1. DriverManager
-        * 驱动管理对象
-        * 功能：
-            1. 注册驱动
-                static void registerDriver(Driver driver):注册给定的驱动程序
-                写代码：Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;)
-                com.mysql.cj.jdbc.Driver,使用静态代码块，调用registerDriver方</code></pre><blockquote>
-<pre><code>注册驱动:
- static {
-      try {
-            DriverManager.registerDriver(new Driver());
-     } catch (SQLException var1) {
-         throw new RuntimeException(&quot;Can&apos;t register driver!&quot;);
-     }
-     }</code></pre></blockquote>
-<pre><code>            PS：mysql5后的驱动jar包可以省略注册驱动的步骤
-
-        2. 连接数据库
-            * 方法：static Connection getConnection(String url, String user, String password)
-            * 参数:
-                * url:指定连接的路径
-                    * 语法
-                        jdbc:mysql://ip地址(域名)：端口号/数据库名称
-                    * 例子
-                        jdbc:mysql://localhost:3306/books?serverTimezone=UTC
-                    * 细节
-                        如果连接本机的mysql服务器，而且端口号3306，可以简写为jdbc:mysql:///数据库名称
-                * user:
-                    数据库用户名
-                * password
-                    密码
-
-2. Connection
-    * 数据库连接对象
-    * 功能：
-        1. 获取执行SQL的对象
-            * Statement createStatement()
-            * PreparedStatement preparedStatement()
-
-        2. 管理事务
-            * 开启事务
-                void setAutoCommit(boolean autoCommit) :参数为false,开启事务
-            * 提交事务
-                commit()
-            * 回滚事务
-                rollback()
-
-3. Statement
-    * 执行SQL对象
-    * 功能：
-        1. 执行SQL语句
-            * int executeUpdate(String sql):执行DML(增删改)语句，DDL语句，返回值：影响的行数，判断是否执行成功（&gt;0）
-            * ResultSet executeQuery(String sql):执行查询语句
-
-4. ResultSet
-    * 结果集对象，封装查询结果
-    * 功能：
-        * boolean next():游标向前移动一行,并判断是否是最后一行，如果是，返回False
-        * getType(参数)：获取数据,一次只能获取一列数据
-            * Type：数据类型，int getInt()
-            * 参数：
-                1. int 列的编号，getInt(1)
-                2. String 列名,getString(name)
-        * 使用时：
-            1. 游标向下移动
-            2. 判断是否存在数据
-            3. 获取数据
-            代码：
-                 while(resultSet.next()){
-                    //获取数据
-                 }
-
-5. PreparedStatement
-    * 执行SQL的对象
-    * SQL注入问题：在拼接sql语句时，有一些特殊的关键字参于字符串的拼接，会造成安全性问题
-        1. 输入用户随便，输入密码：a&apos;or&apos;a&apos;=&apos;a,条件恒为真，
-        2. sql:select * from db where name and password,所有的用户名全都查询出来
-
-    * 解决SQL注入问题：使用PreparedStatemmet类
-    * 预编译SQL:参数使用 ？作为占位符
-    * 步骤：
-        1. 导入驱动jar包
-        2. 注册驱动
-        3. 获取数据库的连接对象 Connection
-        4. 定义SQL语句
-        5. 获取执行SQL语句的对象 PreparedStatement = connection.preparedStatement(sql)
-            * 注意：sql使用?作为占位符， select * from user where name = ? and password = ?;
-        6. 给？赋值
-            * 方法：
-            * setType(参数1，参数2)
-            * 参数1：传递参数的位置
-            * 参数2: 值
-        7. 处理SQL语句,接受返回结果，prearedStatement.executeQuery()
-        8. 处理结果
-        9. 释放资源
-
-    * 使用PreparedStatement对象
-        * 防止SQL注入问题
-        * 效率更高</code></pre><h2 id="抽取JDBC工具类"><a href="#抽取JDBC工具类" class="headerlink" title="抽取JDBC工具类"></a>抽取JDBC工具类</h2><pre><code>- JDBCUtils
-* 目的：简化书写
-* 分析：
-    1. 获取连接
-        * 不传递参数，并保证工具类的通用性
-        * 解决：配置文件
-            jdbc.properties
-                url=...
-
-            1. 创建Properties类
-            Properties properties = new Properties();
-            2. 加载properties文件
-            properties.load(new FileReader(&quot;jdbc.properties&quot;));
-            3. 获取配置
-            url = properties.getProperty(&quot;url&quot;);
-    2. 释放资源</code></pre><h2 id="登陆验证实例"><a href="#登陆验证实例" class="headerlink" title="登陆验证实例"></a>登陆验证实例</h2><pre><code>1. 需求
-    * 通过键盘输入用户名和密码
-    * 判断用户是否合法
-        根据查询结果判断是否合法
-
-2. 实现
-    * 创建表，存储用户名和密码
-        CREATE TABLE IF NOT EXISTS USER (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            NAME VARCHAR(32) NOT NULL,
-            PASSWORD VARCHAR(32) NOT NULL
-        );
-
-    * 查询数据表，
-        sql = &quot;select * from db where name = &apos;name&apos; and password = &apos;password&apos;&quot;
-        如果存在数据，用户合法
-
-3. 注意
-    为了预防SQL注入，导致安全性问题，使用PreparedStatement类，使用预编译SQL,不使用静态拼接SQL,Statement类，效率更高而且更安全。</code></pre><h2 id="JDBC事务控制"><a href="#JDBC事务控制" class="headerlink" title="JDBC事务控制"></a>JDBC事务控制</h2><pre><code>1. 事务：一个包含多个步骤的业务操作，如果业务被事务管理，要么全部成功，要么全部失败
-
-2. 操作
-    1. 开启事务
-    2. 提交事务
-    3. 回滚事务
-
-3. 使用Connection管理事务
-    * 开启事务
-        void setAutoCommit(boolean autoCommit) :参数为false,开启事务
-        执行sql语句之前开启事务
-    * 提交事务
-        commit()
-        SQL执行完毕时提交
-    * 回滚事务
-        rollback
-        try catch中进行回滚，一旦发现异常，将数据回滚</code></pre><h2 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h2><pre><code>1. 概念：
-    * 容器（集合），存放数据库连接的一个容器
-    * 系统初始化后，容器被创建，会申请一些连接对象，在用户访问数据库时，从容器中获取连接对象，使用完毕归还容器资源
-
-2. 优点：
-    * 节约资源：访问时直接获取，不用重复申请资源
-    * 用户访问高效：拿来即用
-
-3. 实现：
-    1. 标准接口：
-        DataSourse javax.sql
-        * 方法:
-            * 获取连接：getConnnection()
-            * 归还连接：如果Connection是从连接池获取的，调用connection.close()方法，不是关闭连接，而时归还连接
-
-    2. 实现技术，由数据库厂商提供
-        * C3P0: 数据库连接池技术
-        * Druid: 
-
-4. C3P0连接池技术
-    * 步骤：
-        1. 导入jar包，jdbc驱动和c3p0包
-        2. 定义配置文件：
-            * 名称：c3p0.properties 或者 c3p0-config.xml
-            * 路径：src目录下
-        3. 创建数据库连接池核心数据对象：ComboPoolDataSourse
-        4. 获取连接对象：getConnection()
-
-5. Druid连接池技术
-    * 步骤：
-        1. 导入jar包：druid-v.jar
-        2. 定义配置文件：
-            * properties形式
-            * 可以叫任意名称，放在任意目录下
-        3. 加载配置文件
-            Properties properties = new Properties();
-            InputStream is = DruidDemo08.class.getClassLoader().getResourceAsStream(&quot;druid.properties&quot;);
-            properties.load(is);
-        3. 创建连接池对象，使用工厂类 DruidDataSourseFactory
-        4. 获取连接对象
-
-    * 定义工具类
-        1. 定义工具类
-        2. 提供静态代码块加载配置文件，初始化连接池对象
-        3. 提供方法
-            1. 获取连接方法，获取连接对象
-            2. 释放资源
-            3. 获取连接池对象</code></pre><h2 id="Spring-JDBC"><a href="#Spring-JDBC" class="headerlink" title="Spring JDBC"></a>Spring JDBC</h2><pre><code>* Spring框架对JDBC的简单封装，提供了JDBCTemplate对象
-* 步骤：
-    1. 导入jar包
-    2. 创建JDBCTemplate对象，依赖与数据源DataSourse
-        JDBCTemplate template = new JDBCTemplate(ds)
-    3. 调用方法完成CRUD的操作</code></pre>]]></content>
-  </entry>
-  <entry>
     <title>七牛云_Hexo</title>
     <url>/2020/05/12/%E4%B8%83%E7%89%9B%E4%BA%91-Hexo/</url>
     <content><![CDATA[<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h2><pre><code>1. 注册七牛云,完成之后就可以进行创建空间，
@@ -1201,258 +1701,6 @@ private Properties myProp;</code></pre></blockquote>
 ]]></content>
       <tags>
         <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring下载</title>
-    <url>/2020/05/09/SpringLoad/</url>
-    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
-<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
-<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
-<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
-<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
-<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-      <tags>
-        <tag>spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java Reflection（java反射机制）</title>
-    <url>/2020/09/10/reflection/</url>
-    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><pre><code>1. 反射（reflection）：动态语言的关键
-    * 反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性和方法
-    * 加载完类之后，在堆内存的方法区产生一个Class对象（一个类只有一个Class对象），这个对象就包含完整的类的信息，可以通过这个Class对象看到类的结构，通过对象看到类的结构的过程，叫做反射
-
-2. 使用反射的应用
-    * 在运行时判断一个对象所属的类
-    * 在运行时构造任意一个类的对象
-    * 在运行时获取泛型的信息
-    * 在运行时获取私有属性，私有方法
-    * 在运行时父类的信息，父类上的泛型
-    * 在运行时获取接口
-    * 在运行时获取所在包，注解
-    * 。。。
-
-3. 相干的API
-    * java.lang.Class
-    * java.lang.reflect.Method    //方法
-    * java.lang.reflect.Filed    //成员变量    
-    * java.lang.reflect.Constructor        //构造器
-
-4. 反射和封装性
-    * 通过直接new对象，或反射的方式都可以调用公共的结构，具体使用位置？
-        1. 建议直接使用new方式，编译的时候可以确定创建哪个对象
-        2. 编译的时候无法确定创建哪个对象，根据传入的参数进行对象的创建，使用反射的方式：
-            反射机制具有动态性
-
-    * 有了反射机制，与对象的封装性，如何看待两种技术？
-        1. 不矛盾
-        2. 封装性：将对象的属性和方法进行权限限定，暴露出的接口表现用户可以使用的方法，建议用户使用的方法和属性，不建议使用私有方法[建不建议]
-        3. 反射：可以使用的方法，用户强制使用私有的属性和方法[能不能]</code></pre><h2 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h2><h3 id="java-lang-Class的理解"><a href="#java-lang-Class的理解" class="headerlink" title="java.lang.Class的理解"></a>java.lang.Class的理解</h3><pre><code>1. 类的加载过程
-    程序在经过javac.exe命令之后，会生成一个或多个字节码文件（.class）文件，
-    接着使用java.exe命令对某个字节码文件进行解释运行。相当于将字节码文件加载到内存，此过程叫做类的加载。
-    加载到内存中的类，我们称为运行时类，此运行时类，就作为Class类的一个实例。
-
-2. 换句话说，Class的实例就是一个运行时类的对象
-3. 加载到内存的运行时类，会缓存一定的时间。在此时间之内，可以通过不同的方法获取运行时类</code></pre><h3 id="获取Class的实例方式"><a href="#获取Class的实例方式" class="headerlink" title="获取Class的实例方式"></a>获取Class的实例方式</h3><pre><code>1. 方式一：通过运行时类的.class属性获取Class实例
-    Class clazz1 = Person.class();
-    System.Out.Println(clazz1);
-
-2. 方式二：通过运行时类的对象的.getClass()方法获取实例
-    Person person = new Person();
-    Class clazz2 = person.getClass();
-
-3. 方式三：通过Class的.forName(&quot;运行时类的全限定类名&quot;)获取实例
-    Class clazz3 = Class.forName(&quot;全限定类名&quot;)；
-
-4. 方式四：通过类的加载器获取实例
-     ClassLoader classLoader = Reflection.class.getClassLoader();
-    Class clazz4 = classLoader.loadClass(&quot;全限定类名&quot;);
-
-上述的四种Class实例的获取方式，方式一和方式二，都与具体的实现类绑定，在开发中一般使用Class类的.forName()方法获取Class实例对象。</code></pre><h3 id="Class对象的范围"><a href="#Class对象的范围" class="headerlink" title="Class对象的范围"></a>Class对象的范围</h3><pre><code>1. class:各种类对象
-2. interface
-3. []:数组 只要数组的类型和维度相同，就是一个Class对象
-4. enum:枚举
-5. annotation
-6. 基本数据类型
-7. void</code></pre><h2 id="ClassLoader-类加载器"><a href="#ClassLoader-类加载器" class="headerlink" title="ClassLoader(类加载器)"></a>ClassLoader(类加载器)</h2><h3 id="类的加载"><a href="#类的加载" class="headerlink" title="类的加载"></a>类的加载</h3><pre><code>1. 加载：将类的字节码文件读入内存，并为其创建一个java.lang.Class对象，实现类的加载过程
-2. 链接：静态变量初始化为默认值
-3. 初始化：JVM使用构造器方法完成类变量的赋值和静态代码块的语句顺序合并产生数据</code></pre><h3 id="ClassLoader"><a href="#ClassLoader" class="headerlink" title="ClassLoader"></a>ClassLoader</h3><pre><code>1. 将.class加载到内存，将这些静态数据转换成方法区运行时的数据结构，生成Class对象，作为方法区中类数据的访问入口
-2. 类缓存：一旦某个类被加载到类加载器，会在类加载器中维持一段时间，JVM的垃圾回收机制可以回收Class对象
-
-3. 分类
-    * 引导类加载器：C++编写的，主要加载Java的核心类库，用户无法获取到该加载器
-    * 扩展类加载器：加载java/lib/ect中的jar包
-    * 系统类加载器：加载当前程序中的类</code></pre><blockquote>
-<pre><code>//1.对于自定义类，使用系统级类加载器
-ClassLoader classLoader = ClassLoaderTest.class.getClassLoader();
-System.out.println(classLoader);
-
-//2.调用系统类加载器的getParent()，获取扩展类加载器
-ClassLoader classLoader1 = classLoader.getParent();
-System.out.println(classLoader1);
-
-//3.调用扩展类加载器getParent()，无法获取引导类加载器
-//引导类加载器加载java的核心类库
-ClassLoader classLoader2 = classLoader1.getParent();
-System.out.println(classLoader2);</code></pre></blockquote>
-<h2 id="创建运行时类的对象"><a href="#创建运行时类的对象" class="headerlink" title="创建运行时类的对象"></a>创建运行时类的对象</h2><h3 id="反射创建运行时类的对象"><a href="#反射创建运行时类的对象" class="headerlink" title="反射创建运行时类的对象"></a>反射创建运行时类的对象</h3><pre><code>1. 使用.newInstance()方法创建运行时类的对象
-    newInstance:
-        * 调用此方法，创建运行时类的方法
-        * 内部调用运行时类的空参构造器
-        * 如果没有空参构造器，产生异常
-
-2. 满足两个条件
-    * 运行时类必须提供空参的构造器
-    * 访问权限不能为private,通常设置为public</code></pre><h2 id="获取运行时类的完整结构"><a href="#获取运行时类的完整结构" class="headerlink" title="获取运行时类的完整结构"></a>获取运行时类的完整结构</h2><h3 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h3><pre><code>修饰符 返回类型 变量名；
-
-1. 获取所有属性
-    1. 获取当前运行时类的所有属性（getDeclaredFileds）
-        * 不考虑权限问题，不会获取父类的属性</code></pre><blockquote>
-<pre><code>Field[] fields1 = clazz.getDeclaredFields();
-for(Field field:fields1){
-    System.out.println(field);
-}</code></pre></blockquote>
-<pre><code>2. 获取属性包含父类的属性（getFileds）
-    * 获取当前运行时类以及父类的所有权限为public的属性</code></pre><blockquote>
-<pre><code>Field[] fields = clazz.getFields();
-for(Field field:fields){
-    System.out.println(field);
-}        </code></pre></blockquote>
-<pre><code>2. 获取属性的修饰符,数据类型，变量名</code></pre><blockquote>
-<pre><code>Class clazz = Person.class;
-
-//获取当前运行时类的所有属性
-Field[] fields = clazz.getDeclaredFields();
-
-for(Field field:fields){
-//修饰符
-//权限被分配了 整型数据,使用Modifier的方法可以翻译为字符串
-int modifiers = field.getModifiers();
-System.out.print(Modifier.toString(modifiers)+&quot;\t&quot;);
-//数据类型
-Class&lt;?type = field.getType();
-System.out.print(type.getName()+&quot;\t&quot;);
-//属性名
-System.out.println(field.getName());
-}</code></pre></blockquote>
-<p><img src="/2020/09/10/reflection/fields.png" alt="运行时类的属性"></p>
-<h3 id="获取方法"><a href="#获取方法" class="headerlink" title="获取方法"></a>获取方法</h3><pre><code>1. 获取当前运行类声明的所有方法</code></pre><blockquote>
-<pre><code>Method[] methods = clazz.getMethods();
-for(Method method:methods){
-    System.out.println(method);
-}</code></pre></blockquote>
-<pre><code>2. 获取当前运行时类以及所有父类的声明为public权限的方法</code></pre><blockquote>
-<pre><code>Method[] declaredMethods = clazz.getDeclaredMethods();
-for(Method method:declaredMethods){
-    System.out.println(method);
-}</code></pre></blockquote>
-<pre><code>3. 获取方法的修饰符，数据类型，方法名
-    * @Anno
-    * 权限修饰符 返回值类型 方法名(形参列表) Throws Exception{}
-
-    Method[] declaredMethods = clazz.getDeclaredMethods();
-    for(Method method:declaredMethods){
-        System.out.println(&quot;-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+&quot;);
-        //1.注解获取
-        Annotation[] methodAnnotations = method.getAnnotations();
-        for(Annotation anno:methodAnnotations){
-            System.out.print(anno+&quot;\t&quot;);
-        }
-
-        //2.权限修饰符
-        System.out.print(Modifier.toString(method.getModifiers())+&quot;\t&quot;);
-        //3.返回值类型
-        System.out.print(method.getReturnType()+&quot;\t&quot;);
-        //4.方法名
-        System.out.print(method.getName());
-        System.out.print(&quot;(&quot;);
-        //5.形参列表参数
-        Class[] parameterTypes = method.getParameterTypes();
-        if(parameterTypes.length 0){
-            for(int i = 0;i &lt; parameterTypes.length;i++){
-                if(i == parameterTypes.length-1){
-                    System.out.print(parameterTypes[i].getName()+&quot; args_&quot;+i);
-                    break;
-                }
-                System.out.print(parameterTypes[i].getName()+&quot; args_&quot;+i+&quot; , &quot;);
-            }
-        }
-        System.out.print(&quot;)&quot;);
-        //6.获取抛出的异常
-        Class[] exceptionTypes = method.getExceptionTypes();
-        if(exceptionTypes.length 0){
-            System.out.print(&quot; throws &quot;);
-            for(int i = 0;i &lt; exceptionTypes.length;i++){
-                if(i == exceptionTypes.length-1){
-                    System.out.print(exceptionTypes[i].getName());
-                    break;
-                }
-                System.out.print(exceptionTypes[i].getName()+&quot; , &quot;);
-            }
-        }
-        System.out.println(&quot;{&quot;+&quot;\n&quot;+&quot;}&quot;);
-    }</code></pre><h3 id="获取构造器的结构"><a href="#获取构造器的结构" class="headerlink" title="获取构造器的结构"></a>获取构造器的结构</h3><pre><code>1. 当前运行时类的所有的构造器</code></pre><blockquote>
-<pre><code>Constructor&lt;?&gt;[] constructors = clazz.getConstructors();
-for(Constructor c:constructors){
-    System.out.println(c);
-}</code></pre></blockquote>
-<pre><code>2. 当前运行时类的所有public的构造器</code></pre><blockquote>
-<pre><code>Constructor&lt;?&gt;[] constructors = clazz.getDeclaredConstructors();
-for(Constructor c:constructors){
-    System.out.println(c);
-}</code></pre></blockquote>
-<h3 id="获取运行时类的父类"><a href="#获取运行时类的父类" class="headerlink" title="获取运行时类的父类"></a>获取运行时类的父类</h3><pre><code>1. getSuperClass():获取父类
-2. getGenericSuperClass()：获取带有泛型的父类</code></pre><h2 id="调用运行时类的指定结构（方法和属性）"><a href="#调用运行时类的指定结构（方法和属性）" class="headerlink" title="调用运行时类的指定结构（方法和属性）"></a>调用运行时类的指定结构（方法和属性）</h2><pre><code>1. 获取指定的属性
-    方法：
-        getFiled():
-            属性声明必须为public
-        getDeclaredFiled()
-            可以访问，但是如果想要访问私有属性，必须显式
-            &lt;属性名&gt;.setAccessible(true);                
-
-    1. 步骤
-        * 获取Class对象
-        * 创建Class对象的实例
-        * 获取指定的属性
-        * set方法
-            * set(obj,value):obj：指明设置哪个对象的属性 value:设置的值
-        * get方法
-            * get(obj):obj：指明获取那个对象的属性
-
-    2. 实例
-        Class clazz = Person.class;
-        Person p = (Person)clazz.newInstance();
-        Filed filed = clazz.getDeclaredFiled(&quot;age&quot;);
-        filed.setAccessible(true);
-        filed.set(p,&quot;11111&quot;);
-
-2. 获取指定的方法
-    方法：
-        getDeclaredMethod(name,param): 参数1：获取的方法的名称，参数2：获取的方法的形参列表
-            可以访问，但是如果想要访问私有属性，必须显式
-            &lt;方法名&gt;.setAccessible(true);
-
-        &lt;方法名&gt;.invoke(obj,value):参数1:方法的调用者，参数2(可变形参)：赋值的实参
-            invoke()方法的返回值为类中调用方法的返回值，
-                如果调用的方法没有返回值，那么返回值为null
-
-    1. 实例</code></pre><blockquote>
-<pre><code>//1.获取指定的方法名
-Method method = clazz.getDeclaredMethod(&quot;compareTo&quot;, String.class);
-//2.确定当前方法是可以访问的
-method.setAccessible(true);
-//3.调用方法
-method.invoke(p,&quot;HHHHH&quot;);   //p.show(&quot;HHHHH&quot;)</code></pre></blockquote>
-<pre><code>2. 调用静态方法
-    invoke(null)
-    invoke(Person.class)</code></pre>]]></content>
-      <tags>
-        <tag>java</tag>
       </tags>
   </entry>
 </search>
