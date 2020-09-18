@@ -246,6 +246,80 @@
     3. 调用方法完成CRUD的操作</code></pre>]]></content>
   </entry>
   <entry>
+    <title>SQL注入</title>
+    <url>/2020/05/08/SQL%E6%B3%A8%E5%85%A5/</url>
+    <content><![CDATA[<h1 id="SQL注入问题"><a href="#SQL注入问题" class="headerlink" title="SQL注入问题"></a>SQL注入问题</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>在拼接sql语句时，有一些特殊的SQL关键字参于字符串的拼接，导致SQL语句的逻辑发生变化，可能会造成安全性问题</code></pre><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre><code>1. 输入 a&apos;or&apos;a&apos;=&apos;a,条件改变
+2. sql:select * from db where name and password = &apos;a&apos;or&apos;a&apos;=&apos;a&apos;,查询所有数据
+
+原SQL语句拼接为: 
+
+    String sql = &quot;select id from db where username=&apos;&quot;+username+&quot;&apos; and password=&apos;&quot;+password+&quot;&apos;&quot;;
+
+用户输入的帐号密码分别为:
+
+请输入您的帐号:
+11111
+请输入您的密码:
+a&apos;or&apos;a&apos;=&apos;a
+组成的SQL语句: 
+select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&apos;=&apos;a；</code></pre><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><pre><code>使用预编译SQL语句,进行参数的传递
+
+更改执行环境：Statement
+
+使用新的环境: PreparedStatement
+
+在通过连接对象，获取一个预编译的SQL环境(PreparedStatement)时, 需要传递一个SQL语句 ! 
+在这个语句中 可以出现? , ? 表示准备填充的参数值!
+
+使用步骤: 
+    1. 通过连接对象, 获得一个预编译的SQL执行环境
+
+        PreparedStatement state = conn.prepareStatement(sql);
+
+        例如: 
+            String sql = &quot;select id from db where username=? and password=?&quot;;
+
+            PreparedStatement state = conn.prepareStatement(sql);    
+
+    2. 向预编译参数列表中传递值: 
+
+        预编译的SQL语句中可以包含【多个问号】, 每一个问号表示一个需要传递的值 
+        我们通过PreparedStatement它的setXxx方法,来完成参数的传递
+            传递参数时, 需要指定问号的索引, 问号的索引从1开始            
+
+        例如:
+            state.setString(1,username);
+            state.setString(2,password);
+
+    3. 执行语句:
+            ResultSet result = state.executeQuery();</code></pre><h2 id="PreparedStatement"><a href="#PreparedStatement" class="headerlink" title="PreparedStatement"></a>PreparedStatement</h2><pre><code>填充预编译的参数: 
+    * setXxx（问号索引,值）
+        向预编译的SQL的?中传递值 
+        参数1. 问号的索引,从1开始
+        参数2. 填充到? 中的值
+
+    * execute()
+    * executeUpdate();
+    * executeQuery();        </code></pre>]]></content>
+  </entry>
+  <entry>
+    <title>Spring下载</title>
+    <url>/2020/05/09/SpringLoad/</url>
+    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
+<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
+<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
+<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
+<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
+<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MyBatis</title>
     <url>/2020/05/15/mybatis/</url>
     <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><pre><code>1. 什么是框架（Framework）？
@@ -855,63 +929,6 @@ User findById(Integer id);</code></pre></blockquote>
       </tags>
   </entry>
   <entry>
-    <title>SQL注入</title>
-    <url>/2020/05/08/SQL%E6%B3%A8%E5%85%A5/</url>
-    <content><![CDATA[<h1 id="SQL注入问题"><a href="#SQL注入问题" class="headerlink" title="SQL注入问题"></a>SQL注入问题</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>在拼接sql语句时，有一些特殊的SQL关键字参于字符串的拼接，导致SQL语句的逻辑发生变化，可能会造成安全性问题</code></pre><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre><code>1. 输入 a&apos;or&apos;a&apos;=&apos;a,条件改变
-2. sql:select * from db where name and password = &apos;a&apos;or&apos;a&apos;=&apos;a&apos;,查询所有数据
-
-原SQL语句拼接为: 
-
-    String sql = &quot;select id from db where username=&apos;&quot;+username+&quot;&apos; and password=&apos;&quot;+password+&quot;&apos;&quot;;
-
-用户输入的帐号密码分别为:
-
-请输入您的帐号:
-11111
-请输入您的密码:
-a&apos;or&apos;a&apos;=&apos;a
-组成的SQL语句: 
-select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&apos;=&apos;a；</code></pre><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><pre><code>使用预编译SQL语句,进行参数的传递
-
-更改执行环境：Statement
-
-使用新的环境: PreparedStatement
-
-在通过连接对象，获取一个预编译的SQL环境(PreparedStatement)时, 需要传递一个SQL语句 ! 
-在这个语句中 可以出现? , ? 表示准备填充的参数值!
-
-使用步骤: 
-    1. 通过连接对象, 获得一个预编译的SQL执行环境
-
-        PreparedStatement state = conn.prepareStatement(sql);
-
-        例如: 
-            String sql = &quot;select id from db where username=? and password=?&quot;;
-
-            PreparedStatement state = conn.prepareStatement(sql);    
-
-    2. 向预编译参数列表中传递值: 
-
-        预编译的SQL语句中可以包含【多个问号】, 每一个问号表示一个需要传递的值 
-        我们通过PreparedStatement它的setXxx方法,来完成参数的传递
-            传递参数时, 需要指定问号的索引, 问号的索引从1开始            
-
-        例如:
-            state.setString(1,username);
-            state.setString(2,password);
-
-    3. 执行语句:
-            ResultSet result = state.executeQuery();</code></pre><h2 id="PreparedStatement"><a href="#PreparedStatement" class="headerlink" title="PreparedStatement"></a>PreparedStatement</h2><pre><code>填充预编译的参数: 
-    * setXxx（问号索引,值）
-        向预编译的SQL的?中传递值 
-        参数1. 问号的索引,从1开始
-        参数2. 填充到? 中的值
-
-    * execute()
-    * executeUpdate();
-    * executeQuery();        </code></pre>]]></content>
-  </entry>
-  <entry>
     <title>Java Reflection（java反射机制）</title>
     <url>/2020/09/10/reflection/</url>
     <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><pre><code>1. 反射（reflection）：动态语言的关键
@@ -1149,7 +1166,7 @@ method.invoke(p,&quot;HHHHH&quot;);   //p.show(&quot;HHHHH&quot;)</code></pre></
   <entry>
     <title>spring</title>
     <url>/2020/09/09/spring/</url>
-    <content><![CDATA[<h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><h3 id="1-什么是spring："><a href="#1-什么是spring：" class="headerlink" title="1. 什么是spring："></a>1. 什么是spring：</h3><pre><code>1. 分层的Java SE/EE的轻量级开源框架
+    <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="1-什么是spring："><a href="#1-什么是spring：" class="headerlink" title="1. 什么是spring："></a>1. 什么是spring：</h3><pre><code>1. 分层的Java SE/EE的轻量级开源框架
 2. 提供了展现层Spring MVC 和持久层Spring JDBC以及业务层事务管理的众多技术
 3. 展现层和持久层的中间部分，业务层</code></pre><h3 id="2-spring的核心："><a href="#2-spring的核心：" class="headerlink" title="2. spring的核心："></a>2. spring的核心：</h3><pre><code>1. IoC（Inversion of Control）: 控制反转
 2. AOP（Aspect Oriented Programming）: 面向切面编程</code></pre><h3 id="3-发展历程和优势"><a href="#3-发展历程和优势" class="headerlink" title="3.发展历程和优势"></a>3.发展历程和优势</h3><pre><code>spring优势：
@@ -1504,7 +1521,7 @@ public Object invoke(Object proxy, Method method, Object[] args) throws Throwabl
     * method : 当前执行的方法
     * args : 当前方法执行的参数
     * 返回类型：和被代理对象的相同方法有相同的返回值类型</code></pre></blockquote>
-<h4 id="基于字类的动态代理"><a href="#基于字类的动态代理" class="headerlink" title="基于字类的动态代理"></a>基于字类的动态代理</h4><pre><code>1. 导入jar包
+<h4 id="基于子类的动态代理"><a href="#基于子类的动态代理" class="headerlink" title="基于子类的动态代理"></a>基于子类的动态代理</h4><pre><code>1. 导入jar包
     cglib包
 
 2. 涉及的类
@@ -1631,7 +1648,7 @@ public IAccountService getAccountService(){
         一个类被AOP织入后，产生一个代理对象
 
     * Aspect(切面)：
-        切入点和通知的结合，切入点和通知的
+        切入点和通知的结合，切入点和通知的有序组合
 5. 明确
     1. 开发阶段：
         核心业务代码，大部分程序员
@@ -1665,7 +1682,7 @@ public IAccountService getAccountService(){
             void com.spring_AOP_xml.service.impl.IAccountServiceImpl.saveAccount()
         2. 返回值类型可以使用通配符*代替：
             * 
-            com.spring_AOP_xml.service.impl.IAccountServiceImpl.saveAccount()
+    com.spring_AOP_xml.service.impl.IAccountServiceImpl.saveAccount()
         3. 包名可以使用*.来代替，有几级包，需要写几个 
             * *.*.*.*.IAccountServiceImpl.saveAccount()
             使用*..可以表示当前包和子包，代表所有的包
@@ -1705,7 +1722,7 @@ public IAccountService getAccountService(){
     * 分析：
         没有对切入点的方法的明确调用
     * 解决：
-        spring提供了一个接口，ProceedingJoinPoint的方法中proceed(),明确切入点方法的调用，该方法可以传入环绕通知参数，在程序执行期间，spring框架会为我们创建实现类。</code></pre><p><img src="/2020/09/09/spring/aroundadvice.png" alt="aroundadvice">    </p>
+        spring提供了一个接口，ProceedingJoinPoint的方法中proceed(),明确切入点方法的调用，该方法可以传入环绕通知参数，在程序执行期间，spring框架会为我们创建实现类。</code></pre><p><img src="/2020/09/09/spring/around_advice.png" alt="aroundadvice"></p>
 <pre><code>* 环绕通知是spring框架为我们提供的一种方式：可以手动控制增强代码执行的方式</code></pre><h3 id="基于注解的AOP配置"><a href="#基于注解的AOP配置" class="headerlink" title="基于注解的AOP配置"></a>基于注解的AOP配置</h3><pre><code>1. 加入context扫描
 2. 配置注解产生对象
 3. 改变增强类的信息，切面的方法
@@ -1770,6 +1787,17 @@ public IAccountService getAccountService(){
       </tags>
   </entry>
   <entry>
+    <title>springMVC</title>
+    <url>/2020/09/18/springMVC/</url>
+    <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id><a href="#" class="headerlink" title></a></h3>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>七牛云_Hexo</title>
     <url>/2020/05/12/%E4%B8%83%E7%89%9B%E4%BA%91-Hexo/</url>
     <content><![CDATA[<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h2><pre><code>1. 注册七牛云,完成之后就可以进行创建空间，
@@ -1806,23 +1834,6 @@ public IAccountService getAccountService(){
 ]]></content>
       <tags>
         <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring下载</title>
-    <url>/2020/05/09/SpringLoad/</url>
-    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
-<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
-<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
-<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
-<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
-<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-      <tags>
-        <tag>spring</tag>
       </tags>
   </entry>
 </search>
