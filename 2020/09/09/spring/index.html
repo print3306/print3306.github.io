@@ -99,7 +99,14 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;09&#x2F;spring&#x2F;advice.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;09&#x2F;spring&#x2F;xml_AOP.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;09&#x2F;spring&#x2F;advice_types.png">
-<meta property="og:updated_time" content="2020-09-16T13:07:31.630Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;09&#x2F;spring&#x2F;aroundadvice.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;09&#x2F;spring&#x2F;AOP_anno.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;09&#x2F;spring&#x2F;dao_xml.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;09&#x2F;spring&#x2F;dao_anno.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;09&#x2F;spring&#x2F;tran_xml.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;09&#x2F;spring&#x2F;tran_anno.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;09&#x2F;spring&#x2F;tx_without_xml.png">
+<meta property="og:updated_time" content="2020-09-18T09:19:12.150Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;09&#x2F;spring&#x2F;autowired.png">
 
@@ -391,7 +398,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  6k
+                  6.9k
                 </span>
               
 
@@ -966,7 +973,69 @@ public IAccountService getAccountService(){
     最终通知：无论怎样都会执行
 
     后置通知和异常通知只会执行一个</code></pre><p><img src="/2020/09/09/spring/advice_types.png" alt="通知类型"></p>
-<pre><code>环绕通知：</code></pre><h3 id="基于注解的AOP配置"><a href="#基于注解的AOP配置" class="headerlink" title="基于注解的AOP配置"></a>基于注解的AOP配置</h3><h2 id="JdbcTemlate"><a href="#JdbcTemlate" class="headerlink" title="JdbcTemlate"></a>JdbcTemlate</h2><h2 id="事务控制"><a href="#事务控制" class="headerlink" title="事务控制"></a>事务控制</h2>
+<pre><code>环绕通知：
+    * 问题：
+        在配置环绕通知之后，业务层方法没有执行，环绕通知执行了
+    * 分析：
+        没有对切入点的方法的明确调用
+    * 解决：
+        spring提供了一个接口，ProceedingJoinPoint的方法中proceed(),明确切入点方法的调用，该方法可以传入环绕通知参数，在程序执行期间，spring框架会为我们创建实现类。</code></pre><p><img src="/2020/09/09/spring/aroundadvice.png" alt="aroundadvice">    </p>
+<pre><code>* 环绕通知是spring框架为我们提供的一种方式：可以手动控制增强代码执行的方式</code></pre><h3 id="基于注解的AOP配置"><a href="#基于注解的AOP配置" class="headerlink" title="基于注解的AOP配置"></a>基于注解的AOP配置</h3><pre><code>1. 加入context扫描
+2. 配置注解产生对象
+3. 改变增强类的信息，切面的方法
+4. 在bean.xml中增加开启注解配置AOP的标签
+    &lt;aop:aspectj-autoproxy/&gt;:有这个标签才使用注解配置AOP</code></pre><p><img src="/2020/09/09/spring/AOP_anno.png" alt="通知和切面类注解">    </p>
+<h2 id="JdbcTemlate"><a href="#JdbcTemlate" class="headerlink" title="JdbcTemlate"></a>JdbcTemlate</h2><h3 id="spring中的JdbcTemplate"><a href="#spring中的JdbcTemplate" class="headerlink" title="spring中的JdbcTemplate"></a>spring中的JdbcTemplate</h3><pre><code>1. 概念    
+    * spring框架的提供的一个对象，是对原始Java API的简单封装，spring为我们提供了很多操作模板类。
+    * 操作关系型数据库：
+    * 操作nosql数据库
+    * 操作消息队列:
+
+    使用的时候需要导入spring-jdbc-5.1.10.RELEASE.jar
+                    spring-tx-5.1.10.RELEASE.jar(事务相关)
+
+2. 作用
+    * 用于和数据库进行交互的，实现数据的CRUD
+
+3. 如果重复的代码过多
+    可以抽取重复代码，形成父类，使AccountDaoImpl继承该父类，也可以实现Dao的实现类</code></pre><blockquote>
+<p>   Dao的两种实现方式:<br><img src="/2020/09/09/spring/dao_xml.png" alt="dao的xml配置方式"><br><img src="/2020/09/09/spring/dao_anno.png" alt="dao的annotation配置方式"></p>
+</blockquote>
+<h2 id="事务控制"><a href="#事务控制" class="headerlink" title="事务控制"></a>事务控制</h2><h3 id="spring的事务"><a href="#spring的事务" class="headerlink" title="spring的事务"></a>spring的事务</h3><pre><code>1. 明确
+    * Java EE体系进行开发，事务处理位于业务层，spring提供分层设计业务层的事务处理方法
+    * spring框架为我们提供一组事务控制的接口，位于spring-tx-5.1.10.RELEASE.jar
+    * spring的事务控制基于AOP的，可以使用配置的控制和编程，主要使用配置事务
+
+2. 事务API
+    * platformTransactionManager</code></pre><h3 id="基于xml的事务控制"><a href="#基于xml的事务控制" class="headerlink" title="基于xml的事务控制"></a>基于xml的事务控制</h3><pre><code>1. 使用
+    1. 配置事务管理器（DataSourceTransactionManager）
+    2. 配置事务通知(tx:advice)
+          此时需要导入事务的约束,tx的名称约束，同时也需要aop的支持
+          使用tx:advice配置事务通知 
+            id:唯一标志 
+            transaction-manager:提供事务管理器使用
+    3. 配置aop的通用切入点表达式
+    4. 建立事务通知和切入点表达式的关联
+    5. 配置事务的属性：事务的通知tx:advice的内部
+        * isolation: 指定事务的隔离级别，默认值式DEFAULT,
+        * propagation: 事务的传播行为REQUESTED 表示一定会有事务，增删改的选择，查询可以选择SUPPORTS
+        * read-only: 事务是否只读，默认为false
+        * time-out: 事务的超时时间,默认-1，表示永不超时，如果指定，以秒为单位
+        * rollback-for: 指定一个异常，当产生该异常时，事务回滚，产生其他异常，事务不回滚，没有默认值，表示任何异常都会回滚
+        * no-rollback-for：指定一个异常，当产生该异常时，事务不回滚，产生其他异常，事务回滚，没有默认值，表示任何异常都会回滚
+
+2. 使用实例</code></pre><p><img src="/2020/09/09/spring/tran_xml.png" alt="基于xml的声明式事务"></p>
+<h3 id="基于注解的事务配置"><a href="#基于注解的事务配置" class="headerlink" title="基于注解的事务配置"></a>基于注解的事务配置</h3><pre><code>1. 步骤
+    1. 配置事务管理器（DataSourceTransactionManager）
+    2. 开启spring对注解事务的支持（tx:annotation-driven）
+    3. 使用注解@transactional对需要事务的地方进行定义
+        xml中的事务属性，均可以在@Transactional的属性中配置
+
+    如果查询和增删改的方法数量差不多，需要对增删改的方法单独配置事务支持
+
+2. 实例</code></pre><p><img src="/2020/09/09/spring/tran_anno.png" alt="基于注解的声明式事务"></p>
+<h3 id="使用纯注解的事务配置"><a href="#使用纯注解的事务配置" class="headerlink" title="使用纯注解的事务配置"></a>使用纯注解的事务配置</h3><p><img src="/2020/09/09/spring/tx_without_xml.png" alt="纯注解的声明式事务"></p>
+
       
     </div>
     
@@ -1168,7 +1237,7 @@ public IAccountService getAccountService(){
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、概述"><span class="nav-number">1.</span> <span class="nav-text">一、概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是spring："><span class="nav-number">1.1.</span> <span class="nav-text">1. 什么是spring：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-spring的核心："><span class="nav-number">1.2.</span> <span class="nav-text">2. spring的核心：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-发展历程和优势"><span class="nav-number">1.3.</span> <span class="nav-text">3.发展历程和优势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的耦合和解耦"><span class="nav-number">2.</span> <span class="nav-text">程序的耦合和解耦</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#耦合"><span class="nav-number">2.0.1.</span> <span class="nav-text">耦合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解耦"><span class="nav-number">2.0.2.</span> <span class="nav-text">解耦</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IoC（Inversion-of-Control）"><span class="nav-number">3.</span> <span class="nav-text">IoC（Inversion of Control）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于XML的IoC配置"><span class="nav-number">3.1.</span> <span class="nav-text">基于XML的IoC配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初步使用"><span class="nav-number">3.1.1.</span> <span class="nav-text">初步使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BeanFactory和ApplicationContext"><span class="nav-number">3.1.2.</span> <span class="nav-text">BeanFactory和ApplicationContext</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#spring对bean对象的管理细节"><span class="nav-number">3.1.3.</span> <span class="nav-text">spring对bean对象的管理细节</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-创建bean的三种方式"><span class="nav-number">3.1.3.1.</span> <span class="nav-text">1. 创建bean的三种方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-bean对象的作用范围"><span class="nav-number">3.1.3.2.</span> <span class="nav-text">2. bean对象的作用范围</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-bean对象的生命周期"><span class="nav-number">3.1.3.3.</span> <span class="nav-text">3. bean对象的生命周期</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#依赖注入（dependency-injection-DI）"><span class="nav-number">3.1.4.</span> <span class="nav-text">依赖注入（dependency injection:DI）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-通过默认构造函数注入"><span class="nav-number">3.1.4.1.</span> <span class="nav-text">1. 通过默认构造函数注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-使用set进行依赖注入"><span class="nav-number">3.1.4.2.</span> <span class="nav-text">2. 使用set进行依赖注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-使用注解进行依赖注入"><span class="nav-number">3.1.4.3.</span> <span class="nav-text">3. 使用注解进行依赖注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-注入复杂数据类型"><span class="nav-number">3.1.4.4.</span> <span class="nav-text">4. 注入复杂数据类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于注解的IoC配置"><span class="nav-number">3.2.</span> <span class="nav-text">基于注解的IoC配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-用于创建bean对象的注解"><span class="nav-number">3.2.1.</span> <span class="nav-text">1. 用于创建bean对象的注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-用于数据注入的注解"><span class="nav-number">3.2.2.</span> <span class="nav-text">2. 用于数据注入的注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-用于改变作用范围的注解"><span class="nav-number">3.2.3.</span> <span class="nav-text">3. 用于改变作用范围的注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-用于改变生命周期的注解"><span class="nav-number">3.2.4.</span> <span class="nav-text">4. 用于改变生命周期的注解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用IoC的一个简单案例"><span class="nav-number">3.3.</span> <span class="nav-text">使用IoC的一个简单案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题"><span class="nav-number">3.3.1.</span> <span class="nav-text">问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring的AOP"><span class="nav-number">4.</span> <span class="nav-text">spring的AOP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#完善account的案例"><span class="nav-number">4.1.</span> <span class="nav-text">完善account的案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进行账户之间的转账"><span class="nav-number">4.1.1.</span> <span class="nav-text">进行账户之间的转账</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态代理"><span class="nav-number">4.2.</span> <span class="nav-text">动态代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基于接口的动态代理"><span class="nav-number">4.2.1.</span> <span class="nav-text">基于接口的动态代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于字类的动态代理"><span class="nav-number">4.2.2.</span> <span class="nav-text">基于字类的动态代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态代理在案例中的使用"><span class="nav-number">4.2.3.</span> <span class="nav-text">动态代理在案例中的使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AOP的概念"><span class="nav-number">4.3.</span> <span class="nav-text">AOP的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于XML的AOP配置"><span class="nav-number">4.4.</span> <span class="nav-text">基于XML的AOP配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于注解的AOP配置"><span class="nav-number">4.5.</span> <span class="nav-text">基于注解的AOP配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JdbcTemlate"><span class="nav-number">5.</span> <span class="nav-text">JdbcTemlate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务控制"><span class="nav-number">6.</span> <span class="nav-text">事务控制</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、概述"><span class="nav-number">1.</span> <span class="nav-text">一、概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是spring："><span class="nav-number">1.1.</span> <span class="nav-text">1. 什么是spring：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-spring的核心："><span class="nav-number">1.2.</span> <span class="nav-text">2. spring的核心：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-发展历程和优势"><span class="nav-number">1.3.</span> <span class="nav-text">3.发展历程和优势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的耦合和解耦"><span class="nav-number">2.</span> <span class="nav-text">程序的耦合和解耦</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#耦合"><span class="nav-number">2.0.1.</span> <span class="nav-text">耦合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解耦"><span class="nav-number">2.0.2.</span> <span class="nav-text">解耦</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IoC（Inversion-of-Control）"><span class="nav-number">3.</span> <span class="nav-text">IoC（Inversion of Control）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于XML的IoC配置"><span class="nav-number">3.1.</span> <span class="nav-text">基于XML的IoC配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初步使用"><span class="nav-number">3.1.1.</span> <span class="nav-text">初步使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BeanFactory和ApplicationContext"><span class="nav-number">3.1.2.</span> <span class="nav-text">BeanFactory和ApplicationContext</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#spring对bean对象的管理细节"><span class="nav-number">3.1.3.</span> <span class="nav-text">spring对bean对象的管理细节</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-创建bean的三种方式"><span class="nav-number">3.1.3.1.</span> <span class="nav-text">1. 创建bean的三种方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-bean对象的作用范围"><span class="nav-number">3.1.3.2.</span> <span class="nav-text">2. bean对象的作用范围</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-bean对象的生命周期"><span class="nav-number">3.1.3.3.</span> <span class="nav-text">3. bean对象的生命周期</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#依赖注入（dependency-injection-DI）"><span class="nav-number">3.1.4.</span> <span class="nav-text">依赖注入（dependency injection:DI）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-通过默认构造函数注入"><span class="nav-number">3.1.4.1.</span> <span class="nav-text">1. 通过默认构造函数注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-使用set进行依赖注入"><span class="nav-number">3.1.4.2.</span> <span class="nav-text">2. 使用set进行依赖注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-使用注解进行依赖注入"><span class="nav-number">3.1.4.3.</span> <span class="nav-text">3. 使用注解进行依赖注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-注入复杂数据类型"><span class="nav-number">3.1.4.4.</span> <span class="nav-text">4. 注入复杂数据类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于注解的IoC配置"><span class="nav-number">3.2.</span> <span class="nav-text">基于注解的IoC配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-用于创建bean对象的注解"><span class="nav-number">3.2.1.</span> <span class="nav-text">1. 用于创建bean对象的注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-用于数据注入的注解"><span class="nav-number">3.2.2.</span> <span class="nav-text">2. 用于数据注入的注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-用于改变作用范围的注解"><span class="nav-number">3.2.3.</span> <span class="nav-text">3. 用于改变作用范围的注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-用于改变生命周期的注解"><span class="nav-number">3.2.4.</span> <span class="nav-text">4. 用于改变生命周期的注解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用IoC的一个简单案例"><span class="nav-number">3.3.</span> <span class="nav-text">使用IoC的一个简单案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题"><span class="nav-number">3.3.1.</span> <span class="nav-text">问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring的AOP"><span class="nav-number">4.</span> <span class="nav-text">spring的AOP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#完善account的案例"><span class="nav-number">4.1.</span> <span class="nav-text">完善account的案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进行账户之间的转账"><span class="nav-number">4.1.1.</span> <span class="nav-text">进行账户之间的转账</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态代理"><span class="nav-number">4.2.</span> <span class="nav-text">动态代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基于接口的动态代理"><span class="nav-number">4.2.1.</span> <span class="nav-text">基于接口的动态代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于字类的动态代理"><span class="nav-number">4.2.2.</span> <span class="nav-text">基于字类的动态代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态代理在案例中的使用"><span class="nav-number">4.2.3.</span> <span class="nav-text">动态代理在案例中的使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AOP的概念"><span class="nav-number">4.3.</span> <span class="nav-text">AOP的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于XML的AOP配置"><span class="nav-number">4.4.</span> <span class="nav-text">基于XML的AOP配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于注解的AOP配置"><span class="nav-number">4.5.</span> <span class="nav-text">基于注解的AOP配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JdbcTemlate"><span class="nav-number">5.</span> <span class="nav-text">JdbcTemlate</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#spring中的JdbcTemplate"><span class="nav-number">5.1.</span> <span class="nav-text">spring中的JdbcTemplate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务控制"><span class="nav-number">6.</span> <span class="nav-text">事务控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#spring的事务"><span class="nav-number">6.1.</span> <span class="nav-text">spring的事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于xml的事务控制"><span class="nav-number">6.2.</span> <span class="nav-text">基于xml的事务控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于注解的事务配置"><span class="nav-number">6.3.</span> <span class="nav-text">基于注解的事务配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用纯注解的事务配置"><span class="nav-number">6.4.</span> <span class="nav-text">使用纯注解的事务配置</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1203,7 +1272,7 @@ public IAccountService getAccountService(){
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">18.5k</span>
+    <span title="Site words total count">19.4k</span>
   
 </div>
 
