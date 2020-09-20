@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="概述">
+<meta name="description" content="概述三层架构1. B&#x2F;S，浏览器&#x2F;服务器模式的开发中，服务端程序一般分为三层，展示层，业务层和持久层。     * 展示层：WEB层，用来与客户端进行数据交互的，表现层采用MVC的设计     * 业务层：处理业务逻辑     * 持久层：与数据库进行交互  2. MVC?     MVC(Model View Controller):模型视图控制器，一种设计模式     * Model: jav">
 <meta name="keywords" content="spring">
 <meta property="og:type" content="article">
-<meta property="og:title" content="springMVC">
+<meta property="og:title" content="SpringMVC">
 <meta property="og:url" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;index.html">
 <meta property="og:site_name" content="浊酒一杯的博客">
-<meta property="og:description" content="概述">
+<meta property="og:description" content="概述三层架构1. B&#x2F;S，浏览器&#x2F;服务器模式的开发中，服务端程序一般分为三层，展示层，业务层和持久层。     * 展示层：WEB层，用来与客户端进行数据交互的，表现层采用MVC的设计     * 业务层：处理业务逻辑     * 持久层：与数据库进行交互  2. MVC?     MVC(Model View Controller):模型视图控制器，一种设计模式     * Model: jav">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-18T09:31:56.758Z">
+<meta property="og:updated_time" content="2020-09-19T07:01:45.699Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -124,7 +124,7 @@
 
 
 
-  <title>springMVC | 浊酒一杯的博客</title>
+  <title>SpringMVC | 浊酒一杯的博客</title>
   
 
 
@@ -312,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">springMVC</h1>
+          <h1 class="post-title" itemprop="name headline">SpringMVC</h1>
         
 
         <div class="post-meta">
@@ -378,7 +378,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2
+                  337
                 </span>
               
 
@@ -403,7 +403,43 @@
       
 
       
-        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id><a href="#" class="headerlink" title></a></h3>
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="三层架构"><a href="#三层架构" class="headerlink" title="三层架构"></a>三层架构</h3><pre><code>1. B/S，浏览器/服务器模式的开发中，服务端程序一般分为三层，展示层，业务层和持久层。
+    * 展示层：WEB层，用来与客户端进行数据交互的，表现层采用MVC的设计
+    * 业务层：处理业务逻辑
+    * 持久层：与数据库进行交互
+
+2. MVC?
+    MVC(Model View Controller):模型视图控制器，一种设计模式
+    * Model: javabean,通常代指数据模型，用于封装数据
+    * View:  jsp,jsp或者html,用于展示数据
+    * Controller: servlet,处理用户交互的部分，处理程序逻辑的部分
+
+3. SpringMVC框架
+    1. 优势：
+
+4. SpringMVC和Struts2的区别</code></pre><h3 id="SpringMVC的入门案例"><a href="#SpringMVC的入门案例" class="headerlink" title="SpringMVC的入门案例"></a>SpringMVC的入门案例</h3><pre><code>1. 项目环境搭建
+    1. 选择maven工程的archetype
+    2. 选择webapp模板
+    3. 填写项目名称等信息
+    4. 添加archetypeCagalog internal加快项目创建的速度
+    5. 使用webapp在main目录下创建java和resources目录，并使用mark directory as声明</code></pre><blockquote>
+<pre><code>图片插入
+[maven_createproject_quickstart]
+[change_directory]</code></pre></blockquote>
+<pre><code>2. 配置MVC项目的步骤
+    1. 配置前端控制器，在servlet上配置控制器</code></pre><blockquote>
+</blockquote>
+<pre><code>&lt;!-- 配置前端控制器 --&gt;
+&lt;servlet&gt;
+  &lt;servlet-name&gt;dispatcherServlet&lt;/servlet-name&gt;
+  &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+  &lt;servlet-name&gt;dispatcherServlet&lt;/servlet-name&gt;
+  &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+
+    2. 配置TomCat服务器</code></pre>
       
     </div>
     
@@ -458,6 +494,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2020/09/19/servlet/" rel="prev" title="Servlet">
+                Servlet <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -469,7 +509,7 @@
         <p id="div-border-left-red">
         <b>本文基于<a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布</b><br/>
         <span>
-          <b>本文地址: </b><a href="/2020/09/18/springMVC/" title="springMVC">http://print3306.github.io/2020/09/18/springMVC/</a><br/><b>转载请注明出处, 谢谢！</b>
+          <b>本文地址: </b><a href="/2020/09/18/springMVC/" title="SpringMVC">http://print3306.github.io/2020/09/18/springMVC/</a><br/><b>转载请注明出处, 谢谢！</b>
         </span>
       </p>
 </div>
@@ -547,7 +587,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -569,7 +609,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -601,7 +641,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.1.</span> <span class="nav-text"></span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三层架构"><span class="nav-number">1.1.</span> <span class="nav-text">三层架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC的入门案例"><span class="nav-number">1.2.</span> <span class="nav-text">SpringMVC的入门案例</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -636,7 +676,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">19.4k</span>
+    <span title="Site words total count">22.6k</span>
   
 </div>
 
