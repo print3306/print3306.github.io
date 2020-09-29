@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="spring," />
+  <meta name="keywords" content="Spring," />
 
 
 
@@ -80,15 +80,24 @@
 
 
 <meta name="description" content="概述三层架构1. B&#x2F;S，浏览器&#x2F;服务器模式的开发中，服务端程序一般分为三层，展示层，业务层和持久层。     * 展示层：WEB层，用来与客户端进行数据交互的，表现层采用MVC的设计     * 业务层：处理业务逻辑     * 持久层：与数据库进行交互  2. MVC?     MVC(Model View Controller):模型视图控制器，一种设计模式     * Model: jav">
-<meta name="keywords" content="spring">
+<meta name="keywords" content="Spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringMVC">
 <meta property="og:url" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;index.html">
 <meta property="og:site_name" content="浊酒一杯的博客">
 <meta property="og:description" content="概述三层架构1. B&#x2F;S，浏览器&#x2F;服务器模式的开发中，服务端程序一般分为三层，展示层，业务层和持久层。     * 展示层：WEB层，用来与客户端进行数据交互的，表现层采用MVC的设计     * 业务层：处理业务逻辑     * 持久层：与数据库进行交互  2. MVC?     MVC(Model View Controller):模型视图控制器，一种设计模式     * Model: jav">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-19T07:01:45.699Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;maven_createproject_quickstart.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;change_directory.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;quickstart_tomcat.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;quickstart_1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;quickstart_2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;requestmapping.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;connection.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;defaultconversion.png">
+<meta property="og:updated_time" content="2020-09-29T13:21:08.342Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;maven_createproject_quickstart.png">
 
 
 
@@ -378,7 +387,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  337
+                  1.3k
                 </span>
               
 
@@ -423,11 +432,13 @@
     3. 填写项目名称等信息
     4. 添加archetypeCagalog internal加快项目创建的速度
     5. 使用webapp在main目录下创建java和resources目录，并使用mark directory as声明</code></pre><blockquote>
-<pre><code>图片插入
-[maven_createproject_quickstart]
-[change_directory]</code></pre></blockquote>
+<p><img src="/2020/09/18/springMVC/maven_createproject_quickstart.png" alt="maven_createproject_quickstart"></p>
+</blockquote>
+<blockquote>
+</blockquote>
+<p><img src="/2020/09/18/springMVC/change_directory.png" alt="change_directory"></p>
 <pre><code>2. 配置MVC项目的步骤
-    1. 配置前端控制器，在servlet上配置控制器</code></pre><blockquote>
+    1. 配置前端控制器，在servlet上配置控制器,主要是访问路径以及拦截</code></pre><blockquote>
 </blockquote>
 <pre><code>&lt;!-- 配置前端控制器 --&gt;
 &lt;servlet&gt;
@@ -437,9 +448,93 @@
 &lt;servlet-mapping&gt;
   &lt;servlet-name&gt;dispatcherServlet&lt;/servlet-name&gt;
   &lt;url-pattern&gt;/&lt;/url-pattern&gt;
-&lt;/servlet-mapping&gt;
+&lt;/servlet-mapping&gt;</code></pre><blockquote>
+<pre><code>&lt;!-- 配置过滤器 --&gt;
+&lt;filter&gt;
+&lt;filter-name&gt;characterEncodingFilter&lt;/filter-name&gt;
+&lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
+&lt;init-param&gt;:初始化参数
+  &lt;param-name&gt;encoding&lt;/param-name&gt;
+  &lt;param-value&gt;UTF-8&lt;/param-value&gt;
+&lt;/init-param&gt;</code></pre>  
+  <filter-mapping>
+    <filter-name>characterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+</blockquote>
+<pre><code>2. 配置TomCat服务器
+    配置项目路径，端口等服务器信息配置</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/springMVC/quickstart_tomcat.png" alt="tomcat设置"></p>
+<pre><code>3. 配置视图解析器
+    在项目配置文件中配置视图解析器，配置前缀路径以及后缀文件名</code></pre><h3 id="SpringMVC实例解析"><a href="#SpringMVC实例解析" class="headerlink" title="SpringMVC实例解析"></a>SpringMVC实例解析</h3><pre><code>1. SpringMVC的流程的说明
+    * 启动服务器，加载配置文件
+        1. DispacherServet被创建
+        2. springmvc.xml被加载
+        3. HelloController被加载到容器
+        4. 开启注解扫描的包，配置视图解析器，开启MVC注解
+    * 发送http请求，后台处理</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/springMVC/quickstart_1.png" alt><br><img src="/2020/09/18/springMVC/quickstart_2.png" alt></p>
+<pre><code>2. springMVC的三大组件(容器)
+    * 处理器映射器：HandlerMapping
+    * 处理器适配器：HandlerAdapter
+    * 视图解析器：ViewResolver
 
-    2. 配置TomCat服务器</code></pre>
+    在开启springMVC的注解时，会自动加载处理器映射器，处理器适配器</code></pre><h2 id="相关注解"><a href="#相关注解" class="headerlink" title="相关注解"></a>相关注解</h2><h3 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h3><pre><code>1. @RequestMapping：建立请求和方法之间的关联
+    path,value:请求路径的字符串
+
+2. 使用位置
+    * 放在方法上，可以直接使用路径来请求数据，二级目录
+    * 放在类上，类上的路径为一级目录，可以先访问一级目录再访问二级目录的方法</code></pre><p><img src="/2020/09/18/springMVC/requestmapping.png" alt></p>
+<pre><code>3. RequestMapping的属性: 任意两个属性之间是&amp;&amp;的关系
+    1. value,path: 互为别名，都是指定请求的路径,请求的URL
+    2. mathod: 用于指定请求的方法，method={RequestMethod.GTE,RequestMethod.POST}等
+    3. params: 指定限制请求参数的条件，支持简单的表达式，要求请求参数中的key和value必须和配置一样
+        * params={&quot;accountName&quot;},请求参数中必须要有accountName
+        * params={&quot;money!100&quot;},请求参数money不能是100
+    4. headers: 发送的请求中必须包含的请求头</code></pre><h2 id="请求参数的绑定"><a href="#请求参数的绑定" class="headerlink" title="请求参数的绑定"></a>请求参数的绑定</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><pre><code>1. 绑定机制
+    1. 表单提交的数据都是key=value格式的，username=hh&amp;password=oooo
+    2. SpringMVC的参数绑定过程是把表单提交的数据作为控制器中的参数进行绑定的
+    3. 表单的name和参数的名称必须是一样的
+
+2. 支持的数据类型
+    1. 基本数据类型和字符串类型
+    2. 实体类型（javaBean）
+    3. 集合数据类型（List,Map）
+
+3. 基本数据类型和字符串类型
+    * 表单中的name属性和参数列表的名称一致，可以直接进行封装
+    * 表单中的name属性和参数列表的名称不一致
+
+4. 实体类型
+    1. 简单的JavaBean
+        * 表单中的name属性和实体类的属性名称一致，框架会自动封装
+        * 
+
+    2. 包含其他的JavaBean引用
+        * 将引用的其他JavaBean的属性名称连同该对象的属性作为表单的name属性
+
+5. 集合数据类型
+    将集合的引用以及属性进行数据封装</code></pre><p><img src="/2020/09/18/springMVC/connection.png" alt="集合的参数封装"></p>
+<h4 id="数据转换器"><a href="#数据转换器" class="headerlink" title="数据转换器"></a>数据转换器</h4><pre><code>1. 说明
+    表单传输的数据都是字符串类型，SpringMVC框架进行了数据类型转换
+    string-&gt; Integer, Double,...
+    字符串转换为Date时，格式不正确，需要显式指定自定义类型转换器
+
+2. 使用接口
+    将S类型的数据转换为T类型
+    public interface Converter&lt;S,T&gt;{
+        T converter(S); S:source,T:target
+    }
+    将指定的数据类型进行转换，实现converter
+
+3. 使用步骤
+    1. 编写Converter接口的实现类，实现converter方法
+    2. 配置自定义类型转换器
+        * springMVC项目配置文件中配置，将自定义配置类加入ConversionServiceFactortBean中
+    3. 配置转换器服务</code></pre><p><img src="/2020/09/18/springMVC/defaultconversion.png" alt="自定义类型转换器"></p>
+
       
     </div>
     
@@ -456,7 +551,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/spring/" rel="tag"><i class="fa fa-tag"></i> spring</a>
+            <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
           
         </div>
       
@@ -609,7 +704,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -641,7 +736,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三层架构"><span class="nav-number">1.1.</span> <span class="nav-text">三层架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC的入门案例"><span class="nav-number">1.2.</span> <span class="nav-text">SpringMVC的入门案例</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三层架构"><span class="nav-number">1.1.</span> <span class="nav-text">三层架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC的入门案例"><span class="nav-number">1.2.</span> <span class="nav-text">SpringMVC的入门案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC实例解析"><span class="nav-number">1.3.</span> <span class="nav-text">SpringMVC实例解析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关注解"><span class="nav-number">2.</span> <span class="nav-text">相关注解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注解"><span class="nav-number">2.1.</span> <span class="nav-text">注解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求参数的绑定"><span class="nav-number">3.</span> <span class="nav-text">请求参数的绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">3.1.</span> <span class="nav-text">说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据转换器"><span class="nav-number">3.1.1.</span> <span class="nav-text">数据转换器</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -676,7 +771,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">28.1k</span>
+    <span title="Site words total count">29k</span>
   
 </div>
 
