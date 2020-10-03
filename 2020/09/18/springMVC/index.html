@@ -103,7 +103,9 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;springmvc_upload1.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;springmvc_upload_error.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;springmvc_upload2.png">
-<meta property="og:updated_time" content="2020-10-02T13:44:05.110Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;file_upload3.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;e1.png">
+<meta property="og:updated_time" content="2020-10-03T10:59:06.656Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;maven_createproject_quickstart.png">
 
@@ -395,7 +397,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.8k
+                  4k
                 </span>
               
 
@@ -707,9 +709,13 @@ mapping: 表示以/static开头的所有的请求路径</code></pre><h4 id="响�
 * void的返回类型，可以使用上述三种方式来响应数据
 * json格式的数据应该和ajax(异步 JavaScript XML)配合来使用</code></pre><h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><h3 id="传统的文件上传"><a href="#传统的文件上传" class="headerlink" title="传统的文件上传"></a>传统的文件上传</h3><pre><code>1. form表单的要求
     * enctype的属性要求，multipart/form-data
-    * method：post</code></pre><p><img src="/2020/09/18/springMVC/file_upload.png" alt="文件上传1"></p>
+    * method：post</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/springMVC/file_upload.png" alt="文件上传1"></p>
 <pre><code>2. 解析工具
-    * 第三方jar包：commons-fileupload-1.4,commons-io-2.6</code></pre><p><img src="/2020/09/18/springMVC/file_pom.png" alt="导入jar包"></p>
+    * 第三方jar包：commons-fileupload-1.4,commons-io-2.6</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/springMVC/file_pom.png" alt="导入jar包"></p>
 <pre><code>3. 步骤
     将本地文件上传至服务器
     * 编写文件上传的jsp文件
@@ -756,15 +762,21 @@ mapping: 表示以/static开头的所有的请求路径</code></pre><h4 id="响�
     * springMVC框架提供了MultipartFile对象，该对象表示要上传的文件，要求变量名称必须和表单file标签的name属性名称相同
     * 由前端控制器获取请求，将请求传送给文件解析器来进行request对象的解析获取文件上传项，再由控制器将获取到的文件上传项作为参数绑定到对应的方法上，在方法中只需要进行文件的上传就可以，不需要关注文件的解析和获取工作
     * 注意：
-        参数绑定：方法的参数必须和file的name属性相同</code></pre><p><img src="/2020/09/18/springMVC/springmvc_upload.png" alt="springMVC文件上传的原理"><br><img src="/2020/09/18/springMVC/springmvc_upload1.png" alt="springMVC文件上传的部分源码"></p>
-<pre><code>一旦配置上传文件的大小，不能超过限制</code></pre><p><img src="/2020/09/18/springMVC/springmvc_upload_error.png" alt="springMVC文件大小上传限制"></p>
+        参数绑定：方法的参数必须和file的name属性相同</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/springMVC/springmvc_upload.png" alt="springMVC文件上传的原理"><br><img src="/2020/09/18/springMVC/springmvc_upload1.png" alt="springMVC文件上传的部分源码"></p>
+<pre><code>一旦配置上传文件的大小，不能超过限制</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/springMVC/springmvc_upload_error.png" alt="springMVC文件大小上传限制"></p>
 <pre><code>2. 步骤
     * 书写文件上传表单
     * 配置文件解析器
         CommonsMultipartResoler,其中id属性必须为 multipartReslover
-            可以进行以来注入
+            可以进行依赖注入
 
-    * 方法书写</code></pre><p><img src="/2020/09/18/springMVC/springmvc_upload2.png" alt="springMVC文件上传"></p>
+    * 方法书写</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/springMVC/springmvc_upload2.png" alt="springMVC文件上传"></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><pre><code>springMVC的框架只是将解析文件的过程进行了封装，本质上还是使用FileItemFactory等进行文件解析，在方法中可以直接调用上传文件项
 
 1. 通用上传文件步骤
@@ -772,7 +784,27 @@ mapping: 表示以/static开头的所有的请求路径</code></pre><h4 id="响�
     2. 对request域进行文件解析，获取文件项(FileItem)[文件解析器]
     3. 生成唯一Id,防止文件覆盖，UUID.randomUUID().toString().replace(&quot;_&quot;,&quot;&quot;);
     4. 文件上传，transferTo(new File(path,name));将文件上传到指定的路径下，生成指定文件名称的文件
-    5. 清理临时文件</code></pre>
+    5. 清理临时文件</code></pre><h3 id="跨服务器方式的文件上传"><a href="#跨服务器方式的文件上传" class="headerlink" title="跨服务器方式的文件上传"></a>跨服务器方式的文件上传</h3><pre><code>1. 分服务器的目的
+    不同的功能服务器将其分开，方便开发
+        * 应用服务器
+        * 数据库服务器
+        * 缓存服务器
+
+2. 步骤
+    * 导入跨服务器传输文件的第三方jar包，jersey-core,jersey-client
+    * 编写业务程序
+        1. 确定上传的文件路径，文件服务器上的路径
+        2. 获取上传文件项的UUID,生成唯一ID
+        3. 获取客户端对象（客户端-服务器的方式建立连接）
+            Client client = Client.create();
+        4. 建立连接，
+            WebResource resource = client.resource(path);
+        5. 上传文件
+            resource.put(upload.getBytes());</code></pre><p><img src="/2020/09/18/springMVC/file_upload3.png" alt="跨服务器上传"></p>
+<pre><code>3. 出现的错误
+    1. 500：Method Not Allowed
+        可以在文件服务器的文件目录下建立文件夹改变Tomcat服务器的readonly属性，Tomcat服务器的安装目录下的conf文件中的web.xml，属性值改为false</code></pre><p><img src="/2020/09/18/springMVC/e1.png" alt></p>
+
       
     </div>
     
@@ -974,7 +1006,7 @@ mapping: 表示以/static开头的所有的请求路径</code></pre><h4 id="响�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三层架构"><span class="nav-number">1.1.</span> <span class="nav-text">三层架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC的入门案例"><span class="nav-number">1.2.</span> <span class="nav-text">SpringMVC的入门案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC实例解析"><span class="nav-number">1.3.</span> <span class="nav-text">SpringMVC实例解析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关注解"><span class="nav-number">2.</span> <span class="nav-text">相关注解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestMapping"><span class="nav-number">2.0.1.</span> <span class="nav-text">@RequestMapping</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestParam"><span class="nav-number">2.0.2.</span> <span class="nav-text">@RequestParam</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestBody"><span class="nav-number">2.0.3.</span> <span class="nav-text">@RequestBody</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PathVarible"><span class="nav-number">2.0.4.</span> <span class="nav-text">@PathVarible</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RESTful编程风格"><span class="nav-number">2.0.4.1.</span> <span class="nav-text">RESTful编程风格</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HiddentHttpMethodFilter"><span class="nav-number">2.0.4.2.</span> <span class="nav-text">@HiddentHttpMethodFilter</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestHeader"><span class="nav-number">2.0.5.</span> <span class="nav-text">@RequestHeader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CookieValue"><span class="nav-number">2.0.6.</span> <span class="nav-text">@CookieValue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ModelAttribute"><span class="nav-number">2.0.7.</span> <span class="nav-text">@ModelAttribute</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SessionAttributes"><span class="nav-number">2.0.8.</span> <span class="nav-text">@SessionAttributes</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求参数的绑定"><span class="nav-number">3.</span> <span class="nav-text">请求参数的绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">3.1.</span> <span class="nav-text">说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据转换器"><span class="nav-number">3.1.1.</span> <span class="nav-text">数据转换器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet-API"><span class="nav-number">4.</span> <span class="nav-text">Servlet API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取原生的Servlet-API"><span class="nav-number">4.1.</span> <span class="nav-text">获取原生的Servlet API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应数据"><span class="nav-number">5.</span> <span class="nav-text">响应数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串"><span class="nav-number">5.1.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#void"><span class="nav-number">5.2.</span> <span class="nav-text">void</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ModelAndView"><span class="nav-number">5.3.</span> <span class="nav-text">ModelAndView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用关键字来进行转发和重定向"><span class="nav-number">5.4.</span> <span class="nav-text">使用关键字来进行转发和重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON数据：ResponseBody响应"><span class="nav-number">5.5.</span> <span class="nav-text">JSON数据：ResponseBody响应</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#过滤静态资源"><span class="nav-number">5.5.1.</span> <span class="nav-text">过滤静态资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#响应json格式数据"><span class="nav-number">5.5.2.</span> <span class="nav-text">响应json格式数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应数据总结"><span class="nav-number">5.6.</span> <span class="nav-text">响应数据总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件上传"><span class="nav-number">6.</span> <span class="nav-text">文件上传</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传统的文件上传"><span class="nav-number">6.1.</span> <span class="nav-text">传统的文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#springMVC的文件上传"><span class="nav-number">6.2.</span> <span class="nav-text">springMVC的文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">6.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三层架构"><span class="nav-number">1.1.</span> <span class="nav-text">三层架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC的入门案例"><span class="nav-number">1.2.</span> <span class="nav-text">SpringMVC的入门案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC实例解析"><span class="nav-number">1.3.</span> <span class="nav-text">SpringMVC实例解析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关注解"><span class="nav-number">2.</span> <span class="nav-text">相关注解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestMapping"><span class="nav-number">2.0.1.</span> <span class="nav-text">@RequestMapping</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestParam"><span class="nav-number">2.0.2.</span> <span class="nav-text">@RequestParam</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestBody"><span class="nav-number">2.0.3.</span> <span class="nav-text">@RequestBody</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PathVarible"><span class="nav-number">2.0.4.</span> <span class="nav-text">@PathVarible</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RESTful编程风格"><span class="nav-number">2.0.4.1.</span> <span class="nav-text">RESTful编程风格</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HiddentHttpMethodFilter"><span class="nav-number">2.0.4.2.</span> <span class="nav-text">@HiddentHttpMethodFilter</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestHeader"><span class="nav-number">2.0.5.</span> <span class="nav-text">@RequestHeader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CookieValue"><span class="nav-number">2.0.6.</span> <span class="nav-text">@CookieValue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ModelAttribute"><span class="nav-number">2.0.7.</span> <span class="nav-text">@ModelAttribute</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SessionAttributes"><span class="nav-number">2.0.8.</span> <span class="nav-text">@SessionAttributes</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求参数的绑定"><span class="nav-number">3.</span> <span class="nav-text">请求参数的绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">3.1.</span> <span class="nav-text">说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据转换器"><span class="nav-number">3.1.1.</span> <span class="nav-text">数据转换器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet-API"><span class="nav-number">4.</span> <span class="nav-text">Servlet API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取原生的Servlet-API"><span class="nav-number">4.1.</span> <span class="nav-text">获取原生的Servlet API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应数据"><span class="nav-number">5.</span> <span class="nav-text">响应数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串"><span class="nav-number">5.1.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#void"><span class="nav-number">5.2.</span> <span class="nav-text">void</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ModelAndView"><span class="nav-number">5.3.</span> <span class="nav-text">ModelAndView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用关键字来进行转发和重定向"><span class="nav-number">5.4.</span> <span class="nav-text">使用关键字来进行转发和重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON数据：ResponseBody响应"><span class="nav-number">5.5.</span> <span class="nav-text">JSON数据：ResponseBody响应</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#过滤静态资源"><span class="nav-number">5.5.1.</span> <span class="nav-text">过滤静态资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#响应json格式数据"><span class="nav-number">5.5.2.</span> <span class="nav-text">响应json格式数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应数据总结"><span class="nav-number">5.6.</span> <span class="nav-text">响应数据总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件上传"><span class="nav-number">6.</span> <span class="nav-text">文件上传</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传统的文件上传"><span class="nav-number">6.1.</span> <span class="nav-text">传统的文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#springMVC的文件上传"><span class="nav-number">6.2.</span> <span class="nav-text">springMVC的文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">6.3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跨服务器方式的文件上传"><span class="nav-number">6.4.</span> <span class="nav-text">跨服务器方式的文件上传</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1009,7 +1041,7 @@ mapping: 表示以/static开头的所有的请求路径</code></pre><h4 id="响�
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.6k</span>
+    <span title="Site words total count">31.8k</span>
   
 </div>
 
