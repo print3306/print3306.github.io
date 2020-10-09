@@ -252,6 +252,140 @@
       </tags>
   </entry>
   <entry>
+    <title>Spring Load</title>
+    <url>/2020/05/09/SpringLoad/</url>
+    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
+<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
+<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
+<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
+<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
+<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
+]]></content>
+      <categories>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git</title>
+    <url>/2020/03/18/git/</url>
+    <content><![CDATA[<h2 id="Git的使用"><a href="#Git的使用" class="headerlink" title="Git的使用"></a>Git的使用</h2><h3 id><a href="#" class="headerlink" title></a></h3><pre><code>1.什么是Git
+    一种源代码管理工具（版本控制工具），方便对代码的管理
+
+2.初始化Git仓库
+    在放置代码的文件夹下，
+    右键“git bash here”,输入命令&apos;git init&apos;,
+    所有的文件放置在‘.git’文件夹下
+
+3.配置身份信息
+    声明当前的用户，“git config --global ”
+    每次备份会将用户名和邮箱存储起来
+
+    1.声明用户
+        &apos;git config --global user.name &quot;用户名&quot;&apos;
+
+    2.声明邮箱
+        &apos;git config --global user.mail &quot;邮箱名&quot;&apos;
+        邮箱不要求为现实邮箱，只要符合邮箱格式
+
+4.将文件放置到Git
+    自动将文件备份到隐藏文件夹‘.git’
+
+    1.将代码添加到‘.git’仓库中（门口）
+        &apos;git add &quot;文件路径名&quot;&apos;
+
+    2.代码提交到‘.git’仓库中（房间）
+        &apos;git commit -m “对文件的说明”&apos;
+            -m message:必须要有文件说明
+
+5.工作区 暂存区 版本库
+    工作区：正在使用的文件夹
+    暂存区：第一次添加的文件
+    版本库：提交的源代码版本
+
+6.查看当前状态
+    &apos;git status&apos;
+    文件是否放入版本库
+
+7.批处理文件
+    git add ./     :当前文件夹的所有修改过的内容放入暂存区
+    git commit --all -m &quot;&quot;    :将所有的文件放入版本库
+
+8.查看提交记录（日志）
+    &apos;git log&apos; 显示提交的用户和时间
+    简化提交日志
+    &apos;git log --oneline&apos; :将日志简化为一条记录
+
+9.恢复代码
+    &apos;git reset --hard Head~0&apos;    ：回退到上次代码提交时的状态
+
+10.根据版本号来进行回退
+    &apos;git reset --hard &quot;版本号&quot;&apos;    ：将代码回退到某一次的提交时的状态
+
+11.查看版本切换日志
+    &apos;git reflog&apos;
+
+12.创建分支，合并分支
+    master:主分支
+
+    1.创建分支
+        &apos;git branch &quot;分支名&quot;&apos; 创建分支
+        与master分支内容一样
+
+    2.切换分支
+        &apos;git checkout &quot;分支名&quot;&apos;    
+
+    3.合并分支
+        &apos;git merge &quot;分支名&quot;&apos;,当前分支与指定分支的合并
+
+    4.查看分支
+        &apos;git branch&apos;
+
+13.手动合并分支
+    合并后删除不需要的文件，再次将其进行提交
+
+14.将代码提交到Github服务器上
+    &apos;git push &quot;地址&quot; master&apos;
+    exp:git push https://github.com/print3306/test007.git master
+
+15.将代码从Github上下载
+    &apos;git pull &quot;地址&quot; master&apos;
+    exp:git pull https://github.com/print3306/test007.git master
+
+    注意：在下载之前必须初始化一个仓库，pull会对数据进行合并
+
+16.对数据的clone
+    &apos;git clone &quot;地址&quot;&apos;
+    远程仓库数据的复制，如果多次执行会覆盖本地内容
+
+17.通过SSH来上传代码
+    公钥和私钥：通过两者之间的联系验证身份
+    生成公钥和私钥
+        ssh-keygen -t rsa -C &quot;邮箱&quot;
+        生成的公钥添加到Github的SSH上
+
+18.本地和远程文件的版本不一样
+    先将服务器上的数据下载下来，在本地修改，解决冲突后，再将最新版上传至服务器
+
+19.简化push和pull
+    增加远程变量，在当前的项目目录有效，变量代替地址
+    git remote add &quot;变量名&quot; &quot;地址&quot;
+
+    上传：git push &quot;变量名&quot; -u master
+        本地当前分支和远程指定分支进行相关联,
+        下一次只需要写上git push进行上传
+
+    下载：git pull &quot;变量名&quot; -u master</code></pre>]]></content>
+      <categories>
+        <category>Git</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SQL Inject</title>
     <url>/2020/05/09/SQL%E6%B3%A8%E5%85%A5/</url>
     <content><![CDATA[<h1 id="SQL注入问题"><a href="#SQL注入问题" class="headerlink" title="SQL注入问题"></a>SQL注入问题</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>在拼接sql语句时，有一些特殊的SQL关键字参于字符串的拼接，导致SQL语句的逻辑发生变化，可能会造成安全性问题</code></pre><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre><code>1. 输入 a&apos;or&apos;a&apos;=&apos;a,条件改变
@@ -312,23 +446,6 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
       </categories>
       <tags>
         <tag>SQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring Load</title>
-    <url>/2020/05/09/SpringLoad/</url>
-    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
-<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
-<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
-<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
-<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
-<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
-]]></content>
-      <categories>
-        <category>Spring</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
@@ -941,6 +1058,35 @@ User findById(Integer id);</code></pre></blockquote>
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MYSQL 5.7.29</title>
+    <url>/2020/06/18/mysql57/</url>
+    <content><![CDATA[<h2 id="下载安装MySQL-5-7-29版本"><a href="#下载安装MySQL-5-7-29版本" class="headerlink" title="下载安装MySQL-5.7.29版本"></a>下载安装MySQL-5.7.29版本</h2><h3 id="1-下载安装包"><a href="#1-下载安装包" class="headerlink" title="1.下载安装包"></a>1.下载安装包</h3><pre><code>官网下载安装包，离线安装方式</code></pre><p><img src="/2020/06/18/mysql57/0.png" alt></p>
+<h3 id="2-my-ini"><a href="#2-my-ini" class="headerlink" title="2.my.ini"></a>2.my.ini</h3><pre><code>下载的安装包解压后，安装目录如果没有*my.ini*文件，新建该文件，内容：
+其中，文件安装和data目录可以自定义</code></pre><p><img src="/2020/06/18/mysql57/5.png" alt></p>
+<h3 id="3-创建服务"><a href="#3-创建服务" class="headerlink" title="3.创建服务"></a>3.创建服务</h3><p><img src="/2020/06/18/mysql57/6.png" alt></p>
+<pre><code>mysql57为服务名</code></pre><h3 id="4-初始化"><a href="#4-初始化" class="headerlink" title="4.初始化"></a>4.初始化</h3><p><code>mysqld --initialize</code></p>
+<h3 id="5-启动服务"><a href="#5-启动服务" class="headerlink" title="5.启动服务"></a>5.启动服务</h3><p><code>net start mysql</code></p>
+<h3 id="6-连接数据库"><a href="#6-连接数据库" class="headerlink" title="6.连接数据库"></a>6.连接数据库</h3><ul>
+<li>临时密码：在***.err下<br><img src="/2020/06/18/mysql57/4.png" alt><br><img src="/2020/06/18/mysql57/9.png" alt><br><img src="/2020/06/18/mysql57/11.png" alt></li>
+</ul>
+<h3 id="7-更改密码"><a href="#7-更改密码" class="headerlink" title="7.更改密码"></a>7.更改密码</h3><p><img src="/2020/06/18/mysql57/12.png" alt></p>
+<h3 id="8-断开连接"><a href="#8-断开连接" class="headerlink" title="8.断开连接"></a>8.断开连接</h3><p><code>exit</code></p>
+<h3 id="9-退出服务"><a href="#9-退出服务" class="headerlink" title="9.退出服务"></a>9.退出服务</h3><p><img src="/2020/06/18/mysql57/13.png" alt></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="1-存在data文件夹"><a href="#1-存在data文件夹" class="headerlink" title="1.存在data文件夹"></a>1.存在data文件夹</h3><ul>
+<li>删除原本data，初始化命令自动生成新的data文件夹</li>
+<li>data文件夹自己手动创建可能报错，最好还是由系统自动创建<br><img src="/2020/06/18/mysql57/7.png" alt></li>
+</ul>
+<h3 id="2-无法启动服务"><a href="#2-无法启动服务" class="headerlink" title="2.无法启动服务"></a>2.无法启动服务</h3><p><img src="/2020/06/18/mysql57/1.png" alt><br><img src="/2020/06/18/mysql57/8.png" alt></p>
+<pre><code>更改注册表信息</code></pre><p><img src="/2020/06/18/mysql57/2.png" alt><br><img src="/2020/06/18/mysql57/3.png" alt></p>
+]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL</tag>
       </tags>
   </entry>
   <entry>
@@ -1984,123 +2130,6 @@ URL重写：
       </tags>
   </entry>
   <entry>
-    <title>git</title>
-    <url>/2020/03/18/git/</url>
-    <content><![CDATA[<h2 id="Git的使用"><a href="#Git的使用" class="headerlink" title="Git的使用"></a>Git的使用</h2><h3 id><a href="#" class="headerlink" title></a></h3><pre><code>1.什么是Git
-    一种源代码管理工具（版本控制工具），方便对代码的管理
-
-2.初始化Git仓库
-    在放置代码的文件夹下，
-    右键“git bash here”,输入命令&apos;git init&apos;,
-    所有的文件放置在‘.git’文件夹下
-
-3.配置身份信息
-    声明当前的用户，“git config --global ”
-    每次备份会将用户名和邮箱存储起来
-
-    1.声明用户
-        &apos;git config --global user.name &quot;用户名&quot;&apos;
-
-    2.声明邮箱
-        &apos;git config --global user.mail &quot;邮箱名&quot;&apos;
-        邮箱不要求为现实邮箱，只要符合邮箱格式
-
-4.将文件放置到Git
-    自动将文件备份到隐藏文件夹‘.git’
-
-    1.将代码添加到‘.git’仓库中（门口）
-        &apos;git add &quot;文件路径名&quot;&apos;
-
-    2.代码提交到‘.git’仓库中（房间）
-        &apos;git commit -m “对文件的说明”&apos;
-            -m message:必须要有文件说明
-
-5.工作区 暂存区 版本库
-    工作区：正在使用的文件夹
-    暂存区：第一次添加的文件
-    版本库：提交的源代码版本
-
-6.查看当前状态
-    &apos;git status&apos;
-    文件是否放入版本库
-
-7.批处理文件
-    git add ./     :当前文件夹的所有修改过的内容放入暂存区
-    git commit --all -m &quot;&quot;    :将所有的文件放入版本库
-
-8.查看提交记录（日志）
-    &apos;git log&apos; 显示提交的用户和时间
-    简化提交日志
-    &apos;git log --oneline&apos; :将日志简化为一条记录
-
-9.恢复代码
-    &apos;git reset --hard Head~0&apos;    ：回退到上次代码提交时的状态
-
-10.根据版本号来进行回退
-    &apos;git reset --hard &quot;版本号&quot;&apos;    ：将代码回退到某一次的提交时的状态
-
-11.查看版本切换日志
-    &apos;git reflog&apos;
-
-12.创建分支，合并分支
-    master:主分支
-
-    1.创建分支
-        &apos;git branch &quot;分支名&quot;&apos; 创建分支
-        与master分支内容一样
-
-    2.切换分支
-        &apos;git checkout &quot;分支名&quot;&apos;    
-
-    3.合并分支
-        &apos;git merge &quot;分支名&quot;&apos;,当前分支与指定分支的合并
-
-    4.查看分支
-        &apos;git branch&apos;
-
-13.手动合并分支
-    合并后删除不需要的文件，再次将其进行提交
-
-14.将代码提交到Github服务器上
-    &apos;git push &quot;地址&quot; master&apos;
-    exp:git push https://github.com/print3306/test007.git master
-
-15.将代码从Github上下载
-    &apos;git pull &quot;地址&quot; master&apos;
-    exp:git pull https://github.com/print3306/test007.git master
-
-    注意：在下载之前必须初始化一个仓库，pull会对数据进行合并
-
-16.对数据的clone
-    &apos;git clone &quot;地址&quot;&apos;
-    远程仓库数据的复制，如果多次执行会覆盖本地内容
-
-17.通过SSH来上传代码
-    公钥和私钥：通过两者之间的联系验证身份
-    生成公钥和私钥
-        ssh-keygen -t rsa -C &quot;邮箱&quot;
-        生成的公钥添加到Github的SSH上
-
-18.本地和远程文件的版本不一样
-    先将服务器上的数据下载下来，在本地修改，解决冲突后，再将最新版上传至服务器
-
-19.简化push和pull
-    增加远程变量，在当前的项目目录有效，变量代替地址
-    git remote add &quot;变量名&quot; &quot;地址&quot;
-
-    上传：git push &quot;变量名&quot; -u master
-        本地当前分支和远程指定分支进行相关联,
-        下一次只需要写上git push进行上传
-
-    下载：git pull &quot;变量名&quot; -u master</code></pre>]]></content>
-      <categories>
-        <category>Git</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Servlet路径有关的问题</title>
     <url>/2020/09/26/servlet_path/</url>
     <content><![CDATA[<h2 id="servlet中的转发，重定向，页面跳转中的路径问题"><a href="#servlet中的转发，重定向，页面跳转中的路径问题" class="headerlink" title="servlet中的转发，重定向，页面跳转中的路径问题"></a>servlet中的转发，重定向，页面跳转中的路径问题</h2><h3 id="转发的路径：request-gerRequestDispacher-“-“-forward-request-respone"><a href="#转发的路径：request-gerRequestDispacher-“-“-forward-request-respone" class="headerlink" title="转发的路径：request.gerRequestDispacher(“/“).forward(request,respone)"></a>转发的路径：request.gerRequestDispacher(“/“).forward(request,respone)</h3><pre><code>1. getRequestDispacher(url) : 只有相对路径，相对于项目路径，还是相对于当前文件路径
@@ -2132,6 +2161,11 @@ URL重写：
       <tags>
         <tag>随笔</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>ssm_use</title>
+    <url>/2020/10/09/ssm/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>spring</title>
@@ -2757,6 +2791,48 @@ public IAccountService getAccountService(){
       </tags>
   </entry>
   <entry>
+    <title>七牛云_Hexo</title>
+    <url>/2020/05/12/%E4%B8%83%E7%89%9B%E4%BA%91-Hexo/</url>
+    <content><![CDATA[<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h2><pre><code>1. 注册七牛云,完成之后就可以进行创建空间，
+2. 注意我们添加的资源为对象存储，访问控制为公开空间
+3. 点击右上角进入密钥管理，复制当前使用的AK和SK，配置的时候会用得到</code></pre><h2 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2. 步骤"></a>2. 步骤</h2><h3 id="2-1-安装插件，进入Hexo主目录，执行："><a href="#2-1-安装插件，进入Hexo主目录，执行：" class="headerlink" title="2.1. 安装插件，进入Hexo主目录，执行："></a>2.1. 安装插件，进入Hexo主目录，执行：</h3><pre><code>`npm install hexo-qiniu-sync --save`</code></pre><h3 id="2-2-配置站点文件-config-yml"><a href="#2-2-配置站点文件-config-yml" class="headerlink" title="2.2. 配置站点文件_config.yml:"></a>2.2. 配置站点文件_config.yml:</h3><blockquote>
+<p>  #plugins:<br>      #- hexo-qiniu-sync<br>    qiniu:<br>      offline: false<br>      sync: true<br>      bucket: bucket_name<br>      access_key: AccessKey<br>      secret_key: SecretKey<br>      dirPrefix:<br>      urlPrefix: <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a><br>      local_dir: cdn<br>      update_exist: true<br>      image:<br>        folder: images<br>        extend:<br>      js:<br>        folder: js<br>      css:<br>        folder: css</p>
+</blockquote>
+<h3 id="2-3-参数"><a href="#2-3-参数" class="headerlink" title="2.3. 参数"></a>2.3. 参数</h3><ul>
+<li><p>bucket ：修改为你刚才申请的七牛空间名称</p>
+</li>
+<li><p>access_key 、 secret_key : 上传密钥AccessKey、SecretKey。即3 第3步复制的AK和SK。</p>
+</li>
+<li><p>urlPrefix : 七牛空间地址的前缀。 重要！必填！ 因为现在七牛已经取消了二级域名，外链前缀类似设置中的 <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a> ，插件不能根据 bucket 自动生成外链前缀了。你可以进入自己创建的空间在域名设置中看到自己的七牛测试域名，也可以查看一个已上传的文件外链地址，确认前缀无误。这个参数的设置是保证解析成网页文件时，外链地址正确的关键之一！<br>  配置参数的说明：</p>
+</li>
+<li><p>offline ：是否离线。设置为 true 将在本地预览时使用本地地址渲染，省流量； false 将使用同步到七牛空间的静态资源渲染，方便检查资源链接是否正确。</p>
+</li>
+<li><p>sync ：是否同步到七牛，一般都是设置 true 啦</p>
+</li>
+<li><p>dirPrefix ：资源将上传到七牛空间的此目录下，可像我一样设置为空。该参数会影响外链的地址，如果设置为非空值，例如默认值 static ，则 urlPrefix 为保持一致需加上目录后缀 /static ，改为 <a href="http://7xqb0u.com1.z0.glb.clouddn.com/static" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com/static</a> 。</p>
+</li>
+<li><p>local_dir ：本地资源储存目录。在本例中，待上传的资源都储存在hexo主目录中的 cdn 文件夹（也就是与 source 目录平级）中。</p>
+</li>
+<li><p>update_exist ：设置为 true ，则会在文件更新之后重新上传并更新七牛空间上中的原有文件。</p>
+</li>
+<li><p>image/js/css ：子参数folder为不同静态资源种类的目录名称，一般不需要改动</p>
+</li>
+<li><p>image.extend ：使用 qnimg 标签引用图片的默认图片处理操作。可以使用 基本图片处理（imageView2）、高级图片处理（imageMogr2）、图片水印处理（watermark） 这三个图片处理接口，多个接口内容之间用 | 间隔。详见 七牛开发者中心-图片处理。</p>
+</li>
+</ul>
+<h2 id="3-使用"><a href="#3-使用" class="headerlink" title="3. 使用"></a>3. 使用</h2><pre><code>1.将图片上传到七牛云，查看照片获取照片的外链
+2.在文章中引用照片外链，markdown格式:*![描述]（外链）*</code></pre><h2 id="4-感谢在使用七牛云时参考的大佬博客："><a href="#4-感谢在使用七牛云时参考的大佬博客：" class="headerlink" title="4. 感谢在使用七牛云时参考的大佬博客："></a>4. 感谢在使用七牛云时参考的大佬博客：</h2><ul>
+<li><a href="http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/" target="_blank" rel="noopener">http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Blog</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringMVC</title>
     <url>/2020/09/18/springMVC/</url>
     <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="三层架构"><a href="#三层架构" class="headerlink" title="三层架构"></a>三层架构</h3><pre><code>1. B/S，浏览器/服务器模式的开发中，服务端程序一般分为三层，展示层，业务层和持久层。
@@ -3156,83 +3232,31 @@ interceptor和filter的区别
 * interceptor: 只能在springMVC中，在配置/*之后，只会拦截访问的控制器方法，如果访问的是jsp,css,html不会进行拦截
 * filter: servlet规范的部分，所有的java web都可以使用，在配置之后，对所有要访问的资源进行拦截
 
-编写拦截器必须实现 HandlerInterceptor接口</code></pre><h3 id><a href="#" class="headerlink" title></a></h3>]]></content>
+编写拦截器必须实现 HandlerInterceptor接口</code></pre><h3 id="拦截器的使用"><a href="#拦截器的使用" class="headerlink" title="拦截器的使用"></a>拦截器的使用</h3><pre><code>1. 步骤
+    * 编写自定义拦截器类（implements HandlerInterceptor）
+    * 在容器中注册该拦截器类
+    * 声明需要拦截的对象
+
+2. 注册拦截器
+    * 可以编写多个拦截器，构成拦截器链
+    * &lt;mvc:mapping path=&quot;&quot;&gt;：指定要拦截的请求路径</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/springMVC/inter_1.png" alt></p>
+<pre><code>3. 拦截的方法</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/springMVC/inter_2.png" alt></p>
+<pre><code>* preHandler: 预处理，在controller方法执行之前执行
+    return true: 放行，继续执行后面的拦截器
+    return false: 不放行，可以使用转发和重定向来进行页面跳转
+
+* postHandler: 后处理，在controller方法执行结束，跳转页面之前执行
+
+* afterCompletion: 页面执行结束后，执行这个方法</code></pre>]]></content>
       <categories>
         <category>Spring</category>
       </categories>
       <tags>
         <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MYSQL 5.7.29</title>
-    <url>/2020/06/18/mysql57/</url>
-    <content><![CDATA[<h2 id="下载安装MySQL-5-7-29版本"><a href="#下载安装MySQL-5-7-29版本" class="headerlink" title="下载安装MySQL-5.7.29版本"></a>下载安装MySQL-5.7.29版本</h2><h3 id="1-下载安装包"><a href="#1-下载安装包" class="headerlink" title="1.下载安装包"></a>1.下载安装包</h3><pre><code>官网下载安装包，离线安装方式</code></pre><p><img src="/2020/06/18/mysql57/0.png" alt></p>
-<h3 id="2-my-ini"><a href="#2-my-ini" class="headerlink" title="2.my.ini"></a>2.my.ini</h3><pre><code>下载的安装包解压后，安装目录如果没有*my.ini*文件，新建该文件，内容：
-其中，文件安装和data目录可以自定义</code></pre><p><img src="/2020/06/18/mysql57/5.png" alt></p>
-<h3 id="3-创建服务"><a href="#3-创建服务" class="headerlink" title="3.创建服务"></a>3.创建服务</h3><p><img src="/2020/06/18/mysql57/6.png" alt></p>
-<pre><code>mysql57为服务名</code></pre><h3 id="4-初始化"><a href="#4-初始化" class="headerlink" title="4.初始化"></a>4.初始化</h3><p><code>mysqld --initialize</code></p>
-<h3 id="5-启动服务"><a href="#5-启动服务" class="headerlink" title="5.启动服务"></a>5.启动服务</h3><p><code>net start mysql</code></p>
-<h3 id="6-连接数据库"><a href="#6-连接数据库" class="headerlink" title="6.连接数据库"></a>6.连接数据库</h3><ul>
-<li>临时密码：在***.err下<br><img src="/2020/06/18/mysql57/4.png" alt><br><img src="/2020/06/18/mysql57/9.png" alt><br><img src="/2020/06/18/mysql57/11.png" alt></li>
-</ul>
-<h3 id="7-更改密码"><a href="#7-更改密码" class="headerlink" title="7.更改密码"></a>7.更改密码</h3><p><img src="/2020/06/18/mysql57/12.png" alt></p>
-<h3 id="8-断开连接"><a href="#8-断开连接" class="headerlink" title="8.断开连接"></a>8.断开连接</h3><p><code>exit</code></p>
-<h3 id="9-退出服务"><a href="#9-退出服务" class="headerlink" title="9.退出服务"></a>9.退出服务</h3><p><img src="/2020/06/18/mysql57/13.png" alt></p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="1-存在data文件夹"><a href="#1-存在data文件夹" class="headerlink" title="1.存在data文件夹"></a>1.存在data文件夹</h3><ul>
-<li>删除原本data，初始化命令自动生成新的data文件夹</li>
-<li>data文件夹自己手动创建可能报错，最好还是由系统自动创建<br><img src="/2020/06/18/mysql57/7.png" alt></li>
-</ul>
-<h3 id="2-无法启动服务"><a href="#2-无法启动服务" class="headerlink" title="2.无法启动服务"></a>2.无法启动服务</h3><p><img src="/2020/06/18/mysql57/1.png" alt><br><img src="/2020/06/18/mysql57/8.png" alt></p>
-<pre><code>更改注册表信息</code></pre><p><img src="/2020/06/18/mysql57/2.png" alt><br><img src="/2020/06/18/mysql57/3.png" alt></p>
-]]></content>
-      <categories>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>SQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>七牛云_Hexo</title>
-    <url>/2020/05/12/%E4%B8%83%E7%89%9B%E4%BA%91-Hexo/</url>
-    <content><![CDATA[<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h2><pre><code>1. 注册七牛云,完成之后就可以进行创建空间，
-2. 注意我们添加的资源为对象存储，访问控制为公开空间
-3. 点击右上角进入密钥管理，复制当前使用的AK和SK，配置的时候会用得到</code></pre><h2 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2. 步骤"></a>2. 步骤</h2><h3 id="2-1-安装插件，进入Hexo主目录，执行："><a href="#2-1-安装插件，进入Hexo主目录，执行：" class="headerlink" title="2.1. 安装插件，进入Hexo主目录，执行："></a>2.1. 安装插件，进入Hexo主目录，执行：</h3><pre><code>`npm install hexo-qiniu-sync --save`</code></pre><h3 id="2-2-配置站点文件-config-yml"><a href="#2-2-配置站点文件-config-yml" class="headerlink" title="2.2. 配置站点文件_config.yml:"></a>2.2. 配置站点文件_config.yml:</h3><blockquote>
-<p>  #plugins:<br>      #- hexo-qiniu-sync<br>    qiniu:<br>      offline: false<br>      sync: true<br>      bucket: bucket_name<br>      access_key: AccessKey<br>      secret_key: SecretKey<br>      dirPrefix:<br>      urlPrefix: <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a><br>      local_dir: cdn<br>      update_exist: true<br>      image:<br>        folder: images<br>        extend:<br>      js:<br>        folder: js<br>      css:<br>        folder: css</p>
-</blockquote>
-<h3 id="2-3-参数"><a href="#2-3-参数" class="headerlink" title="2.3. 参数"></a>2.3. 参数</h3><ul>
-<li><p>bucket ：修改为你刚才申请的七牛空间名称</p>
-</li>
-<li><p>access_key 、 secret_key : 上传密钥AccessKey、SecretKey。即3 第3步复制的AK和SK。</p>
-</li>
-<li><p>urlPrefix : 七牛空间地址的前缀。 重要！必填！ 因为现在七牛已经取消了二级域名，外链前缀类似设置中的 <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a> ，插件不能根据 bucket 自动生成外链前缀了。你可以进入自己创建的空间在域名设置中看到自己的七牛测试域名，也可以查看一个已上传的文件外链地址，确认前缀无误。这个参数的设置是保证解析成网页文件时，外链地址正确的关键之一！<br>  配置参数的说明：</p>
-</li>
-<li><p>offline ：是否离线。设置为 true 将在本地预览时使用本地地址渲染，省流量； false 将使用同步到七牛空间的静态资源渲染，方便检查资源链接是否正确。</p>
-</li>
-<li><p>sync ：是否同步到七牛，一般都是设置 true 啦</p>
-</li>
-<li><p>dirPrefix ：资源将上传到七牛空间的此目录下，可像我一样设置为空。该参数会影响外链的地址，如果设置为非空值，例如默认值 static ，则 urlPrefix 为保持一致需加上目录后缀 /static ，改为 <a href="http://7xqb0u.com1.z0.glb.clouddn.com/static" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com/static</a> 。</p>
-</li>
-<li><p>local_dir ：本地资源储存目录。在本例中，待上传的资源都储存在hexo主目录中的 cdn 文件夹（也就是与 source 目录平级）中。</p>
-</li>
-<li><p>update_exist ：设置为 true ，则会在文件更新之后重新上传并更新七牛空间上中的原有文件。</p>
-</li>
-<li><p>image/js/css ：子参数folder为不同静态资源种类的目录名称，一般不需要改动</p>
-</li>
-<li><p>image.extend ：使用 qnimg 标签引用图片的默认图片处理操作。可以使用 基本图片处理（imageView2）、高级图片处理（imageMogr2）、图片水印处理（watermark） 这三个图片处理接口，多个接口内容之间用 | 间隔。详见 七牛开发者中心-图片处理。</p>
-</li>
-</ul>
-<h2 id="3-使用"><a href="#3-使用" class="headerlink" title="3. 使用"></a>3. 使用</h2><pre><code>1.将图片上传到七牛云，查看照片获取照片的外链
-2.在文章中引用照片外链，markdown格式:*![描述]（外链）*</code></pre><h2 id="4-感谢在使用七牛云时参考的大佬博客："><a href="#4-感谢在使用七牛云时参考的大佬博客：" class="headerlink" title="4. 感谢在使用七牛云时参考的大佬博客："></a>4. 感谢在使用七牛云时参考的大佬博客：</h2><ul>
-<li><a href="http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/" target="_blank" rel="noopener">http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Blog</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
