@@ -245,10 +245,10 @@
         JDBCTemplate template = new JDBCTemplate(ds)
     3. 调用方法完成CRUD的操作</code></pre>]]></content>
       <categories>
-        <category>Java</category>
+        <category>SQL</category>
       </categories>
       <tags>
-        <tag>Java</tag>
+        <tag>SQL</tag>
       </tags>
   </entry>
   <entry>
@@ -2163,7 +2163,7 @@ URL重写：
       </tags>
   </entry>
   <entry>
-    <title>spring</title>
+    <title>Spring</title>
     <url>/2020/09/09/spring/</url>
     <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="1-什么是spring："><a href="#1-什么是spring：" class="headerlink" title="1. 什么是spring："></a>1. 什么是spring：</h3><pre><code>1. 分层的Java SE/EE的轻量级开源框架
 2. 提供了展现层Spring MVC 和持久层Spring JDBC以及业务层事务管理的众多技术
@@ -2779,10 +2779,10 @@ public IAccountService getAccountService(){
 <h3 id="使用纯注解的事务配置"><a href="#使用纯注解的事务配置" class="headerlink" title="使用纯注解的事务配置"></a>使用纯注解的事务配置</h3><p><img src="/2020/09/09/spring/tx_without_xml.png" alt="纯注解的声明式事务"></p>
 ]]></content>
       <categories>
-        <category>Java</category>
+        <category>Spring</category>
       </categories>
       <tags>
-        <tag>spring</tag>
+        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
@@ -3206,10 +3206,10 @@ interceptor和filter的区别
 
 * afterCompletion: 页面执行结束后，执行这个方法</code></pre>]]></content>
       <categories>
-        <category>Spring</category>
+        <category>SpringMVC</category>
       </categories>
       <tags>
-        <tag>Spring</tag>
+        <tag>SpringMVC</tag>
       </tags>
   </entry>
   <entry>
