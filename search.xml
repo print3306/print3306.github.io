@@ -252,6 +252,69 @@
       </tags>
   </entry>
   <entry>
+    <title>SQL Inject</title>
+    <url>/2020/05/09/SQL%E6%B3%A8%E5%85%A5/</url>
+    <content><![CDATA[<h1 id="SQL注入问题"><a href="#SQL注入问题" class="headerlink" title="SQL注入问题"></a>SQL注入问题</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>在拼接sql语句时，有一些特殊的SQL关键字参于字符串的拼接，导致SQL语句的逻辑发生变化，可能会造成安全性问题</code></pre><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre><code>1. 输入 a&apos;or&apos;a&apos;=&apos;a,条件改变
+2. sql:select * from db where name and password = &apos;a&apos;or&apos;a&apos;=&apos;a&apos;,查询所有数据
+
+原SQL语句拼接为: 
+
+    String sql = &quot;select id from db where username=&apos;&quot;+username+&quot;&apos; and password=&apos;&quot;+password+&quot;&apos;&quot;;
+
+用户输入的帐号密码分别为:
+
+请输入您的帐号:
+11111
+请输入您的密码:
+a&apos;or&apos;a&apos;=&apos;a
+组成的SQL语句: 
+select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&apos;=&apos;a；</code></pre><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><pre><code>使用预编译SQL语句,进行参数的传递
+
+更改执行环境：Statement
+
+使用新的环境: PreparedStatement
+
+在通过连接对象，获取一个预编译的SQL环境(PreparedStatement)时, 需要传递一个SQL语句 ! 
+在这个语句中 可以出现? , ? 表示准备填充的参数值!
+
+使用步骤: 
+    1. 通过连接对象, 获得一个预编译的SQL执行环境
+
+        PreparedStatement state = conn.prepareStatement(sql);
+
+        例如: 
+            String sql = &quot;select id from db where username=? and password=?&quot;;
+
+            PreparedStatement state = conn.prepareStatement(sql);    
+
+    2. 向预编译参数列表中传递值: 
+
+        预编译的SQL语句中可以包含【多个问号】, 每一个问号表示一个需要传递的值 
+        我们通过PreparedStatement它的setXxx方法,来完成参数的传递
+            传递参数时, 需要指定问号的索引, 问号的索引从1开始            
+
+        例如:
+            state.setString(1,username);
+            state.setString(2,password);
+
+    3. 执行语句:
+            ResultSet result = state.executeQuery();</code></pre><h2 id="PreparedStatement"><a href="#PreparedStatement" class="headerlink" title="PreparedStatement"></a>PreparedStatement</h2><pre><code>填充预编译的参数: 
+    * setXxx（问号索引,值）
+        向预编译的SQL的?中传递值 
+        参数1. 问号的索引,从1开始
+        参数2. 填充到? 中的值
+
+    * execute()
+    * executeUpdate();
+    * executeQuery();        </code></pre>]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spring Load</title>
     <url>/2020/05/09/SpringLoad/</url>
     <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
@@ -383,69 +446,6 @@
       </categories>
       <tags>
         <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SQL Inject</title>
-    <url>/2020/05/09/SQL%E6%B3%A8%E5%85%A5/</url>
-    <content><![CDATA[<h1 id="SQL注入问题"><a href="#SQL注入问题" class="headerlink" title="SQL注入问题"></a>SQL注入问题</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>在拼接sql语句时，有一些特殊的SQL关键字参于字符串的拼接，导致SQL语句的逻辑发生变化，可能会造成安全性问题</code></pre><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre><code>1. 输入 a&apos;or&apos;a&apos;=&apos;a,条件改变
-2. sql:select * from db where name and password = &apos;a&apos;or&apos;a&apos;=&apos;a&apos;,查询所有数据
-
-原SQL语句拼接为: 
-
-    String sql = &quot;select id from db where username=&apos;&quot;+username+&quot;&apos; and password=&apos;&quot;+password+&quot;&apos;&quot;;
-
-用户输入的帐号密码分别为:
-
-请输入您的帐号:
-11111
-请输入您的密码:
-a&apos;or&apos;a&apos;=&apos;a
-组成的SQL语句: 
-select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&apos;=&apos;a；</code></pre><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><pre><code>使用预编译SQL语句,进行参数的传递
-
-更改执行环境：Statement
-
-使用新的环境: PreparedStatement
-
-在通过连接对象，获取一个预编译的SQL环境(PreparedStatement)时, 需要传递一个SQL语句 ! 
-在这个语句中 可以出现? , ? 表示准备填充的参数值!
-
-使用步骤: 
-    1. 通过连接对象, 获得一个预编译的SQL执行环境
-
-        PreparedStatement state = conn.prepareStatement(sql);
-
-        例如: 
-            String sql = &quot;select id from db where username=? and password=?&quot;;
-
-            PreparedStatement state = conn.prepareStatement(sql);    
-
-    2. 向预编译参数列表中传递值: 
-
-        预编译的SQL语句中可以包含【多个问号】, 每一个问号表示一个需要传递的值 
-        我们通过PreparedStatement它的setXxx方法,来完成参数的传递
-            传递参数时, 需要指定问号的索引, 问号的索引从1开始            
-
-        例如:
-            state.setString(1,username);
-            state.setString(2,password);
-
-    3. 执行语句:
-            ResultSet result = state.executeQuery();</code></pre><h2 id="PreparedStatement"><a href="#PreparedStatement" class="headerlink" title="PreparedStatement"></a>PreparedStatement</h2><pre><code>填充预编译的参数: 
-    * setXxx（问号索引,值）
-        向预编译的SQL的?中传递值 
-        参数1. 问号的索引,从1开始
-        参数2. 填充到? 中的值
-
-    * execute()
-    * executeUpdate();
-    * executeQuery();        </code></pre>]]></content>
-      <categories>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>SQL</tag>
       </tags>
   </entry>
   <entry>
@@ -2163,11 +2163,6 @@ URL重写：
       </tags>
   </entry>
   <entry>
-    <title>ssm_use</title>
-    <url>/2020/10/09/ssm/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>spring</title>
     <url>/2020/09/09/spring/</url>
     <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="1-什么是spring："><a href="#1-什么是spring：" class="headerlink" title="1. 什么是spring："></a>1. 什么是spring：</h3><pre><code>1. 分层的Java SE/EE的轻量级开源框架
@@ -2791,48 +2786,6 @@ public IAccountService getAccountService(){
       </tags>
   </entry>
   <entry>
-    <title>七牛云_Hexo</title>
-    <url>/2020/05/12/%E4%B8%83%E7%89%9B%E4%BA%91-Hexo/</url>
-    <content><![CDATA[<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h2><pre><code>1. 注册七牛云,完成之后就可以进行创建空间，
-2. 注意我们添加的资源为对象存储，访问控制为公开空间
-3. 点击右上角进入密钥管理，复制当前使用的AK和SK，配置的时候会用得到</code></pre><h2 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2. 步骤"></a>2. 步骤</h2><h3 id="2-1-安装插件，进入Hexo主目录，执行："><a href="#2-1-安装插件，进入Hexo主目录，执行：" class="headerlink" title="2.1. 安装插件，进入Hexo主目录，执行："></a>2.1. 安装插件，进入Hexo主目录，执行：</h3><pre><code>`npm install hexo-qiniu-sync --save`</code></pre><h3 id="2-2-配置站点文件-config-yml"><a href="#2-2-配置站点文件-config-yml" class="headerlink" title="2.2. 配置站点文件_config.yml:"></a>2.2. 配置站点文件_config.yml:</h3><blockquote>
-<p>  #plugins:<br>      #- hexo-qiniu-sync<br>    qiniu:<br>      offline: false<br>      sync: true<br>      bucket: bucket_name<br>      access_key: AccessKey<br>      secret_key: SecretKey<br>      dirPrefix:<br>      urlPrefix: <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a><br>      local_dir: cdn<br>      update_exist: true<br>      image:<br>        folder: images<br>        extend:<br>      js:<br>        folder: js<br>      css:<br>        folder: css</p>
-</blockquote>
-<h3 id="2-3-参数"><a href="#2-3-参数" class="headerlink" title="2.3. 参数"></a>2.3. 参数</h3><ul>
-<li><p>bucket ：修改为你刚才申请的七牛空间名称</p>
-</li>
-<li><p>access_key 、 secret_key : 上传密钥AccessKey、SecretKey。即3 第3步复制的AK和SK。</p>
-</li>
-<li><p>urlPrefix : 七牛空间地址的前缀。 重要！必填！ 因为现在七牛已经取消了二级域名，外链前缀类似设置中的 <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a> ，插件不能根据 bucket 自动生成外链前缀了。你可以进入自己创建的空间在域名设置中看到自己的七牛测试域名，也可以查看一个已上传的文件外链地址，确认前缀无误。这个参数的设置是保证解析成网页文件时，外链地址正确的关键之一！<br>  配置参数的说明：</p>
-</li>
-<li><p>offline ：是否离线。设置为 true 将在本地预览时使用本地地址渲染，省流量； false 将使用同步到七牛空间的静态资源渲染，方便检查资源链接是否正确。</p>
-</li>
-<li><p>sync ：是否同步到七牛，一般都是设置 true 啦</p>
-</li>
-<li><p>dirPrefix ：资源将上传到七牛空间的此目录下，可像我一样设置为空。该参数会影响外链的地址，如果设置为非空值，例如默认值 static ，则 urlPrefix 为保持一致需加上目录后缀 /static ，改为 <a href="http://7xqb0u.com1.z0.glb.clouddn.com/static" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com/static</a> 。</p>
-</li>
-<li><p>local_dir ：本地资源储存目录。在本例中，待上传的资源都储存在hexo主目录中的 cdn 文件夹（也就是与 source 目录平级）中。</p>
-</li>
-<li><p>update_exist ：设置为 true ，则会在文件更新之后重新上传并更新七牛空间上中的原有文件。</p>
-</li>
-<li><p>image/js/css ：子参数folder为不同静态资源种类的目录名称，一般不需要改动</p>
-</li>
-<li><p>image.extend ：使用 qnimg 标签引用图片的默认图片处理操作。可以使用 基本图片处理（imageView2）、高级图片处理（imageMogr2）、图片水印处理（watermark） 这三个图片处理接口，多个接口内容之间用 | 间隔。详见 七牛开发者中心-图片处理。</p>
-</li>
-</ul>
-<h2 id="3-使用"><a href="#3-使用" class="headerlink" title="3. 使用"></a>3. 使用</h2><pre><code>1.将图片上传到七牛云，查看照片获取照片的外链
-2.在文章中引用照片外链，markdown格式:*![描述]（外链）*</code></pre><h2 id="4-感谢在使用七牛云时参考的大佬博客："><a href="#4-感谢在使用七牛云时参考的大佬博客：" class="headerlink" title="4. 感谢在使用七牛云时参考的大佬博客："></a>4. 感谢在使用七牛云时参考的大佬博客：</h2><ul>
-<li><a href="http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/" target="_blank" rel="noopener">http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Blog</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SpringMVC</title>
     <url>/2020/09/18/springMVC/</url>
     <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="三层架构"><a href="#三层架构" class="headerlink" title="三层架构"></a>三层架构</h3><pre><code>1. B/S，浏览器/服务器模式的开发中，服务端程序一般分为三层，展示层，业务层和持久层。
@@ -3257,6 +3210,142 @@ interceptor和filter的区别
       </categories>
       <tags>
         <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SSM</title>
+    <url>/2020/09/18/ssm/</url>
+    <content><![CDATA[<h2 id="SSM框架的整合"><a href="#SSM框架的整合" class="headerlink" title="SSM框架的整合"></a>SSM框架的整合</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><pre><code>SSM,spring springmvc mybatis三大框架的整合，可以使用多种方式，这里使用xml+注解的方式</code></pre><h3 id="整合的思路"><a href="#整合的思路" class="headerlink" title="整合的思路"></a>整合的思路</h3><pre><code>1. 以spring框架为核心，进行其他的框架的整合(针对各个框架的使用范围进行整合)</code></pre><p><img src="/2020/09/18/ssm/ssm_1.png" alt></p>
+<h4 id="导入的坐标版本"><a href="#导入的坐标版本" class="headerlink" title="导入的坐标版本"></a>导入的坐标版本</h4><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_version.png" alt="使用的坐标版本"></p>
+<h4 id="日志文件的配置"><a href="#日志文件的配置" class="headerlink" title="日志文件的配置"></a>日志文件的配置</h4><pre><code>1. pom.xml
+    * log4j
+    * slf4j-api
+    * slf4j-log4j12
+        完成日志文件的配置，将标准日志转为log4j格式日志</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_log.png" alt="日志文件的配置"></p>
+<pre><code>2. log4j.propreties配置文件</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_log2.png" alt="日志文件的配置"></p>
+<h4 id="spring框架的配置"><a href="#spring框架的配置" class="headerlink" title="spring框架的配置"></a>spring框架的配置</h4><pre><code>1. pom.xml配置
+    * spring-context: 容器，扫描数据
+    * spring-aop
+    * spring-tx
+    * spring-test:单元测试
+    * spring-jdbc
+    * aspectjweaver:切入点，切面
+    * jstl: Java EL表达式</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_spring1.png" alt="spring的配置1"></p>
+<pre><code>2. applicationContext.xml的配置
+    * 配置需要扫描的包，指定不需要扫描的MVC层的包，MVC的数据由springMV来进行数据扫描</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_spring2.png" alt="spring的配置2"></p>
+<pre><code>3. 配置完上述的配置文件
+    可以使用spring的注解，进行对象注册</code></pre><h4 id="springMVC的整合"><a href="#springMVC的整合" class="headerlink" title="springMVC的整合"></a>springMVC的整合</h4><pre><code>1. pom.xml配置
+    * spring-web
+    * spring-webmvc
+    * servlet-api
+    * jsp-api</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_springmvc1.png" alt="springmvc的配置"></p>
+<pre><code>2. web.xml配置
+    * DispatcherServlet：前端控制器
+    * CharacterEncodingFilter: 字符编码过滤器
+
+3. springmvc.xml配置
+    * 开启注解扫描：controller由springmvc来进行扫描
+    * 开启视图解析器：InternalViewResolver
+    * 配置静态资源过滤：mvc:resources
+    * 配置开启springmvc注解支持
+    * 配置监听器</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_springmvc2.png" alt="springmvc的配置"></p>
+<pre><code>4. spring整合springMVC
+    在启动服务器的时候，加载web.xml文件的时候，只加载了springMVC的配置文件，没有读取spring的配置文件来进行容器的创建以及加载。
+
+    使用监听器：ContextLoaderListener,来监听ServletContext实例的创建，一旦创建，就会扫描spring的配置文件，进行spring容器的创建
+
+    监听器的默认配置文件：/WEB-INF/applicationContext.xml
+        1. 在/WEB-INF/复制文件
+        2. 使用&lt;context-param&gt;进行容器扫描路径的配置</code></pre><p><img src="/2020/09/18/ssm/ssm_listener.png" alt="spring整合springmvc"></p>
+<pre><code>5. 监听器的配置
+    使用spring框架的监听器，在创建ServletContext的时候，同时扫描spring的配置文件，可以通知框架注册实例，以供数据注入</code></pre><h4 id="MyBatis的整合"><a href="#MyBatis的整合" class="headerlink" title="MyBatis的整合"></a>MyBatis的整合</h4><pre><code>1. pom.xml文件的配置
+    * mybatis
+    * mysql-connector-java
+    * c3p0
+
+2. SqlMapConfig.xml配置
+    * typeAlisaes：为实体类创建别名，使用package
+    * 数据库连接环境
+    * mappers: 配置映射文件
+
+3. 整合思路
+    * 将数据的DAO层的代理对象存入容器
+    * 步骤
+        1. 在applicationContext.xml文件编写使用MyBatis的文件步骤
+        2. 编写数据库连接池bean对象
+        3. 配置SqlSessionFactoryBean对象
+        4. 配置扫描的映射文件所在的包
+
+4. 出现的错误</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/erroer_1.png" alt="web.xml或使用此应用程序部署的jar文件中解析"><br><img src="/2020/09/18/ssm/error_2.png" alt="classnotfound:org.apache.jsp."></p>
+<h4 id="spring的声明式事务控制"><a href="#spring的声明式事务控制" class="headerlink" title="spring的声明式事务控制"></a>spring的声明式事务控制</h4><pre><code>1. 配置事务管理器
+2. 配置事务通知
+    * 配置事务的使用位置，传播级别。。
+3. 配置AOP
+    * 配置切入点表达式
+    * 配置事务</code></pre>]]></content>
+      <categories>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>七牛云_Hexo</title>
+    <url>/2020/05/12/%E4%B8%83%E7%89%9B%E4%BA%91-Hexo/</url>
+    <content><![CDATA[<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h2><pre><code>1. 注册七牛云,完成之后就可以进行创建空间，
+2. 注意我们添加的资源为对象存储，访问控制为公开空间
+3. 点击右上角进入密钥管理，复制当前使用的AK和SK，配置的时候会用得到</code></pre><h2 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2. 步骤"></a>2. 步骤</h2><h3 id="2-1-安装插件，进入Hexo主目录，执行："><a href="#2-1-安装插件，进入Hexo主目录，执行：" class="headerlink" title="2.1. 安装插件，进入Hexo主目录，执行："></a>2.1. 安装插件，进入Hexo主目录，执行：</h3><pre><code>`npm install hexo-qiniu-sync --save`</code></pre><h3 id="2-2-配置站点文件-config-yml"><a href="#2-2-配置站点文件-config-yml" class="headerlink" title="2.2. 配置站点文件_config.yml:"></a>2.2. 配置站点文件_config.yml:</h3><blockquote>
+<p>  #plugins:<br>      #- hexo-qiniu-sync<br>    qiniu:<br>      offline: false<br>      sync: true<br>      bucket: bucket_name<br>      access_key: AccessKey<br>      secret_key: SecretKey<br>      dirPrefix:<br>      urlPrefix: <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a><br>      local_dir: cdn<br>      update_exist: true<br>      image:<br>        folder: images<br>        extend:<br>      js:<br>        folder: js<br>      css:<br>        folder: css</p>
+</blockquote>
+<h3 id="2-3-参数"><a href="#2-3-参数" class="headerlink" title="2.3. 参数"></a>2.3. 参数</h3><ul>
+<li><p>bucket ：修改为你刚才申请的七牛空间名称</p>
+</li>
+<li><p>access_key 、 secret_key : 上传密钥AccessKey、SecretKey。即3 第3步复制的AK和SK。</p>
+</li>
+<li><p>urlPrefix : 七牛空间地址的前缀。 重要！必填！ 因为现在七牛已经取消了二级域名，外链前缀类似设置中的 <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a> ，插件不能根据 bucket 自动生成外链前缀了。你可以进入自己创建的空间在域名设置中看到自己的七牛测试域名，也可以查看一个已上传的文件外链地址，确认前缀无误。这个参数的设置是保证解析成网页文件时，外链地址正确的关键之一！<br>  配置参数的说明：</p>
+</li>
+<li><p>offline ：是否离线。设置为 true 将在本地预览时使用本地地址渲染，省流量； false 将使用同步到七牛空间的静态资源渲染，方便检查资源链接是否正确。</p>
+</li>
+<li><p>sync ：是否同步到七牛，一般都是设置 true 啦</p>
+</li>
+<li><p>dirPrefix ：资源将上传到七牛空间的此目录下，可像我一样设置为空。该参数会影响外链的地址，如果设置为非空值，例如默认值 static ，则 urlPrefix 为保持一致需加上目录后缀 /static ，改为 <a href="http://7xqb0u.com1.z0.glb.clouddn.com/static" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com/static</a> 。</p>
+</li>
+<li><p>local_dir ：本地资源储存目录。在本例中，待上传的资源都储存在hexo主目录中的 cdn 文件夹（也就是与 source 目录平级）中。</p>
+</li>
+<li><p>update_exist ：设置为 true ，则会在文件更新之后重新上传并更新七牛空间上中的原有文件。</p>
+</li>
+<li><p>image/js/css ：子参数folder为不同静态资源种类的目录名称，一般不需要改动</p>
+</li>
+<li><p>image.extend ：使用 qnimg 标签引用图片的默认图片处理操作。可以使用 基本图片处理（imageView2）、高级图片处理（imageMogr2）、图片水印处理（watermark） 这三个图片处理接口，多个接口内容之间用 | 间隔。详见 七牛开发者中心-图片处理。</p>
+</li>
+</ul>
+<h2 id="3-使用"><a href="#3-使用" class="headerlink" title="3. 使用"></a>3. 使用</h2><pre><code>1.将图片上传到七牛云，查看照片获取照片的外链
+2.在文章中引用照片外链，markdown格式:*![描述]（外链）*</code></pre><h2 id="4-感谢在使用七牛云时参考的大佬博客："><a href="#4-感谢在使用七牛云时参考的大佬博客：" class="headerlink" title="4. 感谢在使用七牛云时参考的大佬博客："></a>4. 感谢在使用七牛云时参考的大佬博客：</h2><ul>
+<li><a href="http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/" target="_blank" rel="noopener">http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Blog</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
