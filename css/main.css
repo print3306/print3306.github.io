@@ -1219,6 +1219,14 @@ pre .javascript .function {
 .use-motion .menu-item {
   opacity: 0;
 }
+.post-body p a {
+  color: #0593d3;
+  border-bottom: none;
+}
+.post-body p a:hover {
+  color: #0477ab;
+  text-decoration: underline;
+}
 .post-body {
   font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
 }
@@ -1979,7 +1987,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #008b44;
+  background: #e4f590;
 }
 .links-of-blogroll {
   font-size: 13px;

@@ -270,6 +270,23 @@
   
 </nav>
 
+<script>
+    
+    window.onload = function(){
+        var path = 'https://malizhi.cn'; //这里要改成你博客的地址
+        var localhostItem = String(window.location).split(path)[1];
+        var LiNode = document.querySelectorAll('#menu > li > a')
+        
+        for(var i = 0; i< LiNode.length;i++){
+            var item = String(LiNode[i].href).split(path)[1];
+            if(item == localhostItem && item != undefined){
+                LiNode[i].setAttribute('style','border-bottom:1px solid black');
+            }
+        }
+    };
+
+ </script>
+
 
 
  </div>
@@ -363,6 +380,9 @@
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -424,7 +444,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  589
+                  579
                 </span>
               
 
@@ -451,8 +471,8 @@
       
         
           
-          servlet中的转发，重定向，页面跳转中的路径问题转发的路径：request.gerRequestDispacher(“/“).forward(request,respone)1. getRequestDispacher(url) : 只有相对路径，相对于项目路径，还是相对于当前文件路径
-    
+          forward and edirect转发的路径: .forward(request,respone)request.gerRequestDispacher(&quot;/&quot;).forward(request,respone)
+1. getRequestDispacher(url) : 只
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -467,6 +487,10 @@
     
     
     
+
+    <div>
+      
+    </div>
 
     
 
@@ -541,6 +565,9 @@
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -650,6 +677,10 @@
     
     
 
+    <div>
+      
+    </div>
+
     
 
     
@@ -723,6 +754,9 @@
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -832,6 +866,10 @@
     
     
 
+    <div>
+      
+    </div>
+
     
 
     
@@ -905,6 +943,9 @@
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1015,6 +1056,10 @@
     
     
 
+    <div>
+      
+    </div>
+
     
 
     
@@ -1088,6 +1133,9 @@
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1194,6 +1242,10 @@
     
     
 
+    <div>
+      
+    </div>
+
     
 
     
@@ -1267,6 +1319,9 @@
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1373,6 +1428,10 @@
     
     
 
+    <div>
+      
+    </div>
+
     
 
     
@@ -1446,6 +1505,9 @@
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1555,6 +1617,10 @@ mysql57为服务名4.初始化mysqld --initialize
     
     
 
+    <div>
+      
+    </div>
+
     
 
     
@@ -1628,6 +1694,9 @@ mysql57为服务名4.初始化mysqld --initialize
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1739,6 +1808,10 @@ mysql57为服务名4.初始化mysqld --initialize
     
     
 
+    <div>
+      
+    </div>
+
     
 
     
@@ -1812,6 +1885,9 @@ mysql57为服务名4.初始化mysqld --initialize
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1918,6 +1994,10 @@ mysql57为服务名4.初始化mysqld --initialize
     
     
 
+    <div>
+      
+    </div>
+
     
 
     
@@ -1991,6 +2071,9 @@ mysql57为服务名4.初始化mysqld --initialize
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -2095,6 +2178,10 @@ mysql57为服务名4.初始化mysqld --initialize
     
     
     
+
+    <div>
+      
+    </div>
 
     
 
@@ -2820,7 +2907,7 @@ mysql57为服务名4.初始化mysqld --initialize
 
   <!--动态线条背景 220,220,220 opacity='0.8' zIndex="-2"-->
   <script type="text/javascript"
-    color="220,220,220" opacity='0.6' zIndex="-1" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+    color="220,220,220" opacity='0.5' zIndex="-1" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
   </script>
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
