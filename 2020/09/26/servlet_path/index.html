@@ -14,6 +14,13 @@
 
 
 
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
 
 
 
@@ -53,13 +60,13 @@
 <link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar1.jpg?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar1.jpg?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar1.jpg?v=5.1.4">
 
 
   <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
@@ -79,19 +86,19 @@
 
 
 
-<meta name="description" content="forward and edirect转发的路径: .forward(request,respone)request.gerRequestDispacher(&amp;quot;&#x2F;&amp;quot;).forward(request,respone) 1. getRequestDispacher(url) : 只有相对路径，相对于项目路径，还是相对于当前文件路径     *  ServletRequest接口中">
+<meta name="description" content="转发1. getRequestDispacher(url) : 只有相对路径，相对于项目路径，还是相对于当前文件路径     *  ServletRequest接口中的参数路径不仅可以相对于当前Servlet上下文根，还可以相对与当前Servlet路径         *  因为在getRequestDispatcher(url)方法中封装了ServletContext.getRealPath()">
 <meta name="keywords" content="随笔">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Servlet路径有关的问题">
 <meta property="og:url" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;26&#x2F;servlet_path&#x2F;index.html">
-<meta property="og:site_name" content="浊酒一杯的博客">
-<meta property="og:description" content="forward and edirect转发的路径: .forward(request,respone)request.gerRequestDispacher(&amp;quot;&#x2F;&amp;quot;).forward(request,respone) 1. getRequestDispacher(url) : 只有相对路径，相对于项目路径，还是相对于当前文件路径     *  ServletRequest接口中">
+<meta property="og:site_name" content="浊酒一杯">
+<meta property="og:description" content="转发1. getRequestDispacher(url) : 只有相对路径，相对于项目路径，还是相对于当前文件路径     *  ServletRequest接口中的参数路径不仅可以相对于当前Servlet上下文根，还可以相对与当前Servlet路径         *  因为在getRequestDispatcher(url)方法中封装了ServletContext.getRealPath()">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;26&#x2F;servlet_path&#x2F;dispacher_1.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;26&#x2F;servlet_path&#x2F;dispacher_2.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;26&#x2F;servlet_path&#x2F;dispacher_url_use.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;26&#x2F;servlet_path&#x2F;sendredirect_1.png">
-<meta property="og:updated_time" content="2020-10-10T13:17:22.637Z">
+<meta property="og:updated_time" content="2020-10-10T13:37:08.951Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;26&#x2F;servlet_path&#x2F;dispacher_1.png">
 
@@ -129,7 +136,7 @@
 
 
 
-  <title>Servlet路径有关的问题 | 浊酒一杯的博客</title>
+  <title>Servlet路径有关的问题 | 浊酒一杯</title>
   
 
 
@@ -159,7 +166,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">浊酒一杯的博客</span>
+        <span class="site-title">浊酒一杯</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -326,7 +333,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="浊酒一杯的博客">
+      <meta itemprop="name" content="浊酒一杯">
     </span>
 
     
@@ -355,7 +362,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-10-10T21:37:08+08:00">
+                2020-10-10
+              </time>
             
           </span>
 
@@ -403,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  579
+                  553
                 </span>
               
 
@@ -428,8 +447,7 @@
       
 
       
-        <h3 id="forward-and-edirect"><a href="#forward-and-edirect" class="headerlink" title="forward and edirect"></a>forward and edirect</h3><h3 id="转发的路径-forward-request-respone"><a href="#转发的路径-forward-request-respone" class="headerlink" title="转发的路径: .forward(request,respone)"></a>转发的路径: .forward(request,respone)</h3><pre><code>request.gerRequestDispacher(&quot;/&quot;).forward(request,respone)
-1. getRequestDispacher(url) : 只有相对路径，相对于项目路径，还是相对于当前文件路径
+        <h3 id="转发"><a href="#转发" class="headerlink" title="转发"></a>转发</h3><pre><code>1. getRequestDispacher(url) : 只有相对路径，相对于项目路径，还是相对于当前文件路径
     *  ServletRequest接口中的参数路径不仅可以相对于当前Servlet上下文根，还可以相对与当前Servlet路径    
     *  因为在getRequestDispatcher(url)方法中封装了ServletContext.getRealPath()以获得相应的项目根路径，再通过字符串相加，从而可以获得一个完整的路径
 
@@ -447,11 +465,11 @@
     3. res.getContextPath()查找当前的上下文路径，不能用在转发上</code></pre><blockquote>
 </blockquote>
 <p><img src="/2020/09/26/servlet_path/dispacher_1.png" alt="静态页面的访问形式"><br><img src="/2020/09/26/servlet_path/dispacher_2.png" alt="两种路径的区别"><br><img src="/2020/09/26/servlet_path/dispacher_url_use.png" alt="url的格式，使用方式"></p>
-<h3 id="重定向的路径：respone-sendRedirect-url"><a href="#重定向的路径：respone-sendRedirect-url" class="headerlink" title="重定向的路径：respone.sendRedirect(url)"></a>重定向的路径：respone.sendRedirect(url)</h3><pre><code>1. sendRedirect(url):只有相对于项目路径的url
+<h3 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h3><pre><code>1. sendRedirect(url):只有相对于项目路径的url
     * 通过使用 req.getContextPath()+&quot;/xxx/xxx&quot;进行资源的访问</code></pre><blockquote>
 </blockquote>
 <p><img src="/2020/09/26/servlet_path/sendredirect_1.png" alt="sendRedirect"></p>
-<h3 id="表单提交地址"><a href="#表单提交地址" class="headerlink" title="表单提交地址"></a>表单提交地址</h3><pre><code>* 不需要增加/,默认在当前项目的文件夹下，如果增加/,会在当前目录的上一级目录中寻找资源</code></pre>
+<h3 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h3><pre><code>* 不需要增加/,默认在当前项目的文件夹下，如果增加/,会在当前目录的上一级目录中寻找资源</code></pre>
       
     </div>
     
@@ -604,7 +622,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -615,7 +633,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -658,7 +676,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#forward-and-edirect"><span class="nav-number">1.</span> <span class="nav-text">forward and edirect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转发的路径-forward-request-respone"><span class="nav-number">2.</span> <span class="nav-text">转发的路径: .forward(request,respone)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重定向的路径：respone-sendRedirect-url"><span class="nav-number">3.</span> <span class="nav-text">重定向的路径：respone.sendRedirect(url)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表单提交地址"><span class="nav-number">4.</span> <span class="nav-text">表单提交地址</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#转发"><span class="nav-number">1.</span> <span class="nav-text">转发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重定向"><span class="nav-number">2.</span> <span class="nav-text">重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表单"><span class="nav-number">3.</span> <span class="nav-text">表单</span></a></li></ol></div>
             
 
           </div>
@@ -693,7 +711,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">34k</span>
+    <span title="Site words total count">34.3k</span>
   
 </div>
 

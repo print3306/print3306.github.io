@@ -14,6 +14,13 @@
 
 
 
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
 
 
 
@@ -53,13 +60,13 @@
 <link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar1.jpg?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar1.jpg?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar1.jpg?v=5.1.4">
 
 
   <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
@@ -84,7 +91,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java Reflection（java反射机制）">
 <meta property="og:url" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;10&#x2F;reflection&#x2F;index.html">
-<meta property="og:site_name" content="浊酒一杯的博客">
+<meta property="og:site_name" content="浊酒一杯">
 <meta property="og:description" content="概述1. 反射（reflection）：动态语言的关键     * 反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性和方法     * 加载完类之后，在堆内存的方法区产生一个Class对象（一个类只有一个Class对象），这个对象就包含完整的类的信息，可以通过这个Class对象看到类的结构，通过对象看到类的结构的过程，叫做反射  2.">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;10&#x2F;reflection&#x2F;fields.png">
@@ -126,7 +133,7 @@
 
 
 
-  <title>Java Reflection（java反射机制） | 浊酒一杯的博客</title>
+  <title>Java Reflection（java反射机制） | 浊酒一杯</title>
   
 
 
@@ -156,7 +163,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">浊酒一杯的博客</span>
+        <span class="site-title">浊酒一杯</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -323,7 +330,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="浊酒一杯的博客">
+      <meta itemprop="name" content="浊酒一杯">
     </span>
 
     
@@ -352,7 +359,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-10-05T11:04:40+08:00">
+                2020-10-05
+              </time>
             
           </span>
 
@@ -809,7 +828,7 @@ method.invoke(p,&quot;HHHHH&quot;);   //p.show(&quot;HHHHH&quot;)</code></pre></
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -820,7 +839,7 @@ method.invoke(p,&quot;HHHHH&quot;);   //p.show(&quot;HHHHH&quot;)</code></pre></
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -898,7 +917,7 @@ method.invoke(p,&quot;HHHHH&quot;);   //p.show(&quot;HHHHH&quot;)</code></pre></
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">34k</span>
+    <span title="Site words total count">34.3k</span>
   
 </div>
 
