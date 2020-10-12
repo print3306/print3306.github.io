@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>序/README</title>
+    <url>/2020/10/12/readme/</url>
+    <content><![CDATA[<h2 id="自我介绍"><a href="#自我介绍" class="headerlink" title="自我介绍"></a>自我介绍</h2><h3 id="个人经历"><a href="#个人经历" class="headerlink" title="个人经历"></a>个人经历</h3><pre><code>大学四年，碌碌无为，回首大学四年的学习生涯，一无是处。
+人生最美好的四年，没有找到自己的人生方向，随风摇摆，没有方向
+在大学的最后一段时间，找到了的自己的人生方向，可以算是人生目标
+知道了不是每个人都有各自的使命与责任，方向最重要，认清自己
+
+提升自己，找到一份工作，孝顺父母，相信自己，可以活得更好
+2020/10/12 20:53:03 </code></pre><h3 id="学习历程"><a href="#学习历程" class="headerlink" title="学习历程"></a>学习历程</h3><pre><code>1. 2020-9-1 2020-10-12，学习java的框架使用</code></pre>]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo 优化</title>
     <url>/2020/05/18/Hexo%20%E4%BC%98%E5%8C%96/</url>
     <content><![CDATA[<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><h3 id="Hexo-next自适应宽屏"><a href="#Hexo-next自适应宽屏" class="headerlink" title="Hexo next自适应宽屏"></a>Hexo next自适应宽屏</h3><p><code>\themes\next\source/css/_schemes/Picses/_layout.styl</code>在文件末尾添加代码<br><code>// 以下为新增代码！！修改post宽度</code></p>
