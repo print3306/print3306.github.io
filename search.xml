@@ -977,6 +977,7 @@ URL重写：
     * mybatis
     * mysql-connector-java
     * c3p0
+    * mybatis-spring 整合jar包
 
 2. SqlMapConfig.xml配置
     * typeAlisaes：为实体类创建别名，使用package
@@ -987,19 +988,29 @@ URL重写：
     * 将数据的DAO层的代理对象存入容器
     * 步骤
         1. 在applicationContext.xml文件编写使用MyBatis的文件步骤
-        2. 编写数据库连接池bean对象
-        3. 配置SqlSessionFactoryBean对象
-        4. 配置扫描的映射文件所在的包
+        2. 编写数据库连接池bean对象</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/mybatis_spring_1.png" alt="数据连接池"></p>
+<pre><code>3. 配置SqlSessionFactoryBean对象
+可以使用参数设置生成的bean的名称，指定读取的配置文件以及mapper的配置文件</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/mybatis_spring_2.png" alt="将dao对象交由spring容器创建"></p>
+<pre><code>4. 配置扫描的映射文件所在的包</code></pre><p><img src="/2020/09/18/ssm/mybatis_spring_3.png" alt="将dao对象交由spring容器创建"></p>
+<pre><code>        5. 总结
+            spring整合mybatis时，可以在核心配置文件applicationContext.xml中，整合mybatis的配置文件，可以将SqlMapConfig.xml文件的内容完全整合进核心配置文件，也可以整合部分，然后在核心配置文件中引用SqlMapConfig.xml文件。
 
 4. 出现的错误</code></pre><blockquote>
 </blockquote>
-<p><img src="/2020/09/18/ssm/erroer_1.png" alt="web.xml或使用此应用程序部署的jar文件中解析"><br><img src="/2020/09/18/ssm/error_2.png" alt="classnotfound:org.apache.jsp."></p>
+<p><img src="/2020/09/18/ssm/erroer_1.png" alt="web.xml或使用此应用程序部署的jar文件中解析"><br><img src="/2020/09/18/ssm/error_2.png" alt="classnotfound:org.apache.jsp.">    </p>
 <h4 id="spring的声明式事务控制"><a href="#spring的声明式事务控制" class="headerlink" title="spring的声明式事务控制"></a>spring的声明式事务控制</h4><pre><code>1. 配置事务管理器
 2. 配置事务通知
     * 配置事务的使用位置，传播级别。。
 3. 配置AOP
     * 配置切入点表达式
-    * 配置事务</code></pre>]]></content>
+    * 配置事务</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_transaction.png" alt="事务管理"></p>
+]]></content>
       <categories>
         <category>Spring</category>
       </categories>
@@ -1019,12 +1030,7 @@ URL重写：
     MVC(Model View Controller):模型视图控制器，一种设计模式
     * Model: javabean,通常代指数据模型，用于封装数据
     * View:  jsp,jsp或者html,用于展示数据
-    * Controller: servlet,处理用户交互的部分，处理程序逻辑的部分
-
-3. SpringMVC框架
-    1. 优势：
-
-4. SpringMVC和Struts2的区别</code></pre><h3 id="SpringMVC的入门案例"><a href="#SpringMVC的入门案例" class="headerlink" title="SpringMVC的入门案例"></a>SpringMVC的入门案例</h3><pre><code>1. 项目环境搭建
+    * Controller: servlet,处理用户交互的部分，处理程序逻辑的部分</code></pre><h3 id="SpringMVC的入门案例"><a href="#SpringMVC的入门案例" class="headerlink" title="SpringMVC的入门案例"></a>SpringMVC的入门案例</h3><pre><code>1. 项目环境搭建
     1. 选择maven工程的archetype
     2. 选择webapp模板
     3. 填写项目名称等信息
@@ -1428,7 +1434,7 @@ interceptor和filter的区别
 
 * afterCompletion: 页面执行结束后，执行这个方法</code></pre>]]></content>
       <categories>
-        <category>SpringMVC</category>
+        <category>Spring</category>
       </categories>
       <tags>
         <tag>SpringMVC</tag>
@@ -2622,9 +2628,11 @@ public List&lt;UserfinaAll() {
     insert update delete最终调用的都是update方法
 
 3. selectOne
-    selectOne内部调用selectList方法，返回值为列表的第一个元素</code></pre><h4 id="代理Dao实现类的执行过程分析"><a href="#代理Dao实现类的执行过程分析" class="headerlink" title="代理Dao实现类的执行过程分析"></a>代理Dao实现类的执行过程分析</h4><h3 id="SqlMapConfig-xml中的标签属性"><a href="#SqlMapConfig-xml中的标签属性" class="headerlink" title="SqlMapConfig.xml中的标签属性"></a>SqlMapConfig.xml中的标签属性</h3><pre><code>1. &lt;properties&gt;标签
+    selectOne内部调用selectList方法，返回值为列表的第一个元素</code></pre><h4 id="代理Dao实现类的执行过程分析"><a href="#代理Dao实现类的执行过程分析" class="headerlink" title="代理Dao实现类的执行过程分析"></a>代理Dao实现类的执行过程分析</h4><p><em>暂时未进行书写</em></p>
+<h3 id="SqlMapConfig-xml中的标签属性"><a href="#SqlMapConfig-xml中的标签属性" class="headerlink" title="SqlMapConfig.xml中的标签属性"></a>SqlMapConfig.xml中的标签属性</h3><pre><code>1. &lt;properties&gt;标签
     * 配置properties 可以在标签内部配置数据库的连接信息，也可以引用外部配置文件信息
     * 使用&lt;properties&gt;标签，在环境的数据源中的对应数据使用 ${名称} 可以引用
+    * 可能会出现：未声明的文件，直接进行引用就可以了        
 
     resource属性：
           用于指定配置文件的位置，按照类路径的写法来写，必须存放于类路径下
@@ -2928,6 +2936,7 @@ User findById(Integer id);</code></pre></blockquote>
     values已经定义好的结果集封装</code></pre><h3 id="一对多查询注解版"><a href="#一对多查询注解版" class="headerlink" title="一对多查询注解版"></a>一对多查询注解版</h3><h4 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h4><pre><code>结果集的封装，主要关注@Result中的属性：one many
 一对一：使用one 
 一对多：使用many</code></pre><p><img src="/2020/05/15/mybatis/anno_one2many.png" alt="注解配置"></p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><pre><code>1. mybatis-config 的properties配置属性</code></pre><p><img src="/2020/05/15/mybatis/error_1.png" alt="配置文件无法找到"></p>
 ]]></content>
       <categories>
         <category>Java</category>

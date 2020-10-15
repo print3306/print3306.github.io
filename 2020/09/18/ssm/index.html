@@ -103,9 +103,13 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_springmvc1.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_springmvc2.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_listener.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;mybatis_spring_1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;mybatis_spring_2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;mybatis_spring_3.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;erroer_1.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;error_2.png">
-<meta property="og:updated_time" content="2020-10-09T09:22:30.228Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_transaction.png">
+<meta property="og:updated_time" content="2020-10-15T13:29:54.899Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_1.png">
 
@@ -379,8 +383,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-10-09T17:22:30+08:00">
-                2020-10-09
+              <time title="更新于" itemprop="dateModified" datetime="2020-10-15T21:29:54+08:00">
+                2020-10-15
               </time>
             
           </span>
@@ -429,7 +433,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  668
+                  777
                 </span>
               
 
@@ -515,6 +519,7 @@
     * mybatis
     * mysql-connector-java
     * c3p0
+    * mybatis-spring 整合jar包
 
 2. SqlMapConfig.xml配置
     * typeAlisaes：为实体类创建别名，使用package
@@ -525,19 +530,29 @@
     * 将数据的DAO层的代理对象存入容器
     * 步骤
         1. 在applicationContext.xml文件编写使用MyBatis的文件步骤
-        2. 编写数据库连接池bean对象
-        3. 配置SqlSessionFactoryBean对象
-        4. 配置扫描的映射文件所在的包
+        2. 编写数据库连接池bean对象</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/mybatis_spring_1.png" alt="数据连接池"></p>
+<pre><code>3. 配置SqlSessionFactoryBean对象
+可以使用参数设置生成的bean的名称，指定读取的配置文件以及mapper的配置文件</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/mybatis_spring_2.png" alt="将dao对象交由spring容器创建"></p>
+<pre><code>4. 配置扫描的映射文件所在的包</code></pre><p><img src="/2020/09/18/ssm/mybatis_spring_3.png" alt="将dao对象交由spring容器创建"></p>
+<pre><code>        5. 总结
+            spring整合mybatis时，可以在核心配置文件applicationContext.xml中，整合mybatis的配置文件，可以将SqlMapConfig.xml文件的内容完全整合进核心配置文件，也可以整合部分，然后在核心配置文件中引用SqlMapConfig.xml文件。
 
 4. 出现的错误</code></pre><blockquote>
 </blockquote>
-<p><img src="/2020/09/18/ssm/erroer_1.png" alt="web.xml或使用此应用程序部署的jar文件中解析"><br><img src="/2020/09/18/ssm/error_2.png" alt="classnotfound:org.apache.jsp."></p>
+<p><img src="/2020/09/18/ssm/erroer_1.png" alt="web.xml或使用此应用程序部署的jar文件中解析"><br><img src="/2020/09/18/ssm/error_2.png" alt="classnotfound:org.apache.jsp.">    </p>
 <h4 id="spring的声明式事务控制"><a href="#spring的声明式事务控制" class="headerlink" title="spring的声明式事务控制"></a>spring的声明式事务控制</h4><pre><code>1. 配置事务管理器
 2. 配置事务通知
     * 配置事务的使用位置，传播级别。。
 3. 配置AOP
     * 配置切入点表达式
-    * 配置事务</code></pre>
+    * 配置事务</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_transaction.png" alt="事务管理"></p>
+
       
     </div>
     
@@ -705,7 +720,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -783,7 +798,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">34.5k</span>
+    <span title="Site words total count">34.6k</span>
   
 </div>
 
