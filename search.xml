@@ -18,9 +18,55 @@
       </tags>
   </entry>
   <entry>
+    <title>ssm_error</title>
+    <url>/2020/10/16/ssm-error/</url>
+    <content><![CDATA[<h3 id="BindingException-Invalid-bound-statement-not-found-com-maven-dao-ItemsDao-findAll"><a href="#BindingException-Invalid-bound-statement-not-found-com-maven-dao-ItemsDao-findAll" class="headerlink" title="BindingException: Invalid bound statement (not found): com.maven.dao.ItemsDao.findAll"></a>BindingException: Invalid bound statement (not found): com.maven.dao.ItemsDao.findAll</h3><pre><code>1. 问题
+    dao的接口与映射配置文件的绑定失败
+
+2. 解决思路
+    1. 检查dao的方法名与mapper.xml的方法id是否一致
+    2. 检查mapper.xml的namaspace是否为dao接口的全限定类名
+    3. 检查mapper.xml的resultMapper,parameterType是否正确
+    4. 检查是否出现拼写错误
+    5. 检查mapper.xml的路径是否出现错误
+    6. 检查dao的类名和mapper.xml的名称是否一致，不一致，也有可能导致错误</code></pre><p><em>接口名和映射配置文件名称应该一致，在ssm框架中</em></p>
+<pre><code>3. 对applicationContext.xml进行改变
+    * 在sqlSessionFactoryBean的prperty属性
+    * 找到mapperLocations的标签内部
+    * 增加list标签
+    * 增加value标签，将mapper.xml配置文件全部加入</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/10/16/ssm-error/error_1_1.png" alt></p>
+<pre><code>4. 检查target文件夹下是否有.xml文件
+    没有文件</code></pre><p><code>&lt;build&gt;
+&lt;resources&gt;
+&lt;resource&gt;
+&lt;directory&gt;src/main/java&lt;/directory&gt;
+&lt;includes&gt;
+&lt;include&gt;**/*.xml&lt;/include&gt;
+&lt;/includes&gt;
+&lt;filtering&gt;true&lt;/filtering&gt;
+&lt;/resource&gt;
+&lt;/resources&gt;
+&lt;/build&gt;</code></p>
+<pre><code>5. 解决</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/10/16/ssm-error/error_1.png" alt></p>
+<pre><code>6. 总结
+    1. 如果在applicationContext.xml文件中没有指定具体的配置文件位置，应该回到对应的资源目录下的对应路径下寻找和dao名称相同的.xml文件，将.xml的文件名指定为dao的接口名称就可以进行绑定
+    2. 如果在核心配置文件中指定了配置文件的位置，不需要dao的接口名称和mapper配置文件的名称相匹配，也可以扫描的具体的配置文件，完成代理对象的创建
+    3. 如果.xml文件不是存放在资源路径下，需要对其进行设置，在pom.xml文件中进行设置</code></pre>]]></content>
+      <categories>
+        <category>SSM</category>
+      </categories>
+      <tags>
+        <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo 优化</title>
     <url>/2020/05/18/Hexo%20%E4%BC%98%E5%8C%96/</url>
-    <content><![CDATA[<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><h3 id="Hexo-next自适应宽屏"><a href="#Hexo-next自适应宽屏" class="headerlink" title="Hexo next自适应宽屏"></a>Hexo next自适应宽屏</h3><p><code>\themes\next\source/css/_schemes/Picses/_layout.styl</code>在文件末尾添加代码<br><code>// 以下为新增代码！！修改post宽度</code></p>
+    <content><![CDATA[<h2 id="Hexo-next自适应宽屏"><a href="#Hexo-next自适应宽屏" class="headerlink" title="Hexo next自适应宽屏"></a>Hexo next自适应宽屏</h2><p><code>/themes/next/source/css/_schemes/Picses/_layout.styl</code>在文件末尾添加代码<br><code>// 以下为新增代码！！修改post宽度</code></p>
 <pre><code>1. header{ width: 80% !important; }
 2. header.post-header {
       width: auto !important;
@@ -50,9 +96,9 @@
   +mobile() {
     width: 100% !important;
   }
-}</code></pre><h3 id="顶部进度条"><a href="#顶部进度条" class="headerlink" title="顶部进度条"></a>顶部进度条</h3><pre><code>1. 在主题的配置文件中，找到pace:标签，可以开启进度条的设置
+}</code></pre><h2 id="顶部进度条"><a href="#顶部进度条" class="headerlink" title="顶部进度条"></a>顶部进度条</h2><pre><code>1. 在主题的配置文件中，找到pace:标签，可以开启进度条的设置
 2. pace_theme: pace-theme-flash：具体的样式</code></pre><p><a href="https://blog.csdn.net/u011236348/article/details/88146947" target="_blank" rel="noopener">进度条参考博客地址</a></p>
-<h3 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h3><p>在<code>themes/*/source/css/_custom/custom.styl</code>中添加代码<br><code>@font-face {
+<h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><p>在<code>themes/*/source/css/_custom/custom.styl</code>中添加代码<br><code>@font-face {
     font-family: Zitiming;
     src: url(&#39;/fonts/Zitiming.ttf&#39;);
 }
@@ -62,15 +108,18 @@
 }</code></p>
 <p>其中字体文件在 <code>themes/next/source/fonts</code> 目录下，里面有个 <code>.gitkeep</code>的隐藏文件，打开写入你要保留的字体文件，比如我的是就是写入 <code>Zitiming.ttf</code>，具体字库自己从网上下载即可</p>
 <h3 id="设置网站缩略图标"><a href="#设置网站缩略图标" class="headerlink" title="设置网站缩略图标"></a>设置网站缩略图标</h3><p>把你的图片（png或jpg格式，不是favicon.ico）放在<code>themes/next/source/images</code>里，然后打开 主题配置文件 找到<code>favicon</code>，将<code>small、medium、apple_touch_icon</code>三个字段的值都设置成<code>/images/图片名.jpg</code>就可以了，其他字段都注释掉</p>
-<h3 id="静态资源压缩"><a href="#静态资源压缩" class="headerlink" title="静态资源压缩"></a>静态资源压缩</h3><p><a href="https://segmentfault.com/a/1190000019842178?utm_source=tag-newest" target="_blank" rel="noopener">静态资源压缩GULP</a></p>
+<h2 id="静态资源压缩"><a href="#静态资源压缩" class="headerlink" title="静态资源压缩"></a>静态资源压缩</h2><p><a href="https://segmentfault.com/a/1190000019842178?utm_source=tag-newest" target="_blank" rel="noopener">静态资源压缩GULP</a></p>
 <p>使用<br><code>hexo clean</code></p>
 <p> <code>hexo g</code></p>
 <p> <code>gulp</code></p>
 <p> <code>hexo d</code>进行blog的更新</p>
-<h3 id="更新时间"><a href="#更新时间" class="headerlink" title="更新时间"></a>更新时间</h3><p>在主题的配置文件下，使用<code>update</code>会找到一个<code>updated_at</code>的属性改为<code>true</code>即可。</p>
-<h3 id="代码显示"><a href="#代码显示" class="headerlink" title="代码显示"></a>代码显示</h3><p>在hexo的根目录下，<code>_config.yml</code>中的<code>auto_detect: false</code>改为true<br>在hexo的主题目录下，<code>_config.yml</code>中的<code>auto_detect: false</code>改为true</p>
+<h2 id="更新时间"><a href="#更新时间" class="headerlink" title="更新时间"></a>更新时间</h2><p>在主题的配置文件下，使用<code>update</code>会找到一个<code>updated_at</code>的属性改为<code>true</code>即可。</p>
+<h2 id="代码显示"><a href="#代码显示" class="headerlink" title="代码显示"></a>代码显示</h2><p>在hexo的根目录下，<code>_config.yml</code>中的<code>auto_detect: false</code>改为true<br>在hexo的主题目录下，<code>_config.yml</code>中的<code>auto_detect: false</code>改为true</p>
 <p><code>highlight_theme: night eighties</code>,指定代码主题的样式</p>
-]]></content>
+<h2 id="增加代码复制功能"><a href="#增加代码复制功能" class="headerlink" title="增加代码复制功能"></a>增加代码复制功能</h2><ul>
+<li><a href="https://blog.csdn.net/Awt_FuDongLai/article/details/107466848" target="_blank" rel="noopener">代码复制</a></li>
+</ul>
+<h2 id="图片的延迟加载"><a href="#图片的延迟加载" class="headerlink" title="图片的延迟加载"></a>图片的延迟加载</h2>]]></content>
       <categories>
         <category>Hexo</category>
       </categories>
@@ -685,9 +734,7 @@ Session对象是由服务器创建的，存储于服务器端</code></pre><h3 id
     * 一次会话，是使用同一个浏览器发送的多次请求，一旦浏览器关闭，则会话结束
     * 可以将数据存入Session,在一次会话的任意位置进行获取
     * 可以传递任意数据类型（基本数据，字符串，数组，集合等）</code></pre><h4 id="获取Session对象"><a href="#获取Session对象" class="headerlink" title="获取Session对象"></a>获取Session对象</h4><pre><code>在浏览器首次连接服务器时，服务器自动创建Session对象，并创建Cookie返回sessionId
-//1.通过request对象获取Session对象</code></pre><blockquote>
-<pre><code>HttpSession session = request.getSession();
-System.out.println(session.getId());</code></pre></blockquote>
+//1.通过request对象获取Session对象</code></pre><p><code>HttpSession session = request.getSession();</code><br><code>System.out.println(session.getId());</code></p>
 <h3 id="Session数据传递"><a href="#Session数据传递" class="headerlink" title="Session数据传递"></a>Session数据传递</h3><h4 id="保存数据"><a href="#保存数据" class="headerlink" title="保存数据"></a>保存数据</h4><pre><code>* setAttribute(属性名，Object)
     session.setAttribute(key,value);以键值对的形式存储数据</code></pre><h4 id="获取数据"><a href="#获取数据" class="headerlink" title="获取数据"></a>获取数据</h4><pre><code>* getAttribute(属性名)
     session.getAttribute(key);获取数据</code></pre><h4 id="移除数据"><a href="#移除数据" class="headerlink" title="移除数据"></a>移除数据</h4><pre><code>* removeAttribute(key)
@@ -703,159 +750,24 @@ URL重写：
     浏览器在访问服务器的地址时，不再使用原来的地址，而是经过改写的地址，原来的地址后面增加了sessionId
 
 实现：
-    使用respone.encodeRedirectURL(String url)生成新的URL，根据是否禁用cookie来在尾部追加SessionId</code></pre><h3 id="Seeeion的案例"><a href="#Seeeion的案例" class="headerlink" title="Seeeion的案例"></a>Seeeion的案例</h3><pre><code>* 进行登录验证</code></pre><p><img src="/2020/09/19/servlet/session_exp_1.png" alt="Seeeion的案例_进行登录验证"><br>    * 进行邮箱验证<br><img src="/2020/09/19/servlet/session_exp_2.png" alt="Seeeion的案例_进行登录验证"></p>
-<h3 id="Request-Session的区别"><a href="#Request-Session的区别" class="headerlink" title="Request,Session的区别"></a>Request,Session的区别</h3><table>
-<thead>
-<tr>
-<th align="center">名称</th>
-<th align="center">创建时机</th>
-<th align="center">数据类型</th>
-<th align="center">数据存储</th>
-<th align="center">数据获取</th>
-<th align="center">数据移除</th>
-<th align="center">传输方式</th>
-<th align="center">作用范围</th>
-<th align="center">生命周期</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">rsquest</td>
-<td align="center">建立连接</td>
-<td align="center">任意数据类型</td>
-<td align="center">setAttribute(String,Obiect)</td>
-<td align="center">getAttribute</td>
-<td align="center">removeAttribute</td>
-<td align="center">转发</td>
-<td align="center">一个请求，可以多次转发</td>
-<td align="center">一次请求</td>
-</tr>
-<tr>
-<td align="center">session</td>
-<td align="center">首次连接</td>
-<td align="center">任意数据类型</td>
-<td align="center">setAttribute(String,Obiect)</td>
-<td align="center">getAttribute</td>
-<td align="center">removeAttribute</td>
-<td align="center">转发，重定向</td>
-<td align="center">一次会话，可以多次转发和重定向</td>
-<td align="center">一次会话</td>
-</tr>
-<tr>
-<td align="center">### 重定向和转发的区别</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">方式</td>
-<td align="center">数据类型</td>
-<td align="center">数据存储</td>
-<td align="center">数据获取</td>
-<td align="center">数据移除</td>
-<td align="center">传输方式</td>
-<td align="center">作用范围</td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">:-:</td>
-<td align="center">:-:</td>
-<td align="center">:-:</td>
-<td align="center">:-:</td>
-<td align="center">:-:</td>
-<td align="center">:-:</td>
-<td align="center">:-:</td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">转发</td>
-<td align="center">任意数据类型</td>
-<td align="center">request.setAttribute()</td>
-<td align="center">resquest.getAttribute()</td>
-<td align="center">remove</td>
-<td align="center">request.getRequestDispaher(URL).forword(reuqest,resq)</td>
-<td align="center">同一web应用内部</td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">重定向</td>
-<td align="center">字符串</td>
-<td align="center">respone.sendRedirect(URL)</td>
-<td align="center">request.getParaeters()</td>
-<td align="center">?</td>
-<td align="center">resq.sendRedirect(URL)</td>
-<td align="center">任意地址</td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">* 转发和重定向都是数据传递的一种方式，如果需要进行数据的传输，可以使用转发，只是单纯的数据跳转，可以使用重定向</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-<h3 id="Cookie和Session"><a href="#Cookie和Session" class="headerlink" title="Cookie和Session"></a>Cookie和Session</h3><table>
-<thead>
-<tr>
-<th align="center">名称</th>
-<th align="center">创建时机</th>
-<th align="center">创建者</th>
-<th align="center">创建方式</th>
-<th align="center">存储位置</th>
-<th align="center">获取</th>
-<th align="center">赋值</th>
-<th align="center">修改</th>
-<th align="center">作用范围</th>
-<th align="center">编码与解码</th>
-<th align="center">使用限制</th>
-<th align="center">解决思路</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Cookie</td>
-<td align="center">由开发人员在服务中创建</td>
-<td align="center">开发人员</td>
-<td align="center">Cookie ck = new Cookie(string,object)</td>
-<td align="center">存储在客户端</td>
-<td align="center">request.getCookies()</td>
-<td align="center">创建时赋值，也可以使用setValue，使用respone.addCookie()响应给浏览器</td>
-<td align="center">新建，只要名称和路径相同，就可以覆盖</td>
-<td align="center">可以使用setMaxAge设置超时，正数，以秒计算；0 连接关闭时；-1浏览器缓存清空</td>
-<td align="center">URLEncoder.encode(),URLDecoder.decoede()</td>
-<td align="center">缓存较小，禁用cookie</td>
-<td align="center">使用重定向将数据传输</td>
-</tr>
-<tr>
-<td align="center">Session</td>
-<td align="center">浏览器首次连接服务器时，自动创建</td>
-<td align="center">容器</td>
-<td align="center">HttpSession session = req.getSession()</td>
-<td align="center">存储在服务器</td>
-<td align="center">request.getSession()</td>
-<td align="center">sessio..setAttribute</td>
-<td align="center">remove</td>
-<td align="center">使用setMaxInacticveInter()设置超时,单位秒；关闭会话；手动清除session.invaloidate（）</td>
-<td align="center">URLEncoder.encode(),URLDecoder.decoede()</td>
-<td align="center">session借助于cookie来告知浏览器，如果禁用cookie，不会保存session的id,服务器不能识别session</td>
-<td align="center">使用encoderRedirectURL()重定向，将数据加在访问路径之后</td>
-</tr>
-</tbody></table>
+    使用respone.encodeRedirectURL(String url)生成新的URL，根据是否禁用cookie来在尾部追加SessionId</code></pre><h3 id="Seeeion的案例"><a href="#Seeeion的案例" class="headerlink" title="Seeeion的案例"></a>Seeeion的案例</h3><pre><code>* 进行登录验证</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/19/servlet/session_exp_1.png" alt="Seeeion的案例_进行登录验证"></p>
+<pre><code>* 进行邮箱验证</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/19/servlet/session_exp_2.png" alt="Seeeion的案例_进行登录验证"></p>
+<h3 id="Request-Session的区别"><a href="#Request-Session的区别" class="headerlink" title="Request,Session的区别"></a>Request,Session的区别</h3><blockquote>
+</blockquote>
+<p><img src="/2020/09/19/servlet/request_session.png" alt="请求和会话"></p>
+<h3 id="重定向和转发的区别"><a href="#重定向和转发的区别" class="headerlink" title="重定向和转发的区别"></a>重定向和转发的区别</h3><blockquote>
+</blockquote>
+<p><img src="/2020/09/19/servlet/redirect_forward.png" alt="重定向和转发"></p>
+<h3 id="Cookie和Session"><a href="#Cookie和Session" class="headerlink" title="Cookie和Session"></a>Cookie和Session</h3><blockquote>
+</blockquote>
+<p><img src="/2020/09/19/servlet/cookie_session.png" alt="cookie session"></p>
 <pre><code>* cookie和session都是保存浏览器访问服务器的状态，使用方式和存储位置不一样
-* cookie存储的数据都是字符串，需要使用respone.addCookie(),将数据响应给浏览器，可以一次响应多个Cookie
-* sesssion可以存储任意类型数据，直接session.setAttribute(),一个会话只有一个Session，一个SessionId</code></pre><h2 id="ServletContext对象"><a href="#ServletContext对象" class="headerlink" title="ServletContext对象"></a>ServletContext对象</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><pre><code>* 全局对象，拥有作用域，对应tomcat的一个web应用
+* cookie存储的数据都是字符串，需要使用`respone.addCookie()`,将数据响应给浏览器，可以一次响应多个Cookie
+* sesssion可以存储任意类型数据，直接`session.setAttribute()`,一个会话只有一个Session，一个SessionId</code></pre><h2 id="ServletContext对象"><a href="#ServletContext对象" class="headerlink" title="ServletContext对象"></a>ServletContext对象</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><pre><code>* 全局对象，拥有作用域，对应tomcat的一个web应用
 * 当web服务器启动时，会为每一个web应用程序创建一个ServletContext对象，共享的存储区
 * ServletContext在服务器启动的时候创建，服务器关闭的时候销毁</code></pre><h3 id="获取ServletContext"><a href="#获取ServletContext" class="headerlink" title="获取ServletContext"></a>获取ServletContext</h3><pre><code>1. 使用GenericServlet对象
     * getServletContext(),HttpServlet继承了GenericServlet,可以使用this.getServletContext()获取对象
@@ -874,9 +786,13 @@ URL重写：
     * 存储数据：setAttribute(string,object)
     * 获取数据：getAttribute(string)
     * 移除数据：removeAttribute(string)</code></pre><h3 id="ServletContext特点"><a href="#ServletContext特点" class="headerlink" title="ServletContext特点"></a>ServletContext特点</h3><pre><code>* 唯一性：一个项目只有一个ServletContext
-* 生命周期：只要容器不关闭或者应用不卸载，servletContext一直存在</code></pre><h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><pre><code>1. 统计当前项目的访问次数</code></pre><p><img src="/2020/09/19/servlet/servletcontext_count.png" alt="servletcontext"></p>
+* 生命周期：只要容器不关闭或者应用不卸载，servletContext一直存在</code></pre><h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><pre><code>1. 统计当前项目的访问次数</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/19/servlet/servletcontext_count.png" alt="servletcontext"></p>
 <h2 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h2><pre><code>现有问题
-    代码冗余，可以抽取代码，比如编码问题</code></pre><h3 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><pre><code>过滤器(Filter)是位于客户端和服务器目标资源的一道过滤技术</code></pre><p><img src="/2020/09/19/servlet/filter_exe.png" alt="过滤器的执行流程"></p>
+    代码冗余，可以抽取代码，比如编码问题</code></pre><h3 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><pre><code>过滤器(Filter)是位于客户端和服务器目标资源的一道过滤技术</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/19/servlet/filter_exe.png" alt="过滤器的执行流程"></p>
 <h3 id="filter作用"><a href="#filter作用" class="headerlink" title="filter作用"></a>filter作用</h3><pre><code>1. 执行在servlet之前，客户端发送请求的时候，会先经过过滤器，再到达目标资源；响应的时候，会根据执行流程再次反向执行filter
 2. 可以解决多个servlet的代码冗余问题，编码处理，登录验证</code></pre><h3 id="filter的编写"><a href="#filter的编写" class="headerlink" title="filter的编写"></a>filter的编写</h3><pre><code>Servlet API提供了一个Filter接口，只要实现了这个接口，就会成为过滤器（Filter）</code></pre><h4 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h4><pre><code>1. 编写java的实现代码
 2. 编写doFileter()方法
@@ -889,7 +805,7 @@ URL重写：
 2. 在web.xml中配置filter
     使用filter filter-mapping</code></pre><h3 id="过滤器链和过滤优先级"><a href="#过滤器链和过滤优先级" class="headerlink" title="过滤器链和过滤优先级"></a>过滤器链和过滤优先级</h3><pre><code>1. 过滤器链
     * 客户端对服务器请求之后，服务器会执行一组过滤器，那么这组过滤器就叫做过滤器链。
-    * 每个过滤器实现特定的功能当第一个过滤器的doFilter方法被调用的时候，web服务器会创建一个代表过滤器链的filterChain对象，在doFilter方法中，开发人员如果调用了FilterChain的doFilter方法，web服务器会检查是否还有其他的过滤器，如果还有，就会执行第二个过滤器，如果没有，就调用目标资源。
+    * 每个过滤器实现特定的功能当第一个过滤器的doFilter方法被调用的时候，web服务器会创建一个代表过滤器链的filterChain对象，在doFilter方法中，开发人员如果调用了`FilterChain`的`doFilter`方法，web服务器会检查是否还有其他的过滤器，如果还有，就会执行第二个过滤器，如果没有，就调用目标资源。
 
 2. 过滤器链的优先级
     * 如果全是注解，会按照类全名称的字典顺序
@@ -904,7 +820,9 @@ URL重写：
     不能使用/进行拦截</code></pre><h3 id="filter使用场景"><a href="#filter使用场景" class="headerlink" title="filter使用场景"></a>filter使用场景</h3><pre><code>1. 过滤器解决编码问题
     * 统一解决字符编码问题
 2. 解决权限验证问题
-    * 在过滤器中验证是否登录过服务器</code></pre><p><img src="/2020/09/19/servlet/errors_01.png" alt></p>
+    * 在过滤器中验证是否登录过服务器</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/19/servlet/errors_01.png" alt></p>
 ]]></content>
       <categories>
         <category>Servlet</category>
@@ -995,7 +913,9 @@ URL重写：
 可以使用参数设置生成的bean的名称，指定读取的配置文件以及mapper的配置文件</code></pre><blockquote>
 </blockquote>
 <p><img src="/2020/09/18/ssm/mybatis_spring_2.png" alt="将dao对象交由spring容器创建"></p>
-<pre><code>4. 配置扫描的映射文件所在的包</code></pre><p><img src="/2020/09/18/ssm/mybatis_spring_3.png" alt="将dao对象交由spring容器创建"></p>
+<pre><code>4. 配置扫描的映射文件所在的包</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/mybatis_spring_3.png" alt="将dao对象交由spring容器创建"></p>
 <pre><code>        5. 总结
             spring整合mybatis时，可以在核心配置文件applicationContext.xml中，整合mybatis的配置文件，可以将SqlMapConfig.xml文件的内容完全整合进核心配置文件，也可以整合部分，然后在核心配置文件中引用SqlMapConfig.xml文件。
 
@@ -1042,17 +962,9 @@ URL重写：
 </blockquote>
 <p><img src="/2020/09/18/springMVC/change_directory.png" alt="change_directory"></p>
 <pre><code>2. 配置MVC项目的步骤
-    1. 配置前端控制器，在servlet上配置控制器,主要是访问路径以及拦截</code></pre><blockquote>
-</blockquote>
-<pre><code>&lt;!-- 配置前端控制器 --&gt;
-&lt;servlet&gt;
-  &lt;servlet-name&gt;dispatcherServlet&lt;/servlet-name&gt;
-  &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
-&lt;/servlet&gt;
-&lt;servlet-mapping&gt;
-  &lt;servlet-name&gt;dispatcherServlet&lt;/servlet-name&gt;
-  &lt;url-pattern&gt;/&lt;/url-pattern&gt;
-&lt;/servlet-mapping&gt;</code></pre><blockquote>
+    1. 配置前端控制器，在servlet上配置控制器,主要是访问路径以及拦截</code></pre><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置前端控制器 --&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>dispatcherServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>dispatcherServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span></pre></td></tr></table></figure>
+
+<blockquote>
 <pre><code>&lt;!-- 配置过滤器 --&gt;
 &lt;filter&gt;
     &lt;filter-name&gt;characterEncodingFilter&lt;/filter-name&gt;
@@ -1356,7 +1268,10 @@ mapping: 表示以/static开头的所有的请求路径</code></pre><h4 id="响�
     * springMVC框架提供了MultipartFile对象，该对象表示要上传的文件，要求变量名称必须和表单file标签的name属性名称相同
     * 由前端控制器获取请求，将请求传送给文件解析器来进行request对象的解析，获取文件上传项，再由控制器将获取到的文件上传项作为参数绑定到对应的方法上，在方法中只需要进行文件的上传就可以，不需要关注文件的解析和获取工作
     * 注意：
-        参数绑定：方法的参数必须和file的name属性相同</code></pre><blockquote>
+        参数绑定：方法的参数必须和file的name属性相同
+
+2. 配置文件
+    commons-fileupload connoms-io</code></pre><blockquote>
 </blockquote>
 <p><img src="/2020/09/18/springMVC/springmvc_upload.png" alt="springMVC文件上传的原理"><br><img src="/2020/09/18/springMVC/springmvc_upload1.png" alt="springMVC文件上传的部分源码"></p>
 <pre><code>一旦配置上传文件的大小，不能超过限制</code></pre><blockquote>
@@ -1371,7 +1286,7 @@ mapping: 表示以/static开头的所有的请求路径</code></pre><h4 id="响�
     * 方法书写</code></pre><blockquote>
 </blockquote>
 <p><img src="/2020/09/18/springMVC/springmvc_upload2.png" alt="springMVC文件上传"></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><pre><code>springMVC的框架只是将解析文件的过程进行了封装，本质上还是使用FileItemFactory等进行文件解析，在方法中可以直接调用上传文件项
+<h3 id="同一个服务器的文件上传总结"><a href="#同一个服务器的文件上传总结" class="headerlink" title="同一个服务器的文件上传总结"></a>同一个服务器的文件上传总结</h3><pre><code>springMVC的框架只是将解析文件的过程进行了封装，本质上还是使用FileItemFactory等进行文件解析，在方法中可以直接调用上传文件项
 
 1. 通用上传文件步骤
     1. 获取上传文件目录，可以使用file.mkdirs()进行创建
@@ -1394,10 +1309,22 @@ mapping: 表示以/static开头的所有的请求路径</code></pre><h4 id="响�
         4. 建立连接，
             WebResource resource = client.resource(path);
         5. 上传文件
-            resource.put(upload.getBytes());</code></pre><p><img src="/2020/09/18/springMVC/file_upload3.png" alt="跨服务器上传"></p>
+            resource.put(upload.getBytes());</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/springMVC/file_upload3.png" alt="跨服务器上传"></p>
 <pre><code>3. 出现的错误
     1. 500：Method Not Allowed
-        可以在文件服务器的文件目录下建立文件夹改变Tomcat服务器的readonly属性，Tomcat服务器的安装目录下的conf文件中的web.xml，属性值改为false</code></pre><p><img src="/2020/09/18/springMVC/e1.png" alt></p>
+        可以在文件服务器的文件目录下建立文件夹改变Tomcat服务器的readonly属性，Tomcat服务器的安装目录下的conf文件中的web.xml，属性值改为false</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/springMVC/e1.png" alt></p>
+<h3 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h3><pre><code>1. 配置文件
+    1. commons-fileupload_1.4.jar commons-io_2.5.jar
+    2. CommonsMultipartResolver对象
+    3. 需要下载的文件的文件名
+
+2. 演示代码</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/springMVC/filedown.png" alt="文件下载演示代码"></p>
 <h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><pre><code>Controller调用service,service调用dao,异常向上抛出，最终由DispatcherServlet找异常处理器进行处理。</code></pre><blockquote>
 </blockquote>
 <p><img src="/2020/09/18/springMVC/error_process.png" alt="异常处理流程"><br><img src="/2020/09/18/springMVC/exception_1.png" alt="异常抛出演示"></p>

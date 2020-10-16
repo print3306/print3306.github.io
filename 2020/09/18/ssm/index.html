@@ -109,7 +109,7 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;erroer_1.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;error_2.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_transaction.png">
-<meta property="og:updated_time" content="2020-10-15T13:29:54.899Z">
+<meta property="og:updated_time" content="2020-10-16T09:01:11.417Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_1.png">
 
@@ -383,8 +383,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-10-15T21:29:54+08:00">
-                2020-10-15
+              <time title="更新于" itemprop="dateModified" datetime="2020-10-16T17:01:11+08:00">
+                2020-10-16
               </time>
             
           </span>
@@ -537,7 +537,9 @@
 可以使用参数设置生成的bean的名称，指定读取的配置文件以及mapper的配置文件</code></pre><blockquote>
 </blockquote>
 <p><img src="/2020/09/18/ssm/mybatis_spring_2.png" alt="将dao对象交由spring容器创建"></p>
-<pre><code>4. 配置扫描的映射文件所在的包</code></pre><p><img src="/2020/09/18/ssm/mybatis_spring_3.png" alt="将dao对象交由spring容器创建"></p>
+<pre><code>4. 配置扫描的映射文件所在的包</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/mybatis_spring_3.png" alt="将dao对象交由spring容器创建"></p>
 <pre><code>        5. 总结
             spring整合mybatis时，可以在核心配置文件applicationContext.xml中，整合mybatis的配置文件，可以将SqlMapConfig.xml文件的内容完全整合进核心配置文件，也可以整合部分，然后在核心配置文件中引用SqlMapConfig.xml文件。
 
@@ -709,7 +711,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -720,7 +722,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -798,7 +800,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">34.6k</span>
+    <span title="Site words total count">34.7k</span>
   
 </div>
 
@@ -1347,6 +1349,7 @@
 
   
 
+
   <!--鼠标点击心形效果-->
   <script type="text/javascript" src="/js/src/clicklove.js"></script>
 
@@ -1362,8 +1365,82 @@
 
   <!--动态线条背景 220,220,220 opacity='0.8' zIndex="-2"-->
   <script type="text/javascript"
-    color="220,220,220" opacity='0.5' zIndex="-1" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+    color="220,220,220" opacity='0.5' zIndex="-1" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
   </script>
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
 

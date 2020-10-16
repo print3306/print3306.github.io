@@ -112,12 +112,13 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;springmvc_upload2.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;file_upload3.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;e1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;filedown.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;error_process.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;exception_1.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;exception_2.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;inter_1.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;inter_2.png">
-<meta property="og:updated_time" content="2020-10-15T11:49:36.389Z">
+<meta property="og:updated_time" content="2020-10-16T09:37:59.505Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;springMVC&#x2F;maven_createproject_quickstart.png">
 
@@ -391,8 +392,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-10-15T19:49:36+08:00">
-                2020-10-15
+              <time title="更新于" itemprop="dateModified" datetime="2020-10-16T17:37:59+08:00">
+                2020-10-16
               </time>
             
           </span>
@@ -441,7 +442,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  4.4k
+                  4.5k
                 </span>
               
 
@@ -487,17 +488,9 @@
 </blockquote>
 <p><img src="/2020/09/18/springMVC/change_directory.png" alt="change_directory"></p>
 <pre><code>2. 配置MVC项目的步骤
-    1. 配置前端控制器，在servlet上配置控制器,主要是访问路径以及拦截</code></pre><blockquote>
-</blockquote>
-<pre><code>&lt;!-- 配置前端控制器 --&gt;
-&lt;servlet&gt;
-  &lt;servlet-name&gt;dispatcherServlet&lt;/servlet-name&gt;
-  &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
-&lt;/servlet&gt;
-&lt;servlet-mapping&gt;
-  &lt;servlet-name&gt;dispatcherServlet&lt;/servlet-name&gt;
-  &lt;url-pattern&gt;/&lt;/url-pattern&gt;
-&lt;/servlet-mapping&gt;</code></pre><blockquote>
+    1. 配置前端控制器，在servlet上配置控制器,主要是访问路径以及拦截</code></pre><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置前端控制器 --&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>dispatcherServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>dispatcherServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span></pre></td></tr></table></figure>
+
+<blockquote>
 <pre><code>&lt;!-- 配置过滤器 --&gt;
 &lt;filter&gt;
     &lt;filter-name&gt;characterEncodingFilter&lt;/filter-name&gt;
@@ -801,7 +794,10 @@ mapping: 表示以/static开头的所有的请求路径</code></pre><h4 id="响�
     * springMVC框架提供了MultipartFile对象，该对象表示要上传的文件，要求变量名称必须和表单file标签的name属性名称相同
     * 由前端控制器获取请求，将请求传送给文件解析器来进行request对象的解析，获取文件上传项，再由控制器将获取到的文件上传项作为参数绑定到对应的方法上，在方法中只需要进行文件的上传就可以，不需要关注文件的解析和获取工作
     * 注意：
-        参数绑定：方法的参数必须和file的name属性相同</code></pre><blockquote>
+        参数绑定：方法的参数必须和file的name属性相同
+
+2. 配置文件
+    commons-fileupload connoms-io</code></pre><blockquote>
 </blockquote>
 <p><img src="/2020/09/18/springMVC/springmvc_upload.png" alt="springMVC文件上传的原理"><br><img src="/2020/09/18/springMVC/springmvc_upload1.png" alt="springMVC文件上传的部分源码"></p>
 <pre><code>一旦配置上传文件的大小，不能超过限制</code></pre><blockquote>
@@ -816,7 +812,7 @@ mapping: 表示以/static开头的所有的请求路径</code></pre><h4 id="响�
     * 方法书写</code></pre><blockquote>
 </blockquote>
 <p><img src="/2020/09/18/springMVC/springmvc_upload2.png" alt="springMVC文件上传"></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><pre><code>springMVC的框架只是将解析文件的过程进行了封装，本质上还是使用FileItemFactory等进行文件解析，在方法中可以直接调用上传文件项
+<h3 id="同一个服务器的文件上传总结"><a href="#同一个服务器的文件上传总结" class="headerlink" title="同一个服务器的文件上传总结"></a>同一个服务器的文件上传总结</h3><pre><code>springMVC的框架只是将解析文件的过程进行了封装，本质上还是使用FileItemFactory等进行文件解析，在方法中可以直接调用上传文件项
 
 1. 通用上传文件步骤
     1. 获取上传文件目录，可以使用file.mkdirs()进行创建
@@ -839,10 +835,22 @@ mapping: 表示以/static开头的所有的请求路径</code></pre><h4 id="响�
         4. 建立连接，
             WebResource resource = client.resource(path);
         5. 上传文件
-            resource.put(upload.getBytes());</code></pre><p><img src="/2020/09/18/springMVC/file_upload3.png" alt="跨服务器上传"></p>
+            resource.put(upload.getBytes());</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/springMVC/file_upload3.png" alt="跨服务器上传"></p>
 <pre><code>3. 出现的错误
     1. 500：Method Not Allowed
-        可以在文件服务器的文件目录下建立文件夹改变Tomcat服务器的readonly属性，Tomcat服务器的安装目录下的conf文件中的web.xml，属性值改为false</code></pre><p><img src="/2020/09/18/springMVC/e1.png" alt></p>
+        可以在文件服务器的文件目录下建立文件夹改变Tomcat服务器的readonly属性，Tomcat服务器的安装目录下的conf文件中的web.xml，属性值改为false</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/springMVC/e1.png" alt></p>
+<h3 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h3><pre><code>1. 配置文件
+    1. commons-fileupload_1.4.jar commons-io_2.5.jar
+    2. CommonsMultipartResolver对象
+    3. 需要下载的文件的文件名
+
+2. 演示代码</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/springMVC/filedown.png" alt="文件下载演示代码"></p>
 <h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><pre><code>Controller调用service,service调用dao,异常向上抛出，最终由DispatcherServlet找异常处理器进行处理。</code></pre><blockquote>
 </blockquote>
 <p><img src="/2020/09/18/springMVC/error_process.png" alt="异常处理流程"><br><img src="/2020/09/18/springMVC/exception_1.png" alt="异常抛出演示"></p>
@@ -1034,7 +1042,7 @@ interceptor和filter的区别
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1045,7 +1053,7 @@ interceptor和filter的区别
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1088,7 +1096,7 @@ interceptor和filter的区别
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三层架构"><span class="nav-number">1.1.</span> <span class="nav-text">三层架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC的入门案例"><span class="nav-number">1.2.</span> <span class="nav-text">SpringMVC的入门案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC实例解析"><span class="nav-number">1.3.</span> <span class="nav-text">SpringMVC实例解析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关注解"><span class="nav-number">2.</span> <span class="nav-text">相关注解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestMapping"><span class="nav-number">2.0.1.</span> <span class="nav-text">@RequestMapping</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestParam"><span class="nav-number">2.0.2.</span> <span class="nav-text">@RequestParam</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestBody"><span class="nav-number">2.0.3.</span> <span class="nav-text">@RequestBody</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PathVarible"><span class="nav-number">2.0.4.</span> <span class="nav-text">@PathVarible</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RESTful编程风格"><span class="nav-number">2.0.4.1.</span> <span class="nav-text">RESTful编程风格</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HiddentHttpMethodFilter"><span class="nav-number">2.0.4.2.</span> <span class="nav-text">@HiddentHttpMethodFilter</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestHeader"><span class="nav-number">2.0.5.</span> <span class="nav-text">@RequestHeader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CookieValue"><span class="nav-number">2.0.6.</span> <span class="nav-text">@CookieValue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ModelAttribute"><span class="nav-number">2.0.7.</span> <span class="nav-text">@ModelAttribute</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SessionAttributes"><span class="nav-number">2.0.8.</span> <span class="nav-text">@SessionAttributes</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求参数的绑定"><span class="nav-number">3.</span> <span class="nav-text">请求参数的绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">3.1.</span> <span class="nav-text">说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据转换器"><span class="nav-number">3.1.1.</span> <span class="nav-text">数据转换器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet-API"><span class="nav-number">4.</span> <span class="nav-text">Servlet API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取原生的Servlet-API"><span class="nav-number">4.1.</span> <span class="nav-text">获取原生的Servlet API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应数据"><span class="nav-number">5.</span> <span class="nav-text">响应数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串"><span class="nav-number">5.1.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#void"><span class="nav-number">5.2.</span> <span class="nav-text">void</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ModelAndView"><span class="nav-number">5.3.</span> <span class="nav-text">ModelAndView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用关键字来进行转发和重定向"><span class="nav-number">5.4.</span> <span class="nav-text">使用关键字来进行转发和重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON数据：ResponseBody响应"><span class="nav-number">5.5.</span> <span class="nav-text">JSON数据：ResponseBody响应</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#过滤静态资源"><span class="nav-number">5.5.1.</span> <span class="nav-text">过滤静态资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#响应json格式数据"><span class="nav-number">5.5.2.</span> <span class="nav-text">响应json格式数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应数据总结"><span class="nav-number">5.6.</span> <span class="nav-text">响应数据总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件上传"><span class="nav-number">6.</span> <span class="nav-text">文件上传</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传统的文件上传"><span class="nav-number">6.1.</span> <span class="nav-text">传统的文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#springMVC的文件上传"><span class="nav-number">6.2.</span> <span class="nav-text">springMVC的文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">6.3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跨服务器方式的文件上传"><span class="nav-number">6.4.</span> <span class="nav-text">跨服务器方式的文件上传</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常处理"><span class="nav-number">7.</span> <span class="nav-text">异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#springMVC的异常处理"><span class="nav-number">7.1.</span> <span class="nav-text">springMVC的异常处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拦截器（Interceptor）"><span class="nav-number">8.</span> <span class="nav-text">拦截器（Interceptor）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拦截器的使用"><span class="nav-number">8.1.</span> <span class="nav-text">拦截器的使用</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三层架构"><span class="nav-number">1.1.</span> <span class="nav-text">三层架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC的入门案例"><span class="nav-number">1.2.</span> <span class="nav-text">SpringMVC的入门案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC实例解析"><span class="nav-number">1.3.</span> <span class="nav-text">SpringMVC实例解析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关注解"><span class="nav-number">2.</span> <span class="nav-text">相关注解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestMapping"><span class="nav-number">2.0.1.</span> <span class="nav-text">@RequestMapping</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestParam"><span class="nav-number">2.0.2.</span> <span class="nav-text">@RequestParam</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestBody"><span class="nav-number">2.0.3.</span> <span class="nav-text">@RequestBody</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PathVarible"><span class="nav-number">2.0.4.</span> <span class="nav-text">@PathVarible</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RESTful编程风格"><span class="nav-number">2.0.4.1.</span> <span class="nav-text">RESTful编程风格</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HiddentHttpMethodFilter"><span class="nav-number">2.0.4.2.</span> <span class="nav-text">@HiddentHttpMethodFilter</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestHeader"><span class="nav-number">2.0.5.</span> <span class="nav-text">@RequestHeader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CookieValue"><span class="nav-number">2.0.6.</span> <span class="nav-text">@CookieValue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ModelAttribute"><span class="nav-number">2.0.7.</span> <span class="nav-text">@ModelAttribute</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SessionAttributes"><span class="nav-number">2.0.8.</span> <span class="nav-text">@SessionAttributes</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求参数的绑定"><span class="nav-number">3.</span> <span class="nav-text">请求参数的绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">3.1.</span> <span class="nav-text">说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据转换器"><span class="nav-number">3.1.1.</span> <span class="nav-text">数据转换器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet-API"><span class="nav-number">4.</span> <span class="nav-text">Servlet API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取原生的Servlet-API"><span class="nav-number">4.1.</span> <span class="nav-text">获取原生的Servlet API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应数据"><span class="nav-number">5.</span> <span class="nav-text">响应数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串"><span class="nav-number">5.1.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#void"><span class="nav-number">5.2.</span> <span class="nav-text">void</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ModelAndView"><span class="nav-number">5.3.</span> <span class="nav-text">ModelAndView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用关键字来进行转发和重定向"><span class="nav-number">5.4.</span> <span class="nav-text">使用关键字来进行转发和重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON数据：ResponseBody响应"><span class="nav-number">5.5.</span> <span class="nav-text">JSON数据：ResponseBody响应</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#过滤静态资源"><span class="nav-number">5.5.1.</span> <span class="nav-text">过滤静态资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#响应json格式数据"><span class="nav-number">5.5.2.</span> <span class="nav-text">响应json格式数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应数据总结"><span class="nav-number">5.6.</span> <span class="nav-text">响应数据总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件上传"><span class="nav-number">6.</span> <span class="nav-text">文件上传</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传统的文件上传"><span class="nav-number">6.1.</span> <span class="nav-text">传统的文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#springMVC的文件上传"><span class="nav-number">6.2.</span> <span class="nav-text">springMVC的文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同一个服务器的文件上传总结"><span class="nav-number">6.3.</span> <span class="nav-text">同一个服务器的文件上传总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跨服务器方式的文件上传"><span class="nav-number">6.4.</span> <span class="nav-text">跨服务器方式的文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件下载"><span class="nav-number">6.5.</span> <span class="nav-text">文件下载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常处理"><span class="nav-number">7.</span> <span class="nav-text">异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#springMVC的异常处理"><span class="nav-number">7.1.</span> <span class="nav-text">springMVC的异常处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拦截器（Interceptor）"><span class="nav-number">8.</span> <span class="nav-text">拦截器（Interceptor）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拦截器的使用"><span class="nav-number">8.1.</span> <span class="nav-text">拦截器的使用</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1123,7 +1131,7 @@ interceptor和filter的区别
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">34.6k</span>
+    <span title="Site words total count">34.7k</span>
   
 </div>
 
@@ -1672,6 +1680,7 @@ interceptor和filter的区别
 
   
 
+
   <!--鼠标点击心形效果-->
   <script type="text/javascript" src="/js/src/clicklove.js"></script>
 
@@ -1687,8 +1696,82 @@ interceptor和filter的区别
 
   <!--动态线条背景 220,220,220 opacity='0.8' zIndex="-2"-->
   <script type="text/javascript"
-    color="220,220,220" opacity='0.5' zIndex="-1" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+    color="220,220,220" opacity='0.5' zIndex="-1" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
   </script>
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
 

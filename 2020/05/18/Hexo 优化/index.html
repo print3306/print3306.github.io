@@ -86,15 +86,15 @@
 
 
 
-<meta name="description" content="优化Hexo next自适应宽屏\themes\next\source&#x2F;css&#x2F;_schemes&#x2F;Picses&#x2F;_layout.styl在文件末尾添加代码&#x2F;&#x2F; 以下为新增代码！！修改post宽度 1. header{ width: 80% !important; } 2. header.post-header {       width: auto !important;     } .conta">
+<meta name="description" content="Hexo next自适应宽屏&#x2F;themes&#x2F;next&#x2F;source&#x2F;css&#x2F;_schemes&#x2F;Picses&#x2F;_layout.styl在文件末尾添加代码&#x2F;&#x2F; 以下为新增代码！！修改post宽度 1. header{ width: 80% !important; } 2. header.post-header {       width: auto !important;     } .contain">
 <meta name="keywords" content="Hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo 优化">
 <meta property="og:url" content="http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;05&#x2F;18&#x2F;Hexo%20%E4%BC%98%E5%8C%96&#x2F;index.html">
 <meta property="og:site_name" content="浊酒一杯">
-<meta property="og:description" content="优化Hexo next自适应宽屏\themes\next\source&#x2F;css&#x2F;_schemes&#x2F;Picses&#x2F;_layout.styl在文件末尾添加代码&#x2F;&#x2F; 以下为新增代码！！修改post宽度 1. header{ width: 80% !important; } 2. header.post-header {       width: auto !important;     } .conta">
+<meta property="og:description" content="Hexo next自适应宽屏&#x2F;themes&#x2F;next&#x2F;source&#x2F;css&#x2F;_schemes&#x2F;Picses&#x2F;_layout.styl在文件末尾添加代码&#x2F;&#x2F; 以下为新增代码！！修改post宽度 1. header{ width: 80% !important; } 2. header.post-header {       width: auto !important;     } .contain">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-11T12:49:32.234Z">
+<meta property="og:updated_time" content="2020-10-16T12:52:33.928Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -367,8 +367,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-10-11T20:49:32+08:00">
-                2020-10-11
+              <time title="更新于" itemprop="dateModified" datetime="2020-10-16T20:52:33+08:00">
+                2020-10-16
               </time>
             
           </span>
@@ -417,7 +417,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  410
+                  427
                 </span>
               
 
@@ -442,7 +442,7 @@
       
 
       
-        <h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><h3 id="Hexo-next自适应宽屏"><a href="#Hexo-next自适应宽屏" class="headerlink" title="Hexo next自适应宽屏"></a>Hexo next自适应宽屏</h3><p><code>\themes\next\source/css/_schemes/Picses/_layout.styl</code>在文件末尾添加代码<br><code>// 以下为新增代码！！修改post宽度</code></p>
+        <h2 id="Hexo-next自适应宽屏"><a href="#Hexo-next自适应宽屏" class="headerlink" title="Hexo next自适应宽屏"></a>Hexo next自适应宽屏</h2><p><code>/themes/next/source/css/_schemes/Picses/_layout.styl</code>在文件末尾添加代码<br><code>// 以下为新增代码！！修改post宽度</code></p>
 <pre><code>1. header{ width: 80% !important; }
 2. header.post-header {
       width: auto !important;
@@ -472,9 +472,9 @@
   +mobile() {
     width: 100% !important;
   }
-}</code></pre><h3 id="顶部进度条"><a href="#顶部进度条" class="headerlink" title="顶部进度条"></a>顶部进度条</h3><pre><code>1. 在主题的配置文件中，找到pace:标签，可以开启进度条的设置
+}</code></pre><h2 id="顶部进度条"><a href="#顶部进度条" class="headerlink" title="顶部进度条"></a>顶部进度条</h2><pre><code>1. 在主题的配置文件中，找到pace:标签，可以开启进度条的设置
 2. pace_theme: pace-theme-flash：具体的样式</code></pre><p><a href="https://blog.csdn.net/u011236348/article/details/88146947" target="_blank" rel="noopener">进度条参考博客地址</a></p>
-<h3 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h3><p>在<code>themes/*/source/css/_custom/custom.styl</code>中添加代码<br><code>@font-face {
+<h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><p>在<code>themes/*/source/css/_custom/custom.styl</code>中添加代码<br><code>@font-face {
     font-family: Zitiming;
     src: url(&#39;/fonts/Zitiming.ttf&#39;);
 }
@@ -484,15 +484,18 @@
 }</code></p>
 <p>其中字体文件在 <code>themes/next/source/fonts</code> 目录下，里面有个 <code>.gitkeep</code>的隐藏文件，打开写入你要保留的字体文件，比如我的是就是写入 <code>Zitiming.ttf</code>，具体字库自己从网上下载即可</p>
 <h3 id="设置网站缩略图标"><a href="#设置网站缩略图标" class="headerlink" title="设置网站缩略图标"></a>设置网站缩略图标</h3><p>把你的图片（png或jpg格式，不是favicon.ico）放在<code>themes/next/source/images</code>里，然后打开 主题配置文件 找到<code>favicon</code>，将<code>small、medium、apple_touch_icon</code>三个字段的值都设置成<code>/images/图片名.jpg</code>就可以了，其他字段都注释掉</p>
-<h3 id="静态资源压缩"><a href="#静态资源压缩" class="headerlink" title="静态资源压缩"></a>静态资源压缩</h3><p><a href="https://segmentfault.com/a/1190000019842178?utm_source=tag-newest" target="_blank" rel="noopener">静态资源压缩GULP</a></p>
+<h2 id="静态资源压缩"><a href="#静态资源压缩" class="headerlink" title="静态资源压缩"></a>静态资源压缩</h2><p><a href="https://segmentfault.com/a/1190000019842178?utm_source=tag-newest" target="_blank" rel="noopener">静态资源压缩GULP</a></p>
 <p>使用<br><code>hexo clean</code></p>
 <p> <code>hexo g</code></p>
 <p> <code>gulp</code></p>
 <p> <code>hexo d</code>进行blog的更新</p>
-<h3 id="更新时间"><a href="#更新时间" class="headerlink" title="更新时间"></a>更新时间</h3><p>在主题的配置文件下，使用<code>update</code>会找到一个<code>updated_at</code>的属性改为<code>true</code>即可。</p>
-<h3 id="代码显示"><a href="#代码显示" class="headerlink" title="代码显示"></a>代码显示</h3><p>在hexo的根目录下，<code>_config.yml</code>中的<code>auto_detect: false</code>改为true<br>在hexo的主题目录下，<code>_config.yml</code>中的<code>auto_detect: false</code>改为true</p>
+<h2 id="更新时间"><a href="#更新时间" class="headerlink" title="更新时间"></a>更新时间</h2><p>在主题的配置文件下，使用<code>update</code>会找到一个<code>updated_at</code>的属性改为<code>true</code>即可。</p>
+<h2 id="代码显示"><a href="#代码显示" class="headerlink" title="代码显示"></a>代码显示</h2><p>在hexo的根目录下，<code>_config.yml</code>中的<code>auto_detect: false</code>改为true<br>在hexo的主题目录下，<code>_config.yml</code>中的<code>auto_detect: false</code>改为true</p>
 <p><code>highlight_theme: night eighties</code>,指定代码主题的样式</p>
-
+<h2 id="增加代码复制功能"><a href="#增加代码复制功能" class="headerlink" title="增加代码复制功能"></a>增加代码复制功能</h2><ul>
+<li><a href="https://blog.csdn.net/Awt_FuDongLai/article/details/107466848" target="_blank" rel="noopener">代码复制</a></li>
+</ul>
+<h2 id="图片的延迟加载"><a href="#图片的延迟加载" class="headerlink" title="图片的延迟加载"></a>图片的延迟加载</h2>
       
     </div>
     
@@ -649,7 +652,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -660,7 +663,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -703,7 +706,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#优化"><span class="nav-number">1.</span> <span class="nav-text">优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo-next自适应宽屏"><span class="nav-number">1.1.</span> <span class="nav-text">Hexo next自适应宽屏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顶部进度条"><span class="nav-number">1.2.</span> <span class="nav-text">顶部进度条</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字体"><span class="nav-number">1.3.</span> <span class="nav-text">字体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置网站缩略图标"><span class="nav-number">1.4.</span> <span class="nav-text">设置网站缩略图标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态资源压缩"><span class="nav-number">1.5.</span> <span class="nav-text">静态资源压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新时间"><span class="nav-number">1.6.</span> <span class="nav-text">更新时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码显示"><span class="nav-number">1.7.</span> <span class="nav-text">代码显示</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-next自适应宽屏"><span class="nav-number">1.</span> <span class="nav-text">Hexo next自适应宽屏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#顶部进度条"><span class="nav-number">2.</span> <span class="nav-text">顶部进度条</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字体"><span class="nav-number">3.</span> <span class="nav-text">字体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置网站缩略图标"><span class="nav-number">3.1.</span> <span class="nav-text">设置网站缩略图标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态资源压缩"><span class="nav-number">4.</span> <span class="nav-text">静态资源压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新时间"><span class="nav-number">5.</span> <span class="nav-text">更新时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码显示"><span class="nav-number">6.</span> <span class="nav-text">代码显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增加代码复制功能"><span class="nav-number">7.</span> <span class="nav-text">增加代码复制功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片的延迟加载"><span class="nav-number">8.</span> <span class="nav-text">图片的延迟加载</span></a></li></ol></div>
             
 
           </div>
@@ -738,7 +741,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">34.6k</span>
+    <span title="Site words total count">34.7k</span>
   
 </div>
 
@@ -1287,6 +1290,7 @@
 
   
 
+
   <!--鼠标点击心形效果-->
   <script type="text/javascript" src="/js/src/clicklove.js"></script>
 
@@ -1302,8 +1306,82 @@
 
   <!--动态线条背景 220,220,220 opacity='0.8' zIndex="-2"-->
   <script type="text/javascript"
-    color="220,220,220" opacity='0.5' zIndex="-1" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+    color="220,220,220" opacity='0.5' zIndex="-1" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
   </script>
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
 
