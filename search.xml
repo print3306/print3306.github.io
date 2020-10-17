@@ -130,6 +130,9 @@
 <h2 id="引入背景图片"><a href="#引入背景图片" class="headerlink" title="引入背景图片"></a>引入背景图片</h2><p>打开文档下<code>themes\next\source\css\ _custom\custom.sty</code>l文件，这个是Next故意留给用户自己个性化定制一些样式的文件，添加以下代码：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">body &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    background:url(https:<span class="comment">//source.unsplash.com/random/1600x900);</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">    background-repeat: no-repeat;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    background-attachment:fixed;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    background-position:<span class="number">50</span>% <span class="number">50</span>%;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
 
+<h2 id="静态资源压缩-1"><a href="#静态资源压缩-1" class="headerlink" title="静态资源压缩"></a>静态资源压缩</h2><pre><code>参考文档：</code></pre><ul>
+<li><a href="https://maplerain.cc/posts/69416b20.html" target="_blank" rel="noopener">静态资源压缩</a></li>
+</ul>
 ]]></content>
       <categories>
         <category>Hexo</category>
