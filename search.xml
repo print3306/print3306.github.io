@@ -116,10 +116,21 @@
 <h2 id="更新时间"><a href="#更新时间" class="headerlink" title="更新时间"></a>更新时间</h2><p>在主题的配置文件下，使用<code>update</code>会找到一个<code>updated_at</code>的属性改为<code>true</code>即可。</p>
 <h2 id="代码显示"><a href="#代码显示" class="headerlink" title="代码显示"></a>代码显示</h2><p>在hexo的根目录下，<code>_config.yml</code>中的<code>auto_detect: false</code>改为true<br>在hexo的主题目录下，<code>_config.yml</code>中的<code>auto_detect: false</code>改为true</p>
 <p><code>highlight_theme: night eighties</code>,指定代码主题的样式</p>
-<h2 id="增加代码复制功能"><a href="#增加代码复制功能" class="headerlink" title="增加代码复制功能"></a>增加代码复制功能</h2><ul>
+<h2 id="增加代码复制功能"><a href="#增加代码复制功能" class="headerlink" title="增加代码复制功能"></a>增加代码复制功能</h2><pre><code>参考文件地址：</code></pre><ul>
 <li><a href="https://blog.csdn.net/Awt_FuDongLai/article/details/107466848" target="_blank" rel="noopener">代码复制</a></li>
 </ul>
-<h2 id="图片的延迟加载"><a href="#图片的延迟加载" class="headerlink" title="图片的延迟加载"></a>图片的延迟加载</h2>]]></content>
+<h2 id="隐藏网页底部powered-By-Hexo-强力驱动"><a href="#隐藏网页底部powered-By-Hexo-强力驱动" class="headerlink" title="隐藏网页底部powered By Hexo / 强力驱动"></a>隐藏网页底部powered By Hexo / 强力驱动</h2><p>打开<code>themes/next/layout/_partials/footer.swig</code>,隐藏驱动之间的代码即可，或者直接删除。</p>
+<h2 id="底部显示错误"><a href="#底部显示错误" class="headerlink" title="底部显示错误"></a>底部显示<i class="fa fa-angle-right"></i>错误</h2><p>更改<code>\themes\next\layout\_partials\pagination.swig</code>中的代码，将paginator()的代码改为：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">paginator(&#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">  prev_text: <span class="string">'&lt;i class="fa fa-hand-o-left" aria-label="'</span> + __(<span class="string">'accessibility.prev_page'</span>) + <span class="string">'"&gt;&lt;/i&gt;'</span>,</span></pre></td></tr><tr><td class="code"><pre><span class="line">  next_text: <span class="string">'&lt;i class="fa fa-hand-o-right" aria-label="'</span> + __(<span class="string">'accessibility.next_page'</span>) + <span class="string">'"&gt;&lt;/i&gt;'</span>,</span></pre></td></tr><tr><td class="code"><pre><span class="line">  mid_size : <span class="number">1</span>,</span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="built_in">escape</span>   : <span class="literal">false</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;)</span></pre></td></tr></table></figure>
+
+<h2 id="增加雪花特效"><a href="#增加雪花特效" class="headerlink" title="增加雪花特效"></a>增加雪花特效</h2><pre><code>已经配置完成，在样式配置文件中打开配置就行了</code></pre><p>在<code>\themes\next\layout\_layout.swig</code>文件引用</p>
+<ul>
+<li><a href="https://blog.csdn.net/stormdony/article/details/86001618" target="_blank" rel="noopener">雪花特效</a></li>
+</ul>
+<h2 id="引入背景图片"><a href="#引入背景图片" class="headerlink" title="引入背景图片"></a>引入背景图片</h2><p>打开文档下<code>themes\next\source\css\ _custom\custom.sty</code>l文件，这个是Next故意留给用户自己个性化定制一些样式的文件，添加以下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">body &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    background:url(https:<span class="comment">//source.unsplash.com/random/1600x900);</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">    background-repeat: no-repeat;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    background-attachment:fixed;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    background-position:<span class="number">50</span>% <span class="number">50</span>%;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+]]></content>
       <categories>
         <category>Hexo</category>
       </categories>
