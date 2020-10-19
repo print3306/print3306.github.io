@@ -20,7 +20,8 @@
   <entry>
     <title>ssm_error</title>
     <url>/2020/10/16/ssm-error/</url>
-    <content><![CDATA[<h3 id="BindingException-Invalid-bound-statement-not-found-com-maven-dao-ItemsDao-findAll"><a href="#BindingException-Invalid-bound-statement-not-found-com-maven-dao-ItemsDao-findAll" class="headerlink" title="BindingException: Invalid bound statement (not found): com.maven.dao.ItemsDao.findAll"></a>BindingException: Invalid bound statement (not found): com.maven.dao.ItemsDao.findAll</h3><pre><code>1. 问题
+    <content><![CDATA[<h3 id="dao接口不匹配"><a href="#dao接口不匹配" class="headerlink" title="dao接口不匹配"></a>dao接口不匹配</h3><p><code>BindingException: Invalid bound statement (not found): com.maven.dao.ItemsDao.findAll</code></p>
+<pre><code>1. 问题
     dao的接口与映射配置文件的绑定失败
 
 2. 解决思路
@@ -139,6 +140,111 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>maven</title>
+    <url>/2020/10/12/maven/</url>
+    <content><![CDATA[<h2 id="Maven基础知识"><a href="#Maven基础知识" class="headerlink" title="Maven基础知识"></a>Maven基础知识</h2><pre><code>1. Maven的含义
+    * 一个项目管理工具
+    * 依赖管理：
+        Maven对项目的jar包的管理过程，传统项目直接把jar包放置在项目中，
+        maven工程真正的jar包放置在仓库中，项目中只需要放置坐标
+    * 一键构建：
+        maven中集成了对tomcat插件，可以对项目进行编译，测试，打包，安装和发布等
+
+2. 依赖管理
+    1. 仓库的种类
+        * 本地仓库
+        * 远程仓库（私服）
+        * 中央仓库
+
+    2. 仓库之间的关系
+        当我们启动一个maven工程时，maven会通过pom文件中的jar坐标去本地仓库寻找
+        如果本地仓库没有对应jar包，会默认到中央仓库寻找对应jar包，下载到本地仓库
+        在公司中，如果本地仓库没有对应jar包，会先从私服下载，如果私服没有jar包，可以从中央仓库下载jar包，也可以从本地仓库上传jar包
+
+3. 一键构建
+    1. 常用命令
+        * clean:对构建信息进行清理
+        * complie: src/main/java目录进行编译
+        * test: 对测试进行编译
+        * package: 对项目进行打包，默认目录在target目录（本地complie目录）
+        * install：将包安装到本地仓库
+        * deploy：项目上传到私服
+
+    2. maven的生命周期
+        * 清理生命周期：clean
+        * 默认生命周期: complie test package install deploy
+        * 站点生命周期：</code></pre><h2 id="Maven传统使用"><a href="#Maven传统使用" class="headerlink" title="Maven传统使用"></a>Maven传统使用</h2><pre><code>1. jar包的冲突原因
+    如果一个项目导入核心jar包，会自动导入它所依赖的其他jar，如果导入的jar包所依赖的包是同一个，可能因为导入jar包的顺序问题，产生jar包的冲突
+
+2. 解决jar包的冲突
+    1. 第一声明优先原则
+        哪个jar包的坐标在靠上的位置，这个jar包就是先声明的，先声明的jar包的坐标下的依赖包可以优先进入项目
+
+    2. 路径近者优先原则
+        * 直接依赖：项目中直接导入的jar包，就是该项目的直接依赖jar包
+        * 传递依赖：项目中没有直接导入的jar包，可以通过直接依赖的jar包传递到项目中的jar
+        直接依赖路径比传递依赖路径近，最终进入项目的jar包会是路径近的直接依赖
+
+    3. 直接排除法
+        排除某个jar包的依赖包，使用exclusions排除该jar包的依赖包，在坐标内部排除当前jar包，可以不写版本号，默认和当前jar包的版本号一致
+
+3. 版本锁定
+    1. 原因
+        maven工程可以分为父子依赖，
+        凡是依赖别的项目后拿到的别的项目的依赖，都属于传递依赖。
+        项目A,被项目B依赖，项目A中的所有jar包都会传递到项目B,如果此时项目B的开发人员重新导入的jar包，由于是直接依赖，会覆盖到项目A的jar包
+
+    2. 解决方法
+        使用&lt;dependencyManagement&gt;来进行版本锁定，将项目主要的jar包的版本锁定，那么其他依赖该项目的项目中，即使有同名的jar包，也不会发生jar包覆盖
+
+    3. 使用方法
+        使用&lt;DependencyManagement&gt;标签只是起到版本锁定的作用，导入jar包还是需要使用&lt;Dependencies&gt;标签来进行导入jar包        
+
+    4. 简化pom.xml文件
+        * 使用&lt;properties&gt;标签来进行坐标版本的引入，减少后续的开发中的jar版本修改问题
+        * 使用&lt;DependencyManagement&gt;来进行版本锁定</code></pre><h2 id="Maven工程的拆分聚合"><a href="#Maven工程的拆分聚合" class="headerlink" title="Maven工程的拆分聚合"></a>Maven工程的拆分聚合</h2><pre><code>1. 拆分的思想
+    将一个完整的项目，拆分成多个独立的模块，在需要其中的某个模块的时候，可以直接引用该模块，有利于提高代码的可重用性，以及维护性
+
+2. 聚合的思想
+    把拆分的零散的模块组合起来形成一个完整的项目的过程，就是maven的聚合过程</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/10/12/maven/maven_1.png" alt="拆分聚合"></p>
+<h3 id="拆分案例"><a href="#拆分案例" class="headerlink" title="拆分案例"></a>拆分案例</h3><pre><code>1. 步骤
+    * 建立一个project,作为父工程，只需要工程中包含pom.xml文件就可以
+    * 建立子模块，选中当前的项目，右键New-&gt;Module
+    * 在创建子模块的时候会显示父工程的名称
+    * 子模块中的pom.xml文件包含父工程的组织名和版本号（共享），父工程pom.xml会包含子模块的模块名</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/10/12/maven/maven_parent.png" alt="父工程的建立"></p>
+<blockquote>
+<p><img src="/2020/10/12/maven/maven_son_dao.png" alt="子工程的建立"></p>
+</blockquote>
+<p><img src="/2020/10/12/maven/maven_son_dao_2.png" alt="子工程的建立2"></p>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/12/maven/maven_pom.png" alt></p>
+<pre><code>2. 注意
+    1. 项目,工程和模块之间的区别
+        工程不等于一个完整的项目，模块也不等于一个完整的项目，一个完整的项目看的是代&lt;br&gt;码，代码完整，才说明是一个完整的项目，和此项目是工程或模块没有关联
+
+        1. 工程天生只能使用自己的内部资源，天生是独立的，后期可以和其他的工程或模块建立关联关系
+        2. 模块天生属于父工程的，天生不是独立的，模块一旦创建，所有的父工程的资源模块都可以使用
+
+    2. 父子工程
+        * 子模块天生集成父工程，可以使用父工程的所有资源
+        * 子模块之间天生没有任何关联，后期可以自己建立关系，
+            子模块在需要使用其他模块的地方引用模块的坐标就可以了
+
+        * 父子工程之间不用建立关系，继承关系是天生的，不需要手动建立
+        * 子工程之间引用叫做依赖，依赖关系不是天生的，需要手动建立</code></pre><h2 id="私服"><a href="#私服" class="headerlink" title="私服"></a>私服</h2><h2 id="安装第三方Jar包"><a href="#安装第三方Jar包" class="headerlink" title="安装第三方Jar包"></a>安装第三方Jar包</h2>]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+      <tags>
+        <tag>Maven</tag>
       </tags>
   </entry>
   <entry>
@@ -2929,6 +3035,23 @@ User findById(Integer id);</code></pre></blockquote>
       </tags>
   </entry>
   <entry>
+    <title>Spring Load</title>
+    <url>/2020/05/09/SpringLoad/</url>
+    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
+<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
+<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
+<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
+<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
+<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
+]]></content>
+      <categories>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SQL Inject</title>
     <url>/2020/05/09/SQL%E6%B3%A8%E5%85%A5/</url>
     <content><![CDATA[<h1 id="SQL注入问题"><a href="#SQL注入问题" class="headerlink" title="SQL注入问题"></a>SQL注入问题</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>在拼接sql语句时，有一些特殊的SQL关键字参于字符串的拼接，导致SQL语句的逻辑发生变化，可能会造成安全性问题</code></pre><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre><code>1. 输入 a&apos;or&apos;a&apos;=&apos;a,条件改变
@@ -2989,23 +3112,6 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
       </categories>
       <tags>
         <tag>SQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring Load</title>
-    <url>/2020/05/09/SpringLoad/</url>
-    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
-<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
-<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
-<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
-<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
-<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
-]]></content>
-      <categories>
-        <category>Spring</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
