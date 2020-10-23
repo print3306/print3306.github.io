@@ -239,7 +239,29 @@
             子模块在需要使用其他模块的地方引用模块的坐标就可以了
 
         * 父子工程之间不用建立关系，继承关系是天生的，不需要手动建立
-        * 子工程之间引用叫做依赖，依赖关系不是天生的，需要手动建立</code></pre><h2 id="私服"><a href="#私服" class="headerlink" title="私服"></a>私服</h2><h2 id="安装第三方Jar包"><a href="#安装第三方Jar包" class="headerlink" title="安装第三方Jar包"></a>安装第三方Jar包</h2>]]></content>
+        * 子工程之间引用叫做依赖，依赖关系不是天生的，需要手动建立
+
+3. 传递依赖的jar包能否使用
+    * 直接依赖的jar包的作用域为complie,传递依赖的jar包的作用域与这个jar包在pom.xml文件中的定义相关，
+    * 如果实际开发中发现对应的jar包无法导入，可以重新导入jar包
+
+4. maven父子工程项目的测试
+    1. 通过maven的run启动父工程来进行服务启动
+    2. 先将父子工程的jar包安装到本地仓库，父工程 install，安装到本地仓库,然后通过子工程的web来进行启动
+    3. 使用本地的tomcat来进行服务启动
+
+    第一种和第二种的服务启动的方式是基于maven自带的tomcat服务器启动，
+        1. 方式一：使用父工程的run命令来进行服务启动，此时服务首先加载pom.xml文件，进行jar包的导入，由于此时的所有jar包都存在，可以启动服务
+        2. 方式二：使用启动web项目来启动服务，在查找jar包的时候只有service层的jar包，本地仓库没有，中央仓库也没有，jar包导入错误，无法启动，只有将jar包安装到本地仓库，才能使用web项目来进行服务的启动（install）
+
+    第三种方式：直接使用本地的tomcat服务器来进行服务的启动</code></pre><h2 id="私服"><a href="#私服" class="headerlink" title="私服"></a>私服</h2><pre><code>1. 私服的安装</code></pre><ul>
+<li><a href="https://www.cnblogs.com/qdhxhz/p/9801325.html" target="_blank" rel="noopener">maven私服的下载地址</a></li>
+</ul>
+<h2 id="下载第三方jar"><a href="#下载第三方jar" class="headerlink" title="下载第三方jar"></a>下载第三方jar</h2><pre><code>1. 安装第三方jar包到本地仓库
+    1. 进入jar包的所在目录</code></pre><p><code>mvn install:install-file -DgroupId=com.alibaba -DartiactId=fastjson -Dversion=1.1.37 -Dfile=fastjson-1.1.37.jar -Dpackage=jar</code></p>
+<pre><code>2. 使用cmd命令行安装</code></pre><p><code>mvn install:install-file -DgroupId=com.alibaba -DartiactId=fastjson -Dversion=1.1.37 -Dfile=D:/2017217796/fastjson-1.1.37.jar -Dpackage=jar</code></p>
+<pre><code>注意事项：
+    这种安装方法，默认本地仓库的位置为C盘下的指定安装目录，如果曾经更改过本地仓库的位置，会产生错误</code></pre>]]></content>
       <categories>
         <category>Tools</category>
       </categories>
