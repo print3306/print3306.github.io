@@ -143,6 +143,144 @@
       </tags>
   </entry>
   <entry>
+    <title>1819-password-does-not-satisfy</title>
+    <url>/2020/10/28/pwd_not_safe/</url>
+    <content><![CDATA[<h2 id="ERROR-1819-HY000-Your-password-does-not-satisfy-the-current-policy-requirements"><a href="#ERROR-1819-HY000-Your-password-does-not-satisfy-the-current-policy-requirements" class="headerlink" title="ERROR 1819 (HY000): Your password does not satisfy the current policy requirements"></a>ERROR 1819 (HY000): Your password does not satisfy the current policy requirements</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><pre><code>在更改MySQL数据库的密码时，出现这个问题，这是因为设置的密码过于简单，MySQL中对于密码 的设置具有限制</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> <span class="keyword">user</span> <span class="keyword">SET</span> authentication_string=<span class="keyword">PASSWORD</span>(<span class="string">'root'</span>) <span class="keyword">where</span> <span class="keyword">USER</span>=<span class="string">'root'</span>;</span></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">ERROR 1819 (HY000): Your password does not satisfy the current policy requirements</span></pre></td></tr></table></figure>
+
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><pre><code>1. 更改MySQL中对于密码设置的限制</code></pre><p>密码的长度是由<code>validate_password_length</code>决定的,但是可以通过以下命令修改</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> validate_password_length=<span class="number">4</span>;</span></pre></td></tr></table></figure>
+
+<p><code>validate_password_policy</code>决定密码的验证策略,默认等级为<code>MEDIUM</code>(中等),可通过以下命令修改为<code>LOW</code>(低)</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> validate_password_policy=<span class="number">0</span>;</span></pre></td></tr></table></figure>
+
+<p>修改完成后密码就可以设置的很简单，比如1234之类的。</p>
+]]></content>
+      <categories>
+        <category>Error,MySQL,Linux</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1524-plugin-not-load</title>
+    <url>/2020/10/28/plugin_not_load/</url>
+    <content><![CDATA[<h2 id="ERROR-1524-HY000-Plugin-‘msyql-native-password’-is-not-loaded"><a href="#ERROR-1524-HY000-Plugin-‘msyql-native-password’-is-not-loaded" class="headerlink" title="ERROR 1524 (HY000): Plugin ‘msyql_native_password’ is not loaded"></a>ERROR 1524 (HY000): Plugin ‘msyql_native_password’ is not loaded</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><pre><code>在登录MySQL本地服务器的时候，出现上面的问题</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">zhaolong@zl-vm:~$ sudo mysql -uroot -proot</span></pre></td></tr><tr><td class="code"><pre><span class="line">mysql: [Warning] Using a password on the command line interface can be insecure.</span></pre></td></tr><tr><td class="code"><pre><span class="line">ERROR 1524 (HY000): Plugin 'msyql_native_password' is not loaded</span></pre></td></tr></table></figure>
+
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><ul>
+<li>在文件<code>/etc/mysql/my.cnf</code>文件中增加代码,开启<code>无密码登录</code>：</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">[mysqld]</span></pre></td></tr><tr><td class="code"><pre><span class="line">skip-<span class="keyword">grant</span>-<span class="keyword">tables</span></span></pre></td></tr></table></figure>
+
+<ul>
+<li>重启MySQL,重新进行登录</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">sudo service mysql restart</span></pre></td></tr><tr><td class="code"><pre><span class="line">sudo mysql</span></pre></td></tr></table></figure>
+
+<ul>
+<li>输入以下命令，在将<code>/etc/mysql/mysql.cnf</code>修改过来就可以了</li>
+<li>如果此时不修改<code>mysql.cnf</code>文件，可以使用<code>sudo mysql</code>直接进入客户端</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> mysql;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> authentication_string=<span class="keyword">PASSWORD</span>(<span class="string">"密码"</span>) <span class="keyword">where</span> <span class="keyword">User</span>=<span class="string">'root'</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> <span class="keyword">plugin</span>=<span class="string">"mysql_native_password"</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">quit;</span></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Error,MySQL,Linux</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1045-access-denied</title>
+    <url>/2020/10/28/access_denied/</url>
+    <content><![CDATA[<h2 id="ERROR-1045-28000-Access-denied-for-user-‘debian-sys-maint’-’localhost’-using-password-YES"><a href="#ERROR-1045-28000-Access-denied-for-user-‘debian-sys-maint’-’localhost’-using-password-YES" class="headerlink" title="ERROR 1045 (28000): Access denied for user ‘debian-sys-maint’@’localhost’ (using password: YES)"></a>ERROR 1045 (28000): Access denied for user ‘debian-sys-maint’@’localhost’ (using password: YES)</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p> 在使用<code>sudo mysql -udebian-sys-maint -p</code>的时候，出现这个错误<br>    使用的是MySQL登录密码</p>
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><pre><code>修改root用户的密码，通过命令来修改root用户的密码：</code></pre><ul>
+<li>查看密码</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 通过查看文件获取原始的密码</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">sudo vim /etc/mysql/debian.cnf</span></pre></td></tr></table></figure>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/28/access_denied/1045_1.png" alt></p>
+<ul>
+<li>更新密码</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 更改密码</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> <span class="keyword">user</span> <span class="keyword">SET</span> authentication_string=<span class="keyword">PASSWORD</span>(<span class="string">'root'</span>) <span class="keyword">where</span> <span class="keyword">USER</span>=<span class="string">'root'</span>; </span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="comment">-- 刷新权限</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">FLUSH</span> <span class="keyword">PRIVILEGES</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="comment">-- 退出</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">quit</span></pre></td></tr></table></figure>
+
+<ul>
+<li>重新登录    </li>
+</ul>
+<p>使用更新后的密码可以进行登录</p>
+<h3 id="参考博客："><a href="#参考博客：" class="headerlink" title="参考博客："></a>参考博客：</h3><ul>
+<li><a href="https://blog.csdn.net/xiaoshunzi111/article/details/51898939" target="_blank" rel="noopener">1045 Error&lt;/&gt;</a></li>
+<li><a href="https://blog.csdn.net/pengge0727/article/details/81448952?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-8.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-8.channel_param" target="_blank" rel="noopener">1045 Error2</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Error,MySQL,Linux</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2002-mysql-conn-err</title>
+    <url>/2020/10/28/conn_err/</url>
+    <content><![CDATA[<h2 id="2002-Can’t-connect-to-local-MySQL-server-through-socket-‘-var-lib-mysql-mysql-sock’-13-“权限不够”"><a href="#2002-Can’t-connect-to-local-MySQL-server-through-socket-‘-var-lib-mysql-mysql-sock’-13-“权限不够”" class="headerlink" title="2002 - Can’t connect to local MySQL server through socket ‘/var/lib/mysql/mysql.sock’ (13 “权限不够”)"></a>2002 - Can’t connect to local MySQL server through socket ‘/var/lib/mysql/mysql.sock’ (13 “权限不够”)</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><pre><code>在Linux中安装MySQL5.7.31以及Navicat可视化界面，MySQL的连接没有问题，但是在Navicat连接
+数据库的过程中出现错误，错误如下：</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/10/28/conn_err/2002_conn.png" alt="Navicat连接MySQL界面"></p>
+<pre><code>具体的错误代码:</code></pre><blockquote>
+<p><img src="/2020/10/28/conn_err/2002_conn_2.png" alt="2002_MySQL_Error"></p>
+</blockquote>
+<h3 id="本地MySQL客户端不能连接MySQL"><a href="#本地MySQL客户端不能连接MySQL" class="headerlink" title="本地MySQL客户端不能连接MySQL"></a>本地MySQL客户端不能连接MySQL</h3><pre><code>1. 查看MySQL的server配置文件</code></pre><p>在<code>socket ‘/var/lib/mysql/mysql.sock’</code>中，这个目录是连接本地mysql，通常通过一个Unix域套接字文件进行的，可能这个mysql.sock套接字文件配置有问题，本地客户端就不能连接。</p>
+<pre><code>2. 方法</code></pre><p>ubuntu系统的mysql配置文件在<code>/etc/mysql/my.cnf</code>,在此目录里还有一个<code>mysql.cnf</code>,这两个文件是通过软连接的同一个文件, 我在<code>my.cnf</code>里添加配置信息,<code>mysql.cnf</code>里会自动改变。</p>
+<p>使用<code>mysql</code>客户端不能连接到mysql服务端，是因为<code>mysql</code>连接的时候，使用了这个配置文件的<code>[client]</code>部分,新安装的mysql配置文件里是没有内容的,也就没有指定客户端的<code>mysql.sock</code>套接字文件位置;默认使用的是<code>mysql-server</code>服务端的配置,在<code>/etc/mysql/mysql.conf.d/mysqld.cnf</code>里;</p>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/28/conn_err/2002_conn_3.png" alt="mysql配置文件"></p>
+<pre><code>3. 更改文件</code></pre><p>更改mysql客户端的mysql.sock套接字文件, 在配置文件<code>/etc/mysql/my.cnf</code>里添加:</p>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/28/conn_err/2002_conn_4.png" alt="mysql配置文件更改"></p>
+<pre><code>4. 重启</code></pre><p>使用<code>sudo service mysql restart</code>命令重启服务，使用<code>mysql -uroot -p</code>登录</p>
+<h3 id="本地可以登录，Navicat无法登录"><a href="#本地可以登录，Navicat无法登录" class="headerlink" title="本地可以登录，Navicat无法登录"></a>本地可以登录，Navicat无法登录</h3><p>在终端命令行下可以登录，但是使用Navicat无法登录，看了mysql服务端的配置<code>/etc/mysql/mysql.conf.d/mysqld.cnf</code>文件</p>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/28/conn_err/2002_conn_5.png" alt="mysql配置文件"></p>
+<pre><code>1. 解决
+    重新编辑连接，将主机名称进行更改</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/10/28/conn_err/2002_conn_6.png" alt="navicat连接"></p>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/28/conn_err/2002_conn_7.png" alt="navicat连接成功"></p>
+]]></content>
+      <categories>
+        <category>Error,MySQL,Linux</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mysql</title>
+    <url>/2020/10/12/mysql/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><pre><code>* 针对数据库查询的延伸学习
+* 强化数据库操作
+* 学习更好的使用MySQL数据库，提高效率</code></pre><ul>
+<li><a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="noopener">mysql数据库下载地址</a></li>
+<li><a href="https://print3306.github.io/2020/06/18/mysql57/">Windows版下载安装</a></li>
+</ul>
+<h2 id><a href="#" class="headerlink" title></a></h2>]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>maven</title>
     <url>/2020/10/12/maven/</url>
     <content><![CDATA[<h2 id="Maven基础知识"><a href="#Maven基础知识" class="headerlink" title="Maven基础知识"></a>Maven基础知识</h2><pre><code>1. Maven的含义
@@ -2373,24 +2511,44 @@ public IAccountService getAccountService(){
   <entry>
     <title>MYSQL 5.7.29</title>
     <url>/2020/06/18/mysql57/</url>
-    <content><![CDATA[<h2 id="下载安装MySQL-5-7-29版本"><a href="#下载安装MySQL-5-7-29版本" class="headerlink" title="下载安装MySQL-5.7.29版本"></a>下载安装MySQL-5.7.29版本</h2><h3 id="1-下载安装包"><a href="#1-下载安装包" class="headerlink" title="1.下载安装包"></a>1.下载安装包</h3><pre><code>官网下载安装包，离线安装方式</code></pre><p><img src="/2020/06/18/mysql57/0.png" alt></p>
+    <content><![CDATA[<h2 id="下载安装MySQL-5-7-29版本"><a href="#下载安装MySQL-5-7-29版本" class="headerlink" title="下载安装MySQL-5.7.29版本"></a>下载安装MySQL-5.7.29版本</h2><h3 id="1-下载安装包"><a href="#1-下载安装包" class="headerlink" title="1.下载安装包"></a>1.下载安装包</h3><pre><code>官网下载安装包，离线安装方式</code></pre><ul>
+<li><a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="noopener">mysql数据库下载地址</a><blockquote>
+</blockquote>
+<img src="/2020/06/18/mysql57/0.png" alt></li>
+</ul>
 <h3 id="2-my-ini"><a href="#2-my-ini" class="headerlink" title="2.my.ini"></a>2.my.ini</h3><pre><code>下载的安装包解压后，安装目录如果没有*my.ini*文件，新建该文件，内容：
-其中，文件安装和data目录可以自定义</code></pre><p><img src="/2020/06/18/mysql57/5.png" alt></p>
-<h3 id="3-创建服务"><a href="#3-创建服务" class="headerlink" title="3.创建服务"></a>3.创建服务</h3><p><img src="/2020/06/18/mysql57/6.png" alt></p>
+其中，文件安装和data目录可以自定义</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/06/18/mysql57/5.png" alt></p>
+<h3 id="3-创建服务"><a href="#3-创建服务" class="headerlink" title="3.创建服务"></a>3.创建服务</h3><blockquote>
+</blockquote>
+<p><img src="/2020/06/18/mysql57/6.png" alt></p>
 <pre><code>mysql57为服务名</code></pre><h3 id="4-初始化"><a href="#4-初始化" class="headerlink" title="4.初始化"></a>4.初始化</h3><p><code>mysqld --initialize</code></p>
 <h3 id="5-启动服务"><a href="#5-启动服务" class="headerlink" title="5.启动服务"></a>5.启动服务</h3><p><code>net start mysql</code></p>
 <h3 id="6-连接数据库"><a href="#6-连接数据库" class="headerlink" title="6.连接数据库"></a>6.连接数据库</h3><ul>
-<li>临时密码：在***.err下<br><img src="/2020/06/18/mysql57/4.png" alt><br><img src="/2020/06/18/mysql57/9.png" alt><br><img src="/2020/06/18/mysql57/11.png" alt></li>
+<li>临时密码：在***.err下<blockquote>
+</blockquote>
+<img src="/2020/06/18/mysql57/4.png" alt><br><img src="/2020/06/18/mysql57/9.png" alt><br><img src="/2020/06/18/mysql57/11.png" alt></li>
 </ul>
-<h3 id="7-更改密码"><a href="#7-更改密码" class="headerlink" title="7.更改密码"></a>7.更改密码</h3><p><img src="/2020/06/18/mysql57/12.png" alt></p>
+<h3 id="7-更改密码"><a href="#7-更改密码" class="headerlink" title="7.更改密码"></a>7.更改密码</h3><blockquote>
+</blockquote>
+<p><img src="/2020/06/18/mysql57/12.png" alt></p>
 <h3 id="8-断开连接"><a href="#8-断开连接" class="headerlink" title="8.断开连接"></a>8.断开连接</h3><p><code>exit</code></p>
-<h3 id="9-退出服务"><a href="#9-退出服务" class="headerlink" title="9.退出服务"></a>9.退出服务</h3><p><img src="/2020/06/18/mysql57/13.png" alt></p>
+<h3 id="9-退出服务"><a href="#9-退出服务" class="headerlink" title="9.退出服务"></a>9.退出服务</h3><blockquote>
+</blockquote>
+<p><img src="/2020/06/18/mysql57/13.png" alt></p>
 <h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="1-存在data文件夹"><a href="#1-存在data文件夹" class="headerlink" title="1.存在data文件夹"></a>1.存在data文件夹</h3><ul>
 <li>删除原本data，初始化命令自动生成新的data文件夹</li>
-<li>data文件夹自己手动创建可能报错，最好还是由系统自动创建<br><img src="/2020/06/18/mysql57/7.png" alt></li>
+<li>data文件夹自己手动创建可能报错，最好还是由系统自动创建<blockquote>
+</blockquote>
+<img src="/2020/06/18/mysql57/7.png" alt></li>
 </ul>
-<h3 id="2-无法启动服务"><a href="#2-无法启动服务" class="headerlink" title="2.无法启动服务"></a>2.无法启动服务</h3><p><img src="/2020/06/18/mysql57/1.png" alt><br><img src="/2020/06/18/mysql57/8.png" alt></p>
-<pre><code>更改注册表信息</code></pre><p><img src="/2020/06/18/mysql57/2.png" alt><br><img src="/2020/06/18/mysql57/3.png" alt></p>
+<h3 id="2-无法启动服务"><a href="#2-无法启动服务" class="headerlink" title="2.无法启动服务"></a>2.无法启动服务</h3><blockquote>
+</blockquote>
+<p><img src="/2020/06/18/mysql57/1.png" alt><br><img src="/2020/06/18/mysql57/8.png" alt></p>
+<pre><code>更改注册表信息</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/06/18/mysql57/2.png" alt><br><img src="/2020/06/18/mysql57/3.png" alt></p>
 ]]></content>
       <categories>
         <category>SQL</category>
