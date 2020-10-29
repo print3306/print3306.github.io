@@ -158,7 +158,9 @@
 <p>修改完成后密码就可以设置的很简单，比如1234之类的。</p>
 ]]></content>
       <categories>
-        <category>Error,MySQL,Linux</category>
+        <category>Linux</category>
+        <category>MySQL</category>
+        <category>Error</category>
       </categories>
       <tags>
         <tag>MySQL</tag>
@@ -185,7 +187,9 @@
 </ul>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> mysql;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> authentication_string=<span class="keyword">PASSWORD</span>(<span class="string">"密码"</span>) <span class="keyword">where</span> <span class="keyword">User</span>=<span class="string">'root'</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> <span class="keyword">plugin</span>=<span class="string">"mysql_native_password"</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">quit;</span></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>Error,MySQL,Linux</category>
+        <category>Linux</category>
+        <category>MySQL</category>
+        <category>Error</category>
       </categories>
       <tags>
         <tag>MySQL</tag>
@@ -217,7 +221,9 @@
 </ul>
 ]]></content>
       <categories>
-        <category>Error,MySQL,Linux</category>
+        <category>Linux</category>
+        <category>MySQL</category>
+        <category>Error</category>
       </categories>
       <tags>
         <tag>MySQL</tag>
@@ -257,10 +263,42 @@
 <p><img src="/2020/10/28/conn_err/2002_conn_7.png" alt="navicat连接成功"></p>
 ]]></content>
       <categories>
-        <category>Error,MySQL,Linux</category>
+        <category>Linux</category>
+        <category>MySQL</category>
+        <category>Error</category>
       </categories>
       <tags>
         <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>multi-categories</title>
+    <url>/2020/10/29/multi-categories/</url>
+    <content><![CDATA[<h2 id="Hexo博客的多个分类的解决方案"><a href="#Hexo博客的多个分类的解决方案" class="headerlink" title="Hexo博客的多个分类的解决方案"></a>Hexo博客的多个分类的解决方案</h2><pre><code>在写博客的时候，很多方面并不是单一的，需要和其他的事务关联起来，此时的分类不能单一的看作一个，需要分为多个标签，这里提供一些解决方案。
+多个标签的解决方法相同</code></pre><h3 id="子分类"><a href="#子分类" class="headerlink" title="子分类"></a>子分类</h3><pre><code>1. 含义
+    将文章的分类方式，按照包含的关系进行分类，后面的分类包含于前面的分类
+
+2. 使用
+    将文章分类于，java.servlet</code></pre><ul>
+<li>分类方式一：</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="bullet">-</span> <span class="string">Java</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="bullet">-</span> <span class="string">Servlet</span></span></pre></td></tr></table></figure>
+
+<ul>
+<li>分类方式二：</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span> <span class="string">[Java,</span> <span class="string">Servlet]</span></span></pre></td></tr></table></figure>
+
+<pre><code>这两个的作用一致，分类的结构都是树形结构</code></pre><h3 id="多个分类"><a href="#多个分类" class="headerlink" title="多个分类"></a>多个分类</h3><p>希望将一篇文章分类于多个目录中,下面的是将文件分类于<code>java</code>和<code>servlet</code></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="string">-[Java]</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="string">-[Servlet]</span></span></pre></td></tr></table></figure>
+
+<pre><code>也可以在多分类的基础上使用子分类</code></pre><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="string">-[Java,</span> <span class="string">Servlet]</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="string">-[Programming]</span></span></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Blog</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
