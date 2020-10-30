@@ -122,14 +122,14 @@
 </ul>
 <h2 id="隐藏网页底部powered-By-Hexo-强力驱动"><a href="#隐藏网页底部powered-By-Hexo-强力驱动" class="headerlink" title="隐藏网页底部powered By Hexo / 强力驱动"></a>隐藏网页底部powered By Hexo / 强力驱动</h2><p>打开<code>themes/next/layout/_partials/footer.swig</code>,隐藏驱动之间的代码即可，或者直接删除。</p>
 <h2 id="底部显示错误"><a href="#底部显示错误" class="headerlink" title="底部显示错误"></a>底部显示<i class="fa fa-angle-right"></i>错误</h2><p>更改<code>\themes\next\layout\_partials\pagination.swig</code>中的代码，将paginator()的代码改为：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">paginator(&#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">  prev_text: <span class="string">'&lt;i class="fa fa-hand-o-left" aria-label="'</span> + __(<span class="string">'accessibility.prev_page'</span>) + <span class="string">'"&gt;&lt;/i&gt;'</span>,</span></pre></td></tr><tr><td class="code"><pre><span class="line">  next_text: <span class="string">'&lt;i class="fa fa-hand-o-right" aria-label="'</span> + __(<span class="string">'accessibility.next_page'</span>) + <span class="string">'"&gt;&lt;/i&gt;'</span>,</span></pre></td></tr><tr><td class="code"><pre><span class="line">  mid_size : <span class="number">1</span>,</span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="built_in">escape</span>   : <span class="literal">false</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;)</span></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">paginator(&#123;</span><br><span class="line">  prev_text: <span class="string">'&lt;i class="fa fa-hand-o-left" aria-label="'</span> + __(<span class="string">'accessibility.prev_page'</span>) + <span class="string">'"&gt;&lt;/i&gt;'</span>,</span><br><span class="line">  next_text: <span class="string">'&lt;i class="fa fa-hand-o-right" aria-label="'</span> + __(<span class="string">'accessibility.next_page'</span>) + <span class="string">'"&gt;&lt;/i&gt;'</span>,</span><br><span class="line">  mid_size : <span class="number">1</span>,</span><br><span class="line">  <span class="built_in">escape</span>   : <span class="literal">false</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <h2 id="增加雪花特效"><a href="#增加雪花特效" class="headerlink" title="增加雪花特效"></a>增加雪花特效</h2><pre><code>已经配置完成，在样式配置文件中打开配置就行了</code></pre><p>在<code>\themes\next\layout\_layout.swig</code>文件引用</p>
 <ul>
 <li><a href="https://blog.csdn.net/stormdony/article/details/86001618" target="_blank" rel="noopener">雪花特效</a></li>
 </ul>
 <h2 id="引入背景图片"><a href="#引入背景图片" class="headerlink" title="引入背景图片"></a>引入背景图片</h2><p>打开文档下<code>themes\next\source\css\ _custom\custom.sty</code>l文件，这个是Next故意留给用户自己个性化定制一些样式的文件，添加以下代码：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">body &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    background:url(https:<span class="comment">//source.unsplash.com/random/1600x900);</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">    background-repeat: no-repeat;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    background-attachment:fixed;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    background-position:<span class="number">50</span>% <span class="number">50</span>%;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">body &#123;</span><br><span class="line">    background:url(https:<span class="comment">//source.unsplash.com/random/1600x900);</span></span><br><span class="line">    background-repeat: no-repeat;</span><br><span class="line">    background-attachment:fixed;</span><br><span class="line">    background-position:<span class="number">50</span>% <span class="number">50</span>%;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="静态资源压缩-1"><a href="#静态资源压缩-1" class="headerlink" title="静态资源压缩"></a>静态资源压缩</h2><pre><code>参考文档：</code></pre><ul>
 <li><a href="https://maplerain.cc/posts/69416b20.html" target="_blank" rel="noopener">静态资源压缩</a></li>
@@ -145,15 +145,15 @@
   <entry>
     <title>1819-password-does-not-satisfy</title>
     <url>/2020/10/28/pwd_not_safe/</url>
-    <content><![CDATA[<h2 id="ERROR-1819-HY000-Your-password-does-not-satisfy-the-current-policy-requirements"><a href="#ERROR-1819-HY000-Your-password-does-not-satisfy-the-current-policy-requirements" class="headerlink" title="ERROR 1819 (HY000): Your password does not satisfy the current policy requirements"></a>ERROR 1819 (HY000): Your password does not satisfy the current policy requirements</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><pre><code>在更改MySQL数据库的密码时，出现这个问题，这是因为设置的密码过于简单，MySQL中对于密码 的设置具有限制</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> <span class="keyword">user</span> <span class="keyword">SET</span> authentication_string=<span class="keyword">PASSWORD</span>(<span class="string">'root'</span>) <span class="keyword">where</span> <span class="keyword">USER</span>=<span class="string">'root'</span>;</span></pre></td></tr></table></figure>
+    <content><![CDATA[<h2 id="ERROR-1819-HY000-Your-password-does-not-satisfy-the-current-policy-requirements"><a href="#ERROR-1819-HY000-Your-password-does-not-satisfy-the-current-policy-requirements" class="headerlink" title="ERROR 1819 (HY000): Your password does not satisfy the current policy requirements"></a>ERROR 1819 (HY000): Your password does not satisfy the current policy requirements</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><pre><code>在更改MySQL数据库的密码时，出现这个问题，这是因为设置的密码过于简单，MySQL中对于密码 的设置具有限制</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> <span class="keyword">user</span> <span class="keyword">SET</span> authentication_string=<span class="keyword">PASSWORD</span>(<span class="string">'root'</span>) <span class="keyword">where</span> <span class="keyword">USER</span>=<span class="string">'root'</span>;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">ERROR 1819 (HY000): Your password does not satisfy the current policy requirements</span></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">ERROR 1819 (HY000): Your password does not satisfy the current policy requirements</span><br></pre></td></tr></table></figure>
 
 <h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><pre><code>1. 更改MySQL中对于密码设置的限制</code></pre><p>密码的长度是由<code>validate_password_length</code>决定的,但是可以通过以下命令修改</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> validate_password_length=<span class="number">4</span>;</span></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> validate_password_length=<span class="number">4</span>;</span><br></pre></td></tr></table></figure>
 
 <p><code>validate_password_policy</code>决定密码的验证策略,默认等级为<code>MEDIUM</code>(中等),可通过以下命令修改为<code>LOW</code>(低)</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> validate_password_policy=<span class="number">0</span>;</span></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> validate_password_policy=<span class="number">0</span>;</span><br></pre></td></tr></table></figure>
 
 <p>修改完成后密码就可以设置的很简单，比如1234之类的。</p>
 ]]></content>
@@ -169,23 +169,23 @@
   <entry>
     <title>1524-plugin-not-load</title>
     <url>/2020/10/28/plugin_not_load/</url>
-    <content><![CDATA[<h2 id="ERROR-1524-HY000-Plugin-‘msyql-native-password’-is-not-loaded"><a href="#ERROR-1524-HY000-Plugin-‘msyql-native-password’-is-not-loaded" class="headerlink" title="ERROR 1524 (HY000): Plugin ‘msyql_native_password’ is not loaded"></a>ERROR 1524 (HY000): Plugin ‘msyql_native_password’ is not loaded</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><pre><code>在登录MySQL本地服务器的时候，出现上面的问题</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">zhaolong@zl-vm:~$ sudo mysql -uroot -proot</span></pre></td></tr><tr><td class="code"><pre><span class="line">mysql: [Warning] Using a password on the command line interface can be insecure.</span></pre></td></tr><tr><td class="code"><pre><span class="line">ERROR 1524 (HY000): Plugin 'msyql_native_password' is not loaded</span></pre></td></tr></table></figure>
+    <content><![CDATA[<h2 id="ERROR-1524-HY000-Plugin-‘msyql-native-password’-is-not-loaded"><a href="#ERROR-1524-HY000-Plugin-‘msyql-native-password’-is-not-loaded" class="headerlink" title="ERROR 1524 (HY000): Plugin ‘msyql_native_password’ is not loaded"></a>ERROR 1524 (HY000): Plugin ‘msyql_native_password’ is not loaded</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><pre><code>在登录MySQL本地服务器的时候，出现上面的问题</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">zhaolong@zl-vm:~$ sudo mysql -uroot -proot</span><br><span class="line">mysql: [Warning] Using a password on the command line interface can be insecure.</span><br><span class="line">ERROR 1524 (HY000): Plugin 'msyql_native_password' is not loaded</span><br></pre></td></tr></table></figure>
 
 <h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><ul>
 <li>在文件<code>/etc/mysql/my.cnf</code>文件中增加代码,开启<code>无密码登录</code>：</li>
 </ul>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">[mysqld]</span></pre></td></tr><tr><td class="code"><pre><span class="line">skip-<span class="keyword">grant</span>-<span class="keyword">tables</span></span></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">skip-<span class="keyword">grant</span>-<span class="keyword">tables</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>重启MySQL,重新进行登录</li>
 </ul>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">sudo service mysql restart</span></pre></td></tr><tr><td class="code"><pre><span class="line">sudo mysql</span></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">sudo service mysql restart</span><br><span class="line">sudo mysql</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>输入以下命令，在将<code>/etc/mysql/mysql.cnf</code>修改过来就可以了</li>
 <li>如果此时不修改<code>mysql.cnf</code>文件，可以使用<code>sudo mysql</code>直接进入客户端</li>
 </ul>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> mysql;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> authentication_string=<span class="keyword">PASSWORD</span>(<span class="string">"密码"</span>) <span class="keyword">where</span> <span class="keyword">User</span>=<span class="string">'root'</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> <span class="keyword">plugin</span>=<span class="string">"mysql_native_password"</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">quit;</span></pre></td></tr></table></figure>]]></content>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> mysql;</span><br><span class="line"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> authentication_string=<span class="keyword">PASSWORD</span>(<span class="string">"密码"</span>) <span class="keyword">where</span> <span class="keyword">User</span>=<span class="string">'root'</span>;</span><br><span class="line"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> <span class="keyword">plugin</span>=<span class="string">"mysql_native_password"</span>;</span><br><span class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</span><br><span class="line">quit;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Linux</category>
         <category>MySQL</category>
@@ -202,14 +202,14 @@
 <h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><pre><code>修改root用户的密码，通过命令来修改root用户的密码：</code></pre><ul>
 <li>查看密码</li>
 </ul>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 通过查看文件获取原始的密码</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">sudo vim /etc/mysql/debian.cnf</span></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 通过查看文件获取原始的密码</span></span><br><span class="line">sudo vim /etc/mysql/debian.cnf</span><br></pre></td></tr></table></figure>
 <blockquote>
 </blockquote>
 <p><img src="/2020/10/28/access_denied/1045_1.png" alt></p>
 <ul>
 <li>更新密码</li>
 </ul>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 更改密码</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> <span class="keyword">user</span> <span class="keyword">SET</span> authentication_string=<span class="keyword">PASSWORD</span>(<span class="string">'root'</span>) <span class="keyword">where</span> <span class="keyword">USER</span>=<span class="string">'root'</span>; </span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="comment">-- 刷新权限</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">FLUSH</span> <span class="keyword">PRIVILEGES</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="comment">-- 退出</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">quit</span></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 更改密码</span></span><br><span class="line"><span class="keyword">UPDATE</span> <span class="keyword">user</span> <span class="keyword">SET</span> authentication_string=<span class="keyword">PASSWORD</span>(<span class="string">'root'</span>) <span class="keyword">where</span> <span class="keyword">USER</span>=<span class="string">'root'</span>; </span><br><span class="line"><span class="comment">-- 刷新权限</span></span><br><span class="line"><span class="keyword">FLUSH</span> <span class="keyword">PRIVILEGES</span>;</span><br><span class="line"><span class="comment">-- 退出</span></span><br><span class="line">quit</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>重新登录    </li>
@@ -282,17 +282,17 @@
     将文章分类于，java.servlet</code></pre><ul>
 <li>分类方式一：</li>
 </ul>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="bullet">-</span> <span class="string">Java</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="bullet">-</span> <span class="string">Servlet</span></span></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Java</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Servlet</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>分类方式二：</li>
 </ul>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span> <span class="string">[Java,</span> <span class="string">Servlet]</span></span></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span> <span class="string">[Java,</span> <span class="string">Servlet]</span></span><br></pre></td></tr></table></figure>
 
 <pre><code>这两个的作用一致，分类的结构都是树形结构</code></pre><h3 id="多个分类"><a href="#多个分类" class="headerlink" title="多个分类"></a>多个分类</h3><p>希望将一篇文章分类于多个目录中,下面的是将文件分类于<code>java</code>和<code>servlet</code></p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="string">-[Java]</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="string">-[Servlet]</span></span></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="string">-[Java]</span></span><br><span class="line">  <span class="string">-[Servlet]</span></span><br></pre></td></tr></table></figure>
 
-<pre><code>也可以在多分类的基础上使用子分类</code></pre><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="string">-[Java,</span> <span class="string">Servlet]</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="string">-[Programming]</span></span></pre></td></tr></table></figure>]]></content>
+<pre><code>也可以在多分类的基础上使用子分类</code></pre><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="string">-[Java,</span> <span class="string">Servlet]</span></span><br><span class="line">  <span class="string">-[Programming]</span></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Blog</category>
         <category>Hexo</category>
@@ -307,15 +307,18 @@
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><pre><code>* 针对数据库查询的延伸学习
 * 强化数据库操作
 * 学习更好的使用MySQL数据库，提高效率</code></pre><ul>
-<li><a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="noopener">mysql数据库下载地址</a></li>
+<li><a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="noopener">mysql官网下载</a></li>
 <li><a href="https://print3306.github.io/2020/06/18/mysql57/">Windows版下载安装</a></li>
+<li><a href="https://jingyan.baidu.com/article/48b558e382811d3f39c09a77.html" target="_blank" rel="noopener">Linux版安装</a></li>
 </ul>
 <h2 id><a href="#" class="headerlink" title></a></h2>]]></content>
       <categories>
+        <category>Linux</category>
+        <category>MySQL</category>
         <category>SQL</category>
       </categories>
       <tags>
-        <tag>MySQL</tag>
+        <tag>SQL</tag>
       </tags>
   </entry>
   <entry>
@@ -1280,7 +1283,7 @@ URL重写：
 </blockquote>
 <p><img src="/2020/09/18/springMVC/change_directory.png" alt="change_directory"></p>
 <pre><code>2. 配置MVC项目的步骤
-    1. 配置前端控制器，在servlet上配置控制器,主要是访问路径以及拦截</code></pre><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置前端控制器 --&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>dispatcherServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>dispatcherServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span></pre></td></tr></table></figure>
+    1. 配置前端控制器，在servlet上配置控制器,主要是访问路径以及拦截</code></pre><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置前端控制器 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>dispatcherServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>dispatcherServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <pre><code>&lt;!-- 配置过滤器 --&gt;

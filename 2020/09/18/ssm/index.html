@@ -1,4 +1,122 @@
-<!DOCTYPE html><html class="theme-next pisces use-motion" lang=zh-Hans><head><meta charset=UTF-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1"><meta name=theme-color content=#222><script src="/lib/pace/pace.min.js?v=1.0.2"></script><link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel=stylesheet><meta http-equiv=Cache-Control content=no-transform><meta http-equiv=Cache-Control content=no-siteapp><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel=stylesheet type=text/css><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel=stylesheet type=text/css><link href="/css/main.css?v=5.1.4" rel=stylesheet type=text/css><link rel=apple-touch-icon sizes=180x180 href="/images/avatar1.png?v=5.1.4"><link rel=icon type=image/png sizes=32x32 href="/images/avatar1.png?v=5.1.4"><link rel=icon type=image/png sizes=16x16 href="/images/avatar1.png?v=5.1.4"><link rel=mask-icon href="/images/logo.svg?v=5.1.4" color=#222><meta name=keywords content=Spring,><meta name=description content="SSM框架的整合说明SSM,spring springmvc mybatis三大框架的整合，可以使用多种方式，这里使用xml+注解的方式整合的思路1. 以spring框架为核心，进行其他的框架的整合(针对各个框架的使用范围进行整合) 导入的坐标版本 日志文件的配置1. pom.xml * log4j * slf4j-api * slf4j-log4j12"><meta name=keywords content=Spring><meta property=og:type content=article><meta property=og:title content=SSM><meta property=og:url content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;index.html><meta property=og:site_name content=浊酒一杯><meta property=og:description content="SSM框架的整合说明SSM,spring springmvc mybatis三大框架的整合，可以使用多种方式，这里使用xml+注解的方式整合的思路1. 以spring框架为核心，进行其他的框架的整合(针对各个框架的使用范围进行整合) 导入的坐标版本 日志文件的配置1. pom.xml * log4j * slf4j-api * slf4j-log4j12"><meta property=og:locale content=zh-Hans><meta property=og:image content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_1.png><meta property=og:image content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_version.png><meta property=og:image content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_log.png><meta property=og:image content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_log2.png><meta property=og:image content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_spring1.png><meta property=og:image content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_spring2.png><meta property=og:image content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_springmvc1.png><meta property=og:image content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_springmvc2.png><meta property=og:image content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_listener.png><meta property=og:image content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;mybatis_spring_1.png><meta property=og:image content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;mybatis_spring_2.png><meta property=og:image content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;mybatis_spring_3.png><meta property=og:image content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;erroer_1.png><meta property=og:image content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;error_2.png><meta property=og:image content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_transaction.png><meta property=og:updated_time content=2020-10-16T09:01:11.417Z><meta name=twitter:card content=summary><meta name=twitter:image content=http:&#x2F;&#x2F;print3306.github.io&#x2F;2020&#x2F;09&#x2F;18&#x2F;ssm&#x2F;ssm_1.png><script type=text/javascript id=hexo.configurations>
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar1.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar1.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar1.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Spring," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="SSM框架的整合说明SSM,spring springmvc mybatis三大框架的整合，可以使用多种方式，这里使用xml+注解的方式整合的思路1. 以spring框架为核心，进行其他的框架的整合(针对各个框架的使用范围进行整合) 导入的坐标版本   日志文件的配置1. pom.xml     * log4j     * slf4j-api     * slf4j-log4j12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSM">
+<meta property="og:url" content="http://print3306.github.io/2020/09/18/ssm/index.html">
+<meta property="og:site_name" content="浊酒一杯">
+<meta property="og:description" content="SSM框架的整合说明SSM,spring springmvc mybatis三大框架的整合，可以使用多种方式，这里使用xml+注解的方式整合的思路1. 以spring框架为核心，进行其他的框架的整合(针对各个框架的使用范围进行整合) 导入的坐标版本   日志文件的配置1. pom.xml     * log4j     * slf4j-api     * slf4j-log4j12">
+<meta property="og:image" content="http://print3306.github.io/2020/09/18/ssm/ssm_1.png">
+<meta property="og:image" content="http://print3306.github.io/2020/09/18/ssm/ssm_version.png">
+<meta property="og:image" content="http://print3306.github.io/2020/09/18/ssm/ssm_log.png">
+<meta property="og:image" content="http://print3306.github.io/2020/09/18/ssm/ssm_log2.png">
+<meta property="og:image" content="http://print3306.github.io/2020/09/18/ssm/ssm_spring1.png">
+<meta property="og:image" content="http://print3306.github.io/2020/09/18/ssm/ssm_spring2.png">
+<meta property="og:image" content="http://print3306.github.io/2020/09/18/ssm/ssm_springmvc1.png">
+<meta property="og:image" content="http://print3306.github.io/2020/09/18/ssm/ssm_springmvc2.png">
+<meta property="og:image" content="http://print3306.github.io/2020/09/18/ssm/ssm_listener.png">
+<meta property="og:image" content="http://print3306.github.io/2020/09/18/ssm/mybatis_spring_1.png">
+<meta property="og:image" content="http://print3306.github.io/2020/09/18/ssm/mybatis_spring_2.png">
+<meta property="og:image" content="http://print3306.github.io/2020/09/18/ssm/mybatis_spring_3.png">
+<meta property="og:image" content="http://print3306.github.io/2020/09/18/ssm/erroer_1.png">
+<meta property="og:image" content="http://print3306.github.io/2020/09/18/ssm/error_2.png">
+<meta property="og:image" content="http://print3306.github.io/2020/09/18/ssm/ssm_transaction.png">
+<meta property="article:published_time" content="2020-09-18T09:23:17.000Z">
+<meta property="article:modified_time" content="2020-10-16T09:01:11.417Z">
+<meta property="article:author" content="浊酒一杯">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://print3306.github.io/2020/09/18/ssm/ssm_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
@@ -20,7 +138,163 @@
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
   };
-</script><link rel=canonical href="http://print3306.github.io/2020/09/18/ssm/"><title>SSM | 浊酒一杯</title></head><body itemscope itemtype=http://schema.org/WebPage lang=zh-Hans><div class="container sidebar-position-left page-post-detail"><div class=headband></div><header id=header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-wrapper><div class=site-meta><div class=custom-logo-site-title><a href="/" class=brand rel=start><span class=logo-line-before><i></i></span> <span class=site-title>浊酒一杯</span> <span class=logo-line-after><i></i></span></a></div><p class=site-subtitle></p></div><div class=site-nav-toggle><button><span class=btn-bar></span> <span class=btn-bar></span> <span class=btn-bar></span></button></div></div><nav class=site-nav><ul id=menu class=menu><li class="menu-item menu-item-home"><a href="/" rel=section><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel=section><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel=section><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel=section><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类</a></li><li class="menu-item menu-item-about"><a href="/about/" rel=section><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于</a></li><li class="menu-item menu-item-search"><a href=javascript:; class=popup-trigger><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class=site-search><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class=search-icon><i class="fa fa-search"></i></span> <span class=popup-btn-close><i class="fa fa-times-circle"></i></span><div class=local-search-input-wrapper><input autocomplete=off placeholder=搜索... spellcheck=false type=text id=local-search-input></div></div><div id=local-search-result></div></div></div></nav><script>
+</script>
+
+
+
+  <link rel="canonical" href="http://print3306.github.io/2020/09/18/ssm/"/>
+
+
+
+
+
+  <title>SSM | 浊酒一杯</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">浊酒一杯</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script>
     
     window.onload = function(){
         var path = 'https://malizhi.cn'; //这里要改成你博客的地址
@@ -35,24 +309,193 @@
         }
     };
 
- </script></div></header><main id=main class=main><div class=main-inner><div class=content-wrap><div id=content class=content><div id=posts class=posts-expand><article class="post post-type-normal" itemscope itemtype=http://schema.org/Article><div class=post-block><link itemprop=mainEntityOfPage href="http://print3306.github.io/2020/09/18/ssm/"><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=name content=浊酒一杯><meta itemprop=description><meta itemprop=image content=/images/avatar1.jpg></span> <span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content=浊酒一杯></span><header class=post-header><h1 class=post-title itemprop="name headline">SSM</h1><div class=post-meta><span class=post-time><span class=post-meta-item-icon><i class="fa fa-calendar-o"></i></span> <span class=post-meta-item-text>发表于</span><time title=创建于 itemprop="dateCreated datePublished" datetime=2020-09-18T17:23:17+08:00>2020-09-18</time><span class=post-meta-divider>|</span> <span class=post-meta-item-icon><i class="fa fa-calendar-check-o"></i></span> <span class=post-meta-item-text>更新于&#58;</span><time title=更新于 itemprop=dateModified datetime=2020-10-16T17:01:11+08:00>2020-10-16</time></span> <span class=post-category><span class=post-meta-divider>|</span> <span class=post-meta-item-icon><i class="fa fa-folder-o"></i></span> <span class=post-meta-item-text>分类于</span> <span itemprop=about itemscope itemtype=http://schema.org/Thing><a href="/categories/Spring/" itemprop=url rel=index><span itemprop=name>Spring</span></a></span></span><div class=post-wordcount><span class=post-meta-item-icon><i class="fa fa-file-word-o"></i></span> <span class=post-meta-item-text>字数统计&#58;</span> <span title=字数统计>777</span></div></div></header><div class=post-body itemprop=articleBody><h2 id=SSM框架的整合><a href=#SSM框架的整合 class=headerlink title=SSM框架的整合></a>SSM框架的整合</h2><h3 id=说明><a href=#说明 class=headerlink title=说明></a>说明</h3><pre><code>SSM,spring springmvc mybatis三大框架的整合，可以使用多种方式，这里使用xml+注解的方式</code></pre><h3 id=整合的思路><a href=#整合的思路 class=headerlink title=整合的思路></a>整合的思路</h3><pre><code>1. 以spring框架为核心，进行其他的框架的整合(针对各个框架的使用范围进行整合)</code></pre><p><img src=/2020/09/18/ssm/ssm_1.png></p><h4 id=导入的坐标版本><a href=#导入的坐标版本 class=headerlink title=导入的坐标版本></a>导入的坐标版本</h4><blockquote></blockquote><p><img src=/2020/09/18/ssm/ssm_version.png alt=使用的坐标版本></p><h4 id=日志文件的配置><a href=#日志文件的配置 class=headerlink title=日志文件的配置></a>日志文件的配置</h4><pre><code>1. pom.xml
+ </script>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://print3306.github.io/2020/09/18/ssm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="浊酒一杯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="浊酒一杯">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SSM</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-18T17:23:17+08:00">
+                2020-09-18
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-10-16T17:01:11+08:00">
+                2020-10-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  777
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="SSM框架的整合"><a href="#SSM框架的整合" class="headerlink" title="SSM框架的整合"></a>SSM框架的整合</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><pre><code>SSM,spring springmvc mybatis三大框架的整合，可以使用多种方式，这里使用xml+注解的方式</code></pre><h3 id="整合的思路"><a href="#整合的思路" class="headerlink" title="整合的思路"></a>整合的思路</h3><pre><code>1. 以spring框架为核心，进行其他的框架的整合(针对各个框架的使用范围进行整合)</code></pre><p><img src="/2020/09/18/ssm/ssm_1.png" alt></p>
+<h4 id="导入的坐标版本"><a href="#导入的坐标版本" class="headerlink" title="导入的坐标版本"></a>导入的坐标版本</h4><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_version.png" alt="使用的坐标版本"></p>
+<h4 id="日志文件的配置"><a href="#日志文件的配置" class="headerlink" title="日志文件的配置"></a>日志文件的配置</h4><pre><code>1. pom.xml
     * log4j
     * slf4j-api
     * slf4j-log4j12
-        完成日志文件的配置，将标准日志转为log4j格式日志</code></pre><blockquote></blockquote><p><img src=/2020/09/18/ssm/ssm_log.png alt=日志文件的配置></p><pre><code>2. log4j.propreties配置文件</code></pre><blockquote></blockquote><p><img src=/2020/09/18/ssm/ssm_log2.png alt=日志文件的配置></p><h4 id=spring框架的配置><a href=#spring框架的配置 class=headerlink title=spring框架的配置></a>spring框架的配置</h4><pre><code>1. pom.xml配置
+        完成日志文件的配置，将标准日志转为log4j格式日志</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_log.png" alt="日志文件的配置"></p>
+<pre><code>2. log4j.propreties配置文件</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_log2.png" alt="日志文件的配置"></p>
+<h4 id="spring框架的配置"><a href="#spring框架的配置" class="headerlink" title="spring框架的配置"></a>spring框架的配置</h4><pre><code>1. pom.xml配置
     * spring-context: 容器，扫描数据
     * spring-aop
     * spring-tx
     * spring-test:单元测试
     * spring-jdbc
     * aspectjweaver:切入点，切面
-    * jstl: Java EL表达式</code></pre><blockquote></blockquote><p><img src=/2020/09/18/ssm/ssm_spring1.png alt=spring的配置1></p><pre><code>2. applicationContext.xml的配置
-    * 配置需要扫描的包，指定不需要扫描的MVC层的包，MVC的数据由springMV来进行数据扫描</code></pre><blockquote></blockquote><p><img src=/2020/09/18/ssm/ssm_spring2.png alt=spring的配置2></p><pre><code>3. 配置完上述的配置文件
-    可以使用spring的注解，进行对象注册</code></pre><h4 id=springMVC的整合><a href=#springMVC的整合 class=headerlink title=springMVC的整合></a>springMVC的整合</h4><pre><code>1. pom.xml配置
+    * jstl: Java EL表达式</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_spring1.png" alt="spring的配置1"></p>
+<pre><code>2. applicationContext.xml的配置
+    * 配置需要扫描的包，指定不需要扫描的MVC层的包，MVC的数据由springMV来进行数据扫描</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_spring2.png" alt="spring的配置2"></p>
+<pre><code>3. 配置完上述的配置文件
+    可以使用spring的注解，进行对象注册</code></pre><h4 id="springMVC的整合"><a href="#springMVC的整合" class="headerlink" title="springMVC的整合"></a>springMVC的整合</h4><pre><code>1. pom.xml配置
     * spring-web
     * spring-webmvc
     * servlet-api
-    * jsp-api</code></pre><blockquote></blockquote><p><img src=/2020/09/18/ssm/ssm_springmvc1.png alt=springmvc的配置></p><pre><code>2. web.xml配置
+    * jsp-api</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_springmvc1.png" alt="springmvc的配置"></p>
+<pre><code>2. web.xml配置
     * DispatcherServlet：前端控制器
     * CharacterEncodingFilter: 字符编码过滤器
 
@@ -61,15 +504,19 @@
     * 开启视图解析器：InternalViewResolver
     * 配置静态资源过滤：mvc:resources
     * 配置开启springmvc注解支持
-    * 配置监听器</code></pre><blockquote></blockquote><p><img src=/2020/09/18/ssm/ssm_springmvc2.png alt=springmvc的配置></p><pre><code>4. spring整合springMVC
+    * 配置监听器</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_springmvc2.png" alt="springmvc的配置"></p>
+<pre><code>4. spring整合springMVC
     在启动服务器的时候，加载web.xml文件的时候，只加载了springMVC的配置文件，没有读取spring的配置文件来进行容器的创建以及加载。
 
     使用监听器：ContextLoaderListener,来监听ServletContext实例的创建，一旦创建，就会扫描spring的配置文件，进行spring容器的创建
 
     监听器的默认配置文件：/WEB-INF/applicationContext.xml
         1. 在/WEB-INF/复制文件
-        2. 使用&lt;context-param&gt;进行容器扫描路径的配置</code></pre><p><img src=/2020/09/18/ssm/ssm_listener.png alt=spring整合springmvc></p><pre><code>5. 监听器的配置
-    使用spring框架的监听器，在创建ServletContext的时候，同时扫描spring的配置文件，可以通知框架注册实例，以供数据注入</code></pre><h4 id=MyBatis的整合><a href=#MyBatis的整合 class=headerlink title=MyBatis的整合></a>MyBatis的整合</h4><pre><code>1. pom.xml文件的配置
+        2. 使用&lt;context-param&gt;进行容器扫描路径的配置</code></pre><p><img src="/2020/09/18/ssm/ssm_listener.png" alt="spring整合springmvc"></p>
+<pre><code>5. 监听器的配置
+    使用spring框架的监听器，在创建ServletContext的时候，同时扫描spring的配置文件，可以通知框架注册实例，以供数据注入</code></pre><h4 id="MyBatis的整合"><a href="#MyBatis的整合" class="headerlink" title="MyBatis的整合"></a>MyBatis的整合</h4><pre><code>1. pom.xml文件的配置
     * mybatis
     * mysql-connector-java
     * c3p0
@@ -84,20 +531,463 @@
     * 将数据的DAO层的代理对象存入容器
     * 步骤
         1. 在applicationContext.xml文件编写使用MyBatis的文件步骤
-        2. 编写数据库连接池bean对象</code></pre><blockquote></blockquote><p><img src=/2020/09/18/ssm/mybatis_spring_1.png alt=数据连接池></p><pre><code>3. 配置SqlSessionFactoryBean对象
-可以使用参数设置生成的bean的名称，指定读取的配置文件以及mapper的配置文件</code></pre><blockquote></blockquote><p><img src=/2020/09/18/ssm/mybatis_spring_2.png alt=将dao对象交由spring容器创建></p><pre><code>4. 配置扫描的映射文件所在的包</code></pre><blockquote></blockquote><p><img src=/2020/09/18/ssm/mybatis_spring_3.png alt=将dao对象交由spring容器创建></p><pre><code>        5. 总结
+        2. 编写数据库连接池bean对象</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/mybatis_spring_1.png" alt="数据连接池"></p>
+<pre><code>3. 配置SqlSessionFactoryBean对象
+可以使用参数设置生成的bean的名称，指定读取的配置文件以及mapper的配置文件</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/mybatis_spring_2.png" alt="将dao对象交由spring容器创建"></p>
+<pre><code>4. 配置扫描的映射文件所在的包</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/mybatis_spring_3.png" alt="将dao对象交由spring容器创建"></p>
+<pre><code>        5. 总结
             spring整合mybatis时，可以在核心配置文件applicationContext.xml中，整合mybatis的配置文件，可以将SqlMapConfig.xml文件的内容完全整合进核心配置文件，也可以整合部分，然后在核心配置文件中引用SqlMapConfig.xml文件。
 
-4. 出现的错误</code></pre><blockquote></blockquote><p><img src=/2020/09/18/ssm/erroer_1.png alt=web.xml或使用此应用程序部署的jar文件中解析><br><img src=/2020/09/18/ssm/error_2.png alt=classnotfound:org.apache.jsp.></p><h4 id=spring的声明式事务控制><a href=#spring的声明式事务控制 class=headerlink title=spring的声明式事务控制></a>spring的声明式事务控制</h4><pre><code>1. 配置事务管理器
+4. 出现的错误</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/erroer_1.png" alt="web.xml或使用此应用程序部署的jar文件中解析"><br><img src="/2020/09/18/ssm/error_2.png" alt="classnotfound:org.apache.jsp.">    </p>
+<h4 id="spring的声明式事务控制"><a href="#spring的声明式事务控制" class="headerlink" title="spring的声明式事务控制"></a>spring的声明式事务控制</h4><pre><code>1. 配置事务管理器
 2. 配置事务通知
     * 配置事务的使用位置，传播级别。。
 3. 配置AOP
     * 配置切入点表达式
-    * 配置事务</code></pre><blockquote></blockquote><p><img src=/2020/09/18/ssm/ssm_transaction.png alt=事务管理></p></div><div><div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读 ------</div></div><footer class=post-footer><div class=post-tags><a href="/tags/Spring/" rel=tag><i class="fa fa-tag"></i> Spring</a></div><div class=post-widgets><div id=needsharebutton-postbottom><span class=btn><i class="fa fa-share-alt" aria-hidden=true></i></span></div></div><div class=post-nav><div class="post-nav-next post-nav-item"><a href="/2020/09/18/springMVC/" rel=next title=SpringMVC><i class="fa fa-chevron-left"></i> SpringMVC</a></div><span class=post-nav-divider></span><div class="post-nav-prev post-nav-item"><a href="/2020/09/19/servlet/" rel=prev title=Servlet>Servlet <i class="fa fa-chevron-right"></i></a></div></div><div><p id=div-border-left-red><b>本文基于<a target=_blank title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0</a>国际许可协议发布</b><br><span><b>本文地址:</b><a href="/2020/09/18/ssm/" title=SSM>http://print3306.github.io/2020/09/18/ssm/</a><br><b>转载请注明出处, 谢谢！</b></span></p></div></footer></div></article><div class=post-spread></div></div></div></div><div class=sidebar-toggle><div class=sidebar-toggle-line-wrap><span class="sidebar-toggle-line sidebar-toggle-line-first"></span> <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span> <span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id=sidebar class=sidebar><div class=sidebar-inner><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target=post-toc-wrap>文章目录</li><li class=sidebar-nav-overview data-target=site-overview-wrap>站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class=site-overview><div class="site-author motion-element" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image src=/images/avatar1.jpg alt=浊酒一杯><p class=site-author-name itemprop=name>浊酒一杯</p><p class="site-description motion-element" itemprop=description>砥砺前行</p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href=/archives><span class=site-state-item-count>23</span> <span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/index.html><span class=site-state-item-count>14</span> <span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/index.html><span class=site-state-item-count>10</span> <span class=site-state-item-name>标签</span></a></div></nav></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class=post-toc><div class=post-toc-content><ol class=nav><li class="nav-item nav-level-2"><a class=nav-link href=#SSM框架的整合><span class=nav-number>1.</span> <span class=nav-text>SSM框架的整合</span></a><ol class=nav-child><li class="nav-item nav-level-3"><a class=nav-link href=#说明><span class=nav-number>1.1.</span> <span class=nav-text>说明</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#整合的思路><span class=nav-number>1.2.</span> <span class=nav-text>整合的思路</span></a><ol class=nav-child><li class="nav-item nav-level-4"><a class=nav-link href=#导入的坐标版本><span class=nav-number>1.2.1.</span> <span class=nav-text>导入的坐标版本</span></a></li><li class="nav-item nav-level-4"><a class=nav-link href=#日志文件的配置><span class=nav-number>1.2.2.</span> <span class=nav-text>日志文件的配置</span></a></li><li class="nav-item nav-level-4"><a class=nav-link href=#spring框架的配置><span class=nav-number>1.2.3.</span> <span class=nav-text>spring框架的配置</span></a></li><li class="nav-item nav-level-4"><a class=nav-link href=#springMVC的整合><span class=nav-number>1.2.4.</span> <span class=nav-text>springMVC的整合</span></a></li><li class="nav-item nav-level-4"><a class=nav-link href=#MyBatis的整合><span class=nav-number>1.2.5.</span> <span class=nav-text>MyBatis的整合</span></a></li><li class="nav-item nav-level-4"><a class=nav-link href=#spring的声明式事务控制><span class=nav-number>1.2.6.</span> <span class=nav-text>spring的声明式事务控制</span></a></li></ol></li></ol></li></ol></div></div></section></div></aside></div></main><footer id=footer class=footer><div class=footer-inner><div class=copyright>&copy; <span itemprop=copyrightYear>2020</span> <span class=with-love><i class="fa fa-user"></i></span> <span class=author itemprop=copyrightHolder>浊酒一杯</span> <span class=post-meta-divider>|</span> <span class=post-meta-item-icon><i class="fa fa-area-chart"></i></span> <span class=post-meta-item-text>Site words total count&#58;</span> <span title="Site words total count">38k</span></div></div></footer><div class=back-to-top><i class="fa fa-arrow-up"></i> <span id=scrollpercent><span>0</span>%</span></div><div id=needsharebutton-float><span class=btn><i class="fa fa-share-alt" aria-hidden=true></i></span></div></div><script type=text/javascript>
+    * 配置事务</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/09/18/ssm/ssm_transaction.png" alt="事务管理"></p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+        ------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读 ------</div>
+
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/18/springMVC/" rel="next" title="SpringMVC">
+                <i class="fa fa-chevron-left"></i> SpringMVC
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/09/19/servlet/" rel="prev" title="Servlet">
+                Servlet <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      <div>
+        <p id="div-border-left-red">
+        <b>本文基于<a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布</b><br/>
+        <span>
+          <b>本文地址: </b><a href="/2020/09/18/ssm/" title="SSM">http://print3306.github.io/2020/09/18/ssm/</a><br/><b>转载请注明出处, 谢谢！</b>
+        </span>
+      </p>
+</div>
+
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar1.jpg"
+                alt="浊酒一杯" />
+            
+              <p class="site-author-name" itemprop="name">浊酒一杯</p>
+              <p class="site-description motion-element" itemprop="description">砥砺前行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+                <a href="/archives">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:3230372879qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SSM框架的整合"><span class="nav-number">1.</span> <span class="nav-text">SSM框架的整合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">1.1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整合的思路"><span class="nav-number">1.2.</span> <span class="nav-text">整合的思路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#导入的坐标版本"><span class="nav-number">1.2.1.</span> <span class="nav-text">导入的坐标版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#日志文件的配置"><span class="nav-number">1.2.2.</span> <span class="nav-text">日志文件的配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#spring框架的配置"><span class="nav-number">1.2.3.</span> <span class="nav-text">spring框架的配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#springMVC的整合"><span class="nav-number">1.2.4.</span> <span class="nav-text">springMVC的整合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MyBatis的整合"><span class="nav-number">1.2.5.</span> <span class="nav-text">MyBatis的整合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#spring的声明式事务控制"><span class="nav-number">1.2.6.</span> <span class="nav-text">spring的声明式事务控制</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  
+  <span class="author" itemprop="copyrightHolder">浊酒一杯</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">38k</span>
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
   if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
     window.Promise = null;
   }
-</script><script type=text/javascript src="/lib/jquery/index.js?v=2.1.3"></script><script type=text/javascript src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type=text/javascript src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type=text/javascript src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type=text/javascript src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type=text/javascript src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type=text/javascript src="/js/src/utils.js?v=5.1.4"></script><script type=text/javascript src="/js/src/motion.js?v=5.1.4"></script><script type=text/javascript src="/js/src/affix.js?v=5.1.4"></script><script type=text/javascript src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type=text/javascript src="/js/src/scrollspy.js?v=5.1.4"></script><script type=text/javascript src="/js/src/post-details.js?v=5.1.4"></script><script type=text/javascript src="/js/src/bootstrap.js?v=5.1.4"></script><script type=text/javascript>
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
     // Popup Window;
     var isfetched = false;
     var isXml = true;
@@ -412,7 +1302,28 @@
         onPopupClose();
       }
     });
-  </script><link rel=stylesheet href=/lib/needsharebutton/needsharebutton.css><script src=/lib/needsharebutton/needsharebutton.js></script><script>
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
     
       pbOptions = {};
       
@@ -439,13 +1350,38 @@
       
       new needShareButton('#needsharebutton-float', flOptions);
     
-  </script><script type=text/javascript src=/js/src/clicklove.js></script><script type=text/javascript>
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+
+  <!--鼠标点击心形效果-->
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+
+  <!--mob_share-->
+  
+<script type="text/javascript">
     //微信二维码点击背景关闭
     $('body').delegate('.-mob-share-weixin-qrcode-bg','click', function(){
          $(".-mob-share-weixin-qrcode-close").trigger("click");
     }); 
-</script><script type=text/javascript color=192,192,192 opacity=0.6 zindex=-1 count=150 src=//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js>
-  </script><style>
+</script>
+
+
+  <!--动态线条背景 220,220,220 opacity='0.8' zIndex="-2"-->
+  <script type="text/javascript"
+    color="192,192,192" opacity='0.6' zIndex="-1" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+  </script>
+
+  <!-- 代码复制 -->
+  
+  <style>
     .copy-btn {
       display: inline-block;
       padding: 6px 12px;
@@ -481,7 +1417,9 @@
     .highlight-wrap {
       position: relative;
     }
-  </style><script>
+  </style>
+  
+  <script>
     $('.highlight').each(function (i, e) {
       var $wrap = $('<div>').addClass('highlight-wrap')
       $(e).after($wrap)
@@ -511,4 +1449,19 @@
         }, 300)
       }).append(e)
     })
-  </script><script src=/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
+  </script>
+
+
+
+  <!-- 雪花特效 
+  <script type="text/javascript">
+    var windowWidth = $(window).width();
+    if (windowWidth > 480) {
+      document.write('<script type="text/javascript" src="/js/src/snow.js"><、/script>');
+    }
+  </script>
+
+  <script type="text/javascript" src="//libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>-->
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
