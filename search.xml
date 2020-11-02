@@ -259,6 +259,45 @@
       </tags>
   </entry>
   <entry>
+    <title>ubuntu</title>
+    <url>/2020/10/24/ubuntu/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><pre><code>这篇博客主要记录在使用Vmware安装的Unbuntu系统下遇到的错误以及解决问题的方式</code></pre><h2 id="虚拟机打开黑屏"><a href="#虚拟机打开黑屏" class="headerlink" title="虚拟机打开黑屏"></a>虚拟机打开黑屏</h2><pre><code>1. 解决方式
+    由于在日志里面有句话，虚拟打印设备无法使用，在编辑中启用虚拟设备，可以打开虚拟机
+
+2. 链接</code></pre><ul>
+<li><a href="https://blog.csdn.net/qq_37074001/article/details/102645024" target="_blank" rel="noopener">虚拟机黑屏解决方法</a></li>
+</ul>
+<h2 id="Unbuntu安装FTP"><a href="#Unbuntu安装FTP" class="headerlink" title="Unbuntu安装FTP"></a>Unbuntu安装FTP</h2><h3 id="E-无法定位软件包-vsftpd"><a href="#E-无法定位软件包-vsftpd" class="headerlink" title="E: 无法定位软件包 vsftpd"></a>E: 无法定位软件包 vsftpd</h3><pre><code>1. 问题描述
+    在使用`sudo apt-get install vsftpd`安装ftp系统的时候，出现该问题</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/10/24/ubuntu/1_error.png" alt="E: 无法定位软件包 vsftpd"></p>
+<pre><code>2. 解决方法</code></pre><p>更新软件源，<code>sudo apt-get update</code>        </p>
+<h2 id="无法解析域名"><a href="#无法解析域名" class="headerlink" title="无法解析域名"></a>无法解析域名</h2><pre><code>1. 问题描述
+    在使用`sudo apt-get update`,出现域名无法解析的问题，应该是域名服务器出现了问题，实际上是虚拟操作系统的网络出了问题，重新配置网络之后，可以进行更新</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/10/24/ubuntu/2_error.png" alt="无法解析域名"></p>
+<pre><code>2. 解决方法
+    1. 查看DNS的配置文件
+        重新配置网络DNS</code></pre><pre><code class="linux">cat /etc/resolv.conf</code></pre>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/24/ubuntu/2_1.png" alt></p>
+<ul>
+<li><a href="https://www.jb51.net/article/158414.htm" target="_blank" rel="noopener">Linux网络配置</a></li>
+</ul>
+<h2 id="ifconig无法使用"><a href="#ifconig无法使用" class="headerlink" title="ifconig无法使用"></a>ifconig无法使用</h2><pre><code>* sudo apt install net-tools
+* sudo apt update: 升级apt</code></pre><ul>
+<li><a href="https://blog.csdn.net/i_spirit/article/details/109182493" target="_blank" rel="noopener">command “ifconfig” not found</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Unbuntu</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>multi-categories</title>
     <url>/2020/10/29/multi-categories/</url>
     <content><![CDATA[<h2 id="Hexo博客的多个分类的解决方案"><a href="#Hexo博客的多个分类的解决方案" class="headerlink" title="Hexo博客的多个分类的解决方案"></a>Hexo博客的多个分类的解决方案</h2><pre><code>在写博客的时候，很多方面并不是单一的，需要和其他的事务关联起来，此时的分类不能单一的看作一个，需要分为多个标签，这里提供一些解决方案。
@@ -289,6 +328,52 @@
       </tags>
   </entry>
   <entry>
+    <title>soft</title>
+    <url>/2020/10/26/soft/</url>
+    <content><![CDATA[<h2 id="SecureCRT"><a href="#SecureCRT" class="headerlink" title="SecureCRT"></a>SecureCRT</h2><pre><code>1. 作用
+    Windows和Linux之间的文件传输，支持SSH
+
+2. 官网地址</code></pre><ul>
+<li><p><a href="https://www.vandyke.com/cgi-bin/releases.php?product=securecrt" target="_blank" rel="noopener">SecureCRT官网</a></p>
+</li>
+<li><p><a href="https://www.vandyke.com/cgi-bin/releases.php?product=securecrt" target="_blank" rel="noopener">https://www.vandyke.com/cgi-bin/releases.php?product=securecrt</a></p>
+<p><a href="https://pan.baidu.com/s/163MKL_sAXwfQ_8oPXGW7MA" target="_blank" rel="noopener">百度网盘地址，提取码：ab12 </a></p>
+<ol start="3">
+<li><p>安装<br> 需要注意安装路径，其余的直接next</p>
+</li>
+<li><p>破解</p>
+</li>
+</ol>
+</li>
+<li><p><a href="http://www.xue51.com/soft/10266.html" target="_blank" rel="noopener">SecrueCRT破解教程</a></p>
+</li>
+</ul>
+<p>在软件安装包中存在注册机，直接根据教程进行破解就可以了</p>
+<pre><code>5. 使用
+    建立链接，可以使用sz,rz进行文件的下载和上传，也可以使用sftp进行文件的下载和上传</code></pre><ul>
+<li><p><a href="https://blog.csdn.net/yule117737767/article/details/82388285" target="_blank" rel="noopener">SecrueCRT使用教程1</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/qq_41880069/article/details/89643358?utm_medium=distribute.pc_relevant.none-task-blog-title-3&spm=1001.2101.3001.4242" target="_blank" rel="noopener">SecrueCRT使用教程2</a></p>
+<p>  使用SFTP进行文件传输：Alt + P,打开sftp界面</p>
+<ul>
+<li>lcd 本地上传或者下载目录</li>
+<li>cd linux文件目录</li>
+<li>put 本地文件夹下的文件名</li>
+<li>get linux文件夹下的文件名<blockquote>
+</blockquote>
+<img src="/2020/10/26/soft/secureCRT_1.png" alt="secure文件上传和下载"></li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+      <tags>
+        <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>mysql</title>
     <url>/2020/10/12/mysql/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><pre><code>* 针对数据库查询的延伸学习
@@ -306,6 +391,22 @@
       </categories>
       <tags>
         <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1046-no-database</title>
+    <url>/2020/10/28/not_db/</url>
+    <content><![CDATA[<h2 id="1046-3D000-No-database-selected"><a href="#1046-3D000-No-database-selected" class="headerlink" title="1046 (3D000): No database selected"></a>1046 (3D000): No database selected</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><pre><code>在MySQL进行数据更新的时候，出现这个错误</code></pre><h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><pre><code>1. 出现位置</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> <span class="keyword">user</span> <span class="keyword">SET</span> authentication_string=<span class="keyword">PASSWORD</span>(<span class="string">'root'</span>) <span class="keyword">where</span> <span class="keyword">USER</span>=<span class="string">'root'</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code>2. 错误代码</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">ERROR 1046 (3D000): No database selected</span><br></pre></td></tr></table></figure>
+
+<pre><code>3. 解决
+    因为是直接使用 SQL 语句的方式来删除账户，所以必须先选择 mysql 自身的数据库：</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> mysql;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Error,MySQL,Linux</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -3243,6 +3344,23 @@ User findById(Integer id);</code></pre></blockquote>
       </tags>
   </entry>
   <entry>
+    <title>Spring Load</title>
+    <url>/2020/05/09/SpringLoad/</url>
+    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
+<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
+<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
+<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
+<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
+<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
+]]></content>
+      <categories>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SQL Inject</title>
     <url>/2020/05/09/SQL%E6%B3%A8%E5%85%A5/</url>
     <content><![CDATA[<h1 id="SQL注入问题"><a href="#SQL注入问题" class="headerlink" title="SQL注入问题"></a>SQL注入问题</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>在拼接sql语句时，有一些特殊的SQL关键字参于字符串的拼接，导致SQL语句的逻辑发生变化，可能会造成安全性问题</code></pre><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre><code>1. 输入 a&apos;or&apos;a&apos;=&apos;a,条件改变
@@ -3303,23 +3421,6 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
       </categories>
       <tags>
         <tag>SQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring Load</title>
-    <url>/2020/05/09/SpringLoad/</url>
-    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
-<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
-<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
-<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
-<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
-<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
-]]></content>
-      <categories>
-        <category>Spring</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>

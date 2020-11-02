@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="MySQL," />
+  <meta name="keywords" content="Unbuntu," />
 
 
 
@@ -86,19 +86,21 @@
 
 
 
-<meta name="description" content="ERROR 1045 (28000): Access denied for user ‘debian-sys-maint’@’localhost’ (using password: YES)说明 在使用sudo mysql -udebian-sys-maint -p的时候，出现这个错误    使用的是MySQL登录密码 解决修改root用户的密码，通过命令来修改root用户的密码： 查看密码  1">
+<meta name="description" content="简介这篇博客主要记录在使用Vmware安装的Unbuntu系统下遇到的错误以及解决问题的方式虚拟机打开黑屏1. 解决方式     由于在日志里面有句话，虚拟打印设备无法使用，在编辑中启用虚拟设备，可以打开虚拟机  2. 链接 虚拟机黑屏解决方法  Unbuntu安装FTPE: 无法定位软件包 vsftpd1. 问题描述     在使用&#96;sudo apt-get install vsftpd&#96;安装f">
 <meta property="og:type" content="article">
-<meta property="og:title" content="1045-access-denied">
-<meta property="og:url" content="http://print3306.github.io/2020/10/28/access_denied/index.html">
+<meta property="og:title" content="ubuntu">
+<meta property="og:url" content="http://print3306.github.io/2020/10/24/ubuntu/index.html">
 <meta property="og:site_name" content="浊酒一杯">
-<meta property="og:description" content="ERROR 1045 (28000): Access denied for user ‘debian-sys-maint’@’localhost’ (using password: YES)说明 在使用sudo mysql -udebian-sys-maint -p的时候，出现这个错误    使用的是MySQL登录密码 解决修改root用户的密码，通过命令来修改root用户的密码： 查看密码  1">
-<meta property="og:image" content="http://print3306.github.io/2020/10/28/access_denied/1045_1.png">
-<meta property="article:published_time" content="2020-10-28T12:55:24.000Z">
-<meta property="article:modified_time" content="2020-10-29T13:22:40.182Z">
+<meta property="og:description" content="简介这篇博客主要记录在使用Vmware安装的Unbuntu系统下遇到的错误以及解决问题的方式虚拟机打开黑屏1. 解决方式     由于在日志里面有句话，虚拟打印设备无法使用，在编辑中启用虚拟设备，可以打开虚拟机  2. 链接 虚拟机黑屏解决方法  Unbuntu安装FTPE: 无法定位软件包 vsftpd1. 问题描述     在使用&#96;sudo apt-get install vsftpd&#96;安装f">
+<meta property="og:image" content="http://print3306.github.io/2020/10/24/ubuntu/1_error.png">
+<meta property="og:image" content="http://print3306.github.io/2020/10/24/ubuntu/2_error.png">
+<meta property="og:image" content="http://print3306.github.io/2020/10/24/ubuntu/2_1.png">
+<meta property="article:published_time" content="2020-10-24T12:50:07.000Z">
+<meta property="article:modified_time" content="2020-11-01T12:11:43.851Z">
 <meta property="article:author" content="浊酒一杯">
-<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="Unbuntu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://print3306.github.io/2020/10/28/access_denied/1045_1.png">
+<meta name="twitter:image" content="http://print3306.github.io/2020/10/24/ubuntu/1_error.png">
 
 
 
@@ -128,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://print3306.github.io/2020/10/28/access_denied/"/>
+  <link rel="canonical" href="http://print3306.github.io/2020/10/24/ubuntu/"/>
 
 
 
 
 
-  <title>1045-access-denied | 浊酒一杯</title>
+  <title>ubuntu | 浊酒一杯</title>
   
 
 
@@ -322,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://print3306.github.io/2020/10/28/access_denied/">
+    <link itemprop="mainEntityOfPage" href="http://print3306.github.io/2020/10/24/ubuntu/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="浊酒一杯">
@@ -339,7 +341,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">1045-access-denied</h1>
+          <h1 class="post-title" itemprop="name headline">ubuntu</h1>
         
 
         <div class="post-meta">
@@ -354,8 +356,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-28T20:55:24+08:00">
-                2020-10-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-24T20:50:07+08:00">
+                2020-10-24
               </time>
             
 
@@ -370,8 +372,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-10-29T21:22:40+08:00">
-                2020-10-29
+              <time title="更新于" itemprop="dateModified" datetime="2020-11-01T20:11:43+08:00">
+                2020-11-01
               </time>
             
           </span>
@@ -391,28 +393,6 @@
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/MySQL/Error/" itemprop="url" rel="index">
-                    <span itemprop="name">Error</span>
                   </a>
                 </span>
 
@@ -442,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  145
+                  266
                 </span>
               
 
@@ -467,26 +447,33 @@
       
 
       
-        <h2 id="ERROR-1045-28000-Access-denied-for-user-‘debian-sys-maint’-’localhost’-using-password-YES"><a href="#ERROR-1045-28000-Access-denied-for-user-‘debian-sys-maint’-’localhost’-using-password-YES" class="headerlink" title="ERROR 1045 (28000): Access denied for user ‘debian-sys-maint’@’localhost’ (using password: YES)"></a>ERROR 1045 (28000): Access denied for user ‘debian-sys-maint’@’localhost’ (using password: YES)</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p> 在使用<code>sudo mysql -udebian-sys-maint -p</code>的时候，出现这个错误<br>    使用的是MySQL登录密码</p>
-<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><pre><code>修改root用户的密码，通过命令来修改root用户的密码：</code></pre><ul>
-<li>查看密码</li>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><pre><code>这篇博客主要记录在使用Vmware安装的Unbuntu系统下遇到的错误以及解决问题的方式</code></pre><h2 id="虚拟机打开黑屏"><a href="#虚拟机打开黑屏" class="headerlink" title="虚拟机打开黑屏"></a>虚拟机打开黑屏</h2><pre><code>1. 解决方式
+    由于在日志里面有句话，虚拟打印设备无法使用，在编辑中启用虚拟设备，可以打开虚拟机
+
+2. 链接</code></pre><ul>
+<li><a href="https://blog.csdn.net/qq_37074001/article/details/102645024" target="_blank" rel="noopener">虚拟机黑屏解决方法</a></li>
 </ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 通过查看文件获取原始的密码</span></span><br><span class="line">sudo vim /etc/mysql/debian.cnf</span><br></pre></td></tr></table></figure>
+<h2 id="Unbuntu安装FTP"><a href="#Unbuntu安装FTP" class="headerlink" title="Unbuntu安装FTP"></a>Unbuntu安装FTP</h2><h3 id="E-无法定位软件包-vsftpd"><a href="#E-无法定位软件包-vsftpd" class="headerlink" title="E: 无法定位软件包 vsftpd"></a>E: 无法定位软件包 vsftpd</h3><pre><code>1. 问题描述
+    在使用`sudo apt-get install vsftpd`安装ftp系统的时候，出现该问题</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/10/24/ubuntu/1_error.png" alt="E: 无法定位软件包 vsftpd"></p>
+<pre><code>2. 解决方法</code></pre><p>更新软件源，<code>sudo apt-get update</code>        </p>
+<h2 id="无法解析域名"><a href="#无法解析域名" class="headerlink" title="无法解析域名"></a>无法解析域名</h2><pre><code>1. 问题描述
+    在使用`sudo apt-get update`,出现域名无法解析的问题，应该是域名服务器出现了问题，实际上是虚拟操作系统的网络出了问题，重新配置网络之后，可以进行更新</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/10/24/ubuntu/2_error.png" alt="无法解析域名"></p>
+<pre><code>2. 解决方法
+    1. 查看DNS的配置文件
+        重新配置网络DNS</code></pre><pre><code class="linux">cat /etc/resolv.conf</code></pre>
 <blockquote>
 </blockquote>
-<p><img src="/2020/10/28/access_denied/1045_1.png" alt></p>
+<p><img src="/2020/10/24/ubuntu/2_1.png" alt></p>
 <ul>
-<li>更新密码</li>
+<li><a href="https://www.jb51.net/article/158414.htm" target="_blank" rel="noopener">Linux网络配置</a></li>
 </ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 更改密码</span></span><br><span class="line"><span class="keyword">UPDATE</span> <span class="keyword">user</span> <span class="keyword">SET</span> authentication_string=<span class="keyword">PASSWORD</span>(<span class="string">'root'</span>) <span class="keyword">where</span> <span class="keyword">USER</span>=<span class="string">'root'</span>; </span><br><span class="line"><span class="comment">-- 刷新权限</span></span><br><span class="line"><span class="keyword">FLUSH</span> <span class="keyword">PRIVILEGES</span>;</span><br><span class="line"><span class="comment">-- 退出</span></span><br><span class="line">quit</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>重新登录    </li>
-</ul>
-<p>使用更新后的密码可以进行登录</p>
-<h3 id="参考博客："><a href="#参考博客：" class="headerlink" title="参考博客："></a>参考博客：</h3><ul>
-<li><a href="https://blog.csdn.net/xiaoshunzi111/article/details/51898939" target="_blank" rel="noopener">1045 Error&lt;/&gt;</a></li>
-<li><a href="https://blog.csdn.net/pengge0727/article/details/81448952?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-8.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-8.channel_param" target="_blank" rel="noopener">1045 Error2</a></li>
+<h2 id="ifconig无法使用"><a href="#ifconig无法使用" class="headerlink" title="ifconig无法使用"></a>ifconig无法使用</h2><pre><code>* sudo apt install net-tools
+* sudo apt update: 升级apt</code></pre><ul>
+<li><a href="https://blog.csdn.net/i_spirit/article/details/109182493" target="_blank" rel="noopener">command “ifconfig” not found</a></li>
 </ul>
 
       
@@ -514,7 +501,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
+            <a href="/tags/Unbuntu/" rel="tag"><i class="fa fa-tag"></i> Unbuntu</a>
           
         </div>
       
@@ -542,8 +529,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/10/28/pwd_not_safe/" rel="next" title="1819-password-does-not-satisfy">
-                <i class="fa fa-chevron-left"></i> 1819-password-does-not-satisfy
+              <a href="/2020/10/16/ssm-error/" rel="next" title="ssm_error">
+                <i class="fa fa-chevron-left"></i> ssm_error
               </a>
             
           </div>
@@ -552,8 +539,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/10/28/plugin_not_load/" rel="prev" title="1524-plugin-not-load">
-                1524-plugin-not-load <i class="fa fa-chevron-right"></i>
+              <a href="/2020/10/26/soft/" rel="prev" title="soft">
+                soft <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -567,7 +554,7 @@
         <p id="div-border-left-red">
         <b>本文基于<a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布</b><br/>
         <span>
-          <b>本文地址: </b><a href="/2020/10/28/access_denied/" title="1045-access-denied">http://print3306.github.io/2020/10/28/access_denied/</a><br/><b>转载请注明出处, 谢谢！</b>
+          <b>本文地址: </b><a href="/2020/10/24/ubuntu/" title="ubuntu">http://print3306.github.io/2020/10/24/ubuntu/</a><br/><b>转载请注明出处, 谢谢！</b>
         </span>
       </p>
 </div>
@@ -707,7 +694,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ERROR-1045-28000-Access-denied-for-user-‘debian-sys-maint’-’localhost’-using-password-YES"><span class="nav-number">1.</span> <span class="nav-text">ERROR 1045 (28000): Access denied for user ‘debian-sys-maint’@’localhost’ (using password: YES)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">1.1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决"><span class="nav-number">1.2.</span> <span class="nav-text">解决</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考博客："><span class="nav-number">1.3.</span> <span class="nav-text">参考博客：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟机打开黑屏"><span class="nav-number">2.</span> <span class="nav-text">虚拟机打开黑屏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unbuntu安装FTP"><span class="nav-number">3.</span> <span class="nav-text">Unbuntu安装FTP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#E-无法定位软件包-vsftpd"><span class="nav-number">3.1.</span> <span class="nav-text">E: 无法定位软件包 vsftpd</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#无法解析域名"><span class="nav-number">4.</span> <span class="nav-text">无法解析域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ifconig无法使用"><span class="nav-number">5.</span> <span class="nav-text">ifconig无法使用</span></a></li></ol></div>
             
 
           </div>
