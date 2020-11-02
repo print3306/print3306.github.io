@@ -383,7 +383,122 @@
 <li><a href="https://print3306.github.io/2020/06/18/mysql57/">Windows版下载安装</a></li>
 <li><a href="https://jingyan.baidu.com/article/48b558e382811d3f39c09a77.html" target="_blank" rel="noopener">Linux版安装</a></li>
 </ul>
-<h2 id><a href="#" class="headerlink" title></a></h2>]]></content>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="Index说明"><a href="#Index说明" class="headerlink" title="Index说明"></a>Index说明</h3><pre><code>1. 索引的含义
+    索引（Index）是帮助MySQL高效获取数据（查询）的一种数据结构。
+    在数据之外，数据库系统还维护着满足特定查找算法的数据结构，
+    这些数据结构以某种方式指向（或引用）数据，这样就可以在这些数据结构上使用高级查找算法，提高查询效率，这种数据结构就是索引。
+
+2. 特点
+    * 用来提高查询效率的指向数据的数据结构
+    * 满足特定查找算法
+    * 可以使用高级查找算法进行数据查询
+
+3. 索引的
+    1. 没有索引
+        查询数据需要全表扫描，最差的情况扫描n次，效率极低
+
+    2. 使用索引
+        根据查找数据的特点，建立数据结构，可以使用顺序表，二叉树等，来查询数值型数据</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/index.png" alt></p>
+<h3 id="Index的优势和劣势"><a href="#Index的优势和劣势" class="headerlink" title="Index的优势和劣势"></a>Index的优势和劣势</h3><h4 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h4><pre><code>1. 类似于书籍的目录索引，提高数据的检索效率，降低数据库的IO成本
+2. 通过索引列对数据进行排序，降低数据排序的成本，降低CPU的消耗</code></pre><h4 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h4><pre><code>1. 索引本身需要开销，索引本身也是一张表，该表保存了主键和索引字段，并指向实体类的记录（一般保存在磁盘文件）
+2. 索引降低了数据更新表的速度（Update，Delete,Insert）,在数据更新之后，索引表也需要
+进行维护，需要调整因为更新带来的键值变化后的索引信息</code></pre><h3 id="Index的结构"><a href="#Index的结构" class="headerlink" title="Index的结构"></a>Index的结构</h3><pre><code>索引是在MySQL的存储引擎层中实现的，不是在服务器层实现的，所以每种存储引擎的索引都不一定
+完全相同，也不是所有的存储引擎都支持索引。</code></pre><h4 id="主流的索引（4种）"><a href="#主流的索引（4种）" class="headerlink" title="主流的索引（4种）"></a>主流的索引（4种）</h4><pre><code>1. BTree (B+树) : 最常见的索引类型，大部分的索引引擎都支持BTree类型的索引
+2. Hash ：只有Memory引擎支持，使用场景简单
+3. R-tree(空间索引) ：空间索引是MyISAM引擎的一个特殊索引类型，主要用于地理空间数据类型
+4. Full-text(全文索引) ：全文索引也是MyISAM引擎的一个特殊索引类型，
+主要用于全文索引，InnoBD引擎从MySQL5.6版本开始支持Full-text索引</code></pre><blockquote>
+<p><strong>MyISAM,InnoDB,Memory三种存储引擎对于各种索引类型的支持</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">索引</th>
+<th align="center">InnoDB引擎</th>
+<th align="center">Memery引擎</th>
+<th align="center">MyISAM引擎</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">BTree</td>
+<td align="center">支持</td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+</tr>
+<tr>
+<td align="center">Hash</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+</tr>
+<tr>
+<td align="center">R-tree</td>
+<td align="center">不支持</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td align="center">Full-text</td>
+<td align="center">5.6以后支持</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+</tbody></table>
+<pre><code>我们平常所说的索引一般都是指B+树，多路搜索树，其中聚集索引，复合索引，前缀索引，
+唯一索引默认使用的都是B+树，统称为索引    </code></pre><h4 id="BTree结构"><a href="#BTree结构" class="headerlink" title="BTree结构"></a>BTree结构</h4><pre><code>默认InnoDB存储引擎所支持的索引结构主要就是：BTree
+
+1. BTree的特点
+    BTree又叫做多路平衡搜索树，一颗m叉的BTree特性如下:
+        * 树的每个节点的最多包含m个孩子
+        * 除根结点与叶子节点之外，每个节点至少有[ceil(m / 2)]个孩子:ceil向上取整
+        * 若根节点不是叶子节点，至少有两个孩子
+        * 所有的叶子节点都在同一层
+        * 每个非叶子节点有n个key与n+1个指针组成，其中[ceil(m / 2) - 1] &lt;= n &lt;= m-1
+
+2. BTree实例
+    以一个5叉的b树为例，可以由公式推导出，key的取值，ceil(5 / 2 - 1) = 2 &lt;= n 
+    &lt;= 5-1 = 4,所以每个非叶子节点的key的取值为[2,4],
+    当n&gt;4时，中间节点分裂到父结点，两边节点分裂
+
+1. 以插入CNGA HEKQ MFWL TZDP RXYS字符串为例</code></pre><ul>
+<li>插入前四个字母:CNGA</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_1.png" alt="CNGA">    </p>
+<ul>
+<li>插入H， n &gt; 4</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_2.png" alt="CNGAH"></p>
+<ul>
+<li>插入E,K,Q，此时没有节点的key到达4，整体结构不变</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_3_2.png" alt="CNGAHEKQ"></p>
+<ul>
+<li>插入M,M分裂到父结点</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_4.png" alt="CNGAHEKQM"></p>
+<ul>
+<li>插入F,W,L,T,结构不变</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_5.png" alt="CNGAHEKQMFWLT"></p>
+<ul>
+<li>插入Z,T变为父结点</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_6.png" alt="CNGAHEKQMFWLTZ"></p>
+<ul>
+<li>插入D,D变为父结点</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_7.png" alt="CNGAHEKQMFWLTZD"></p>
+<ul>
+<li>插入P，R，X，Y结构不变</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_8.png" alt="CNGAHEKQMFWLTZDPRXY"></p>
+<ul>
+<li>插入S,需要分隔两次父结点</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_9.png" alt="CNGAHEKQMFWLTZDPRXYS"></p>
+]]></content>
       <categories>
         <category>Linux</category>
         <category>MySQL</category>
@@ -403,7 +518,9 @@
 <pre><code>3. 解决
     因为是直接使用 SQL 语句的方式来删除账户，所以必须先选择 mysql 自身的数据库：</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> mysql;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>Error,MySQL,Linux</category>
+        <category>Linux</category>
+        <category>MySQL</category>
+        <category>Error</category>
       </categories>
       <tags>
         <tag>MySQL</tag>
@@ -3344,23 +3461,6 @@ User findById(Integer id);</code></pre></blockquote>
       </tags>
   </entry>
   <entry>
-    <title>Spring Load</title>
-    <url>/2020/05/09/SpringLoad/</url>
-    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
-<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
-<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
-<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
-<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
-<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
-]]></content>
-      <categories>
-        <category>Spring</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SQL Inject</title>
     <url>/2020/05/09/SQL%E6%B3%A8%E5%85%A5/</url>
     <content><![CDATA[<h1 id="SQL注入问题"><a href="#SQL注入问题" class="headerlink" title="SQL注入问题"></a>SQL注入问题</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>在拼接sql语句时，有一些特殊的SQL关键字参于字符串的拼接，导致SQL语句的逻辑发生变化，可能会造成安全性问题</code></pre><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre><code>1. 输入 a&apos;or&apos;a&apos;=&apos;a,条件改变
@@ -3421,6 +3521,23 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
       </categories>
       <tags>
         <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring Load</title>
+    <url>/2020/05/09/SpringLoad/</url>
+    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
+<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
+<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
+<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
+<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
+<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
+]]></content>
+      <categories>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
