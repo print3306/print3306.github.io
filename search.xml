@@ -65,6 +65,207 @@
       </tags>
   </entry>
   <entry>
+    <title>mysql</title>
+    <url>/2020/10/12/mysql/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><pre><code>* 针对数据库查询的延伸学习
+* 强化数据库操作
+* 学习更好的使用MySQL数据库，提高效率</code></pre><ul>
+<li><a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="noopener">mysql官网下载</a></li>
+<li><a href="https://print3306.github.io/2020/06/18/mysql57/">Windows版下载安装</a></li>
+<li><a href="https://jingyan.baidu.com/article/48b558e382811d3f39c09a77.html" target="_blank" rel="noopener">Linux版安装</a></li>
+</ul>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="Index说明"><a href="#Index说明" class="headerlink" title="Index说明"></a>Index说明</h3><pre><code>1. 索引的含义
+    索引（Index）是帮助MySQL高效获取数据（查询）的一种数据结构。
+    在数据之外，数据库系统还维护着满足特定查找算法的数据结构，
+    这些数据结构以某种方式指向（或引用）数据，这样就可以在这些数据结构上使用高级查找算法，提高查询效率，这种数据结构就是索引。
+
+2. 特点
+    * 用来提高查询效率的指向数据的数据结构
+    * 满足特定查找算法
+    * 可以使用高级查找算法进行数据查询
+
+3. 索引的使用
+    1. 没有索引
+        查询数据需要全表扫描，最差的情况扫描n次，效率极低
+
+    2. 使用索引
+        根据查找数据的特点，建立数据结构，可以使用顺序表，二叉树等，来查询数值型数据</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/index.png" alt></p>
+<h3 id="Index的优势和劣势"><a href="#Index的优势和劣势" class="headerlink" title="Index的优势和劣势"></a>Index的优势和劣势</h3><h4 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h4><pre><code>1. 类似于书籍的目录索引，提高数据的检索效率，降低数据库的IO成本
+2. 通过索引列对数据进行排序，降低数据排序的成本，降低CPU的消耗</code></pre><h4 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h4><pre><code>1. 索引本身需要开销，索引本身也是一张表，该表保存了主键和索引字段，并指向实体类的记录
+（一般保存在磁盘文件）
+2. 索引降低了数据更新表的速度（Update，Delete,Insert）,在数据更新之后，索引表也需要
+进行维护，需要调整因为更新带来的键值变化后的索引信息</code></pre><h3 id="Index的结构"><a href="#Index的结构" class="headerlink" title="Index的结构"></a>Index的结构</h3><pre><code>索引是在MySQL的存储引擎层中实现的，不是在服务器层实现的，所以每种存储引擎的索引都不一定
+完全相同，也不是所有的存储引擎都支持索引。</code></pre><h4 id="主流的索引（4种）"><a href="#主流的索引（4种）" class="headerlink" title="主流的索引（4种）"></a>主流的索引（4种）</h4><pre><code>1. BTree (B+树) : 最常见的索引类型，大部分的索引引擎都支持BTree类型的索引
+2. Hash ：只有Memory引擎支持，使用场景简单
+3. R-tree(空间索引) ：空间索引是MyISAM引擎的一个特殊索引类型，主要用于地理空间数据类型
+4. Full-text(全文索引) ：全文索引也是MyISAM引擎的一个特殊索引类型，
+主要用于全文索引，InnoBD引擎从MySQL5.6版本开始支持Full-text索引</code></pre><blockquote>
+<p><strong>MyISAM,InnoDB,Memory三种存储引擎对于各种索引类型的支持</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">索引</th>
+<th align="center">InnoDB引擎</th>
+<th align="center">Memery引擎</th>
+<th align="center">MyISAM引擎</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">BTree</td>
+<td align="center">支持</td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+</tr>
+<tr>
+<td align="center">Hash</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+</tr>
+<tr>
+<td align="center">R-tree</td>
+<td align="center">不支持</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td align="center">Full-text</td>
+<td align="center">5.6以后支持</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+</tbody></table>
+<pre><code>我们平常所说的索引一般都是指B+树，多路搜索树，其中聚集索引，复合索引，前缀索引，
+唯一索引默认使用的都是B+树，统称为索引    </code></pre><h4 id="BTree结构"><a href="#BTree结构" class="headerlink" title="BTree结构"></a>BTree结构</h4><pre><code>默认InnoDB存储引擎所支持的索引结构主要就是：BTree
+
+1. BTree的特点
+    BTree又叫做多路平衡搜索树，一颗m叉的BTree特性如下:
+        * 树的每个节点的最多包含m个孩子
+        * 除根结点与叶子节点之外，每个节点至少有[ceil(m / 2)]个孩子:ceil向上取整
+        * 若根节点不是叶子节点，至少有两个孩子
+        * 所有的叶子节点都在同一层
+        * 每个非叶子节点有n个key与n+1个指针组成，其中[ceil(m / 2) - 1] &lt;= n &lt;= m-1
+
+2. BTree实例
+    以一个5叉的b树为例，可以由公式推导出，key的取值，ceil(5 / 2 - 1) = 2 &lt;= n 
+    &lt;= 5-1 = 4,所以每个非叶子节点的key的取值为[2,4],
+    当n&gt;4时，中间节点分裂到父结点，两边节点分裂
+
+1. 以插入CNGA HEKQ MFWL TZDP RXYS字符串为例</code></pre><ul>
+<li>插入前四个字母:CNGA</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_1.png" alt="CNGA">    </p>
+<ul>
+<li>插入H， n &gt; 4</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_2.png" alt="CNGAH"></p>
+<ul>
+<li>插入E,K,Q，此时没有节点的key到达4，整体结构不变</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_3_2.png" alt="CNGAHEKQ"></p>
+<ul>
+<li>插入M,M分裂到父结点</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_4.png" alt="CNGAHEKQM"></p>
+<ul>
+<li>插入F,W,L,T,结构不变</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_5.png" alt="CNGAHEKQMFWLT"></p>
+<ul>
+<li>插入Z,T变为父结点</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_6.png" alt="CNGAHEKQMFWLTZ"></p>
+<ul>
+<li>插入D,D变为父结点</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_7.png" alt="CNGAHEKQMFWLTZD"></p>
+<ul>
+<li>插入P，R，X，Y结构不变</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_8.png" alt="CNGAHEKQMFWLTZDPRXY"></p>
+<ul>
+<li>插入S,需要分隔两次父结点</li>
+</ul>
+<p><img src="/2020/10/12/mysql/BTree_5_9.png" alt="CNGAHEKQMFWLTZDPRXYS"></p>
+<h4 id="B-Tree的结构"><a href="#B-Tree的结构" class="headerlink" title="B+Tree的结构"></a>B+Tree的结构</h4><pre><code>B+Tree是BTree的变种，B+Tree和BTree的区别：
+    * n叉B+Tree最多有n个key，而BTree最多有n-1个key
+    * B+Tree的叶子节点保存所有的key信息，根据key的大小排序
+    * 所有非叶子节点都可以看做key的索引部分
+
+1. 由于B+Tree的所有key信息保存在叶子节点中,查询任何数据都需要经过root到叶子节点，B
++Tree的查询效率更加稳定
+2. 为了减少磁盘I/O操作，磁盘并不是每次需要才去读取，而是会进行预读取。在预读取的过程
+中，磁盘进行顺序读取，顺序读取不需要进行磁盘寻道，并且只需要很短的磁盘旋转时间，速度会非常快。
+3. 数据库系统将索引的一个节点的大小，使得一次I/O就能完全载入一个节点，并且可以利用预读
+特性，相邻的节点也能被预先载入
+
+使用B+Tree的好处，可以充分利用操作系统的文件系统，减少磁盘IO操作</code></pre><h4 id="MySQL中的BTree"><a href="#MySQL中的BTree" class="headerlink" title="MySQL中的BTree"></a>MySQL中的BTree</h4><pre><code>MySQL中的BTree实际上指的是B+Tree，但是在B+Tree树的基础上进行了优化，
+增加了一个指向相邻叶子节点的链表指针，就形成了带有顺序指针的B+Tree，提高了区间访问的性能。
+
+1. 为什么改进的B+Tree能提高区间访问的能力？
+    由于在叶子节点上增加了指向相邻节点的链表指针，数据区间查询的时候，可以通过指针查找到所有数据，不需要通过root节点向下进行查找</code></pre><h3 id="Index的分类"><a href="#Index的分类" class="headerlink" title="Index的分类"></a>Index的分类</h3><h4 id="索引分类"><a href="#索引分类" class="headerlink" title="索引分类"></a>索引分类</h4><pre><code>1. 单值索引：索引只包含单个列，一个表可以包括多个单值索引
+2. 唯一索引：索引列的值必须唯一，但允许有空值（包括多个空值）
+3. 复合索引：一个索引包含多个列</code></pre><h4 id="索引语法"><a href="#索引语法" class="headerlink" title="索引语法"></a>索引语法</h4><pre><code>索引可以在创建表的时候创建，也可以随时增加新的索引。</code></pre><h5 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h5><pre><code>1. 语法</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> [<span class="keyword">unique</span>|fulltext|spatial] <span class="keyword">index</span> index_name</span><br><span class="line">[<span class="keyword">using</span> index_type]</span><br><span class="line"><span class="keyword">on</span> <span class="keyword">table</span>(index_col_name...);</span><br><span class="line">index_col_name : column_name[(length)][desc|asc]</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">	实例：在城市的名称上建立索引</span><br><span class="line">```sql</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">index</span> idx_city_name <span class="keyword">on</span> city(city_name);</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看索引"><a href="#查看索引" class="headerlink" title="查看索引"></a>查看索引</h5><pre><code>1. 语法</code></pre><p><code>show index from city;</code></p>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/index_show.png" alt></p>
+<pre><code>没有指定建立索引的类型，InnoDB引擎默认使用BTree索引类型</code></pre><h5 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h5><pre><code>1. 语法</code></pre><p><code>drop index idx_city_name on city;</code></p>
+<h5 id="ALTER命令"><a href="#ALTER命令" class="headerlink" title="ALTER命令"></a>ALTER命令</h5><pre><code>1. 使用
+    可以在使用ALter修改表结构的时候，修改索引</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tb_name <span class="keyword">add</span> primary <span class="keyword">key</span>(column_list); </span><br><span class="line">添加主键，索引值唯一，不能为null,自动添加索引</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tb_name <span class="keyword">add</span> <span class="keyword">unique</span> index_name(column_list);</span><br><span class="line">添加唯一索引</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tb_name <span class="keyword">add</span> <span class="keyword">index</span> index_name(column_list);</span><br><span class="line">添加普通索引</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tb_name <span class="keyword">add</span> fulltext index_name(column_list);</span><br><span class="line">添加全文索引</span><br></pre></td></tr></table></figure>
+
+<h3 id="Index设计原则"><a href="#Index设计原则" class="headerlink" title="Index设计原则"></a>Index设计原则</h3><pre><code>1. 设计原则
+    * 查询频次高，而且数据量比较大的表
+    * 查询条件，索引字段的选择，最佳候选列应该从where子句中出现的条件选择
+    * 使用唯一索引，区分度高，使用索引的效率越高
+    * 索引的数量不是越多越好，在更新的时候，需要维护索引
+    * 尽量使用短索引，索引创建完成之后，需要保存在磁盘文件中，使用短索引可以提升磁盘IO
+    的效率，给定大小的存储块中可以存储更多的索引值
+    * 利用最左前缀，N个列组合而成的组合索引，相当于创建了N个索引，如果查询时where使用
+    了组合索引的某个前缀，这个查询条件可以利用组合索引来提高效率</code></pre><p><code>创建复合索引
+    create index idx_name_email_status on city(name,email,status);
+就相当于：
+    对name 创建索引
+    对name email 创建索引
+    对name email status 创建索引</code></p>
+<h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><h3 id="视图概述"><a href="#视图概述" class="headerlink" title="视图概述"></a>视图概述</h3><pre><code>1. 什么是视图？
+    视图（View）是一种虚拟存在的表，视图并不真实的存在于数据库中，行和列的数据来自于
+定义视图的语句动态生成。通俗的讲，视图就是一条select语句执行后返回的结果集，所以创建
+视图的时候，主要工作就在于创建这一条SQL语句。
+
+2. 使用视图的优势
+    * 简单：使用视图的用户不需要关注表的关联条件，筛选条件，是过滤好的值
+    * 安全：使用视图的用户看到的值是允许访问的部分，将表的权限锁定在某一行某一列
+    * 数据独立：一旦视图的结构确定，用户无法感知到实体表的变化情况，屏蔽了表的变化</code></pre><h3 id="创建或修改视图"><a href="#创建或修改视图" class="headerlink" title="创建或修改视图"></a>创建或修改视图</h3><pre><code>1. 创建视图的语法</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> [<span class="keyword">or</span> <span class="keyword">replace</span>] [algorithm = &#123;undefined,<span class="keyword">merge</span>,temptable&#125;]</span><br><span class="line"><span class="keyword">view</span> view_name</span><br><span class="line"><span class="keyword">as</span> select_statement</span><br><span class="line">[<span class="keyword">with</span> [<span class="keyword">cascade</span> | <span class="keyword">local</span>] <span class="keyword">check</span> <span class="keyword">option</span>]</span><br></pre></td></tr></table></figure>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/view_create.png" alt></p>
+<pre><code>2. 更新视图
+    可以按照使用实体表的方法使用视图，在更新视图的时候，实际上是更新的实体表</code></pre><p><code>update view_city_country set city_name=&#39;gg&#39; where country_name=&#39;中国&#39;</code>    </p>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/view_update.png" alt></p>
+<pre><code>是否可以更新视图还取决于，
+    [with [cascade | local] check option]
+
+    * local: 只要满足本视图的条件就可以更新
+    * cascade: 必须满足针对该视图的所有条件才能进行更新
+
+3. 修改视图</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">alter</span> [algorithm = &#123;undefined,<span class="keyword">merge</span>,temptable&#125;]</span><br><span class="line"><span class="keyword">view</span> view_name</span><br><span class="line"><span class="keyword">as</span> select_statement</span><br><span class="line">[<span class="keyword">with</span> [<span class="keyword">cascade</span> | <span class="keyword">local</span>] <span class="keyword">check</span> <span class="keyword">option</span>]</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Linux</category>
+        <category>MySQL</category>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo 优化</title>
     <url>/2020/05/18/Hexo%20%E4%BC%98%E5%8C%96/</url>
     <content><![CDATA[<h2 id="Hexo-next自适应宽屏"><a href="#Hexo-next自适应宽屏" class="headerlink" title="Hexo next自适应宽屏"></a>Hexo next自适应宽屏</h2><p><code>/themes/next/source/css/_schemes/Picses/_layout.styl</code>在文件末尾添加代码<br><code>// 以下为新增代码！！修改post宽度</code></p>
@@ -371,141 +572,6 @@
       </categories>
       <tags>
         <tag>随笔</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mysql</title>
-    <url>/2020/10/12/mysql/</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><pre><code>* 针对数据库查询的延伸学习
-* 强化数据库操作
-* 学习更好的使用MySQL数据库，提高效率</code></pre><ul>
-<li><a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="noopener">mysql官网下载</a></li>
-<li><a href="https://print3306.github.io/2020/06/18/mysql57/">Windows版下载安装</a></li>
-<li><a href="https://jingyan.baidu.com/article/48b558e382811d3f39c09a77.html" target="_blank" rel="noopener">Linux版安装</a></li>
-</ul>
-<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="Index说明"><a href="#Index说明" class="headerlink" title="Index说明"></a>Index说明</h3><pre><code>1. 索引的含义
-    索引（Index）是帮助MySQL高效获取数据（查询）的一种数据结构。
-    在数据之外，数据库系统还维护着满足特定查找算法的数据结构，
-    这些数据结构以某种方式指向（或引用）数据，这样就可以在这些数据结构上使用高级查找算法，提高查询效率，这种数据结构就是索引。
-
-2. 特点
-    * 用来提高查询效率的指向数据的数据结构
-    * 满足特定查找算法
-    * 可以使用高级查找算法进行数据查询
-
-3. 索引的
-    1. 没有索引
-        查询数据需要全表扫描，最差的情况扫描n次，效率极低
-
-    2. 使用索引
-        根据查找数据的特点，建立数据结构，可以使用顺序表，二叉树等，来查询数值型数据</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/10/12/mysql/index.png" alt></p>
-<h3 id="Index的优势和劣势"><a href="#Index的优势和劣势" class="headerlink" title="Index的优势和劣势"></a>Index的优势和劣势</h3><h4 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h4><pre><code>1. 类似于书籍的目录索引，提高数据的检索效率，降低数据库的IO成本
-2. 通过索引列对数据进行排序，降低数据排序的成本，降低CPU的消耗</code></pre><h4 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h4><pre><code>1. 索引本身需要开销，索引本身也是一张表，该表保存了主键和索引字段，并指向实体类的记录（一般保存在磁盘文件）
-2. 索引降低了数据更新表的速度（Update，Delete,Insert）,在数据更新之后，索引表也需要
-进行维护，需要调整因为更新带来的键值变化后的索引信息</code></pre><h3 id="Index的结构"><a href="#Index的结构" class="headerlink" title="Index的结构"></a>Index的结构</h3><pre><code>索引是在MySQL的存储引擎层中实现的，不是在服务器层实现的，所以每种存储引擎的索引都不一定
-完全相同，也不是所有的存储引擎都支持索引。</code></pre><h4 id="主流的索引（4种）"><a href="#主流的索引（4种）" class="headerlink" title="主流的索引（4种）"></a>主流的索引（4种）</h4><pre><code>1. BTree (B+树) : 最常见的索引类型，大部分的索引引擎都支持BTree类型的索引
-2. Hash ：只有Memory引擎支持，使用场景简单
-3. R-tree(空间索引) ：空间索引是MyISAM引擎的一个特殊索引类型，主要用于地理空间数据类型
-4. Full-text(全文索引) ：全文索引也是MyISAM引擎的一个特殊索引类型，
-主要用于全文索引，InnoBD引擎从MySQL5.6版本开始支持Full-text索引</code></pre><blockquote>
-<p><strong>MyISAM,InnoDB,Memory三种存储引擎对于各种索引类型的支持</strong></p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th align="center">索引</th>
-<th align="center">InnoDB引擎</th>
-<th align="center">Memery引擎</th>
-<th align="center">MyISAM引擎</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">BTree</td>
-<td align="center">支持</td>
-<td align="center">支持</td>
-<td align="center">不支持</td>
-</tr>
-<tr>
-<td align="center">Hash</td>
-<td align="center">不支持</td>
-<td align="center">支持</td>
-<td align="center">不支持</td>
-</tr>
-<tr>
-<td align="center">R-tree</td>
-<td align="center">不支持</td>
-<td align="center">不支持</td>
-<td align="center">支持</td>
-</tr>
-<tr>
-<td align="center">Full-text</td>
-<td align="center">5.6以后支持</td>
-<td align="center">不支持</td>
-<td align="center">支持</td>
-</tr>
-</tbody></table>
-<pre><code>我们平常所说的索引一般都是指B+树，多路搜索树，其中聚集索引，复合索引，前缀索引，
-唯一索引默认使用的都是B+树，统称为索引    </code></pre><h4 id="BTree结构"><a href="#BTree结构" class="headerlink" title="BTree结构"></a>BTree结构</h4><pre><code>默认InnoDB存储引擎所支持的索引结构主要就是：BTree
-
-1. BTree的特点
-    BTree又叫做多路平衡搜索树，一颗m叉的BTree特性如下:
-        * 树的每个节点的最多包含m个孩子
-        * 除根结点与叶子节点之外，每个节点至少有[ceil(m / 2)]个孩子:ceil向上取整
-        * 若根节点不是叶子节点，至少有两个孩子
-        * 所有的叶子节点都在同一层
-        * 每个非叶子节点有n个key与n+1个指针组成，其中[ceil(m / 2) - 1] &lt;= n &lt;= m-1
-
-2. BTree实例
-    以一个5叉的b树为例，可以由公式推导出，key的取值，ceil(5 / 2 - 1) = 2 &lt;= n 
-    &lt;= 5-1 = 4,所以每个非叶子节点的key的取值为[2,4],
-    当n&gt;4时，中间节点分裂到父结点，两边节点分裂
-
-1. 以插入CNGA HEKQ MFWL TZDP RXYS字符串为例</code></pre><ul>
-<li>插入前四个字母:CNGA</li>
-</ul>
-<p><img src="/2020/10/12/mysql/BTree_5_1.png" alt="CNGA">    </p>
-<ul>
-<li>插入H， n &gt; 4</li>
-</ul>
-<p><img src="/2020/10/12/mysql/BTree_5_2.png" alt="CNGAH"></p>
-<ul>
-<li>插入E,K,Q，此时没有节点的key到达4，整体结构不变</li>
-</ul>
-<p><img src="/2020/10/12/mysql/BTree_5_3_2.png" alt="CNGAHEKQ"></p>
-<ul>
-<li>插入M,M分裂到父结点</li>
-</ul>
-<p><img src="/2020/10/12/mysql/BTree_5_4.png" alt="CNGAHEKQM"></p>
-<ul>
-<li>插入F,W,L,T,结构不变</li>
-</ul>
-<p><img src="/2020/10/12/mysql/BTree_5_5.png" alt="CNGAHEKQMFWLT"></p>
-<ul>
-<li>插入Z,T变为父结点</li>
-</ul>
-<p><img src="/2020/10/12/mysql/BTree_5_6.png" alt="CNGAHEKQMFWLTZ"></p>
-<ul>
-<li>插入D,D变为父结点</li>
-</ul>
-<p><img src="/2020/10/12/mysql/BTree_5_7.png" alt="CNGAHEKQMFWLTZD"></p>
-<ul>
-<li>插入P，R，X，Y结构不变</li>
-</ul>
-<p><img src="/2020/10/12/mysql/BTree_5_8.png" alt="CNGAHEKQMFWLTZDPRXY"></p>
-<ul>
-<li>插入S,需要分隔两次父结点</li>
-</ul>
-<p><img src="/2020/10/12/mysql/BTree_5_9.png" alt="CNGAHEKQMFWLTZDPRXYS"></p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-        <category>MySQL</category>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>SQL</tag>
       </tags>
   </entry>
   <entry>
