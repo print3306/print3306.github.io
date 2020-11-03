@@ -208,7 +208,7 @@
 1. 为什么改进的B+Tree能提高区间访问的能力？
     由于在叶子节点上增加了指向相邻节点的链表指针，数据区间查询的时候，可以通过指针查找到所有数据，不需要通过root节点向下进行查找</code></pre><h3 id="Index的分类"><a href="#Index的分类" class="headerlink" title="Index的分类"></a>Index的分类</h3><h4 id="索引分类"><a href="#索引分类" class="headerlink" title="索引分类"></a>索引分类</h4><pre><code>1. 单值索引：索引只包含单个列，一个表可以包括多个单值索引
 2. 唯一索引：索引列的值必须唯一，但允许有空值（包括多个空值）
-3. 复合索引：一个索引包含多个列</code></pre><h4 id="索引语法"><a href="#索引语法" class="headerlink" title="索引语法"></a>索引语法</h4><pre><code>索引可以在创建表的时候创建，也可以随时增加新的索引。</code></pre><h5 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h5><pre><code>1. 语法</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> [<span class="keyword">unique</span>|fulltext|spatial] <span class="keyword">index</span> index_name</span><br><span class="line">[<span class="keyword">using</span> index_type]</span><br><span class="line"><span class="keyword">on</span> <span class="keyword">table</span>(index_col_name...);</span><br><span class="line">index_col_name : column_name[(length)][desc|asc]</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">	实例：在城市的名称上建立索引</span><br><span class="line">```sql</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">index</span> idx_city_name <span class="keyword">on</span> city(city_name);</span><br></pre></td></tr></table></figure>
+3. 复合索引：一个索引包含多个列</code></pre><h4 id="索引语法"><a href="#索引语法" class="headerlink" title="索引语法"></a>索引语法</h4><pre><code>索引可以在创建表的时候创建，也可以随时增加新的索引。</code></pre><h5 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h5><pre><code>1. 语法</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> [<span class="keyword">unique</span>|fulltext|spatial] <span class="keyword">index</span> index_name</span><br><span class="line">[<span class="keyword">using</span> index_type]</span><br><span class="line"><span class="keyword">on</span> <span class="keyword">table</span>(index_col_name...);</span><br><span class="line">index_col_name : column_name[(length)][desc|asc]</span><br><span class="line">案例：在名称上建立索引</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">index</span> idx_city_name <span class="keyword">on</span> city(city_name);</span><br></pre></td></tr></table></figure>
 
 <h5 id="查看索引"><a href="#查看索引" class="headerlink" title="查看索引"></a>查看索引</h5><pre><code>1. 语法</code></pre><p><code>show index from city;</code></p>
 <blockquote>
@@ -226,12 +226,8 @@
     * 尽量使用短索引，索引创建完成之后，需要保存在磁盘文件中，使用短索引可以提升磁盘IO
     的效率，给定大小的存储块中可以存储更多的索引值
     * 利用最左前缀，N个列组合而成的组合索引，相当于创建了N个索引，如果查询时where使用
-    了组合索引的某个前缀，这个查询条件可以利用组合索引来提高效率</code></pre><p><code>创建复合索引
-    create index idx_name_email_status on city(name,email,status);
-就相当于：
-    对name 创建索引
-    对name email 创建索引
-    对name email status 创建索引</code></p>
+    了组合索引的某个前缀，这个查询条件可以利用组合索引来提高效率</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">创建复合索引</span><br><span class="line">	<span class="keyword">create</span> <span class="keyword">index</span> idx_name_email_status <span class="keyword">on</span> city(<span class="keyword">name</span>,email,<span class="keyword">status</span>);</span><br><span class="line">就相当于：</span><br><span class="line">	对name 创建索引</span><br><span class="line">	对name email 创建索引</span><br><span class="line">	对name email status 创建索引</span><br></pre></td></tr></table></figure>
+
 <h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><h3 id="视图概述"><a href="#视图概述" class="headerlink" title="视图概述"></a>视图概述</h3><pre><code>1. 什么是视图？
     视图（View）是一种虚拟存在的表，视图并不真实的存在于数据库中，行和列的数据来自于
 定义视图的语句动态生成。通俗的讲，视图就是一条select语句执行后返回的结果集，所以创建
@@ -253,9 +249,60 @@
     [with [cascade | local] check option]
 
     * local: 只要满足本视图的条件就可以更新
-    * cascade: 必须满足针对该视图的所有条件才能进行更新
+    * cascade: 必须满足针对该视图的所有条件才能进行更新（默认值）
 
-3. 修改视图</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">alter</span> [algorithm = &#123;undefined,<span class="keyword">merge</span>,temptable&#125;]</span><br><span class="line"><span class="keyword">view</span> view_name</span><br><span class="line"><span class="keyword">as</span> select_statement</span><br><span class="line">[<span class="keyword">with</span> [<span class="keyword">cascade</span> | <span class="keyword">local</span>] <span class="keyword">check</span> <span class="keyword">option</span>]</span><br></pre></td></tr></table></figure>]]></content>
+虽然可以更新视图，但是不建议更新，需要更新，可以直接更新实体表    
+
+3. 修改视图</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">alter</span> [algorithm = &#123;undefined,<span class="keyword">merge</span>,temptable&#125;]</span><br><span class="line"><span class="keyword">view</span> view_name</span><br><span class="line"><span class="keyword">as</span> select_statement</span><br><span class="line">[<span class="keyword">with</span> [<span class="keyword">cascade</span> | <span class="keyword">local</span>] <span class="keyword">check</span> <span class="keyword">option</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看视图"><a href="#查看视图" class="headerlink" title="查看视图"></a>查看视图</h3><pre><code>1. 查看视图</code></pre><p>在MySQL中，视图也是表的一种，可以使用<code>show tables;</code>进行查看</p>
+<pre><code>2. 查看创建视图的语句</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">view</span> view_city_country;</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除视图"><a href="#删除视图" class="headerlink" title="删除视图"></a>删除视图</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">view</span> [<span class="keyword">if</span> <span class="keyword">exists</span>] view_name [,view_name] ... [restrict | <span class="keyword">cascade</span>];</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">view</span> view_city_country;</span><br></pre></td></tr></table></figure>
+
+<h2 id="存储过程和函数"><a href="#存储过程和函数" class="headerlink" title="存储过程和函数"></a>存储过程和函数</h2><h3 id="存储过程和函数概述"><a href="#存储过程和函数概述" class="headerlink" title="存储过程和函数概述"></a>存储过程和函数概述</h3><pre><code> 存储过程和函数是事先经过编译并存储在数据库中的一段SQL语句的集合，调用存储过程和函数可
+以简化开发人员的工作，减少数据在数据库和应用之间的传输，有利于提高数据处理的效率
+
+存储过程和函数的区别：函数必须要有返回值，存储过程没有返回值
+    函数：有返回值的过程
+    过程：没有返回值的函数</code></pre><h3 id="创建存储过程"><a href="#创建存储过程" class="headerlink" title="创建存储过程"></a>创建存储过程</h3><pre><code>1. 语法
+    SQL语句默认的分隔符为分号，使用存储过程需要改变默认分隔符
+    DELIMITER:声明分割符，默认为分号</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">delimiter $;	声明$为分隔符</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> procedure_name([params])</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">	<span class="comment">-- sql语句</span></span><br><span class="line"><span class="keyword">end</span>$</span><br></pre></td></tr></table></figure>
+<pre><code>2. 案例</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">DELIMITER ^</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">PROCEDURE</span> pro_test4()</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">	<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> country;</span><br><span class="line"><span class="keyword">END</span>^</span><br></pre></td></tr></table></figure>
+
+<h3 id="调用存储过程"><a href="#调用存储过程" class="headerlink" title="调用存储过程"></a>调用存储过程</h3><pre><code>语法</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">delimiter ;</span><br><span class="line"><span class="keyword">call</span> procedure_name() ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看存储过程"><a href="#查看存储过程" class="headerlink" title="查看存储过程"></a>查看存储过程</h3><pre><code>1. 使用数据库查询语句</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">name</span> <span class="keyword">form</span> mysql.proc <span class="keyword">where</span> db = <span class="string">'db_name'</span>;</span><br><span class="line">db_name : 查询的数据库的名称</span><br></pre></td></tr></table></figure>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/pro_1.png" alt></p>
+<pre><code>2. 查询存储过程的状态</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">查询存储过程，以格式化的方式进行展示</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">procedure</span> <span class="keyword">status</span>\G;</span><br></pre></td></tr></table></figure>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/pro_2.png" alt></p>
+<pre><code>3. 查询某个存储过程的定义</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">procedure</span> test.pro\G;</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除存储过程"><a href="#删除存储过程" class="headerlink" title="删除存储过程"></a>删除存储过程</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">procedure</span> pro_name;</span><br></pre></td></tr></table></figure>
+
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><ul>
+<li>declare: 声明</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">declare</span> var_name[,...] <span class="keyword">type</span> [<span class="keyword">default</span> <span class="keyword">value</span>];</span><br></pre></td></tr></table></figure>
+
+<p>实例：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">delimiter $</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> pro()</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">	<span class="keyword">declare</span> <span class="keyword">sum</span> <span class="built_in">int</span> <span class="keyword">default</span> <span class="number">10</span>;</span><br><span class="line">	<span class="keyword">select</span> <span class="keyword">sum</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">end</span>$</span><br><span class="line">delimiter ;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>set : 赋值</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> var_name = <span class="keyword">exp</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>select .. into …</p>
+<p>  将查询的结果赋值给变量</p>
+</li>
+</ul>
+<h4 id="if条件判断"><a href="#if条件判断" class="headerlink" title="if条件判断"></a>if条件判断</h4>]]></content>
       <categories>
         <category>Linux</category>
         <category>MySQL</category>
@@ -3527,6 +3574,23 @@ User findById(Integer id);</code></pre></blockquote>
       </tags>
   </entry>
   <entry>
+    <title>Spring Load</title>
+    <url>/2020/05/09/SpringLoad/</url>
+    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
+<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
+<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
+<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
+<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
+<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
+]]></content>
+      <categories>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SQL Inject</title>
     <url>/2020/05/09/SQL%E6%B3%A8%E5%85%A5/</url>
     <content><![CDATA[<h1 id="SQL注入问题"><a href="#SQL注入问题" class="headerlink" title="SQL注入问题"></a>SQL注入问题</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>在拼接sql语句时，有一些特殊的SQL关键字参于字符串的拼接，导致SQL语句的逻辑发生变化，可能会造成安全性问题</code></pre><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre><code>1. 输入 a&apos;or&apos;a&apos;=&apos;a,条件改变
@@ -3587,23 +3651,6 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
       </categories>
       <tags>
         <tag>SQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring Load</title>
-    <url>/2020/05/09/SpringLoad/</url>
-    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
-<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
-<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
-<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
-<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
-<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
-]]></content>
-      <categories>
-        <category>Spring</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
