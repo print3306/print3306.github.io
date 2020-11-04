@@ -86,12 +86,12 @@
 
 
 
-<meta name="description" content="简介* 针对数据库查询的延伸学习 * 强化数据库操作 * 学习更好的使用MySQL数据库，提高效率 mysql官网下载 Windows版下载安装 Linux版安装  索引Index说明1. 索引的含义     索引（Index）是帮助MySQL高效获取数据（查询）的一种数据结构。     在数据之外，数据库系统还维护着满足特定查找算法的数据结构，     这些数据结构以某种方式指向（或引用）数据，">
+<meta name="description" content="简介* 针对数据库查询的延伸学习 * 强化数据库操作 * 学习更好的使用MySQL数据库，提高效率 mysql官网下载 Windows版下载安装 Linux版安装  索引Index说明1. 索引的含义     索引（Index）是帮助MySQL高效获取数据（查询）的一种数据结构。     在数据之外，数据库系统还维护着满足特定查找算法的数据结构，这些数据结构以某种方式指向（或引用）数据，这样就可以">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql">
 <meta property="og:url" content="http://print3306.github.io/2020/10/12/mysql/index.html">
 <meta property="og:site_name" content="浊酒一杯">
-<meta property="og:description" content="简介* 针对数据库查询的延伸学习 * 强化数据库操作 * 学习更好的使用MySQL数据库，提高效率 mysql官网下载 Windows版下载安装 Linux版安装  索引Index说明1. 索引的含义     索引（Index）是帮助MySQL高效获取数据（查询）的一种数据结构。     在数据之外，数据库系统还维护着满足特定查找算法的数据结构，     这些数据结构以某种方式指向（或引用）数据，">
+<meta property="og:description" content="简介* 针对数据库查询的延伸学习 * 强化数据库操作 * 学习更好的使用MySQL数据库，提高效率 mysql官网下载 Windows版下载安装 Linux版安装  索引Index说明1. 索引的含义     索引（Index）是帮助MySQL高效获取数据（查询）的一种数据结构。     在数据之外，数据库系统还维护着满足特定查找算法的数据结构，这些数据结构以某种方式指向（或引用）数据，这样就可以">
 <meta property="og:image" content="http://print3306.github.io/2020/10/12/mysql/index.png">
 <meta property="og:image" content="http://print3306.github.io/2020/10/12/mysql/BTree_5_1.png">
 <meta property="og:image" content="http://print3306.github.io/2020/10/12/mysql/BTree_5_2.png">
@@ -107,8 +107,9 @@
 <meta property="og:image" content="http://print3306.github.io/2020/10/12/mysql/view_update.png">
 <meta property="og:image" content="http://print3306.github.io/2020/10/12/mysql/pro_1.png">
 <meta property="og:image" content="http://print3306.github.io/2020/10/12/mysql/pro_2.png">
+<meta property="og:image" content="http://print3306.github.io/2020/10/12/mysql/pro_3.png">
 <meta property="article:published_time" content="2020-10-12T11:33:20.000Z">
-<meta property="article:modified_time" content="2020-11-03T13:42:02.310Z">
+<meta property="article:modified_time" content="2020-11-04T13:48:24.931Z">
 <meta property="article:author" content="浊酒一杯">
 <meta property="article:tag" content="SQL">
 <meta name="twitter:card" content="summary">
@@ -384,8 +385,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-11-03T21:42:02+08:00">
-                2020-11-03
+              <time title="更新于" itemprop="dateModified" datetime="2020-11-04T21:48:24+08:00">
+                2020-11-04
               </time>
             
           </span>
@@ -456,7 +457,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.9k
+                  3.5k
                 </span>
               
 
@@ -490,8 +491,7 @@
 </ul>
 <h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="Index说明"><a href="#Index说明" class="headerlink" title="Index说明"></a>Index说明</h3><pre><code>1. 索引的含义
     索引（Index）是帮助MySQL高效获取数据（查询）的一种数据结构。
-    在数据之外，数据库系统还维护着满足特定查找算法的数据结构，
-    这些数据结构以某种方式指向（或引用）数据，这样就可以在这些数据结构上使用高级查找算法，提高查询效率，这种数据结构就是索引。
+    在数据之外，数据库系统还维护着满足特定查找算法的数据结构，这些数据结构以某种方式指向（或引用）数据，这样就可以在这些数据结构上使用高级查找算法，提高查询效率，这种数据结构就是索引。
 
 2. 特点
     * 用来提高查询效率的指向数据的数据结构
@@ -507,11 +507,8 @@
 </blockquote>
 <p><img src="/2020/10/12/mysql/index.png" alt></p>
 <h3 id="Index的优势和劣势"><a href="#Index的优势和劣势" class="headerlink" title="Index的优势和劣势"></a>Index的优势和劣势</h3><h4 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h4><pre><code>1. 类似于书籍的目录索引，提高数据的检索效率，降低数据库的IO成本
-2. 通过索引列对数据进行排序，降低数据排序的成本，降低CPU的消耗</code></pre><h4 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h4><pre><code>1. 索引本身需要开销，索引本身也是一张表，该表保存了主键和索引字段，并指向实体类的记录
-（一般保存在磁盘文件）
-2. 索引降低了数据更新表的速度（Update，Delete,Insert）,在数据更新之后，索引表也需要
-进行维护，需要调整因为更新带来的键值变化后的索引信息</code></pre><h3 id="Index的结构"><a href="#Index的结构" class="headerlink" title="Index的结构"></a>Index的结构</h3><pre><code>索引是在MySQL的存储引擎层中实现的，不是在服务器层实现的，所以每种存储引擎的索引都不一定
-完全相同，也不是所有的存储引擎都支持索引。</code></pre><h4 id="主流的索引（4种）"><a href="#主流的索引（4种）" class="headerlink" title="主流的索引（4种）"></a>主流的索引（4种）</h4><pre><code>1. BTree (B+树) : 最常见的索引类型，大部分的索引引擎都支持BTree类型的索引
+2. 通过索引列对数据进行排序，降低数据排序的成本，降低CPU的消耗</code></pre><h4 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h4><pre><code>1. 索引本身需要开销，索引本身也是一张表，该表保存了主键和索引字段，并指向实体类的记录（一般保存在磁盘文件）
+2. 索引降低了数据更新表的速度（Update，Delete,Insert）,在数据更新之后，索引表也需要进行维护，需要调整因为更新带来的键值变化后的索引信息</code></pre><h3 id="Index的结构"><a href="#Index的结构" class="headerlink" title="Index的结构"></a>Index的结构</h3><pre><code>索引是在MySQL的存储引擎层中实现的，不是在服务器层实现的，所以每种存储引擎的索引都不一定完全相同，也不是所有的存储引擎都支持索引。</code></pre><h4 id="主流的索引（4种）"><a href="#主流的索引（4种）" class="headerlink" title="主流的索引（4种）"></a>主流的索引（4种）</h4><pre><code>1. BTree (B+树) : 最常见的索引类型，大部分的索引引擎都支持BTree类型的索引
 2. Hash ：只有Memory引擎支持，使用场景简单
 3. R-tree(空间索引) ：空间索引是MyISAM引擎的一个特殊索引类型，主要用于地理空间数据类型
 4. Full-text(全文索引) ：全文索引也是MyISAM引擎的一个特殊索引类型，
@@ -609,15 +606,11 @@
     * B+Tree的叶子节点保存所有的key信息，根据key的大小排序
     * 所有非叶子节点都可以看做key的索引部分
 
-1. 由于B+Tree的所有key信息保存在叶子节点中,查询任何数据都需要经过root到叶子节点，B
-+Tree的查询效率更加稳定
-2. 为了减少磁盘I/O操作，磁盘并不是每次需要才去读取，而是会进行预读取。在预读取的过程
-中，磁盘进行顺序读取，顺序读取不需要进行磁盘寻道，并且只需要很短的磁盘旋转时间，速度会非常快。
-3. 数据库系统将索引的一个节点的大小，使得一次I/O就能完全载入一个节点，并且可以利用预读
-特性，相邻的节点也能被预先载入
+1. 由于B+Tree的所有key信息保存在叶子节点中,查询任何数据都需要经过root到叶子节点，B+Tree的查询效率更加稳定
+2. 为了减少磁盘I/O操作，磁盘并不是每次需要才去读取，而是会进行预读取。在预读取的过程中，磁盘进行顺序读取，顺序读取不需要进行磁盘寻道，并且只需要很短的磁盘旋转时间，速度会非常快。
+3. 数据库系统将索引的一个节点的大小，使得一次I/O就能完全载入一个节点，并且可以利用预读特性，相邻的节点也能被预先载入
 
-使用B+Tree的好处，可以充分利用操作系统的文件系统，减少磁盘IO操作</code></pre><h4 id="MySQL中的BTree"><a href="#MySQL中的BTree" class="headerlink" title="MySQL中的BTree"></a>MySQL中的BTree</h4><pre><code>MySQL中的BTree实际上指的是B+Tree，但是在B+Tree树的基础上进行了优化，
-增加了一个指向相邻叶子节点的链表指针，就形成了带有顺序指针的B+Tree，提高了区间访问的性能。
+使用B+Tree的好处，可以充分利用操作系统的文件系统，减少磁盘IO操作</code></pre><h4 id="MySQL中的BTree"><a href="#MySQL中的BTree" class="headerlink" title="MySQL中的BTree"></a>MySQL中的BTree</h4><pre><code>MySQL中的BTree实际上指的是B+Tree，但是在B+Tree树的基础上进行了优化，增加了一个指向相邻叶子节点的链表指针，就形成了带有顺序指针的B+Tree，提高了区间访问的性能。
 
 1. 为什么改进的B+Tree能提高区间访问的能力？
     由于在叶子节点上增加了指向相邻节点的链表指针，数据区间查询的时候，可以通过指针查找到所有数据，不需要通过root节点向下进行查找</code></pre><h3 id="Index的分类"><a href="#Index的分类" class="headerlink" title="Index的分类"></a>Index的分类</h3><h4 id="索引分类"><a href="#索引分类" class="headerlink" title="索引分类"></a>索引分类</h4><pre><code>1. 单值索引：索引只包含单个列，一个表可以包括多个单值索引
@@ -715,8 +708,48 @@
 <li><p>select .. into …</p>
 <p>  将查询的结果赋值给变量</p>
 </li>
+<li><p>ps:</p>
+<ol>
+<li>使用@修饰的变量，叫做会话变量，连接关闭，变量失效，类似于全局变量</li>
+<li>使用@@修饰的变量，叫做系统变量</li>
+<li>在存储过程中的变量，不需要修饰符进行修饰，普通变量；在外部使用的变量，一般使用@修饰，全局变量</li>
+</ol>
+</li>
 </ul>
-<h4 id="if条件判断"><a href="#if条件判断" class="headerlink" title="if条件判断"></a>if条件判断</h4>
+<h4 id="if条件判断"><a href="#if条件判断" class="headerlink" title="if条件判断"></a>if条件判断</h4><pre><code>1. 语法</code></pre><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 条件判断语句</span><br><span class="line">if serach_condition then statement_list</span><br><span class="line">[,elseif search_condition then statement_list]</span><br><span class="line">[else statement_list]</span><br><span class="line"><span class="keyword">end</span> <span class="keyword">if</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code>2. 使用案例</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/pro_3.png" alt="案例if"></p>
+<h4 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h4><pre><code>1. 语法</code></pre><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> proc_name(<span class="keyword">in</span>/<span class="keyword">out</span>/inout 参数名 参数类型)</span><br><span class="line"><span class="keyword">in</span> ： 该参数作为输入参数，在调用的时候传入，默认</span><br><span class="line"><span class="keyword">out</span> : 输出参数，该参数可以作为返回值</span><br><span class="line">inout : 可以作为输入参数，也可以作为输出参数</span><br></pre></td></tr></table></figure>
+
+<h4 id="case语法"><a href="#case语法" class="headerlink" title="case语法"></a>case语法</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 方式一 : 表达式满足某种条件</span><br><span class="line">case</span><br><span class="line">	when exp1 then state1;</span><br><span class="line">	when exp2 then state2;</span><br><span class="line">	else staten;</span><br><span class="line"><span class="keyword">end</span> <span class="keyword">case</span>;</span><br><span class="line">// 方式二 ：情况匹配</span><br><span class="line">case exp</span><br><span class="line">	when wnen_1 then state1;</span><br><span class="line">	when when_2 then state2;</span><br><span class="line">	else staten;</span><br><span class="line"><span class="keyword">end</span> <span class="keyword">case</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="循环结构"><a href="#循环结构" class="headerlink" title="循环结构"></a>循环结构</h4><h5 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h5><pre><code>1. 语法
+    先判断，条件成立，循环开始执行，最少执行了0次</code></pre><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">while search_condition <span class="keyword">do</span></span><br><span class="line">	statement_list</span><br><span class="line"><span class="keyword">end</span> <span class="keyword">while</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code>2. 案例</code></pre><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> pro_while2(n <span class="built_in">int</span>)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">	<span class="keyword">declare</span> total <span class="built_in">int</span> <span class="keyword">default</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">declare</span> <span class="keyword">num</span> <span class="built_in">int</span> <span class="keyword">default</span> <span class="number">1</span>;</span><br><span class="line">	while num&lt;=n do</span><br><span class="line">		<span class="keyword">set</span> total = total + <span class="keyword">num</span>;</span><br><span class="line">		<span class="keyword">set</span> <span class="keyword">num</span> = <span class="keyword">num</span> + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">end</span> <span class="keyword">while</span>;</span><br><span class="line">	<span class="keyword">select</span> total;</span><br><span class="line"><span class="keyword">end</span>$</span><br></pre></td></tr></table></figure>
+
+<h5 id="repeat循环"><a href="#repeat循环" class="headerlink" title="repeat循环"></a>repeat循环</h5><pre><code>1. 语法
+    满足条件，退出循环, 条件之后不需要增加分号</code></pre><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 执行循环体，直到条件满足，退出循环</span><br><span class="line">repeat </span><br><span class="line">	statement_list</span><br><span class="line">until search_condition</span><br><span class="line"><span class="keyword">end</span> <span class="keyword">repeat</span>$</span><br></pre></td></tr></table></figure>
+
+<pre><code>2. 案例</code></pre><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> pro_repeat(n <span class="built_in">int</span>)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">	<span class="keyword">declare</span> total <span class="built_in">int</span> <span class="keyword">default</span> <span class="number">0</span>;</span><br><span class="line">	repeat</span><br><span class="line">		<span class="keyword">set</span> total = total + n;</span><br><span class="line">		<span class="keyword">set</span> n = n - <span class="number">1</span>;</span><br><span class="line">	until n = 0</span><br><span class="line">	<span class="keyword">end</span> <span class="keyword">repeat</span>;</span><br><span class="line">	<span class="keyword">select</span> total;</span><br><span class="line"><span class="keyword">end</span>$</span><br></pre></td></tr></table></figure>
+
+<h5 id="loop循环"><a href="#loop循环" class="headerlink" title="loop循环"></a>loop循环</h5><pre><code>1. 语法
+    一般退出语句需要使用leave语句来进行实现，如果不退出，直接死循环</code></pre><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">start_label loop</span><br><span class="line">	statement_condition</span><br><span class="line"><span class="keyword">end</span> <span class="keyword">loop</span> [start_label];</span><br></pre></td></tr></table></figure>
+
+<h4 id="leave语句"><a href="#leave语句" class="headerlink" title="leave语句"></a>leave语句</h4><pre><code>在loop语句执行的时候，可以使用leave进行退出循环</code></pre><h4 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h4><pre><code>游标是用来存储查询结果集的数据类型，在存储过程和函数中使用游标对结果集进行循环的处理，游标的使用包括游标的声明，open，fetch, close
+
+1. 语法</code></pre><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 声明游标，游标的位置在查询结果集的第一行数据</span><br><span class="line"><span class="keyword">declare</span> cursor_name <span class="keyword">cursor</span> <span class="keyword">for</span> select_statement;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// open : 打开游标</span><br><span class="line">open cursor_name;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// fetch : 游标推进一次</span><br><span class="line">fetch cursor_name into var_name[,var_name];</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// colse</span><br><span class="line">close cuesor_name;</span><br></pre></td></tr></table></figure>
+
+<pre><code>2. 使用循环退出
+    MySQL提供了句柄机制，一旦触发句柄，可以改变变量的值，在循环中判断变量的值，可以完成循环</code></pre><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> cursor_name <span class="keyword">cursor</span> <span class="keyword">for</span> select_statement;</span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">exit</span> headler <span class="keyword">for</span> <span class="keyword">not</span> <span class="keyword">found</span> <span class="keyword">set</span> <span class="keyword">var</span> = var_value;</span><br><span class="line">// 句柄的定义和游标的定义在一起</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -935,7 +968,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引"><span class="nav-number">2.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Index说明"><span class="nav-number">2.1.</span> <span class="nav-text">Index说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Index的优势和劣势"><span class="nav-number">2.2.</span> <span class="nav-text">Index的优势和劣势</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优势"><span class="nav-number">2.2.1.</span> <span class="nav-text">优势</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#劣势"><span class="nav-number">2.2.2.</span> <span class="nav-text">劣势</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Index的结构"><span class="nav-number">2.3.</span> <span class="nav-text">Index的结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主流的索引（4种）"><span class="nav-number">2.3.1.</span> <span class="nav-text">主流的索引（4种）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BTree结构"><span class="nav-number">2.3.2.</span> <span class="nav-text">BTree结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-Tree的结构"><span class="nav-number">2.3.3.</span> <span class="nav-text">B+Tree的结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL中的BTree"><span class="nav-number">2.3.4.</span> <span class="nav-text">MySQL中的BTree</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Index的分类"><span class="nav-number">2.4.</span> <span class="nav-text">Index的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#索引分类"><span class="nav-number">2.4.1.</span> <span class="nav-text">索引分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引语法"><span class="nav-number">2.4.2.</span> <span class="nav-text">索引语法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#创建索引"><span class="nav-number">2.4.2.1.</span> <span class="nav-text">创建索引</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看索引"><span class="nav-number">2.4.2.2.</span> <span class="nav-text">查看索引</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#删除索引"><span class="nav-number">2.4.2.3.</span> <span class="nav-text">删除索引</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ALTER命令"><span class="nav-number">2.4.2.4.</span> <span class="nav-text">ALTER命令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Index设计原则"><span class="nav-number">2.5.</span> <span class="nav-text">Index设计原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视图"><span class="nav-number">3.</span> <span class="nav-text">视图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#视图概述"><span class="nav-number">3.1.</span> <span class="nav-text">视图概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建或修改视图"><span class="nav-number">3.2.</span> <span class="nav-text">创建或修改视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看视图"><span class="nav-number">3.3.</span> <span class="nav-text">查看视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除视图"><span class="nav-number">3.4.</span> <span class="nav-text">删除视图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储过程和函数"><span class="nav-number">4.</span> <span class="nav-text">存储过程和函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存储过程和函数概述"><span class="nav-number">4.1.</span> <span class="nav-text">存储过程和函数概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建存储过程"><span class="nav-number">4.2.</span> <span class="nav-text">创建存储过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调用存储过程"><span class="nav-number">4.3.</span> <span class="nav-text">调用存储过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看存储过程"><span class="nav-number">4.4.</span> <span class="nav-text">查看存储过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除存储过程"><span class="nav-number">4.5.</span> <span class="nav-text">删除存储过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-number">4.6.</span> <span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量"><span class="nav-number">4.6.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#if条件判断"><span class="nav-number">4.6.2.</span> <span class="nav-text">if条件判断</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引"><span class="nav-number">2.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Index说明"><span class="nav-number">2.1.</span> <span class="nav-text">Index说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Index的优势和劣势"><span class="nav-number">2.2.</span> <span class="nav-text">Index的优势和劣势</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优势"><span class="nav-number">2.2.1.</span> <span class="nav-text">优势</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#劣势"><span class="nav-number">2.2.2.</span> <span class="nav-text">劣势</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Index的结构"><span class="nav-number">2.3.</span> <span class="nav-text">Index的结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主流的索引（4种）"><span class="nav-number">2.3.1.</span> <span class="nav-text">主流的索引（4种）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BTree结构"><span class="nav-number">2.3.2.</span> <span class="nav-text">BTree结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-Tree的结构"><span class="nav-number">2.3.3.</span> <span class="nav-text">B+Tree的结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL中的BTree"><span class="nav-number">2.3.4.</span> <span class="nav-text">MySQL中的BTree</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Index的分类"><span class="nav-number">2.4.</span> <span class="nav-text">Index的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#索引分类"><span class="nav-number">2.4.1.</span> <span class="nav-text">索引分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引语法"><span class="nav-number">2.4.2.</span> <span class="nav-text">索引语法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#创建索引"><span class="nav-number">2.4.2.1.</span> <span class="nav-text">创建索引</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看索引"><span class="nav-number">2.4.2.2.</span> <span class="nav-text">查看索引</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#删除索引"><span class="nav-number">2.4.2.3.</span> <span class="nav-text">删除索引</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ALTER命令"><span class="nav-number">2.4.2.4.</span> <span class="nav-text">ALTER命令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Index设计原则"><span class="nav-number">2.5.</span> <span class="nav-text">Index设计原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视图"><span class="nav-number">3.</span> <span class="nav-text">视图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#视图概述"><span class="nav-number">3.1.</span> <span class="nav-text">视图概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建或修改视图"><span class="nav-number">3.2.</span> <span class="nav-text">创建或修改视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看视图"><span class="nav-number">3.3.</span> <span class="nav-text">查看视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除视图"><span class="nav-number">3.4.</span> <span class="nav-text">删除视图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储过程和函数"><span class="nav-number">4.</span> <span class="nav-text">存储过程和函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存储过程和函数概述"><span class="nav-number">4.1.</span> <span class="nav-text">存储过程和函数概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建存储过程"><span class="nav-number">4.2.</span> <span class="nav-text">创建存储过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调用存储过程"><span class="nav-number">4.3.</span> <span class="nav-text">调用存储过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看存储过程"><span class="nav-number">4.4.</span> <span class="nav-text">查看存储过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除存储过程"><span class="nav-number">4.5.</span> <span class="nav-text">删除存储过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-number">4.6.</span> <span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量"><span class="nav-number">4.6.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#if条件判断"><span class="nav-number">4.6.2.</span> <span class="nav-text">if条件判断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数传递"><span class="nav-number">4.6.3.</span> <span class="nav-text">参数传递</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#case语法"><span class="nav-number">4.6.4.</span> <span class="nav-text">case语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#循环结构"><span class="nav-number">4.6.5.</span> <span class="nav-text">循环结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#while循环"><span class="nav-number">4.6.5.1.</span> <span class="nav-text">while循环</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#repeat循环"><span class="nav-number">4.6.5.2.</span> <span class="nav-text">repeat循环</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#loop循环"><span class="nav-number">4.6.5.3.</span> <span class="nav-text">loop循环</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#leave语句"><span class="nav-number">4.6.6.</span> <span class="nav-text">leave语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#游标"><span class="nav-number">4.6.7.</span> <span class="nav-text">游标</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -970,7 +1003,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">42k</span>
+    <span title="Site words total count">42.8k</span>
   
 </div>
 
