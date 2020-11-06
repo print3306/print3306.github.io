@@ -1,131 +1,4 @@
-<!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
-
-
-
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar1.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar1.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar1.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="SpringMVC," />
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="概述三层架构1. B&#x2F;S，浏览器&#x2F;服务器模式的开发中，服务端程序一般分为三层，展示层，业务层和持久层。     * 展示层：WEB层，用来与客户端进行数据交互的，表现层采用MVC的设计     * 业务层：处理业务逻辑     * 持久层：与数据库进行交互  2. MVC?     MVC(Model View Controller):模型视图控制器，一种设计模式     * Model: jav">
-<meta property="og:type" content="article">
-<meta property="og:title" content="SpringMVC">
-<meta property="og:url" content="http://print3306.github.io/2020/09/18/springMVC/index.html">
-<meta property="og:site_name" content="浊酒一杯">
-<meta property="og:description" content="概述三层架构1. B&#x2F;S，浏览器&#x2F;服务器模式的开发中，服务端程序一般分为三层，展示层，业务层和持久层。     * 展示层：WEB层，用来与客户端进行数据交互的，表现层采用MVC的设计     * 业务层：处理业务逻辑     * 持久层：与数据库进行交互  2. MVC?     MVC(Model View Controller):模型视图控制器，一种设计模式     * Model: jav">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/maven_createproject_quickstart.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/change_directory.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/quickstart_tomcat.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/quickstart_1.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/quickstart_2.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/requestmapping.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/connection.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/defaultconversion.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/void_01.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/model.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/file_upload.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/file_pom.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/springmvc_upload.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/springmvc_upload1.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/springmvc_upload_error.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/springmvc_upload2.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/file_upload3.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/e1.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/filedown.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/error_process.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/exception_1.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/exception_2.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/inter_1.png">
-<meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/inter_2.png">
-<meta property="article:published_time" content="2020-09-18T09:22:55.000Z">
-<meta property="article:modified_time" content="2020-10-16T09:37:59.505Z">
-<meta property="article:author" content="浊酒一杯">
-<meta property="article:tag" content="SpringMVC">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://print3306.github.io/2020/09/18/springMVC/maven_createproject_quickstart.png">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
+<!DOCTYPE html><html class="theme-next pisces use-motion" lang=zh-Hans><head><meta charset=UTF-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1"><meta name=theme-color content=#222><script src="/lib/pace/pace.min.js?v=1.0.2"></script><link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel=stylesheet><meta http-equiv=Cache-Control content=no-transform><meta http-equiv=Cache-Control content=no-siteapp><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel=stylesheet type=text/css><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel=stylesheet type=text/css><link href="/css/main.css?v=5.1.4" rel=stylesheet type=text/css><link rel=apple-touch-icon sizes=180x180 href="/images/avatar1.png?v=5.1.4"><link rel=icon type=image/png sizes=32x32 href="/images/avatar1.png?v=5.1.4"><link rel=icon type=image/png sizes=16x16 href="/images/avatar1.png?v=5.1.4"><link rel=mask-icon href="/images/logo.svg?v=5.1.4" color=#222><meta name=keywords content=SpringMVC,><meta name=description content="概述三层架构1. B&#x2F;S，浏览器&#x2F;服务器模式的开发中，服务端程序一般分为三层，展示层，业务层和持久层。 * 展示层：WEB层，用来与客户端进行数据交互的，表现层采用MVC的设计 * 业务层：处理业务逻辑 * 持久层：与数据库进行交互 2. MVC? MVC(Model View Controller):模型视图控制器，一种设计模式 * Model: jav"><meta property=og:type content=article><meta property=og:title content=SpringMVC><meta property=og:url content=http://print3306.github.io/2020/09/18/springMVC/index.html><meta property=og:site_name content=浊酒一杯><meta property=og:description content="概述三层架构1. B&#x2F;S，浏览器&#x2F;服务器模式的开发中，服务端程序一般分为三层，展示层，业务层和持久层。 * 展示层：WEB层，用来与客户端进行数据交互的，表现层采用MVC的设计 * 业务层：处理业务逻辑 * 持久层：与数据库进行交互 2. MVC? MVC(Model View Controller):模型视图控制器，一种设计模式 * Model: jav"><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/maven_createproject_quickstart.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/change_directory.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/quickstart_tomcat.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/quickstart_1.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/quickstart_2.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/requestmapping.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/connection.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/defaultconversion.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/void_01.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/model.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/file_upload.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/file_pom.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/springmvc_upload.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/springmvc_upload1.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/springmvc_upload_error.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/springmvc_upload2.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/file_upload3.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/e1.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/filedown.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/error_process.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/exception_1.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/exception_2.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/inter_1.png><meta property=og:image content=http://print3306.github.io/2020/09/18/springMVC/inter_2.png><meta property=article:published_time content=2020-09-18T09:22:55.000Z><meta property=article:modified_time content=2020-10-16T09:37:59.505Z><meta property=article:author content=浊酒一杯><meta property=article:tag content=SpringMVC><meta name=twitter:card content=summary><meta name=twitter:image content=http://print3306.github.io/2020/09/18/springMVC/maven_createproject_quickstart.png><script type=text/javascript id=hexo.configurations>
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
@@ -147,163 +20,7 @@
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
   };
-</script>
-
-
-
-  <link rel="canonical" href="http://print3306.github.io/2020/09/18/springMVC/"/>
-
-
-
-
-
-  <title>SpringMVC | 浊酒一杯</title>
-  
-
-
-
-
-
-
-
-
-<meta name="generator" content="Hexo 4.2.1"></head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">浊酒一杯</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle"></p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
-</nav>
-
-<script>
+</script><link rel=canonical href="http://print3306.github.io/2020/09/18/springMVC/"><title>SpringMVC | 浊酒一杯</title><meta name=generator content="Hexo 4.2.1"></head><body itemscope itemtype=http://schema.org/WebPage lang=zh-Hans><div class="container sidebar-position-left page-post-detail"><div class=headband></div><header id=header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-wrapper><div class=site-meta><div class=custom-logo-site-title><a href="/" class=brand rel=start><span class=logo-line-before><i></i></span> <span class=site-title>浊酒一杯</span> <span class=logo-line-after><i></i></span></a></div><p class=site-subtitle></p></div><div class=site-nav-toggle><button><span class=btn-bar></span> <span class=btn-bar></span> <span class=btn-bar></span></button></div></div><nav class=site-nav><ul id=menu class=menu><li class="menu-item menu-item-home"><a href="/" rel=section><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel=section><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel=section><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel=section><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类</a></li><li class="menu-item menu-item-about"><a href="/about/" rel=section><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于</a></li><li class="menu-item menu-item-search"><a href=javascript:; class=popup-trigger><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class=site-search><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class=search-icon><i class="fa fa-search"></i></span> <span class=popup-btn-close><i class="fa fa-times-circle"></i></span><div class=local-search-input-wrapper><input autocomplete=off placeholder=搜索... spellcheck=false type=text id=local-search-input></div></div><div id=local-search-result></div></div></div></nav><script>
     
     window.onload = function(){
         var path = 'https://malizhi.cn'; //这里要改成你博客的地址
@@ -318,157 +35,7 @@
         }
     };
 
- </script>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://print3306.github.io/2020/09/18/springMVC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="浊酒一杯">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar1.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="浊酒一杯">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">SpringMVC</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-18T17:22:55+08:00">
-                2020-09-18
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2020-10-16T17:37:59+08:00">
-                2020-10-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  4.5k
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="三层架构"><a href="#三层架构" class="headerlink" title="三层架构"></a>三层架构</h3><pre><code>1. B/S，浏览器/服务器模式的开发中，服务端程序一般分为三层，展示层，业务层和持久层。
+ </script></div></header><main id=main class=main><div class=main-inner><div class=content-wrap><div id=content class=content><div id=posts class=posts-expand><article class="post post-type-normal" itemscope itemtype=http://schema.org/Article><div class=post-block><link itemprop=mainEntityOfPage href="http://print3306.github.io/2020/09/18/springMVC/"><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=name content=浊酒一杯><meta itemprop=description><meta itemprop=image content=/images/avatar1.jpg></span> <span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content=浊酒一杯></span><header class=post-header><h1 class=post-title itemprop="name headline">SpringMVC</h1><div class=post-meta><span class=post-time><span class=post-meta-item-icon><i class="fa fa-calendar-o"></i></span> <span class=post-meta-item-text>发表于</span><time title=创建于 itemprop="dateCreated datePublished" datetime=2020-09-18T17:22:55+08:00>2020-09-18</time><span class=post-meta-divider>|</span> <span class=post-meta-item-icon><i class="fa fa-calendar-check-o"></i></span> <span class=post-meta-item-text>更新于&#58;</span><time title=更新于 itemprop=dateModified datetime=2020-10-16T17:37:59+08:00>2020-10-16</time></span> <span class=post-category><span class=post-meta-divider>|</span> <span class=post-meta-item-icon><i class="fa fa-folder-o"></i></span> <span class=post-meta-item-text>分类于</span> <span itemprop=about itemscope itemtype=http://schema.org/Thing><a href="/categories/Spring/" itemprop=url rel=index><span itemprop=name>Spring</span></a></span></span><div class=post-wordcount><span class=post-meta-item-icon><i class="fa fa-file-word-o"></i></span> <span class=post-meta-item-text>字数统计&#58;</span> <span title=字数统计>4.5k</span></div></div></header><div class=post-body itemprop=articleBody><h2 id=概述><a href=#概述 class=headerlink title=概述></a>概述</h2><h3 id=三层架构><a href=#三层架构 class=headerlink title=三层架构></a>三层架构</h3><pre><code>1. B/S，浏览器/服务器模式的开发中，服务端程序一般分为三层，展示层，业务层和持久层。
     * 展示层：WEB层，用来与客户端进行数据交互的，表现层采用MVC的设计
     * 业务层：处理业务逻辑
     * 持久层：与数据库进行交互
@@ -477,22 +44,13 @@
     MVC(Model View Controller):模型视图控制器，一种设计模式
     * Model: javabean,通常代指数据模型，用于封装数据
     * View:  jsp,jsp或者html,用于展示数据
-    * Controller: servlet,处理用户交互的部分，处理程序逻辑的部分</code></pre><h3 id="SpringMVC的入门案例"><a href="#SpringMVC的入门案例" class="headerlink" title="SpringMVC的入门案例"></a>SpringMVC的入门案例</h3><pre><code>1. 项目环境搭建
+    * Controller: servlet,处理用户交互的部分，处理程序逻辑的部分</code></pre><h3 id=SpringMVC的入门案例><a href=#SpringMVC的入门案例 class=headerlink title=SpringMVC的入门案例></a>SpringMVC的入门案例</h3><pre><code>1. 项目环境搭建
     1. 选择maven工程的archetype
     2. 选择webapp模板
     3. 填写项目名称等信息
     4. 添加archetypeCagalog internal加快项目创建的速度
-    5. 使用webapp在main目录下创建java和resources目录，并使用mark directory as声明</code></pre><blockquote>
-<p><img src="/2020/09/18/springMVC/maven_createproject_quickstart.png" alt="maven_createproject_quickstart"></p>
-</blockquote>
-<blockquote>
-</blockquote>
-<p><img src="/2020/09/18/springMVC/change_directory.png" alt="change_directory"></p>
-<pre><code>2. 配置MVC项目的步骤
-    1. 配置前端控制器，在servlet上配置控制器,主要是访问路径以及拦截</code></pre><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置前端控制器 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>dispatcherServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>dispatcherServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<pre><code>&lt;!-- 配置过滤器 --&gt;
+    5. 使用webapp在main目录下创建java和resources目录，并使用mark directory as声明</code></pre><blockquote><p><img src=/2020/09/18/springMVC/maven_createproject_quickstart.png alt=maven_createproject_quickstart></p></blockquote><blockquote></blockquote><p><img src=/2020/09/18/springMVC/change_directory.png alt=change_directory></p><pre><code>2. 配置MVC项目的步骤
+    1. 配置前端控制器，在servlet上配置控制器,主要是访问路径以及拦截</code></pre><figure class="highlight html"><table><tr><td class=gutter><pre><span class=line>1</span><br><span class=line>2</span><br><span class=line>3</span><br><span class=line>4</span><br><span class=line>5</span><br><span class=line>6</span><br><span class=line>7</span><br><span class=line>8</span><br><span class=line>9</span><br></pre></td><td class=code><pre><span class=line><span class=comment>&lt;!-- 配置前端控制器 --&gt;</span></span><br><span class=line><span class=tag>&lt;<span class=name>servlet</span>&gt;</span></span><br><span class=line>  <span class=tag>&lt;<span class=name>servlet-name</span>&gt;</span>dispatcherServlet<span class=tag>&lt;/<span class=name>servlet-name</span>&gt;</span></span><br><span class=line>  <span class=tag>&lt;<span class=name>servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class=tag>&lt;/<span class=name>servlet-class</span>&gt;</span></span><br><span class=line><span class=tag>&lt;/<span class=name>servlet</span>&gt;</span></span><br><span class=line><span class=tag>&lt;<span class=name>servlet-mapping</span>&gt;</span></span><br><span class=line>  <span class=tag>&lt;<span class=name>servlet-name</span>&gt;</span>dispatcherServlet<span class=tag>&lt;/<span class=name>servlet-name</span>&gt;</span></span><br><span class=line>  <span class=tag>&lt;<span class=name>url-pattern</span>&gt;</span>/<span class=tag>&lt;/<span class=name>url-pattern</span>&gt;</span></span><br><span class=line><span class=tag>&lt;/<span class=name>servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure><blockquote><pre><code>&lt;!-- 配置过滤器 --&gt;
 &lt;filter&gt;
     &lt;filter-name&gt;characterEncodingFilter&lt;/filter-name&gt;
     &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
@@ -504,39 +62,31 @@
   &lt;filter-mapping&gt;
     &lt;filter-name&gt;characterEncodingFilter&lt;/filter-name&gt;
     &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
-  &lt;/filter-mapping&gt;</code></pre></blockquote>
-<pre><code>2. 配置TomCat服务器
-    配置项目路径，端口等服务器信息配置</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/18/springMVC/quickstart_tomcat.png" alt="tomcat设置"></p>
-<pre><code>3. 配置视图解析器
-    在项目配置文件中配置视图解析器，配置前缀路径以及后缀文件名</code></pre><h3 id="SpringMVC实例解析"><a href="#SpringMVC实例解析" class="headerlink" title="SpringMVC实例解析"></a>SpringMVC实例解析</h3><pre><code>1. SpringMVC的流程的说明
+  &lt;/filter-mapping&gt;</code></pre></blockquote><pre><code>2. 配置TomCat服务器
+    配置项目路径，端口等服务器信息配置</code></pre><blockquote></blockquote><p><img src=/2020/09/18/springMVC/quickstart_tomcat.png alt=tomcat设置></p><pre><code>3. 配置视图解析器
+    在项目配置文件中配置视图解析器，配置前缀路径以及后缀文件名</code></pre><h3 id=SpringMVC实例解析><a href=#SpringMVC实例解析 class=headerlink title=SpringMVC实例解析></a>SpringMVC实例解析</h3><pre><code>1. SpringMVC的流程的说明
     * 启动服务器，加载配置文件
         1. DispacherServet被创建
         2. springmvc.xml被加载
         3. HelloController被加载到容器
         4. 开启注解扫描的包，配置视图解析器，开启MVC注解
-    * 发送http请求，后台处理</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/18/springMVC/quickstart_1.png" alt><br><img src="/2020/09/18/springMVC/quickstart_2.png" alt></p>
-<pre><code>2. springMVC的三大组件(容器)
+    * 发送http请求，后台处理</code></pre><blockquote></blockquote><p><img src=/2020/09/18/springMVC/quickstart_1.png><br><img src=/2020/09/18/springMVC/quickstart_2.png></p><pre><code>2. springMVC的三大组件(容器)
     * 处理器映射器：HandlerMapping
     * 处理器适配器：HandlerAdapter
     * 视图解析器：ViewResolver
 
-    在开启springMVC的注解时，会自动加载处理器映射器，处理器适配器</code></pre><h2 id="相关注解"><a href="#相关注解" class="headerlink" title="相关注解"></a>相关注解</h2><h4 id="RequestMapping"><a href="#RequestMapping" class="headerlink" title="@RequestMapping"></a>@RequestMapping</h4><pre><code>1. @RequestMapping：建立请求和方法之间的关联
+    在开启springMVC的注解时，会自动加载处理器映射器，处理器适配器</code></pre><h2 id=相关注解><a href=#相关注解 class=headerlink title=相关注解></a>相关注解</h2><h4 id=RequestMapping><a href=#RequestMapping class=headerlink title=@RequestMapping></a>@RequestMapping</h4><pre><code>1. @RequestMapping：建立请求和方法之间的关联
     path,value:请求路径的字符串
 
 2. 使用位置
     * 放在方法上，可以直接使用路径来请求数据，二级目录
-    * 放在类上，类上的路径为一级目录，可以先访问一级目录再访问二级目录的方法</code></pre><p><img src="/2020/09/18/springMVC/requestmapping.png" alt></p>
-<pre><code>3. RequestMapping的属性: 任意两个属性之间是&amp;&amp;的关系
+    * 放在类上，类上的路径为一级目录，可以先访问一级目录再访问二级目录的方法</code></pre><p><img src=/2020/09/18/springMVC/requestmapping.png></p><pre><code>3. RequestMapping的属性: 任意两个属性之间是&amp;&amp;的关系
     1. value,path: 互为别名，都是指定请求的路径,请求的URL
     2. mathod: 用于指定请求的方法，method={RequestMethod.GTE,RequestMethod.POST}等
     3. params: 指定限制请求参数的条件，支持简单的表达式，要求请求参数中的key和value必须和配置一样
         * params={&quot;accountName&quot;},请求参数中必须要有accountName
         * params={&quot;money!100&quot;},请求参数money不能是100
-    4. headers: 发送的请求中必须包含的请求头</code></pre><h4 id="RequestParam"><a href="#RequestParam" class="headerlink" title="@RequestParam"></a>@RequestParam</h4><pre><code>1. 含义
+    4. headers: 发送的请求中必须包含的请求头</code></pre><h4 id=RequestParam><a href=#RequestParam class=headerlink title=@RequestParam></a>@RequestParam</h4><pre><code>1. 含义
     把请求中指定名称的参数传给控制器的形参（形参赋值）
 
 2. 使用位置
@@ -545,7 +95,7 @@
 
 3. 属性
     1. name,value: 请求中的参数名称
-    2. required: 默认true，请求中的参数名称必须与name属性的值相同</code></pre><h4 id="RequestBody"><a href="#RequestBody" class="headerlink" title="@RequestBody"></a>@RequestBody</h4><pre><code>1. 含义
+    2. required: 默认true，请求中的参数名称必须与name属性的值相同</code></pre><h4 id=RequestBody><a href=#RequestBody class=headerlink title=@RequestBody></a>@RequestBody</h4><pre><code>1. 含义
     用于获取请求体内容，直接使用得到的是 key=value&amp;key=value 的数据    
     get请求方式不适用，参数不在请求体
 
@@ -554,7 +104,7 @@
 
 3. 使用
     注解定义在参数上
-    直接注解将请求体内部的数据以键值对的方式赋给指定的形参</code></pre><h4 id="PathVarible"><a href="#PathVarible" class="headerlink" title="@PathVarible"></a>@PathVarible</h4><pre><code>1. 含义
+    直接注解将请求体内部的数据以键值对的方式赋给指定的形参</code></pre><h4 id=PathVarible><a href=#PathVarible class=headerlink title=@PathVarible></a>@PathVarible</h4><pre><code>1. 含义
     绑定url中的占位符，url中有/delete/{id},{id}就是占位符
 
 2. 属性
@@ -564,15 +114,15 @@
 3. 使用
     * 只能作用在参数上
     * value的名称必须和访问路径下的占位符的名称一致
-    * 访问时只需要在访问路径的占位符上添加数据就可以了</code></pre><h5 id="RESTful编程风格"><a href="#RESTful编程风格" class="headerlink" title="RESTful编程风格"></a>RESTful编程风格</h5><pre><code>1. Representational State Transfer：
+    * 访问时只需要在访问路径的占位符上添加数据就可以了</code></pre><h5 id=RESTful编程风格><a href=#RESTful编程风格 class=headerlink title=RESTful编程风格></a>RESTful编程风格</h5><pre><code>1. Representational State Transfer：
     表述性状态转换
 
 2. 请求地址相同，但是具体的请求方法不同
     * 获取：GET
     * 创建：POST
     * 更新：PUT
-    * 删除：DELETE</code></pre><h5 id="HiddentHttpMethodFilter"><a href="#HiddentHttpMethodFilter" class="headerlink" title="@HiddentHttpMethodFilter"></a>@HiddentHttpMethodFilter</h5><pre><code>1. 说明
-    浏览器form表单只支持GET,POST请求，DELETE以及PUT不支持，这个过滤器可以将浏览器的请求改为指定的请求方式</code></pre><h4 id="RequestHeader"><a href="#RequestHeader" class="headerlink" title="@RequestHeader"></a>@RequestHeader</h4><pre><code>1. 说明
+    * 删除：DELETE</code></pre><h5 id=HiddentHttpMethodFilter><a href=#HiddentHttpMethodFilter class=headerlink title=@HiddentHttpMethodFilter></a>@HiddentHttpMethodFilter</h5><pre><code>1. 说明
+    浏览器form表单只支持GET,POST请求，DELETE以及PUT不支持，这个过滤器可以将浏览器的请求改为指定的请求方式</code></pre><h4 id=RequestHeader><a href=#RequestHeader class=headerlink title=@RequestHeader></a>@RequestHeader</h4><pre><code>1. 说明
     获取请求头
 
 2. 属性
@@ -581,7 +131,7 @@
 
 3. 使用
     * 只能作用在参数上
-    * 必须指定想要获取的标签的名称</code></pre><h4 id="CookieValue"><a href="#CookieValue" class="headerlink" title="@CookieValue"></a>@CookieValue</h4><pre><code>1. 说明
+    * 必须指定想要获取的标签的名称</code></pre><h4 id=CookieValue><a href=#CookieValue class=headerlink title=@CookieValue></a>@CookieValue</h4><pre><code>1. 说明
     把指定的Cookie名称的值传入控制器方法参数
 
 2. 属性
@@ -590,7 +140,7 @@
 
 3. 使用
     * 作用在参数上
-    * 需要指定cookie的key</code></pre><h4 id="ModelAttribute"><a href="#ModelAttribute" class="headerlink" title="@ModelAttribute"></a>@ModelAttribute</h4><pre><code>1. 说明
+    * 需要指定cookie的key</code></pre><h4 id=ModelAttribute><a href=#ModelAttribute class=headerlink title=@ModelAttribute></a>@ModelAttribute</h4><pre><code>1. 说明
     可以出现在方法和参数上
     * 方法：当前方法会在控制器的方法执行之前先执行，可以修饰没有返回值的方法，也可以修饰有返回值的方法
     * 参数：获取指定的参数给属性赋值
@@ -599,7 +149,7 @@
     * value: 用于获取数据的key,数据类型可以是JavaBean,也可以是集合
 
 3. 使用
-    * 当表单提交的字段不完整，可以保证没有提交的数据使用数据库原本的字段数据    </code></pre><h4 id="SessionAttributes"><a href="#SessionAttributes" class="headerlink" title="@SessionAttributes"></a>@SessionAttributes</h4><pre><code>1. 说明
+    * 当表单提交的字段不完整，可以保证没有提交的数据使用数据库原本的字段数据    </code></pre><h4 id=SessionAttributes><a href=#SessionAttributes class=headerlink title=@SessionAttributes></a>@SessionAttributes</h4><pre><code>1. 说明
     用于多次执行控制器方法之间的参数共享
 
 2. 属性
@@ -608,7 +158,7 @@
 
 3. 使用
     * 只能作用在类上
-    * 可以借助Model来将数据存入Request域中</code></pre><h2 id="请求参数的绑定"><a href="#请求参数的绑定" class="headerlink" title="请求参数的绑定"></a>请求参数的绑定</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><pre><code>1. 绑定机制
+    * 可以借助Model来将数据存入Request域中</code></pre><h2 id=请求参数的绑定><a href=#请求参数的绑定 class=headerlink title=请求参数的绑定></a>请求参数的绑定</h2><h3 id=说明><a href=#说明 class=headerlink title=说明></a>说明</h3><pre><code>1. 绑定机制
     1. 表单提交的数据都是key=value格式的，username=hh&amp;password=oooo
     2. SpringMVC的参数绑定过程是把表单提交的数据作为控制器中的参数进行绑定的
     3. 表单的name和参数的名称必须是一样的（不一致可以使用@RequestParam）
@@ -631,8 +181,7 @@
         * 将引用的其他JavaBean的属性名称连同该对象的属性作为表单的name属性
 
 5. 集合数据类型
-    将集合的引用以及属性进行数据封装</code></pre><p><img src="/2020/09/18/springMVC/connection.png" alt="集合的参数封装"></p>
-<h4 id="数据转换器"><a href="#数据转换器" class="headerlink" title="数据转换器"></a>数据转换器</h4><pre><code>1. 说明
+    将集合的引用以及属性进行数据封装</code></pre><p><img src=/2020/09/18/springMVC/connection.png alt=集合的参数封装></p><h4 id=数据转换器><a href=#数据转换器 class=headerlink title=数据转换器></a>数据转换器</h4><pre><code>1. 说明
     表单传输的数据都是字符串类型，SpringMVC框架进行了数据类型转换
     string-&gt; Integer, Double,...
     字符串转换为Date时，格式不正确，需要显式指定自定义类型转换器
@@ -648,18 +197,16 @@
     1. 编写Converter接口的实现类，实现converter方法
     2. 配置自定义类型转换器
         * springMVC项目配置文件中配置，将自定义配置类加入ConversionServiceFactortBean中
-    3. 配置转换器服务</code></pre><p><img src="/2020/09/18/springMVC/defaultconversion.png" alt="自定义类型转换器"></p>
-<h2 id="Servlet-API"><a href="#Servlet-API" class="headerlink" title="Servlet API"></a>Servlet API</h2><h3 id="获取原生的Servlet-API"><a href="#获取原生的Servlet-API" class="headerlink" title="获取原生的Servlet API"></a>获取原生的Servlet API</h3><pre><code>1. 获取方式
+    3. 配置转换器服务</code></pre><p><img src=/2020/09/18/springMVC/defaultconversion.png alt=自定义类型转换器></p><h2 id=Servlet-API><a href=#Servlet-API class=headerlink title="Servlet API"></a>Servlet API</h2><h3 id=获取原生的Servlet-API><a href=#获取原生的Servlet-API class=headerlink title="获取原生的Servlet API"></a>获取原生的Servlet API</h3><pre><code>1. 获取方式
     使用参数获取的方式，将希望获取到的对象作为参数绑定到路径
 
 2. 实例
     @RequestMapping(&quot;/servletAPI&quot;)
     public String testServletAPI(HttpServletRequest request){
 
-    }</code></pre><h2 id="响应数据"><a href="#响应数据" class="headerlink" title="响应数据"></a>响应数据</h2><h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><pre><code>因为配置了视图解析器，包含String类型返回值，会自动解析我们配置的静态资源，会到指定的路径寻找返回值名称相同的文件
+    }</code></pre><h2 id=响应数据><a href=#响应数据 class=headerlink title=响应数据></a>响应数据</h2><h3 id=字符串><a href=#字符串 class=headerlink title=字符串></a>字符串</h3><pre><code>因为配置了视图解析器，包含String类型返回值，会自动解析我们配置的静态资源，会到指定的路径寻找返回值名称相同的文件
 1. 字符串代表一个静态或者动态页面
-2. 在方法中获取需要的数据，使用Request域来获取，将其填充在页面上显示</code></pre><h3 id="void"><a href="#void" class="headerlink" title="void"></a>void</h3><pre><code>1. 默认值，返回一个和当前方法相同的访问路径的一个jsp文件</code></pre><p><img src="/2020/09/18/springMVC/void_01.png" alt="默认返回值void"></p>
-<pre><code>2. 可以使用servlet的请求转发，重定向
+2. 在方法中获取需要的数据，使用Request域来获取，将其填充在页面上显示</code></pre><h3 id=void><a href=#void class=headerlink title=void></a>void</h3><pre><code>1. 默认值，返回一个和当前方法相同的访问路径的一个jsp文件</code></pre><p><img src=/2020/09/18/springMVC/void_01.png alt=默认返回值void></p><pre><code>2. 可以使用servlet的请求转发，重定向
     * 转发：request.getRequestDispatcher(&quot;/WEB-INF/pages/xx.jsp&quot;).forward(req,resp);
         自已手动转发的路径必须写当前项目的全路径，视图解析器不再自动寻找路径
 
@@ -668,15 +215,14 @@
     转发在当前的web项目内部进行，不需要带项目名称；重定向，不知道项目路径，需要加上项目路径
 
 3. 直接进行响应
-    直接使用输出流来响应数据</code></pre><h3 id="ModelAndView"><a href="#ModelAndView" class="headerlink" title="ModelAndView"></a>ModelAndView</h3><pre><code>1. 说明
+    直接使用输出流来响应数据</code></pre><h3 id=ModelAndView><a href=#ModelAndView class=headerlink title=ModelAndView></a>ModelAndView</h3><pre><code>1. 说明
     ModelAndView对象为spring提供的一个对象，可以用来调整具体的JSP视图
 
 2. 使用
     创建ModelAndView对象，使用addObject(key,Object)添加数据
     使用setViewName()指定返回的页面
 
-    返回值String类型的与ModelAndView的实现机制相同，String基于ModelAndView来实现的</code></pre><p><img src="/2020/09/18/springMVC/model.png" alt></p>
-<h3 id="使用关键字来进行转发和重定向"><a href="#使用关键字来进行转发和重定向" class="headerlink" title="使用关键字来进行转发和重定向"></a>使用关键字来进行转发和重定向</h3><pre><code>1. 需要使用视图解析器来进行资源的获取
+    返回值String类型的与ModelAndView的实现机制相同，String基于ModelAndView来实现的</code></pre><p><img src=/2020/09/18/springMVC/model.png></p><h3 id=使用关键字来进行转发和重定向><a href=#使用关键字来进行转发和重定向 class=headerlink title=使用关键字来进行转发和重定向></a>使用关键字来进行转发和重定向</h3><pre><code>1. 需要使用视图解析器来进行资源的获取
     如果没有配置视图解析器，需要手动配置转发和重定向的路径
 
 2. 基于返回值为字符串的方式
@@ -684,77 +230,28 @@
     * &quot;rediect:success&quot; ：重定向
 
 3. 注意
-    使用关键字，会使用UrlBaseViewReslover进行视图解析，会使用到配置的视图解析器</code></pre><h3 id="JSON数据：ResponseBody响应"><a href="#JSON数据：ResponseBody响应" class="headerlink" title="JSON数据：ResponseBody响应"></a>JSON数据：ResponseBody响应</h3><h4 id="过滤静态资源"><a href="#过滤静态资源" class="headerlink" title="过滤静态资源"></a>过滤静态资源</h4><pre><code>1. 问题
+    使用关键字，会使用UrlBaseViewReslover进行视图解析，会使用到配置的视图解析器</code></pre><h3 id=JSON数据：ResponseBody响应><a href=#JSON数据：ResponseBody响应 class=headerlink title=JSON数据：ResponseBody响应></a>JSON数据：ResponseBody响应</h3><h4 id=过滤静态资源><a href=#过滤静态资源 class=headerlink title=过滤静态资源></a>过滤静态资源</h4><pre><code>1. 问题
     在配置前端控制器的时候，使用了通配符 / 来进行URL拦截，DispatcherServlet拦截了除了.jsp之外的所有资源，静态资源也会被拦截，从而不能使用。如果希望不拦截静态资源，可以再springmvc.xml中配置。
 
-2. 解决</code></pre><blockquote>
-<pre><code>&lt;!-- 配置静态资源过滤: js下的文件不进行拦截 --&gt;
+2. 解决</code></pre><blockquote><pre><code>&lt;!-- 配置静态资源过滤: js下的文件不进行拦截 --&gt;
 &lt;mvc:resources mapping=&quot;/js/**&quot; location=&quot;/js/&quot;/&gt; &lt;!-- js文件 --&gt;
 &lt;mvc:resources mapping=&quot;/images/**&quot; location=&quot;/images/&quot;/&gt;
-&lt;mvc:resources mapping=&quot;/css/**&quot; location=&quot;/css/&quot;/&gt;</code></pre></blockquote>
-<pre><code>location: webapp目录下的所有指定文件
-mapping: 表示以/static开头的所有的请求路径</code></pre><h4 id="响应json格式数据"><a href="#响应json格式数据" class="headerlink" title="响应json格式数据"></a>响应json格式数据</h4><pre><code>1. 导入必须的包
+&lt;mvc:resources mapping=&quot;/css/**&quot; location=&quot;/css/&quot;/&gt;</code></pre></blockquote><pre><code>location: webapp目录下的所有指定文件
+mapping: 表示以/static开头的所有的请求路径</code></pre><h4 id=响应json格式数据><a href=#响应json格式数据 class=headerlink title=响应json格式数据></a>响应json格式数据</h4><pre><code>1. 导入必须的包
     jackson-databind jackson-core jackson-annotations,可以由框架进行数据的赋值
 
 2. 使用@ResponseBody
-    将查询到的数据封装到json格式的页面中，完成异步请求，响应json格式数据</code></pre><h3 id="响应数据总结"><a href="#响应数据总结" class="headerlink" title="响应数据总结"></a>响应数据总结</h3><table>
-<thead>
-<tr>
-<th align="center">返回值类型</th>
-<th align="center">跳转页面</th>
-<th align="center">要求</th>
-<th align="center">使用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">String</td>
-<td align="center">指定的返回字符串表示的页面</td>
-<td align="center">使用视图解析器配置需要解析的页面</td>
-<td align="center">在对应的文件夹下创建和返回值名称相同的页面</td>
-</tr>
-<tr>
-<td align="center">void</td>
-<td align="center">默认返回和访问路径相同的目录结构下的文件</td>
-<td align="center">可以使用重定向和转发，Model来进行页面跳转，或者直接响应数据</td>
-<td align="center">配合转发和重定向来使用</td>
-</tr>
-<tr>
-<td align="center">ModelAndView</td>
-<td align="center">使用setViewName()指定跳转的页面</td>
-<td align="center">需要使用addAttribute()添加元素</td>
-<td align="center">ModelMap</td>
-</tr>
-<tr>
-<td align="center">关键字字符串</td>
-<td align="center">使用关键字 redirect forward进行转发和重定向</td>
-<td align="center">在返回值为字符串的格式下</td>
-<td align="center">和String类似</td>
-</tr>
-<tr>
-<td align="center">json格式数据</td>
-<td align="center">返回json格式的数据</td>
-<td align="center">使用第三方库来进行解析和包装</td>
-<td align="center">使用@ResponseBody</td>
-</tr>
-</tbody></table>
-<pre><code>* ModelAndView和String的实现机制类似
+    将查询到的数据封装到json格式的页面中，完成异步请求，响应json格式数据</code></pre><h3 id=响应数据总结><a href=#响应数据总结 class=headerlink title=响应数据总结></a>响应数据总结</h3><table><thead><tr><th align=center>返回值类型</th><th align=center>跳转页面</th><th align=center>要求</th><th align=center>使用</th></tr></thead><tbody><tr><td align=center>String</td><td align=center>指定的返回字符串表示的页面</td><td align=center>使用视图解析器配置需要解析的页面</td><td align=center>在对应的文件夹下创建和返回值名称相同的页面</td></tr><tr><td align=center>void</td><td align=center>默认返回和访问路径相同的目录结构下的文件</td><td align=center>可以使用重定向和转发，Model来进行页面跳转，或者直接响应数据</td><td align=center>配合转发和重定向来使用</td></tr><tr><td align=center>ModelAndView</td><td align=center>使用setViewName()指定跳转的页面</td><td align=center>需要使用addAttribute()添加元素</td><td align=center>ModelMap</td></tr><tr><td align=center>关键字字符串</td><td align=center>使用关键字 redirect forward进行转发和重定向</td><td align=center>在返回值为字符串的格式下</td><td align=center>和String类似</td></tr><tr><td align=center>json格式数据</td><td align=center>返回json格式的数据</td><td align=center>使用第三方库来进行解析和包装</td><td align=center>使用@ResponseBody</td></tr></tbody></table><pre><code>* ModelAndView和String的实现机制类似
 * 使用转发和重定向可以访问的资源范围不仅局限在定义的资源文件
 * void的返回类型，可以使用上述三种方式来响应数据
-* json格式的数据应该和ajax(异步 JavaScript XML)配合来使用</code></pre><h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><h3 id="传统的文件上传"><a href="#传统的文件上传" class="headerlink" title="传统的文件上传"></a>传统的文件上传</h3><pre><code>1. form表单的要求
+* json格式的数据应该和ajax(异步 JavaScript XML)配合来使用</code></pre><h2 id=文件上传><a href=#文件上传 class=headerlink title=文件上传></a>文件上传</h2><h3 id=传统的文件上传><a href=#传统的文件上传 class=headerlink title=传统的文件上传></a>传统的文件上传</h3><pre><code>1. form表单的要求
     * enctype的属性要求，multipart/form-data
-    * method：post</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/18/springMVC/file_upload.png" alt="文件上传1"></p>
-<pre><code>2. 解析工具
-    * 第三方jar包：commons-fileupload-1.4,commons-io-2.6</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/18/springMVC/file_pom.png" alt="导入jar包"></p>
-<pre><code>3. 步骤
+    * method：post</code></pre><blockquote></blockquote><p><img src=/2020/09/18/springMVC/file_upload.png alt=文件上传1></p><pre><code>2. 解析工具
+    * 第三方jar包：commons-fileupload-1.4,commons-io-2.6</code></pre><blockquote></blockquote><p><img src=/2020/09/18/springMVC/file_pom.png alt=导入jar包></p><pre><code>3. 步骤
     将本地文件上传至服务器
     * 编写文件上传的jsp文件
     * 导入第三方库，处理上传后的文件
-    * 一旦提交表单，所有的数据会存在于request对象的域中，将数据传送给方法，进行处理</code></pre><blockquote>
-<pre><code>//1.指定文件上传位置
+    * 一旦提交表单，所有的数据会存在于request对象的域中，将数据传送给方法，进行处理</code></pre><blockquote><pre><code>//1.指定文件上传位置
     String path = request.getSession().getServletContext().getRealPath(&quot;/uploads/&quot;);
     System.out.println(path);
     //2.判断文件路径是否存在
@@ -790,37 +287,27 @@ mapping: 表示以/static开头的所有的请求路径</code></pre><h4 id="响�
         }
     } catch (Exception e) {
         e.printStackTrace();
-    }</code></pre></blockquote>
-<h3 id="springMVC的文件上传"><a href="#springMVC的文件上传" class="headerlink" title="springMVC的文件上传"></a>springMVC的文件上传</h3><pre><code>1. 说明
+    }</code></pre></blockquote><h3 id=springMVC的文件上传><a href=#springMVC的文件上传 class=headerlink title=springMVC的文件上传></a>springMVC的文件上传</h3><pre><code>1. 说明
     * springMVC框架提供了MultipartFile对象，该对象表示要上传的文件，要求变量名称必须和表单file标签的name属性名称相同
     * 由前端控制器获取请求，将请求传送给文件解析器来进行request对象的解析，获取文件上传项，再由控制器将获取到的文件上传项作为参数绑定到对应的方法上，在方法中只需要进行文件的上传就可以，不需要关注文件的解析和获取工作
     * 注意：
         参数绑定：方法的参数必须和file的name属性相同
 
 2. 配置文件
-    commons-fileupload connoms-io</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/18/springMVC/springmvc_upload.png" alt="springMVC文件上传的原理"><br><img src="/2020/09/18/springMVC/springmvc_upload1.png" alt="springMVC文件上传的部分源码"></p>
-<pre><code>一旦配置上传文件的大小，不能超过限制</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/18/springMVC/springmvc_upload_error.png" alt="springMVC文件大小上传限制"></p>
-<pre><code>2. 步骤
+    commons-fileupload connoms-io</code></pre><blockquote></blockquote><p><img src=/2020/09/18/springMVC/springmvc_upload.png alt=springMVC文件上传的原理><br><img src=/2020/09/18/springMVC/springmvc_upload1.png alt=springMVC文件上传的部分源码></p><pre><code>一旦配置上传文件的大小，不能超过限制</code></pre><blockquote></blockquote><p><img src=/2020/09/18/springMVC/springmvc_upload_error.png alt=springMVC文件大小上传限制></p><pre><code>2. 步骤
     * 书写文件上传表单
     * 配置文件解析器
         CommonsMultipartResoler,其中id属性必须为 multipartReslover
             可以进行依赖注入
 
-    * 方法书写</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/18/springMVC/springmvc_upload2.png" alt="springMVC文件上传"></p>
-<h3 id="同一个服务器的文件上传总结"><a href="#同一个服务器的文件上传总结" class="headerlink" title="同一个服务器的文件上传总结"></a>同一个服务器的文件上传总结</h3><pre><code>springMVC的框架只是将解析文件的过程进行了封装，本质上还是使用FileItemFactory等进行文件解析，在方法中可以直接调用上传文件项
+    * 方法书写</code></pre><blockquote></blockquote><p><img src=/2020/09/18/springMVC/springmvc_upload2.png alt=springMVC文件上传></p><h3 id=同一个服务器的文件上传总结><a href=#同一个服务器的文件上传总结 class=headerlink title=同一个服务器的文件上传总结></a>同一个服务器的文件上传总结</h3><pre><code>springMVC的框架只是将解析文件的过程进行了封装，本质上还是使用FileItemFactory等进行文件解析，在方法中可以直接调用上传文件项
 
 1. 通用上传文件步骤
     1. 获取上传文件目录，可以使用file.mkdirs()进行创建
     2. 对request域进行文件解析，获取文件项(FileItem)[文件解析器]
     3. 生成唯一Id,防止文件覆盖，UUID.randomUUID().toString().replace(&quot;_&quot;,&quot;&quot;);
     4. 文件上传，transferTo(new File(path,name));将文件上传到指定的路径下，生成指定文件名称的文件
-    5. 清理临时文件</code></pre><h3 id="跨服务器方式的文件上传"><a href="#跨服务器方式的文件上传" class="headerlink" title="跨服务器方式的文件上传"></a>跨服务器方式的文件上传</h3><pre><code>1. 分服务器的目的
+    5. 清理临时文件</code></pre><h3 id=跨服务器方式的文件上传><a href=#跨服务器方式的文件上传 class=headerlink title=跨服务器方式的文件上传></a>跨服务器方式的文件上传</h3><pre><code>1. 分服务器的目的
     不同的功能服务器将其分开，方便开发
         * 应用服务器
         * 数据库服务器
@@ -836,489 +323,42 @@ mapping: 表示以/static开头的所有的请求路径</code></pre><h4 id="响�
         4. 建立连接，
             WebResource resource = client.resource(path);
         5. 上传文件
-            resource.put(upload.getBytes());</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/18/springMVC/file_upload3.png" alt="跨服务器上传"></p>
-<pre><code>3. 出现的错误
+            resource.put(upload.getBytes());</code></pre><blockquote></blockquote><p><img src=/2020/09/18/springMVC/file_upload3.png alt=跨服务器上传></p><pre><code>3. 出现的错误
     1. 500：Method Not Allowed
-        可以在文件服务器的文件目录下建立文件夹改变Tomcat服务器的readonly属性，Tomcat服务器的安装目录下的conf文件中的web.xml，属性值改为false</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/18/springMVC/e1.png" alt></p>
-<h3 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h3><pre><code>1. 配置文件
+        可以在文件服务器的文件目录下建立文件夹改变Tomcat服务器的readonly属性，Tomcat服务器的安装目录下的conf文件中的web.xml，属性值改为false</code></pre><blockquote></blockquote><p><img src=/2020/09/18/springMVC/e1.png></p><h3 id=文件下载><a href=#文件下载 class=headerlink title=文件下载></a>文件下载</h3><pre><code>1. 配置文件
     1. commons-fileupload_1.4.jar commons-io_2.5.jar
     2. CommonsMultipartResolver对象
     3. 需要下载的文件的文件名
 
-2. 演示代码</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/18/springMVC/filedown.png" alt="文件下载演示代码"></p>
-<h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><pre><code>Controller调用service,service调用dao,异常向上抛出，最终由DispatcherServlet找异常处理器进行处理。</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/18/springMVC/error_process.png" alt="异常处理流程"><br><img src="/2020/09/18/springMVC/exception_1.png" alt="异常抛出演示"></p>
-<h3 id="springMVC的异常处理"><a href="#springMVC的异常处理" class="headerlink" title="springMVC的异常处理"></a>springMVC的异常处理</h3><pre><code>1. 步骤
+2. 演示代码</code></pre><blockquote></blockquote><p><img src=/2020/09/18/springMVC/filedown.png alt=文件下载演示代码></p><h2 id=异常处理><a href=#异常处理 class=headerlink title=异常处理></a>异常处理</h2><pre><code>Controller调用service,service调用dao,异常向上抛出，最终由DispatcherServlet找异常处理器进行处理。</code></pre><blockquote></blockquote><p><img src=/2020/09/18/springMVC/error_process.png alt=异常处理流程><br><img src=/2020/09/18/springMVC/exception_1.png alt=异常抛出演示></p><h3 id=springMVC的异常处理><a href=#springMVC的异常处理 class=headerlink title=springMVC的异常处理></a>springMVC的异常处理</h3><pre><code>1. 步骤
     * 编写自定义异常处理类 （提示信息）
     * 编写异常处理器，必须实现异常处理器接口，HandlerExceptionResolver
     * 配置异常处理器（决定跳转页面）
-        在springmvc.xml中增加bean标签，将异常处理器加载到容器中</code></pre><p><img src="/2020/09/18/springMVC/exception_2.png" alt="异常抛出"></p>
-<h2 id="拦截器（Interceptor）"><a href="#拦截器（Interceptor）" class="headerlink" title="拦截器（Interceptor）"></a>拦截器（Interceptor）</h2><pre><code>springMVC的拦截器和servlet的Filter过滤器的作用类似，用于对处理器（controller）进行预处理和后处理。
+        在springmvc.xml中增加bean标签，将异常处理器加载到容器中</code></pre><p><img src=/2020/09/18/springMVC/exception_2.png alt=异常抛出></p><h2 id=拦截器（Interceptor）><a href=#拦截器（Interceptor） class=headerlink title=拦截器（Interceptor）></a>拦截器（Interceptor）</h2><pre><code>springMVC的拦截器和servlet的Filter过滤器的作用类似，用于对处理器（controller）进行预处理和后处理。
     Interceptor chain : 拦截器链，对一组拦截器按照一定的顺序进行访问
 
 interceptor和filter的区别
 * interceptor: 只能在springMVC中，在配置/*之后，只会拦截访问的控制器方法，如果访问的是jsp,css,html不会进行拦截
 * filter: servlet规范的部分，所有的java web都可以使用，在配置之后，对所有要访问的资源进行拦截
 
-编写拦截器必须实现 HandlerInterceptor接口</code></pre><h3 id="拦截器的使用"><a href="#拦截器的使用" class="headerlink" title="拦截器的使用"></a>拦截器的使用</h3><pre><code>1. 步骤
+编写拦截器必须实现 HandlerInterceptor接口</code></pre><h3 id=拦截器的使用><a href=#拦截器的使用 class=headerlink title=拦截器的使用></a>拦截器的使用</h3><pre><code>1. 步骤
     * 编写自定义拦截器类（implements HandlerInterceptor）
     * 在容器中注册该拦截器类
     * 声明需要拦截的对象
 
 2. 注册拦截器
     * 可以编写多个拦截器，构成拦截器链
-    * &lt;mvc:mapping path=&quot;&quot;&gt;：指定要拦截的请求路径</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/18/springMVC/inter_1.png" alt></p>
-<pre><code>3. 拦截的方法</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/09/18/springMVC/inter_2.png" alt></p>
-<pre><code>* preHandler: 预处理，在controller方法执行之前执行
+    * &lt;mvc:mapping path=&quot;&quot;&gt;：指定要拦截的请求路径</code></pre><blockquote></blockquote><p><img src=/2020/09/18/springMVC/inter_1.png></p><pre><code>3. 拦截的方法</code></pre><blockquote></blockquote><p><img src=/2020/09/18/springMVC/inter_2.png></p><pre><code>* preHandler: 预处理，在controller方法执行之前执行
     return true: 放行，继续执行后面的拦截器
     return false: 不放行，可以使用转发和重定向来进行页面跳转
 
 * postHandler: 后处理，在controller方法执行结束，跳转页面之前执行
 
-* afterCompletion: 页面执行结束后，执行这个方法</code></pre>
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-        
-    <div style="text-align:center;color: #ccc;font-size:14px;">
-        ------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读 ------</div>
-
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/SpringMVC/" rel="tag"><i class="fa fa-tag"></i> SpringMVC</a>
-          
-        </div>
-      
-
-      
-      
-        <div class="post-widgets">
-        
-
-        
-
-        
-          
-          <div id="needsharebutton-postbottom">
-            <span class="btn">
-              <i class="fa fa-share-alt" aria-hidden="true"></i>
-            </span>
-          </div>
-        
-        </div>
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/09/10/reflection/" rel="next" title="Java Reflection（java反射机制）">
-                <i class="fa fa-chevron-left"></i> Java Reflection（java反射机制）
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/09/18/ssm/" rel="prev" title="SSM">
-                SSM <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-
-      <div>
-        <p id="div-border-left-red">
-        <b>本文基于<a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a>国际许可协议发布</b><br/>
-        <span>
-          <b>本文地址: </b><a href="/2020/09/18/springMVC/" title="SpringMVC">http://print3306.github.io/2020/09/18/springMVC/</a><br/><b>转载请注明出处, 谢谢！</b>
-        </span>
-      </p>
-</div>
-
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/images/avatar1.jpg"
-                alt="浊酒一杯" />
-            
-              <p class="site-author-name" itemprop="name">浊酒一杯</p>
-              <p class="site-description motion-element" itemprop="description">砥砺前行</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-                <a href="/archives">
-                  <span class="site-state-item-count">26</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">15</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="mailto:3230372879qq.com" target="_blank" title="E-Mail">
-                      
-                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
-                  </span>
-                
-            </div>
-          
-
-          
-          
-
-          
-          
-
-          
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三层架构"><span class="nav-number">1.1.</span> <span class="nav-text">三层架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC的入门案例"><span class="nav-number">1.2.</span> <span class="nav-text">SpringMVC的入门案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC实例解析"><span class="nav-number">1.3.</span> <span class="nav-text">SpringMVC实例解析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关注解"><span class="nav-number">2.</span> <span class="nav-text">相关注解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestMapping"><span class="nav-number">2.0.1.</span> <span class="nav-text">@RequestMapping</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestParam"><span class="nav-number">2.0.2.</span> <span class="nav-text">@RequestParam</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestBody"><span class="nav-number">2.0.3.</span> <span class="nav-text">@RequestBody</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PathVarible"><span class="nav-number">2.0.4.</span> <span class="nav-text">@PathVarible</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RESTful编程风格"><span class="nav-number">2.0.4.1.</span> <span class="nav-text">RESTful编程风格</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HiddentHttpMethodFilter"><span class="nav-number">2.0.4.2.</span> <span class="nav-text">@HiddentHttpMethodFilter</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestHeader"><span class="nav-number">2.0.5.</span> <span class="nav-text">@RequestHeader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CookieValue"><span class="nav-number">2.0.6.</span> <span class="nav-text">@CookieValue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ModelAttribute"><span class="nav-number">2.0.7.</span> <span class="nav-text">@ModelAttribute</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SessionAttributes"><span class="nav-number">2.0.8.</span> <span class="nav-text">@SessionAttributes</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求参数的绑定"><span class="nav-number">3.</span> <span class="nav-text">请求参数的绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">3.1.</span> <span class="nav-text">说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据转换器"><span class="nav-number">3.1.1.</span> <span class="nav-text">数据转换器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet-API"><span class="nav-number">4.</span> <span class="nav-text">Servlet API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取原生的Servlet-API"><span class="nav-number">4.1.</span> <span class="nav-text">获取原生的Servlet API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应数据"><span class="nav-number">5.</span> <span class="nav-text">响应数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串"><span class="nav-number">5.1.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#void"><span class="nav-number">5.2.</span> <span class="nav-text">void</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ModelAndView"><span class="nav-number">5.3.</span> <span class="nav-text">ModelAndView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用关键字来进行转发和重定向"><span class="nav-number">5.4.</span> <span class="nav-text">使用关键字来进行转发和重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON数据：ResponseBody响应"><span class="nav-number">5.5.</span> <span class="nav-text">JSON数据：ResponseBody响应</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#过滤静态资源"><span class="nav-number">5.5.1.</span> <span class="nav-text">过滤静态资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#响应json格式数据"><span class="nav-number">5.5.2.</span> <span class="nav-text">响应json格式数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应数据总结"><span class="nav-number">5.6.</span> <span class="nav-text">响应数据总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件上传"><span class="nav-number">6.</span> <span class="nav-text">文件上传</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传统的文件上传"><span class="nav-number">6.1.</span> <span class="nav-text">传统的文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#springMVC的文件上传"><span class="nav-number">6.2.</span> <span class="nav-text">springMVC的文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同一个服务器的文件上传总结"><span class="nav-number">6.3.</span> <span class="nav-text">同一个服务器的文件上传总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跨服务器方式的文件上传"><span class="nav-number">6.4.</span> <span class="nav-text">跨服务器方式的文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件下载"><span class="nav-number">6.5.</span> <span class="nav-text">文件下载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常处理"><span class="nav-number">7.</span> <span class="nav-text">异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#springMVC的异常处理"><span class="nav-number">7.1.</span> <span class="nav-text">springMVC的异常处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拦截器（Interceptor）"><span class="nav-number">8.</span> <span class="nav-text">拦截器（Interceptor）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拦截器的使用"><span class="nav-number">8.1.</span> <span class="nav-text">拦截器的使用</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  
-  <span class="author" itemprop="copyrightHolder">浊酒一杯</span>
-
-  
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
-    </span>
-    
-      <span class="post-meta-item-text">Site words total count&#58;</span>
-    
-    <span title="Site words total count">44.4k</span>
-  
-</div>
-
-<!--
-
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
-
--->
-
-
-
-        
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-    
-
-    
-      <div id="needsharebutton-float">
-        <span class="btn">
-          <i class="fa fa-share-alt" aria-hidden="true"></i>
-        </span>
-      </div>
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
+* afterCompletion: 页面执行结束后，执行这个方法</code></pre></div><div><div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读 ------</div></div><footer class=post-footer><div class=post-tags><a href="/tags/SpringMVC/" rel=tag><i class="fa fa-tag"></i> SpringMVC</a></div><div class=post-widgets><div id=needsharebutton-postbottom><span class=btn><i class="fa fa-share-alt" aria-hidden=true></i></span></div></div><div class=post-nav><div class="post-nav-next post-nav-item"><a href="/2020/09/10/reflection/" rel=next title="Java Reflection（java反射机制）"><i class="fa fa-chevron-left"></i> Java Reflection（java反射机制）</a></div><span class=post-nav-divider></span><div class="post-nav-prev post-nav-item"><a href="/2020/09/18/ssm/" rel=prev title=SSM>SSM <i class="fa fa-chevron-right"></i></a></div></div><div><p id=div-border-left-red><b>本文基于<a target=_blank title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0</a>国际许可协议发布</b><br><span><b>本文地址:</b><a href="/2020/09/18/springMVC/" title=SpringMVC>http://print3306.github.io/2020/09/18/springMVC/</a><br><b>转载请注明出处, 谢谢！</b></span></p></div></footer></div></article><div class=post-spread></div></div></div></div><div class=sidebar-toggle><div class=sidebar-toggle-line-wrap><span class="sidebar-toggle-line sidebar-toggle-line-first"></span> <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span> <span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id=sidebar class=sidebar><div class=sidebar-inner><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target=post-toc-wrap>文章目录</li><li class=sidebar-nav-overview data-target=site-overview-wrap>站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class=site-overview><div class="site-author motion-element" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image src=/images/avatar1.jpg alt=浊酒一杯><p class=site-author-name itemprop=name>浊酒一杯</p><p class="site-description motion-element" itemprop=description>砥砺前行</p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href=/archives><span class=site-state-item-count>26</span> <span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/index.html><span class=site-state-item-count>15</span> <span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/index.html><span class=site-state-item-count>11</span> <span class=site-state-item-name>标签</span></a></div></nav><div class="links-of-author motion-element"><span class=links-of-author-item><a href=mailto:3230372879qq.com target=_blank title=E-Mail><i class="fa fa-fw fa-globe"></i>E-Mail</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class=post-toc><div class=post-toc-content><ol class=nav><li class="nav-item nav-level-2"><a class=nav-link href=#概述><span class=nav-number>1.</span> <span class=nav-text>概述</span></a><ol class=nav-child><li class="nav-item nav-level-3"><a class=nav-link href=#三层架构><span class=nav-number>1.1.</span> <span class=nav-text>三层架构</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#SpringMVC的入门案例><span class=nav-number>1.2.</span> <span class=nav-text>SpringMVC的入门案例</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#SpringMVC实例解析><span class=nav-number>1.3.</span> <span class=nav-text>SpringMVC实例解析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class=nav-link href=#相关注解><span class=nav-number>2.</span> <span class=nav-text>相关注解</span></a><ol class=nav-child><li class="nav-item nav-level-4"><a class=nav-link href=#RequestMapping><span class=nav-number>2.0.1.</span> <span class=nav-text>@RequestMapping</span></a></li><li class="nav-item nav-level-4"><a class=nav-link href=#RequestParam><span class=nav-number>2.0.2.</span> <span class=nav-text>@RequestParam</span></a></li><li class="nav-item nav-level-4"><a class=nav-link href=#RequestBody><span class=nav-number>2.0.3.</span> <span class=nav-text>@RequestBody</span></a></li><li class="nav-item nav-level-4"><a class=nav-link href=#PathVarible><span class=nav-number>2.0.4.</span> <span class=nav-text>@PathVarible</span></a><ol class=nav-child><li class="nav-item nav-level-5"><a class=nav-link href=#RESTful编程风格><span class=nav-number>2.0.4.1.</span> <span class=nav-text>RESTful编程风格</span></a></li><li class="nav-item nav-level-5"><a class=nav-link href=#HiddentHttpMethodFilter><span class=nav-number>2.0.4.2.</span> <span class=nav-text>@HiddentHttpMethodFilter</span></a></li></ol></li><li class="nav-item nav-level-4"><a class=nav-link href=#RequestHeader><span class=nav-number>2.0.5.</span> <span class=nav-text>@RequestHeader</span></a></li><li class="nav-item nav-level-4"><a class=nav-link href=#CookieValue><span class=nav-number>2.0.6.</span> <span class=nav-text>@CookieValue</span></a></li><li class="nav-item nav-level-4"><a class=nav-link href=#ModelAttribute><span class=nav-number>2.0.7.</span> <span class=nav-text>@ModelAttribute</span></a></li><li class="nav-item nav-level-4"><a class=nav-link href=#SessionAttributes><span class=nav-number>2.0.8.</span> <span class=nav-text>@SessionAttributes</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class=nav-link href=#请求参数的绑定><span class=nav-number>3.</span> <span class=nav-text>请求参数的绑定</span></a><ol class=nav-child><li class="nav-item nav-level-3"><a class=nav-link href=#说明><span class=nav-number>3.1.</span> <span class=nav-text>说明</span></a><ol class=nav-child><li class="nav-item nav-level-4"><a class=nav-link href=#数据转换器><span class=nav-number>3.1.1.</span> <span class=nav-text>数据转换器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class=nav-link href=#Servlet-API><span class=nav-number>4.</span> <span class=nav-text>Servlet API</span></a><ol class=nav-child><li class="nav-item nav-level-3"><a class=nav-link href=#获取原生的Servlet-API><span class=nav-number>4.1.</span> <span class=nav-text>获取原生的Servlet API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class=nav-link href=#响应数据><span class=nav-number>5.</span> <span class=nav-text>响应数据</span></a><ol class=nav-child><li class="nav-item nav-level-3"><a class=nav-link href=#字符串><span class=nav-number>5.1.</span> <span class=nav-text>字符串</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#void><span class=nav-number>5.2.</span> <span class=nav-text>void</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#ModelAndView><span class=nav-number>5.3.</span> <span class=nav-text>ModelAndView</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#使用关键字来进行转发和重定向><span class=nav-number>5.4.</span> <span class=nav-text>使用关键字来进行转发和重定向</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#JSON数据：ResponseBody响应><span class=nav-number>5.5.</span> <span class=nav-text>JSON数据：ResponseBody响应</span></a><ol class=nav-child><li class="nav-item nav-level-4"><a class=nav-link href=#过滤静态资源><span class=nav-number>5.5.1.</span> <span class=nav-text>过滤静态资源</span></a></li><li class="nav-item nav-level-4"><a class=nav-link href=#响应json格式数据><span class=nav-number>5.5.2.</span> <span class=nav-text>响应json格式数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class=nav-link href=#响应数据总结><span class=nav-number>5.6.</span> <span class=nav-text>响应数据总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class=nav-link href=#文件上传><span class=nav-number>6.</span> <span class=nav-text>文件上传</span></a><ol class=nav-child><li class="nav-item nav-level-3"><a class=nav-link href=#传统的文件上传><span class=nav-number>6.1.</span> <span class=nav-text>传统的文件上传</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#springMVC的文件上传><span class=nav-number>6.2.</span> <span class=nav-text>springMVC的文件上传</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#同一个服务器的文件上传总结><span class=nav-number>6.3.</span> <span class=nav-text>同一个服务器的文件上传总结</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#跨服务器方式的文件上传><span class=nav-number>6.4.</span> <span class=nav-text>跨服务器方式的文件上传</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#文件下载><span class=nav-number>6.5.</span> <span class=nav-text>文件下载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class=nav-link href=#异常处理><span class=nav-number>7.</span> <span class=nav-text>异常处理</span></a><ol class=nav-child><li class="nav-item nav-level-3"><a class=nav-link href=#springMVC的异常处理><span class=nav-number>7.1.</span> <span class=nav-text>springMVC的异常处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class=nav-link href=#拦截器（Interceptor）><span class=nav-number>8.</span> <span class=nav-text>拦截器（Interceptor）</span></a><ol class=nav-child><li class="nav-item nav-level-3"><a class=nav-link href=#拦截器的使用><span class=nav-number>8.1.</span> <span class=nav-text>拦截器的使用</span></a></li></ol></li></div></div></section></div></aside></div></main><footer id=footer class=footer><div class=footer-inner><div class=copyright>&copy; <span itemprop=copyrightYear>2020</span> <span class=with-love><i class="fa fa-user"></i></span> <span class=author itemprop=copyrightHolder>浊酒一杯</span> <span class=post-meta-divider>|</span> <span class=post-meta-item-icon><i class="fa fa-area-chart"></i></span> <span class=post-meta-item-text>Site words total count&#58;</span> <span title="Site words total count">46.1k</span></div></div></footer><div class=back-to-top><i class="fa fa-arrow-up"></i> <span id=scrollpercent><span>0</span>%</span></div><div id=needsharebutton-float><span class=btn><i class="fa fa-share-alt" aria-hidden=true></i></span></div></div><script type=text/javascript>
   if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
     window.Promise = null;
   }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
+</script><script type=text/javascript src="/lib/jquery/index.js?v=2.1.3"></script><script type=text/javascript src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type=text/javascript src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type=text/javascript src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type=text/javascript src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type=text/javascript src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type=text/javascript src="/js/src/utils.js?v=5.1.4"></script><script type=text/javascript src="/js/src/motion.js?v=5.1.4"></script><script type=text/javascript src="/js/src/affix.js?v=5.1.4"></script><script type=text/javascript src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type=text/javascript src="/js/src/scrollspy.js?v=5.1.4"></script><script type=text/javascript src="/js/src/post-details.js?v=5.1.4"></script><script type=text/javascript src="/js/src/bootstrap.js?v=5.1.4"></script><script type=text/javascript>
     // Popup Window;
     var isfetched = false;
     var isXml = true;
@@ -1633,28 +673,7 @@ interceptor和filter的区别
         onPopupClose();
       }
     });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-  
-  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
-
-  
-  
-  <script src="/lib/needsharebutton/needsharebutton.js"></script>
-
-  <script>
+  </script><link rel=stylesheet href=/lib/needsharebutton/needsharebutton.css><script src=/lib/needsharebutton/needsharebutton.js></script><script>
     
       pbOptions = {};
       
@@ -1681,38 +700,13 @@ interceptor和filter的区别
       
       new needShareButton('#needsharebutton-float', flOptions);
     
-  </script>
-
-  
-
-  
-
-  
-
-  
-
-
-  <!--鼠标点击心形效果-->
-  <script type="text/javascript" src="/js/src/clicklove.js"></script>
-
-  <!--mob_share-->
-  
-<script type="text/javascript">
+  </script><script type=text/javascript src=/js/src/clicklove.js></script><script type=text/javascript>
     //微信二维码点击背景关闭
     $('body').delegate('.-mob-share-weixin-qrcode-bg','click', function(){
          $(".-mob-share-weixin-qrcode-close").trigger("click");
     }); 
-</script>
-
-
-  <!--动态线条背景 220,220,220 opacity='0.8' zIndex="-2"-->
-  <script type="text/javascript"
-    color="192,192,192" opacity='0.6' zIndex="-1" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
-  </script>
-
-  <!-- 代码复制 -->
-  
-  <style>
+</script><script type=text/javascript color=192,192,192 opacity=0.6 zindex=-1 count=150 src=//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js>
+  </script><style>
     .copy-btn {
       display: inline-block;
       padding: 6px 12px;
@@ -1748,9 +742,7 @@ interceptor和filter的区别
     .highlight-wrap {
       position: relative;
     }
-  </style>
-  
-  <script>
+  </style><script>
     $('.highlight').each(function (i, e) {
       var $wrap = $('<div>').addClass('highlight-wrap')
       $(e).after($wrap)
@@ -1780,23 +772,4 @@ interceptor和filter的区别
         }, 300)
       }).append(e)
     })
-  </script>
-
-
-
-  <!-- 雪花特效 
-  <script type="text/javascript">
-    var windowWidth = $(window).width();
-    if (windowWidth > 480) {
-      document.write('<script type="text/javascript" src="/js/src/snow.js"><、/script>');
-    }
-  </script>
-
-  <script type="text/javascript" src="//libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>-->
-
-  <!-- 不蒜子统计 -->
-  
-
-
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
-</html>
+  </script><script src=/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>

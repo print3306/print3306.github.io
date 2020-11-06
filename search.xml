@@ -355,7 +355,7 @@
     * 函数相当于一个表达式，使用select来调用函数</code></pre><blockquote>
 </blockquote>
 <p><img src="/2020/10/12/mysql/fun_1.png" alt></p>
-<h2 id="触发器-trigger"><a href="#触发器-trigger" class="headerlink" title="触发器 trigger"></a>触发器 trigger</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><pre><code>触发器（trigger）是与表有关的数据库对象，指在insert/update/delete之前或之后，触发并执行触发器中定义的SQL语句集合，
+<h2 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><pre><code>触发器（trigger）是与表有关的数据库对象，指在insert/update/delete之前或之后，触发并执行触发器中定义的SQL语句集合，
  * 确保数据的完整性
  * 记录日志， 在进行操作之前，生成记录，保存在日志文件中
  * 数据校验，使用触发器在操作之前进行数据校验，保证数据安全
@@ -381,7 +381,7 @@
 <td align="center">OLD表示将要或者已经删除的数据</td>
 </tr>
 </tbody></table>
-<h3 id="创建触发器"><a href="#创建触发器" class="headerlink" title="创建触发器"></a>创建触发器</h3><pre><code>1. 语法</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> trigger_name </span><br><span class="line"><span class="keyword">before</span>|<span class="keyword">after</span> <span class="keyword">insert</span>|<span class="keyword">update</span>|<span class="keyword">delete</span></span><br><span class="line"><span class="keyword">on</span> table_name</span><br><span class="line">[<span class="keyword">for</span> <span class="keyword">each</span> <span class="keyword">row</span>] <span class="comment">-- 行级触发器</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">	<span class="comment">-- SQL</span></span><br><span class="line"><span class="keyword">end</span>;</span><br><span class="line">```   </span><br><span class="line"></span><br><span class="line">	2. 案例</span><br><span class="line">		在插入数据进入city之后，将名称存入country表</span><br><span class="line">```sql</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> trigger_insert_city</span><br><span class="line"><span class="keyword">after</span> <span class="keyword">insert</span></span><br><span class="line"><span class="keyword">on</span> city</span><br><span class="line"><span class="keyword">for</span> <span class="keyword">each</span> <span class="keyword">row</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">insert</span> <span class="keyword">into</span> country <span class="keyword">values</span>(<span class="literal">null</span>,new.city_name);</span><br><span class="line"><span class="keyword">end</span>$</span><br></pre></td></tr></table></figure>
+<h3 id="创建触发器"><a href="#创建触发器" class="headerlink" title="创建触发器"></a>创建触发器</h3><pre><code>1. 语法</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> trigger_name </span><br><span class="line"><span class="keyword">before</span>|<span class="keyword">after</span> <span class="keyword">insert</span>|<span class="keyword">update</span>|<span class="keyword">delete</span></span><br><span class="line"><span class="keyword">on</span> table_name</span><br><span class="line">[<span class="keyword">for</span> <span class="keyword">each</span> <span class="keyword">row</span>] <span class="comment">-- 行级触发器</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">	<span class="comment">-- SQL</span></span><br><span class="line"><span class="keyword">end</span>;```  </span><br><span class="line"></span><br><span class="line">	2. 案例</span><br><span class="line">		在插入数据进入city之后，将名称存入country表</span><br><span class="line">```sql</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> trigger_insert_city</span><br><span class="line"><span class="keyword">after</span> <span class="keyword">insert</span></span><br><span class="line"><span class="keyword">on</span> city</span><br><span class="line"><span class="keyword">for</span> <span class="keyword">each</span> <span class="keyword">row</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">insert</span> <span class="keyword">into</span> country <span class="keyword">values</span>(<span class="literal">null</span>,new.city_name);</span><br><span class="line"><span class="keyword">end</span>$</span><br></pre></td></tr></table></figure>
 
 <h3 id="删除触发器"><a href="#删除触发器" class="headerlink" title="删除触发器"></a>删除触发器</h3><pre><code>1. 语法</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查看触发器</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">triggers</span>\G;</span><br><span class="line"><span class="comment">-- 删除触发器</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">trigger</span> [schema_name.]trigger_name; </span><br><span class="line"><span class="comment">-- 默认删除当前数据库的指定触发器</span></span><br></pre></td></tr></table></figure>
 
@@ -547,7 +547,71 @@ MySQL最多的特点：
 <td align="center"></td>
 </tr>
 </tbody></table>
-<h3 id="优化SQL步骤"><a href="#优化SQL步骤" class="headerlink" title="优化SQL步骤"></a>优化SQL步骤</h3><h3 id="索引的使用"><a href="#索引的使用" class="headerlink" title="索引的使用"></a>索引的使用</h3><h3 id="SQL优化"><a href="#SQL优化" class="headerlink" title="SQL优化"></a>SQL优化</h3>]]></content>
+<h5 id="InnoDB"><a href="#InnoDB" class="headerlink" title="InnoDB"></a>InnoDB</h5><pre><code>InnoDB存储引擎是MySQL的默认存储引擎，具有提交，回滚，恢复事务能力，相对于MyISAM存储引擎，InnoDB的写的处理效率较低，而且会占用更多的存储空间来存储索引和数据。</code></pre><p><strong>支持事务安全</strong></p>
+<pre><code>默认每个查询是一次事务，会自动提交事务
+使用start transaction,开启事务，在数据查询之后，使用commit可以提交事务</code></pre><p><strong>支持外键</strong></p>
+<pre><code>InnoDB存储引擎是唯一支持外键的存储引擎，在创建子表时，可以指定在删除，更新主表对子表的操作如下，restrict,cascade,set null,no action
+* restrict和no action：限制子表有关联记录时，父表不能更新
+* cascade: 在更新父表的时候，更新对应子表中的记录
+* set null: 在更新父表的时候，子表的对应字段设置为空</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`city_innodb`</span>(</span><br><span class="line">	<span class="string">`city_id`</span> <span class="built_in">INT</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">	<span class="string">`city_name`</span> <span class="built_in">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">	<span class="string">`country_id`</span> <span class="built_in">INT</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">	PRIMARY <span class="keyword">KEY</span>(<span class="string">`city_id`</span>),</span><br><span class="line">	<span class="keyword">FOREIGN</span> <span class="keyword">KEY</span>(country_id) <span class="keyword">REFERENCES</span> country_innodb(country_id) <span class="keyword">ON</span> <span class="keyword">UPDATE</span> RESTRICT <span class="keyword">ON</span> <span class="keyword">DELETE</span> <span class="keyword">CASCADE</span></span><br><span class="line">)<span class="keyword">ENGINE</span>=<span class="keyword">INNODB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br><span class="line">on <span class="keyword">update</span> restrict: 在更新时，存在关联，不能进行更新</span><br><span class="line"><span class="keyword">on</span> <span class="keyword">delete</span> <span class="keyword">cascade</span>: 在删除时，级联删除</span><br></pre></td></tr></table></figure>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/innodb.png" alt="InnoDB"></p>
+<p><strong>存储方式</strong></p>
+<pre><code>在linux操作系统下，mysql只要存储两个文件
+1. .frm文件：存储表的结构信息（定义 ）
+2. .idb文件：存储表的索引信息和数据</code></pre><h5 id="MyISAM"><a href="#MyISAM" class="headerlink" title="MyISAM"></a>MyISAM</h5><pre><code>MyISAM不支持事务和外键，访问速度块，对事务的完整性没有要求的select,insert为主的数据可以使用MyISAM存储引擎</code></pre><p><strong>不支持事务</strong></p>
+<pre><code>一旦查询语句执行，数据会马上提交到数据库</code></pre><p><strong>文件存储方式</strong></p>
+<pre><code>每个MyISAM存储引擎会分成3个文件名称和表的名称相同，拓展名不同：
+1. .frm: 存储表的定义
+2. .myd: 存储表的数据
+3. .myi: 存储表的索引</code></pre><h5 id="Memory"><a href="#Memory" class="headerlink" title="Memory"></a>Memory</h5><pre><code>1. Memory存储引擎将表的数据存放在内存中。
+2. 每个表对应一个磁盘文件，格式是.frm,该文件只存放表的结构，数据文件全都存放在内存中，这样有利于数据的快速处理，提高表的效率。
+3. Memory类型的表的数据访问速度快，因为数据存放在内存中，可以默认使用Hash索引，但是服务一旦关闭表中的数据就会丢失。</code></pre><h5 id="Merge"><a href="#Merge" class="headerlink" title="Merge"></a>Merge</h5><pre><code>类似于视图，虚拟表，只包含结构，不包含数据
+1. Merge是一组MyISAM的组合，这些MyISAM表结构必须完全相同，Merge本身并没有存储数据
+2. 对Merge类型的表可以进行查询，删除，更新等，这些操作实际上是对内部的MyISAM进行操作
+3. 对于Merge类型表的插入操作，是通过子句insert_method子句定义插入的表，
+    * 使用first,last使插入的数据作用在第一个或者最后一个表上
+    * 不定义或者定义为no,表示不能对Merge表进行插入操作
+4. drop操作，只是删除了Merge本身的定义，对实际表没有影响
+
+1. Merge类型的使用</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 表1</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> order_1(</span><br><span class="line">	order_id <span class="built_in">INT</span>,</span><br><span class="line">	order_money <span class="keyword">DOUBLE</span>(<span class="number">10</span>,<span class="number">2</span>),</span><br><span class="line">	order_address <span class="built_in">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line">	PRIMARY <span class="keyword">KEY</span>(order_id)</span><br><span class="line">)<span class="keyword">ENGINE</span>=MYISAM <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> = utf8;</span><br><span class="line"><span class="comment">-- 表2</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> order_2(</span><br><span class="line">	order_id <span class="built_in">INT</span>,</span><br><span class="line">	order_money <span class="keyword">DOUBLE</span>(<span class="number">10</span>,<span class="number">2</span>),</span><br><span class="line">	order_address <span class="built_in">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line">	PRIMARY <span class="keyword">KEY</span>(order_id)</span><br><span class="line">)<span class="keyword">ENGINE</span>=MYISAM <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> = utf8;</span><br><span class="line"><span class="comment">-- merge表</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> order_all(</span><br><span class="line">	order_id <span class="built_in">INT</span>,</span><br><span class="line">	order_money <span class="keyword">DOUBLE</span>(<span class="number">10</span>,<span class="number">2</span>),</span><br><span class="line">	order_address <span class="built_in">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line">	PRIMARY <span class="keyword">KEY</span>(order_id)</span><br><span class="line">)<span class="keyword">ENGINE</span>=<span class="keyword">MERGE</span> <span class="keyword">UNION</span> = (order_1,order_2) INSERT_METHOD = <span class="keyword">LAST</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> = utf8;</span><br><span class="line"><span class="comment">-- 插入数据</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> order_1 <span class="keyword">VALUES</span>(<span class="number">10</span>,<span class="number">100.0</span>,<span class="string">'上海'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> order_1 <span class="keyword">VALUES</span>(<span class="number">20</span>,<span class="number">300.0</span>,<span class="string">'北京'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> order_2 <span class="keyword">VALUES</span>(<span class="number">3</span>,<span class="number">100.0</span>,<span class="string">'云南'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> order_2 <span class="keyword">VALUES</span>(<span class="number">4</span>,<span class="number">100.0</span>,<span class="string">'合肥'</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/merge_1.png" alt></p>
+<pre><code>2. 注意
+    union: 表示合并的是哪些表
+    insert_method: 插入数据的方式，这里使用last，向order_2插入数据
+    合并表的主键有可能会出现相同的情况</code></pre><h4 id="存储引擎的选择"><a href="#存储引擎的选择" class="headerlink" title="存储引擎的选择"></a>存储引擎的选择</h4><pre><code>在选择存储引擎时，可以根据需要进行选择单个存储引擎，也可以选择多个存储引擎同时使用：</code></pre><ul>
+<li>InnoDB: 对数据的安全性要求比较高，数据容错率低，在并发环境下要求数据的一致性，数据除了查询之外还有更新和删除的时候，应该选择InnoDB存储引擎。比如计费系统，财务系统</li>
+<li>MyISAM: 不支持事务控制，如果对数据的操作以查询和插入为主，对并发的要求不高的情况下，可以使用</li>
+<li>Memory: 所有的数据都保存在内存中，对数据的操作速度快，在小容量，对访问速度要求比较高的情况下，可以使用Memory引擎。更新不太频繁的小表中</li>
+<li>Merge: 将一组MyISAM表组合起来，作为一个引用来使用，可以突破单个MyISAM引擎表的大小限制，将不同的表存在多个磁盘，可以改善访问效率。数据存储仓库比较合适 </li>
+</ul>
+<h3 id="优化SQL步骤"><a href="#优化SQL步骤" class="headerlink" title="优化SQL步骤"></a>优化SQL步骤</h3><pre><code>在初期开发过程中，数据量比较小，一般来说只需要实现功能即可，但是随着用户数据的增多，
+SQL语句的执行速度越来越慢,此时，需要对一些有问题的SQL语句进行优化。</code></pre><h4 id="查看SQL执行频率"><a href="#查看SQL执行频率" class="headerlink" title="查看SQL执行频率"></a>查看SQL执行频率</h4><p>MySQL客户端连接成功之后，可以使用<code>show global|session status</code>查看服务器的状态信息，<code>show global|session status</code>可以根据参数<code>session</code>查看当前会话（当前连接）的统计结果，或者<code>golbal</code>整个数据库（自从上次启动之后）的统计结果</p>
+<pre><code>1. 当前session的统计结果</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 这里通配符使用 - ，一共7个，长度固定，更好观察结果</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">status</span> <span class="keyword">like</span> <span class="string">'Com______'</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/sql_1.png" alt="当前连接的状态"></p>
+<pre><code>2. 查看InnoDB存储引擎的统计结果</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">status</span> <span class="keyword">like</span> <span class="string">'InnoDB_rows_%'</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/sql_2.png" alt="InnoDB的状态"></p>
+<pre><code>3. 查看自从上次重启之后的统计结果</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">global</span> <span class="keyword">status</span> <span class="keyword">like</span> <span class="string">'Com_______'</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/sql_3.png" alt="当前服务器的状态"></p>
+<h4 id="定位低效率SQL语句"><a href="#定位低效率SQL语句" class="headerlink" title="定位低效率SQL语句"></a>定位低效率SQL语句</h4><ul>
+<li>慢查询日志进行定位：可以通过慢查询日志来定位哪些执行效率比较慢的SQL语句，使用<code>--log-slow-queries[=file_name]</code>选项启动的时侯，mysqld写一个包含执行时间超过<code>long-query-time</code>秒的SQL语句，可以分析日志，定位到慢查询语句</li>
+<li>show processlist: 慢查询日志在查询结束之后才能发现执行效率低的SQL语句，可以使用命名令来查看当前SQL语句在进行的线程，包括线程的状态，是否锁表等信息，可以实时的查看SQL的执行情况</li>
+</ul>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/sql_4.png" alt="当前服务器的状态"></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">id列：用户登录MySQL之后，分配的connection_id,可以调用函数connection_id进行查看</span><br><span class="line">user列：显示当前用户，如果不是root用户，只能显示当前权限内的sql</span><br><span class="line">host列：显示这个SQL是从哪个IP的哪个端口发出的，跟踪出现问题的用户</span><br><span class="line">db列：当前进程正在连接哪个数据库</span><br><span class="line">command列：当前连接正在执行的命令，sleep,query,connect</span><br><span class="line">state列：当前连接的状态，语句执行过程中的一个状态</span><br><span class="line">time列：已经进行的时间</span><br><span class="line">info列：正在执行的SQL语句</span><br></pre></td></tr></table></figure>
+
+<h4 id="explain分析计划执行"><a href="#explain分析计划执行" class="headerlink" title="explain分析计划执行"></a>explain分析计划执行</h4><h4 id="show-profile分析SQL"><a href="#show-profile分析SQL" class="headerlink" title="show profile分析SQL"></a>show profile分析SQL</h4><h4 id="trace分析优化器执行计划"><a href="#trace分析优化器执行计划" class="headerlink" title="trace分析优化器执行计划"></a>trace分析优化器执行计划</h4><h3 id="索引的使用"><a href="#索引的使用" class="headerlink" title="索引的使用"></a>索引的使用</h3><h3 id="SQL优化"><a href="#SQL优化" class="headerlink" title="SQL优化"></a>SQL优化</h3>]]></content>
       <categories>
         <category>Linux</category>
         <category>MySQL</category>
