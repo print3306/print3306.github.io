@@ -642,18 +642,18 @@ SQL语句的执行速度越来越慢,此时，需要对一些有问题的SQL语�
 <blockquote>
 </blockquote>
 <p><img src="/2020/10/12/mysql/explain_1.png" alt="explian执行计划"></p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 属性的含义</span></span><br><span class="line">id: 查询的序列号，一组数字，表示查询过程中<span class="keyword">select</span>子句或者操作表的顺序</span><br><span class="line">select_type: 执行操作的类型，simple update...</span><br><span class="line"><span class="keyword">table</span>: 输出结果集的表</span><br><span class="line"><span class="keyword">type</span>: 表的连接类型，性能由好到差<span class="keyword">system</span>,const,eq_ref,<span class="keyword">ref</span>,ref_of_null,index_merge ,index_subquert,<span class="keyword">range</span>,<span class="keyword">index</span> ,<span class="keyword">all</span></span><br><span class="line">possible_keys: 可能使用的索引</span><br><span class="line"><span class="keyword">key</span>: 实际使用的索引</span><br><span class="line"><span class="keyword">rows</span>: 扫描行的数量</span><br><span class="line">extra: 执行情况的说明和描述</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 属性的含义</span></span><br><span class="line">id: 查询的序列号，一组数字，表示查询过程中<span class="keyword">select</span>子句或者操作表的顺序</span><br><span class="line">select_type: 执行操作的类型，simple primary...</span><br><span class="line"><span class="keyword">table</span>: 输出结果集的表</span><br><span class="line"><span class="keyword">type</span>: 表的连接类型，性能由好到差<span class="keyword">system</span>,const,eq_ref,<span class="keyword">ref</span>,ref_of_null,index_merge ,index_subquert,<span class="keyword">range</span>,<span class="keyword">index</span> ,<span class="keyword">all</span></span><br><span class="line">possible_keys: 可能使用的索引</span><br><span class="line"><span class="keyword">key</span>: 实际使用的索引</span><br><span class="line"><span class="keyword">rows</span>: 扫描行的数量</span><br><span class="line">extra: 执行情况的说明和描述</span><br></pre></td></tr></table></figure>
 
 <h5 id="explain-id"><a href="#explain-id" class="headerlink" title="explain: id"></a>explain: id</h5><pre><code>id: 表示表的加载顺序,可以通过查看id来发现语句执行的顺序
 
 1. id相同，表示从上到下顺序加载</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询用户对应的角色信息</span></span><br><span class="line"><span class="keyword">explain</span> <span class="keyword">select</span> * <span class="keyword">from</span> t_user <span class="keyword">as</span> u,t_role <span class="keyword">as</span> r,user_role <span class="keyword">as</span> ur <span class="keyword">where</span> u.id = ur.user_id <span class="keyword">and</span> ur.role_id = r.id;</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p><img src="/2020/10/12/mysql/explain_2.png" alt="explain_id"></p>
 </blockquote>
+<p><img src="/2020/10/12/mysql/explain_2.png" alt="explain_id"></p>
 <pre><code>2. id不同，id的值越大，优先级越高</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询指定用户名的角色,嵌套查询</span></span><br><span class="line"><span class="keyword">explain</span> <span class="keyword">select</span> role_code <span class="keyword">from</span> t_role <span class="keyword">where</span> <span class="keyword">id</span> = (<span class="keyword">select</span> role_id <span class="keyword">from</span> user_role <span class="keyword">where</span> user_id = (<span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> t_user <span class="keyword">where</span> username = <span class="string">'zxl'</span>));</span><br><span class="line">1. 先查询t_user 2.再查询user_role 3.最后查询t_user</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p><img src="/2020/10/12/mysql/explain_3.png" alt="explain_id"></p>
 </blockquote>
+<p><img src="/2020/10/12/mysql/explain_3.png" alt="explain_id"></p>
 <pre><code>3. id有相同的，也有不同的</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询用户id为2的对应的角色信息</span></span><br><span class="line"><span class="keyword">explain</span> <span class="keyword">select</span> * <span class="keyword">from</span> t_role r,(<span class="keyword">select</span> * <span class="keyword">from</span> user_role <span class="keyword">where</span> user_id = <span class="string">'2'</span>) a <span class="keyword">where</span> a.role_id = r.id;</span><br></pre></td></tr></table></figure>
 
 <h5 id="explain-select-type"><a href="#explain-select-type" class="headerlink" title="explain: select_type"></a>explain: select_type</h5><pre><code>select_type: 执行语句的类型
@@ -763,9 +763,109 @@ SQL语句的执行速度越来越慢,此时，需要对一些有问题的SQL语�
 <h4 id="show-profile分析SQL"><a href="#show-profile分析SQL" class="headerlink" title="show profile分析SQL"></a>show profile分析SQL</h4><p>MySQL自从5.0.7之后增加了<code>show profiles</code>和<code>show profile</code>语句的支持。<code>show profiles</code>能够在SQL优化的同时帮助我们了解时间耗费在哪。</p>
 <p>通过<code>have_ptofiling</code>参数，可以看出MySQL是否支持profile:</p>
 <blockquote>
-<p><img src="/2020/10/12/mysql/profile_1.png" alt="查看profile是否支持"></p>
 </blockquote>
-<h4 id="trace分析优化器执行计划"><a href="#trace分析优化器执行计划" class="headerlink" title="trace分析优化器执行计划"></a>trace分析优化器执行计划</h4><h3 id="索引的使用"><a href="#索引的使用" class="headerlink" title="索引的使用"></a>索引的使用</h3><h3 id="SQL优化"><a href="#SQL优化" class="headerlink" title="SQL优化"></a>SQL优化</h3>]]></content>
+<p><img src="/2020/10/12/mysql/profile_1.png" alt="查看profile是否支持"></p>
+<p>profile默认关闭，可以通过<code>select @@profiling</code>查看是否开启：</p>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/profile_2.png" alt="开启profile"></p>
+<pre><code>1. profile的使用</code></pre><p><code>show profiles</code>:查看所有的查询语句耗的时间</p>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/profile_3.png" alt="开启profile"></p>
+<p><code>show profile for query query_id</code>:查看对应的查询语句具体的操作步骤花费的时间，也可以查看CPU等信息的情况</p>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/profile_4.png" alt="开启profile"></p>
+<pre><code>sending data: 表示MySQL线程开始访问数据行并把结果返回给客户端，不仅仅是访问数据
+由于访问数据行需要大量的磁盘IO操作，花费的时间一般来说最长</code></pre><h4 id="trace分析优化器执行计划"><a href="#trace分析优化器执行计划" class="headerlink" title="trace分析优化器执行计划"></a>trace分析优化器执行计划</h4><pre><code>MySQL5.6可以使用trace工具查看优化器的执行次序</code></pre><h5 id="trace设置"><a href="#trace设置" class="headerlink" title="trace设置"></a>trace设置</h5><p>打开trace,设置trace的格式为json,设置最大使用内存，避免解析过程中因为内存无法显示完全</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 开启trace, 设置格式为json</span></span><br><span class="line"><span class="keyword">set</span> optimizer_trace = <span class="string">'enabled=on'</span>,end_markers_in_json=<span class="keyword">on</span>;</span><br><span class="line"><span class="keyword">set</span> optimizer_trace_max_mem_size=<span class="number">1000000</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="trace跟踪优化器的执行"><a href="#trace跟踪优化器的执行" class="headerlink" title="trace跟踪优化器的执行"></a>trace跟踪优化器的执行</h5><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> information_schema.optimizer_trace\G;</span><br></pre></td></tr></table></figure>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/12/mysql/trace.png" alt></p>
+<h3 id="索引的使用"><a href="#索引的使用" class="headerlink" title="索引的使用"></a>索引的使用</h3><h4 id="验证索引提升查询效率"><a href="#验证索引提升查询效率" class="headerlink" title="验证索引提升查询效率"></a>验证索引提升查询效率</h4><p>使用索引和不使用索引查询的效率有较大的差距，可以通过查询一个大量的表进行数据查询实验进行验证<br>在自己的数据库上，使用了100W条数据进行实验</p>
+<h4 id="索引的使用-1"><a href="#索引的使用-1" class="headerlink" title="索引的使用"></a>索引的使用</h4><p>big_datas数据库中的vote_record一共100W条数据</p>
+<h5 id="避免索引失效"><a href="#避免索引失效" class="headerlink" title="避免索引失效"></a>避免索引失效</h5><p><strong>1）全值匹配</strong></p>
+<pre><code>* 对索引中的所有列都指定具体值，在这种情况下，索引生效，查询效率高
+* 可以实验explain分析工具进行分析</code></pre><p><strong>2）最左前缀法则</strong></p>
+<pre><code>* 如果索引了多列，要遵守最左前缀法则，查询从最左前列开始，而且不能跳过索引中的列
+* 检查查询条件是否包含索引列，与查询条件顺序无关</code></pre><p><strong>3）范围查询右侧的索引失效</strong></p>
+<pre><code>* 多个索引列，满足最左前缀匹配，同时一旦遇到范围查询，在其之后的查询条件，不再使用索引进行查询</code></pre><p><strong>4）索引列上进行运算索引失效</strong></p>
+<pre><code>* 一旦在索引列进行运算，索引失效
+* B+Tree索引key保存的是具体的数据，一旦运算，索引成本太大</code></pre><p><strong>5）字符串不加单引号索引失效</strong></p>
+<pre><code>* 在查询字符串的时候，索引没有被使用，索引失效
+* 在MySQL内部，查询优化器会对字符串进行隐式类型转换，在底层，对索引列进行了运算</code></pre><p><strong>6）尽量使用覆盖索引，不使用select※</strong></p>
+<pre><code>* 索引覆盖：索引列完全包含查询列
+* 只访问索引的查询，减少select *的使用</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 在使用explian分析时，extra中的信息</span></span><br><span class="line">using index : 使用了索引覆盖</span><br><span class="line">using where : 在查找使用索引的情况下，需要回表查询所需的数据</span><br><span class="line">using index condition : 在查找使用索引的情况下，需要回表查询所需的数据</span><br><span class="line">using where,using index ：在查找使用索引，所需的属性列全部包含在索引表中，不需要回表查询</span><br></pre></td></tr></table></figure>
+
+<p><strong>7）用or分隔的索引</strong></p>
+<pre><code>* 如果前面的查询条件使用索引，但是or后面的条件没有使用索引，那么整个查询没有使用索引
+* 如果使用and，将会使用索引</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- vote_id上有索引，但是在create_time上没有索引</span></span><br><span class="line"><span class="keyword">explain</span> <span class="keyword">select</span> vote_id,<span class="keyword">group_id</span>,create_time <span class="keyword">from</span> vote_record <span class="keyword">where</span> vote_id=<span class="string">'594'</span> <span class="keyword">or</span> create_time=<span class="string">'2020-11-07 13:08:53'</span>;</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/10/12/mysql/index_1.png" alt="OR"></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- vote_id上有索引，但是在create_time上没有索引</span></span><br><span class="line"><span class="keyword">explain</span> <span class="keyword">select</span> vote_id,<span class="keyword">group_id</span>,create_time <span class="keyword">from</span> vote_record <span class="keyword">where</span> vote_id=<span class="string">'594'</span> <span class="keyword">and</span> create_time=<span class="string">'2020-11-07 13:08:53'</span>;</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/10/12/mysql/index_2.png" alt="AND"></p>
+<p><strong>8) like模糊查询以%开头的查询，索引失效</strong></p>
+<pre><code>* 一旦模糊匹配，%开头，索引失效；加在后面，索引还是生效的
+* 使用索引覆盖，可以解决模糊匹配索引失效的问题</code></pre><p><img src="/2020/10/12/mysql/index_4.png" alt="模糊匹配"></p>
+<p><strong>9）如果MySQL觉得全表扫描的速度更快，不使用索引</strong></p>
+<pre><code>* 和数据库中的数据有关系，MySQL会评估，如果全表扫描更快，不会使用索引</code></pre><p><strong>10) null和not null</strong></p>
+<pre><code>* MySQL可以感知数据的Null的数量，自动评估全表扫描和索引的效率</code></pre><p><strong>11）in和not in</strong></p>
+<pre><code>* 可能不同的查询条件会产生不同的结果，主键索引案例如下</code></pre><p><img src="/2020/10/12/mysql/index_5.png" alt></p>
+<p><strong>12) 单列索引和复合索引</strong></p>
+<pre><code>* 尽量使用复合索引，少使用单列索引
+* 创建复合索引，最左前缀相当于创建多个索引
+* 如果使用多个单列索引，MySQL只会选择一个最优索引（辨识度最高的索引），不会全部使用</code></pre><h4 id="使用索引的查看"><a href="#使用索引的查看" class="headerlink" title="使用索引的查看"></a>使用索引的查看</h4><p>通过指令查看索引的使用情况:</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查看当前会话的索引使用</span></span><br><span class="line"><span class="keyword">show</span> statue <span class="keyword">like</span> <span class="string">'handler_read%'</span></span><br><span class="line"><span class="comment">-- 查看当前连接的索引使用</span></span><br><span class="line"><span class="keyword">show</span> golbal statue <span class="keyword">like</span> <span class="string">'handler_read%'</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2020/10/12/mysql/index_6.png" alt></p>
+<h3 id="SQL优化"><a href="#SQL优化" class="headerlink" title="SQL优化"></a>SQL优化</h3><h4 id="大批量插入数据"><a href="#大批量插入数据" class="headerlink" title="大批量插入数据"></a>大批量插入数据</h4><pre><code>在数据库新建的时候，需要插入大量的数据，对于InnoDB存储引擎，有以下三个方面进行优化：</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 插入数据，需要指定分割符和换行符</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> <span class="keyword">infile</span> <span class="string">'文件目录'</span> <span class="keyword">into</span> <span class="keyword">table</span> <span class="string">'tabel_name'</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> 分割符 <span class="keyword">lines</span> <span class="keyword">terminated</span> <span class="keyword">by</span> 换行符；</span><br></pre></td></tr></table></figure>
+
+<p><strong>1）主键顺序插入</strong></p>
+<pre><code>* InnoDB类型的表是按照主键的顺序保存的，所以将需要导入的数据按照主键的顺序排序，可以有效的提高插入数据的效率
+* 如果InnoDB没有主键，系统会自动默认创建内部列作为主键</code></pre><p><strong>2）关闭唯一性校验</strong></p>
+<pre><code>* 在导入数据的时候，使用`set unique_check=0，关闭唯一性校验，在数据插入完成之后，将其置为1
+* 可以提高效率</code></pre><p><strong>3) 手动提交事务</strong></p>
+<pre><code>* 在导入数据之前，将事务提交置为0，也可以提高数据插入效率</code></pre><h4 id="优化insert语句"><a href="#优化insert语句" class="headerlink" title="优化insert语句"></a>优化insert语句</h4><ul>
+<li>如果需要同时对一个表插入多条语句，尽量使用多个值表的insert语句，可以减少和数据库之间的连接次数，减少连接，关闭的消耗，效率更高</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">transaction</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> tb_user <span class="keyword">values</span>(<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> tb_user <span class="keyword">values</span>(<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line"><span class="comment">-- 可以改为</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> tb_user <span class="keyword">values</span>(<span class="number">1</span>,<span class="number">1</span>),(<span class="number">1</span>,<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>改为手动提交</p>
+</li>
+<li><p>插入数据按照主键顺序插入 </p>
+</li>
+</ul>
+<h4 id="优化order-by语句"><a href="#优化order-by语句" class="headerlink" title="优化order by语句"></a>优化order by语句</h4><p><strong>两种排序</strong></p>
+<pre><code>1. filesort
+    通过对返回的数据集进行排序，使用文件系统进行的排序叫做filesort
+    * 所有不是通过索引直接返回排序结果的排序都叫做filesort
+2. using index
+    通过索引顺序扫描直接返回有序数据的排序叫做using index,不需要额外排序，效率高</code></pre><p><strong>多字段排序</strong></p>
+<pre><code>1. 最好全部升序或者全部降序排序
+2. 排序的顺序需要和索引的顺序保持一致</code></pre><p><strong>filesort的优化</strong></p>
+<pre><code>1. 两次扫描算法
+2. 一次扫描算法：一次性取出所有满足条件的所有字段，在排序区排序后直接输出结果集，排序时内存开销大，效率更高
+
+可以通过设置最大排序空间来提高排序效率</code></pre><h4 id="优化group-by语句"><a href="#优化group-by语句" class="headerlink" title="优化group by语句"></a>优化group by语句</h4><pre><code>相对于order by子句，group by只是多了排序之后的分组操作，在group by子句中，可以使用
+索引来提高效率
+
+1. 如果像消除group by子句后的排序对于结果的消耗，可以执行order by null禁止排序
+2. 使用索引提高效率</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 分组之后，不执行排序，可以提高分组排序的效率</span></span><br><span class="line"><span class="keyword">select</span> age,<span class="keyword">count</span>(*) <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">group</span> <span class="keyword">by</span> age <span class="keyword">order</span> <span class="keyword">by</span> <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="优化嵌套查询"><a href="#优化嵌套查询" class="headerlink" title="优化嵌套查询"></a>优化嵌套查询</h4><pre><code>尽量少使用子查询，多使用连接查询join连接</code></pre><h4 id="优化or条件"><a href="#优化or条件" class="headerlink" title="优化or条件"></a>优化or条件</h4><pre><code>1. 如果使用or来进行条件的关联，如果相使用索引，每个查询条件都必须使用索引，否则索引不生效
+2. 对于复合索引使用or,必须两边同时满足最左前缀匹配
+3. 可以使用union来替换or，进行条件的组合</code></pre><h4 id="优化分页查询"><a href="#优化分页查询" class="headerlink" title="优化分页查询 ???"></a>优化分页查询 ???</h4><pre><code>limit进行分页查询，在输出结果之前，需要对查询的数据进行排序，然后才使用limit子句，其余的数据丢弃
+
+1. 在索引上完成排序分页操作，然后返回主表进行关联查询操作</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> vote_record v,(<span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> vote_record <span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">id</span> <span class="keyword">limit</span> <span class="number">20000</span>,<span class="number">10</span>) t <span class="keyword">where</span> t.id = v.id;</span><br></pre></td></tr></table></figure>
+
+<pre><code>2. 对于主键自增的表，可以先进行where子句获取取值范围，再使用limit</code></pre><h4 id="使用SQL提示"><a href="#使用SQL提示" class="headerlink" title="使用SQL提示"></a>使用SQL提示</h4><pre><code>SQL提示，在SQL语句中加入一些人为的提示来进行优化操作</code></pre><h5 id="use-index"><a href="#use-index" class="headerlink" title="use index"></a>use index</h5><pre><code>在查询语句的后面，可能选择的索引有多个，可以增加use index,人为指定可用索引，MySQL不会在比较索引，而是直接使用用户指定的索引</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_name <span class="keyword">use</span> <span class="keyword">index</span>(idx_name);</span><br></pre></td></tr></table></figure>
+
+<h5 id="ingore-index"><a href="#ingore-index" class="headerlink" title="ingore index"></a>ingore index</h5><pre><code>指定忽略的索引</code></pre><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_name ingore <span class="keyword">index</span>(idx_name);</span><br></pre></td></tr></table></figure>
+
+<h5 id="force-index"><a href="#force-index" class="headerlink" title="force index"></a>force index</h5><pre><code>强制使用某个索引，此时有索引，但是全表扫描的效率更高，此时不使用索引</code></pre><h5 id="use-和-force的区别"><a href="#use-和-force的区别" class="headerlink" title="use 和 force的区别"></a>use 和 force的区别</h5><pre><code>use是推荐MySQL使用索引，可能包含多个索引候选项
+force在索引效率低的时候，强制MySQL使用索引</code></pre>]]></content>
       <categories>
         <category>Linux</category>
         <category>MySQL</category>
@@ -832,6 +932,27 @@ SQL语句的执行速度越来越慢,此时，需要对一些有问题的SQL语�
 
 <pre><code>2. 修改配置文件_config.yml</code></pre><p>在<code>themes/next/_config.yml</code>主题配置文件，搜索关键字<code>busuanzi_count</code>,将enable的值改为true,并对站点UV配置、站点PV配置、单页面PV进行配置。如下：</p>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">busuanzi_count:</span></span><br><span class="line">  <span class="comment"># count values only if the other configs are false</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># custom uv span for the whole site</span></span><br><span class="line">  <span class="attr">site_uv:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">site_uv_header:</span> <span class="string">&lt;i</span> <span class="string">class="fa</span> <span class="string">fa-user"&gt;本站访客数&lt;/i&gt;</span></span><br><span class="line">  <span class="string">site_uv_footer:人次</span></span><br><span class="line">  <span class="comment"># custom pv span for the whole site</span></span><br><span class="line">  <span class="attr">site_pv:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">site_pv_header:</span> <span class="string">&lt;i</span> <span class="string">class="fa</span> <span class="string">fa-eye"&gt;本站总访问量&lt;/i&gt;</span></span><br><span class="line">  <span class="string">site_pv_footer:次</span></span><br><span class="line">  <span class="comment"># custom pv span for one page only</span></span><br><span class="line">  <span class="attr">page_pv:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">page_pv_header:</span> <span class="string">&lt;i</span> <span class="string">class="fa</span> <span class="string">fa-file-o"&gt;本文总阅读量&lt;/i&gt;</span></span><br><span class="line">  <span class="string">page_pv_footer:次</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Hexo表格优化"><a href="#Hexo表格优化" class="headerlink" title="Hexo表格优化"></a>Hexo表格优化</h2><p>在使用Hexo表格的时候，不太满意，这里对Hexo的表格样式进行改进:修改CSS文件，<code>themes\next\source\css\_custom\custom.styl</code></p>
+<p><strong>基本样式</strong></p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">// 基本样式</span><br><span class="line"><span class="selector-tag">table</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>; <span class="comment">/*表格宽度*/</span></span><br><span class="line">    <span class="attribute">max-width</span>: <span class="number">65em</span>; <span class="comment">/*表格最大宽度，避免表格过宽*/</span></span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#dedede</span>; <span class="comment">/*表格外边框设置*/</span></span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">15px</span> auto; <span class="comment">/*外边距*/</span></span><br><span class="line">    <span class="attribute">border-collapse</span>: collapse; <span class="comment">/*使用单一线条的边框*/</span></span><br><span class="line">    <span class="attribute">empty-cells</span>: show; <span class="comment">/*单元格无内容依旧绘制边框*/</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">th</span>,<span class="selector-tag">table</span> <span class="selector-tag">td</span> &#123;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">35px</span>; <span class="comment">/*统一每一行的默认高度*/</span></span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#dedede</span>; <span class="comment">/*内部边框样式*/</span></span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">10px</span>; <span class="comment">/*内边距*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>表头</strong></p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">// 表头</span><br><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">th</span> &#123;</span><br><span class="line">    <span class="attribute">font-weight</span>: bold; <span class="comment">/*加粗*/</span></span><br><span class="line">    <span class="attribute">text-align</span>: center <span class="meta">!important</span>; <span class="comment">/*内容居中，加上 !important 避免被 Markdown 样式覆盖*/</span></span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">rgba</span>(158,188,226,0.2); <span class="comment">/*背景色*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>隔行变色</strong></p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">tbody</span> <span class="selector-tag">tr</span><span class="selector-pseudo">:nth-child(2n)</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">rgba</span>(158,188,226,0.12); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>悬浮变色</strong></p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">tr</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#efefef</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>表头不换行</strong></p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">th</span> &#123;</span><br><span class="line">    <span class="attribute">white-space</span>: nowrap; <span class="comment">/*表头内容强制在一行显示*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>首列不换行</strong></p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">td</span><span class="selector-pseudo">:nth-child(1)</span> &#123;</span><br><span class="line">    <span class="attribute">white-space</span>: nowrap; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>列宽问题</strong><br>    基本上，Hexo表格的样式还是可以的，但是列宽平分，让人难受，暂时没有找到解决方法</p>
 ]]></content>
       <categories>
         <category>Hexo</category>
