@@ -886,7 +886,7 @@ force在索引效率低的时候，强制MySQL使用索引</code></pre><h2 id="�
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'query_cache_type;</span></span><br></pre></td></tr></table></figure>
 <p><img src="/2020/10/12/mysql/qc_2.png" alt="查看是否开启查询缓存"></p>
 </li>
-<li><p>查看当前MySQL查询缓存增加</p>
+<li><p>查看当前MySQL查询缓存大小</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'query_cache_size'</span>;</span><br></pre></td></tr></table></figure>
 <p><img src="/2020/10/12/mysql/qc_3.png" alt="查看查询缓存大小"></p>
 </li>
@@ -940,7 +940,89 @@ force在索引效率低的时候，强制MySQL使用索引</code></pre><h2 id="�
 <li><p>如果表更改，使用该表的所有高速缓存查询全部失效</p>
 </li>
 </ol>
-<h2 id="MySQL内存管理及优化"><a href="#MySQL内存管理及优化" class="headerlink" title="MySQL内存管理及优化"></a>MySQL内存管理及优化</h2><h2 id="MySQL并发参数优化"><a href="#MySQL并发参数优化" class="headerlink" title="MySQL并发参数优化"></a>MySQL并发参数优化</h2><h2 id="MySQL锁"><a href="#MySQL锁" class="headerlink" title="MySQL锁"></a>MySQL锁</h2><h2 id="常用MySQL技巧"><a href="#常用MySQL技巧" class="headerlink" title="常用MySQL技巧"></a>常用MySQL技巧</h2>]]></content>
+<h2 id="MySQL内存管理及优化"><a href="#MySQL内存管理及优化" class="headerlink" title="MySQL内存管理及优化"></a>MySQL内存管理及优化</h2><h3 id="内存优化原则"><a href="#内存优化原则" class="headerlink" title="内存优化原则"></a>内存优化原则</h3><pre><code>1. 将尽量多的内存分配给MySQL做缓存，但是需要给操作系统和其他的软件预留足够的空间
+2. 如果使用的存储引擎是MyISAM,需要预留更多的内存来给操作系统做IO缓存，MyISAM存储引擎的数据文件读取依赖操作系统的IO缓存
+3. 排序区，连接区等缓存是直接分配给每个连接会话的，需要根据最大连接数按需分配，如果分配的空间过大，会直接导致物理内存耗尽</code></pre><h3 id="MyISAM内存优化"><a href="#MyISAM内存优化" class="headerlink" title="MyISAM内存优化"></a>MyISAM内存优化</h3><pre><code>* MyISAM存储引擎使用key_buffer缓存索引块，加速MyISAM索引块的读写速度。
+* 对于MyISAM存储引擎的数据块，没有特别的缓存机制，需要依赖于操作系统的IO缓存</code></pre><p><strong>key_buffer_size</strong></p>
+<p>索引缓存区的大小，直接影响MyISAM的存取效率，可以在<code>/etc/my.cnf</code>进行修改：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">key_buffer_size = 16M</span><br></pre></td></tr></table></figure>
+
+<p><strong>read_buffer_size</strong></p>
+<p>如果需要经常进行顺序扫描MyISAM表，可以增大读缓存大小，该缓存空间由每个会话独享，如果分配的太大，在高并发时，消耗大量的物理内存</p>
+<p><strong>read_rnd_buffer_size</strong></p>
+<p>对于需要做排序的MyISAM表，order by增加read_rnd_buffer_size可以改善性能，该缓存空间由每个会话独享，如果分配的太大，在高并发时，消耗大量的物理内存</p>
+<h3 id="InnoDB内存优化"><a href="#InnoDB内存优化" class="headerlink" title="InnoDB内存优化"></a>InnoDB内存优化</h3><pre><code>* InnoDB使用一个内存区作为IO缓存池
+* 该缓存池既缓存索引块，又缓存数据块</code></pre><p><strong>innodb_buffer_pool_size</strong></p>
+<p>该变量决定InnoDB的缓存池的大小，值越大，缓存命中率越高，InnoDB需要的磁盘IO越少</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">innodb_buffer_pool_size=128M</span><br></pre></td></tr></table></figure>
+
+<p><strong>innodb_log_buffer_size</strong></p>
+<p>该变量决定InnoDB重做日志文件缓存的大小，对于可能产生大量更新记录的事务，增加大小，可以减少不必要的磁盘操作</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">innodb_log_buffer_size = 10M</span><br></pre></td></tr></table></figure>
+
+<h2 id="MySQL并发参数优化"><a href="#MySQL并发参数优化" class="headerlink" title="MySQL并发参数优化"></a>MySQL并发参数优化</h2><h3 id="max-connections"><a href="#max-connections" class="headerlink" title="max_connections"></a>max_connections</h3><ol>
+<li>max_connections控制允许连接到MySQL服务器端的最大连接数，默认151，如果已经达到最大连接数，再来的连接会处于等待状态。</li>
+<li>可以通过变量connection_errors_max不为0，并且持续增长，可以说明有连接请求因为服务器达到最大连接数而失败</li>
+<li>max_connections不能随便增大，需要考虑服务器的性能来进行提升</li>
+</ol>
+<h3 id="back-log"><a href="#back-log" class="headerlink" title="back_log"></a>back_log</h3><ol>
+<li>back_log: 控制MySQL监听TCP端口时设置的积压请求栈大小，默认80，如果MySQL到达最大连接数，新来的连接请求会存放在积压请求栈中，等待其他的连接释放资源</li>
+<li>如果积压请求数超过back_log,不会授予新的连接请求连接资源</li>
+<li>如果数据库需要在较短的时间内处理大量的连接请求，可以考虑增加back_log</li>
+</ol>
+<h3 id="table-open-cahce"><a href="#table-open-cahce" class="headerlink" title="table_open_cahce"></a>table_open_cahce</h3><ol>
+<li>该参数控制所有SQL语句执行线程可以打开表缓存的数量，而执行SQL语句时，每个执行语句至少打开一张表，默认2000</li>
+<li>该值需要根据最大连接数max_connections以及每次执行关联查询涉及到的表进行设置</li>
+</ol>
+<h3 id="thread-cache-size"><a href="#thread-cache-size" class="headerlink" title="thread_cache_size"></a>thread_cache_size</h3><ol>
+<li>为了加速连接数据库的速度，MySQL服务器缓存了一定的连接线程备用，连接线程池</li>
+<li>可以控制连接线程的数量，默认8</li>
+</ol>
+<h3 id="innodb-lock-wait-timeout"><a href="#innodb-lock-wait-timeout" class="headerlink" title="innodb_lock_wait_timeout"></a>innodb_lock_wait_timeout</h3><ol>
+<li>设置InnoDB事务等待行锁的时间，默认50ms</li>
+<li>对于需要快速反应的业务系统，时间可以设置的较小，避免事务长时间挂起；对于时间要求比较低的批处理程序，可以将等待行锁增大，能避免发生大批量的回滚操作</li>
+</ol>
+<p><img src="/2020/10/12/mysql/memory_default.png" alt></p>
+<h2 id="MySQL锁"><a href="#MySQL锁" class="headerlink" title="MySQL锁"></a>MySQL锁</h2><h3 id="锁的概述"><a href="#锁的概述" class="headerlink" title="锁的概述"></a>锁的概述</h3><pre><code>1. 锁，是计算机系统协调多个进行或者线程并发访问某一资源的机制，避免资源的争抢。
+2. 在数据库中，除了传统资源的并发访问之外，数据表也是被许多用户共享的资源。
+3. 为了保证数据并发访问的一致性，有效性，锁机制也是MySQL中比较重要的机制。</code></pre><h3 id="锁分类"><a href="#锁分类" class="headerlink" title="锁分类"></a>锁分类</h3><p><strong>操作粒度</strong></p>
+<pre><code>1. 表锁：操作时，会锁定整张表
+2. 行锁：操作时，只会锁定修改的那行数据</code></pre><p><strong>对数据操作的类型</strong></p>
+<pre><code>1. 读锁(共享锁)：针对同一份数据，多个读操作可以同时进行不会相互影响
+2. 写锁(排他锁)：当前操作没有完成之前，不允许其他的锁进行操作</code></pre><h3 id="MySQL锁-1"><a href="#MySQL锁-1" class="headerlink" title="MySQL锁"></a>MySQL锁</h3><pre><code>对于MySQL来说，不同的存储引擎具有不同的锁机制：
+1. InnoDB默认支持行级锁
+2. MyISAM默认支持标级锁</code></pre><p><strong>MySQL锁的特性</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">锁类型</th>
+<th align="center">特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">表级锁</td>
+<td align="center">偏向MyISAM存储引擎，开销小，加锁块；不会出现死锁；锁定的粒度大，并发低</td>
+</tr>
+<tr>
+<td align="left">行级锁</td>
+<td align="center">偏向InnoDB存储引擎，开销大，枷锁慢；会出现死锁；锁定的粒度小，并发高</td>
+</tr>
+<tr>
+<td align="left">页面锁</td>
+<td align="center">性能介于行级锁和表级锁之间</td>
+</tr>
+</tbody></table>
+<pre><code>不同的锁类型具有不同的性质，需要根据情况具体选择</code></pre><h3 id="MyISAM锁"><a href="#MyISAM锁" class="headerlink" title="MyISAM锁"></a>MyISAM锁</h3><pre><code>MyISAM默认支持表锁，也只支持表锁</code></pre><h4 id="如何加表锁"><a href="#如何加表锁" class="headerlink" title="如何加表锁"></a>如何加表锁</h4><p>MyISAM在执行查询语句select之前，会自动给涉及到的表加读锁，在执行更新语句update之前，会自动给涉及到的表加写锁，这个过程不需要用户干预</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">加读锁：<span class="keyword">lock</span> <span class="keyword">table</span> table_name <span class="keyword">read</span>;</span><br><span class="line">加写锁：<span class="keyword">lock</span> <span class="keyword">table</span> table_name write;</span><br><span class="line">释放锁：<span class="keyword">unlock</span> <span class="keyword">tables</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="加锁"><a href="#加锁" class="headerlink" title="加锁"></a>加锁</h4><pre><code>1. 读锁会阻塞写，不会阻塞读
+2. 写锁会阻塞读，又会阻塞写
+
+MyISAM存储引擎的写锁优先，拿到写锁之后，其他线程处于阻塞状态，如果存在大量的更新，查询难以执行，长时间的阻塞</code></pre><h4 id="查看锁的争用情况"><a href="#查看锁的争用情况" class="headerlink" title="查看锁的争用情况"></a>查看锁的争用情况</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 展示那张表正在锁定</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">open</span> <span class="keyword">tables</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 展示表锁的状态</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">status</span> <span class="keyword">like</span> <span class="string">'table_%'</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="InnoDB锁"><a href="#InnoDB锁" class="headerlink" title="InnoDB锁"></a>InnoDB锁</h3><h2 id="常用MySQL技巧"><a href="#常用MySQL技巧" class="headerlink" title="常用MySQL技巧"></a>常用MySQL技巧</h2>]]></content>
       <categories>
         <category>Linux</category>
         <category>MySQL</category>
