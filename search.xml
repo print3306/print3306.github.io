@@ -18,6 +18,70 @@
       </tags>
   </entry>
   <entry>
+    <title>hutool</title>
+    <url>/2020/11/25/hutool/</url>
+    <content><![CDATA[<p><a href="https://www.hutool.cn/" target="_blank" rel="noopener">HuTool</a><br><img src="/2020/11/25/hutool/ht_1.png" alt></p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>HuTool是一个小而全的java工具类库，通过静态方法封装，降低相关API的学习成本，提高工作效率，涵盖了java开发的方方面面。</p>
+<p><strong>名称</strong></p>
+<p>HuTool=&gt; 难得糊涂,不需要了解底层开发原理，直接使用</p>
+<p><strong>改变编码方式</strong></p>
+<p>不需要搜索需要解决的问题，直接引入<code>hutool</code>对应的解决方案就可以，可以保证代码的一致性</p>
+<p><strong>组件</strong></p>
+<p>一个java基础工具类，对文件、流、加密解密、转码、正则、线程、xml进行封装，并且提供对应的组件</p>
+<h2 id="使用HuTool"><a href="#使用HuTool" class="headerlink" title="使用HuTool"></a>使用HuTool</h2><p>引入依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.hutool<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hutool-all<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>5.3.7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Convert类型转换"><a href="#Convert类型转换" class="headerlink" title="Convert类型转换"></a>Convert类型转换</h2><h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>在java开发中，需要面对很多类型转换方面的问题，一般的解决方法是先将其转换为字符串类型，然后调用<code>parseXX()</code>方法，还需要增加<code>try.catch</code>捕获异常，Convert类可以解决这个问题。</p>
+<h3 id="Convert"><a href="#Convert" class="headerlink" title="Convert"></a>Convert</h3><p>COnvert是一个类型转换工具类，封装了对于java常见类型的转换，可以用来简化类型转换。Convert类大大部分方法是<code>toXXX()</code>,参数类型是Object,可以将任意类型的参数转换为指定类型。同时支持第二个<code>defaultValue</code>在转换失败时返回默认值。</p>
+<h3 id="Convert类的使用"><a href="#Convert类的使用" class="headerlink" title="Convert类的使用"></a>Convert类的使用</h3><p>Convert类可以转换为不同的</p>
+<h4 id="转换为字符串"><a href="#转换为字符串" class="headerlink" title="转换为字符串"></a>转换为字符串</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Convert.toStr(Object)</span><br><span class="line"><span class="comment">// 整型数据转换为字符串</span></span><br><span class="line">String str = Convert.toStr(a);</span><br><span class="line">System.out.println(str);</span><br><span class="line"><span class="comment">// 数组转换为字符串</span></span><br><span class="line"><span class="keyword">long</span>[] b = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line">String toStr = Convert.toStr(b);</span><br><span class="line">System.out.println(toStr);</span><br><span class="line"><span class="comment">// toStr = "[1, 2, 3, 4]"</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="转换为日期对象"><a href="#转换为日期对象" class="headerlink" title="转换为日期对象"></a>转换为日期对象</h4><p>Convert类转换，可以转换不同格式的数据，不需要指定格式</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 传统转换</span></span><br><span class="line">String date = <span class="string">"2020-11-25"</span>;</span><br><span class="line">Date parse = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd"</span>).parse(date);</span><br><span class="line">System.out.println(parse);</span><br><span class="line"><span class="comment">// Convert转换</span></span><br><span class="line">System.out.println(Convert.toDate(date));</span><br><span class="line">String date1 = <span class="string">"2020/11/25"</span>;</span><br><span class="line">System.out.println(Convert.toDate(date1));</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>tools</category>
+      </categories>
+      <tags>
+        <tag>hutools</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>lombok</title>
+    <url>/2020/11/25/lombok/</url>
+    <content><![CDATA[<p><a href="https://projectlombok.org/" target="_blank" rel="noopener">lombok官网</a><br><img src="/2020/11/25/lombok/1.png" alt></p>
+<h2 id="IDEA安装Lombok"><a href="#IDEA安装Lombok" class="headerlink" title="IDEA安装Lombok"></a>IDEA安装Lombok</h2><pre><code>Files -&gt; Setting
+Plugins -&gt; 搜索Lombok</code></pre><h2 id="lombok概述"><a href="#lombok概述" class="headerlink" title="lombok概述"></a>lombok概述</h2><p>lombok是一个java库，可以自动插入编译器和构建工具中，lombok提供了一组有用的注释（注解），来消除代码中大量的样板代码（Setter,Getter），可以替换数百行代码。</p>
+<p>lombok是指一种快速开发工具，提供了一组java开发注解，通过注解来快速生成Java对象中的方法。（get,set,equals,hashcode）</p>
+<h2 id="lombok的使用"><a href="#lombok的使用" class="headerlink" title="lombok的使用"></a>lombok的使用</h2><h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>引入maven依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.18.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用lombok注解</p>
+</li>
+</ol>
+<p>在java对象前面增加@Data等相关注解</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"><span class="comment">// @Data注解</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="lombok原理"><a href="#lombok原理" class="headerlink" title="lombok原理"></a>lombok原理</h3><p>lombok在编译期生效，在jvm将java源文件进行语法分析的时候，根据lombok注解修改语法树，生成包含set,get方法的字节码文件。<br>在引入坐标的时候，有scope属性，因为和lombok的原理有关，只需要在编译期将对应的注解解析到语法树，生成的字节码文件已经包含具体的代码，不需要在将其部署到实际生产环境上。</p>
+<h3 id="lombok注解"><a href="#lombok注解" class="headerlink" title="lombok注解"></a>lombok注解</h3><h4 id="Data"><a href="#Data" class="headerlink" title="@Data"></a>@Data</h4><pre><code>使用在类上
+用来生成set,get,equals,hashcode</code></pre><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Getter-Setter"><a href="#Getter-Setter" class="headerlink" title="@Getter @Setter"></a>@Getter @Setter</h4><pre><code>用在类上
+生成对应的get和set方法</code></pre><h4 id="ToString"><a href="#ToString" class="headerlink" title="@ToString"></a>@ToString</h4><pre><code>用在类上
+只生成toString方法</code></pre><h4 id="AllArgsConstructor-NoArgsConstructor"><a href="#AllArgsConstructor-NoArgsConstructor" class="headerlink" title="@AllArgsConstructor @NoArgsConstructor"></a>@AllArgsConstructor @NoArgsConstructor</h4><pre><code>用在类上
+生成全部的有参构造方法，一般配合无参构造方法 @NoArgsConstructor</code></pre><h4 id="Accessors"><a href="#Accessors" class="headerlink" title="@Accessors"></a>@Accessors</h4><pre><code>用在类上
+用来给类中的set方法开启链式调用，chain属性：true,开启</code></pre><p><img src="/2020/11/25/lombok/2.png" alt></p>
+<h4 id="slf4j"><a href="#slf4j" class="headerlink" title="@slf4j"></a>@slf4j</h4><pre><code>用在类上
+用来快速给类定义一个日志变量</code></pre>]]></content>
+      <categories>
+        <category>tools</category>
+      </categories>
+      <tags>
+        <tag>lombok</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ssm_error</title>
     <url>/2020/10/16/ssm-error/</url>
     <content><![CDATA[<h3 id="dao接口不匹配"><a href="#dao接口不匹配" class="headerlink" title="dao接口不匹配"></a>dao接口不匹配</h3><p><code>BindingException: Invalid bound statement (not found): com.maven.dao.ItemsDao.findAll</code></p>
@@ -1323,9 +1387,8 @@ URL重写：
     * mybatis
     * mysql-connector-java
     * c3p0
-    * mybatis-spring 整合jar包
-
-2. SqlMapConfig.xml配置
+    * mybatis-spring 整合jar包</code></pre><p><img src="/2020/09/18/ssm/ssm_dao_1.png" alt></p>
+<pre><code>2. SqlMapConfig.xml配置
     * typeAlisaes：为实体类创建别名，使用package
     * 数据库连接环境
     * mappers: 配置映射文件
