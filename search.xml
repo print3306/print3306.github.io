@@ -18,7 +18,7 @@
       </tags>
   </entry>
   <entry>
-    <title>hutool</title>
+    <title>HuTool</title>
     <url>/2020/11/25/hutool/</url>
     <content><![CDATA[<p><a href="https://www.hutool.cn/" target="_blank" rel="noopener">HuTool</a><br><img src="/2020/11/25/hutool/ht_1.png" alt></p>
 <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>HuTool是一个小而全的java工具类库，通过静态方法封装，降低相关API的学习成本，提高工作效率，涵盖了java开发的方方面面。</p>
@@ -43,11 +43,11 @@
         <category>Tools</category>
       </categories>
       <tags>
-        <tag>hutool</tag>
+        <tag>HuTool</tag>
       </tags>
   </entry>
   <entry>
-    <title>lombok</title>
+    <title>Lombok</title>
     <url>/2020/11/25/lombok/</url>
     <content><![CDATA[<p><a href="https://projectlombok.org/" target="_blank" rel="noopener">lombok官网</a><br><img src="/2020/11/25/lombok/1.png" alt></p>
 <h2 id="IDEA安装Lombok"><a href="#IDEA安装Lombok" class="headerlink" title="IDEA安装Lombok"></a>IDEA安装Lombok</h2><pre><code>Files -&gt; Setting
@@ -78,11 +78,66 @@ Plugins -&gt; 搜索Lombok</code></pre><h2 id="lombok概述"><a href="#lombok概
         <category>Tools</category>
       </categories>
       <tags>
-        <tag>lombok</tag>
+        <tag>Lombok</tag>
       </tags>
   </entry>
   <entry>
-    <title>ssm_error</title>
+    <title>Ubuntu</title>
+    <url>/2020/10/24/ubuntu/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><pre><code>这篇博客主要记录在使用Vmware安装的Unbuntu系统下遇到的错误以及解决问题的方式</code></pre><h2 id="虚拟机打开黑屏（1）"><a href="#虚拟机打开黑屏（1）" class="headerlink" title="虚拟机打开黑屏（1）"></a>虚拟机打开黑屏（1）</h2><pre><code>1. 解决方式
+    由于在日志里面有句话，虚拟打印设备无法使用，在编辑中启用虚拟设备，可以打开虚拟机
+
+2. 链接</code></pre><ul>
+<li><a href="https://blog.csdn.net/qq_37074001/article/details/102645024" target="_blank" rel="noopener">虚拟机黑屏解决方法</a></li>
+</ul>
+<h2 id="虚拟机打开黑屏（2）"><a href="#虚拟机打开黑屏（2）" class="headerlink" title="虚拟机打开黑屏（2）"></a>虚拟机打开黑屏（2）</h2><pre><code>在每次重新打开电脑的时候，可以正常进入Unbuntu系统，但是一旦关闭后，无法再次进入系统，一值黑屏
+
+本系统VMware: 15, Uubuntu: 18.04
+解决方法：
+    1. 在进入Unbuntu的时候，按F2进入启动项，按键盘&apos;E&apos;,进行编辑
+
+    2. 在屏幕里的待编辑文字中找到【splash】 ，正常在中下部
+
+    3. 在【splash】后加入一个空格，再键入【nomodeset】
+
+    4. 按下Ctrl+X，退出编辑，重启系统，此时可以正常系统
+
+    5. 进入Unbuntu系统后，打开终端，编辑文件</code></pre><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">sudo gedit /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+
+<pre><code>6. 随后在打开的文档中，找到所有的【splash】，并在其后加入一个空格，再键入【nomodeset】
+
+7. 保存文件，以后就可以正常使用Ubuntu了</code></pre><h2 id="Unbuntu安装FTP"><a href="#Unbuntu安装FTP" class="headerlink" title="Unbuntu安装FTP"></a>Unbuntu安装FTP</h2><h3 id="E-无法定位软件包-vsftpd"><a href="#E-无法定位软件包-vsftpd" class="headerlink" title="E: 无法定位软件包 vsftpd"></a>E: 无法定位软件包 vsftpd</h3><pre><code>1. 问题描述
+    在使用`sudo apt-get install vsftpd`安装ftp系统的时候，出现该问题</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/10/24/ubuntu/1_error.png" alt="E: 无法定位软件包 vsftpd"></p>
+<pre><code>2. 解决方法</code></pre><p>更新软件源，<code>sudo apt-get update</code>        </p>
+<h2 id="无法解析域名"><a href="#无法解析域名" class="headerlink" title="无法解析域名"></a>无法解析域名</h2><pre><code>1. 问题描述
+    在使用`sudo apt-get update`,出现域名无法解析的问题，应该是域名服务器出现了问题，实际上是虚拟操作系统的网络出了问题，重新配置网络之后，可以进行更新</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/10/24/ubuntu/2_error.png" alt="无法解析域名"></p>
+<pre><code>2. 解决方法
+    1. 查看DNS的配置文件
+        重新配置网络DNS</code></pre><pre><code class="linux">cat /etc/resolv.conf</code></pre>
+<blockquote>
+</blockquote>
+<p><img src="/2020/10/24/ubuntu/2_1.png" alt></p>
+<ul>
+<li><a href="https://www.jb51.net/article/158414.htm" target="_blank" rel="noopener">Linux网络配置</a></li>
+</ul>
+<h2 id="ifconig无法使用"><a href="#ifconig无法使用" class="headerlink" title="ifconig无法使用"></a>ifconig无法使用</h2><pre><code>* sudo apt install net-tools
+* sudo apt update: 升级apt</code></pre><ul>
+<li><a href="https://blog.csdn.net/i_spirit/article/details/109182493" target="_blank" rel="noopener">command “ifconfig” not found</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Unbuntu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ssm_errors</title>
     <url>/2020/10/16/ssm-error/</url>
     <content><![CDATA[<h3 id="dao接口不匹配"><a href="#dao接口不匹配" class="headerlink" title="dao接口不匹配"></a>dao接口不匹配</h3><p><code>BindingException: Invalid bound statement (not found): com.maven.dao.ItemsDao.findAll</code></p>
 <pre><code>1. 问题
@@ -125,7 +180,7 @@ Plugins -&gt; 搜索Lombok</code></pre><h2 id="lombok概述"><a href="#lombok概
         <category>SSM</category>
       </categories>
       <tags>
-        <tag>随笔</tag>
+        <tag>Error</tag>
       </tags>
   </entry>
   <entry>
@@ -208,7 +263,7 @@ Plugins -&gt; 搜索Lombok</code></pre><h2 id="lombok概述"><a href="#lombok概
 <p><strong>列宽问题</strong><br>    基本上，Hexo表格的样式还是可以的，但是列宽平分，让人难受，暂时没有找到解决方法</p>
 ]]></content>
       <categories>
-        <category>Hexo</category>
+        <category>Blog</category>
       </categories>
       <tags>
         <tag>Hexo</tag>
@@ -341,61 +396,6 @@ Plugins -&gt; 搜索Lombok</code></pre><h2 id="lombok概述"><a href="#lombok概
       </categories>
       <tags>
         <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ubuntu</title>
-    <url>/2020/10/24/ubuntu/</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><pre><code>这篇博客主要记录在使用Vmware安装的Unbuntu系统下遇到的错误以及解决问题的方式</code></pre><h2 id="虚拟机打开黑屏（1）"><a href="#虚拟机打开黑屏（1）" class="headerlink" title="虚拟机打开黑屏（1）"></a>虚拟机打开黑屏（1）</h2><pre><code>1. 解决方式
-    由于在日志里面有句话，虚拟打印设备无法使用，在编辑中启用虚拟设备，可以打开虚拟机
-
-2. 链接</code></pre><ul>
-<li><a href="https://blog.csdn.net/qq_37074001/article/details/102645024" target="_blank" rel="noopener">虚拟机黑屏解决方法</a></li>
-</ul>
-<h2 id="虚拟机打开黑屏（2）"><a href="#虚拟机打开黑屏（2）" class="headerlink" title="虚拟机打开黑屏（2）"></a>虚拟机打开黑屏（2）</h2><pre><code>在每次重新打开电脑的时候，可以正常进入Unbuntu系统，但是一旦关闭后，无法再次进入系统，一值黑屏
-
-本系统VMware: 15, Uubuntu: 18.04
-解决方法：
-    1. 在进入Unbuntu的时候，按F2进入启动项，按键盘&apos;E&apos;,进行编辑
-
-    2. 在屏幕里的待编辑文字中找到【splash】 ，正常在中下部
-
-    3. 在【splash】后加入一个空格，再键入【nomodeset】
-
-    4. 按下Ctrl+X，退出编辑，重启系统，此时可以正常系统
-
-    5. 进入Unbuntu系统后，打开终端，编辑文件</code></pre><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">sudo gedit /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
-
-<pre><code>6. 随后在打开的文档中，找到所有的【splash】，并在其后加入一个空格，再键入【nomodeset】
-
-7. 保存文件，以后就可以正常使用Ubuntu了</code></pre><h2 id="Unbuntu安装FTP"><a href="#Unbuntu安装FTP" class="headerlink" title="Unbuntu安装FTP"></a>Unbuntu安装FTP</h2><h3 id="E-无法定位软件包-vsftpd"><a href="#E-无法定位软件包-vsftpd" class="headerlink" title="E: 无法定位软件包 vsftpd"></a>E: 无法定位软件包 vsftpd</h3><pre><code>1. 问题描述
-    在使用`sudo apt-get install vsftpd`安装ftp系统的时候，出现该问题</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/10/24/ubuntu/1_error.png" alt="E: 无法定位软件包 vsftpd"></p>
-<pre><code>2. 解决方法</code></pre><p>更新软件源，<code>sudo apt-get update</code>        </p>
-<h2 id="无法解析域名"><a href="#无法解析域名" class="headerlink" title="无法解析域名"></a>无法解析域名</h2><pre><code>1. 问题描述
-    在使用`sudo apt-get update`,出现域名无法解析的问题，应该是域名服务器出现了问题，实际上是虚拟操作系统的网络出了问题，重新配置网络之后，可以进行更新</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/10/24/ubuntu/2_error.png" alt="无法解析域名"></p>
-<pre><code>2. 解决方法
-    1. 查看DNS的配置文件
-        重新配置网络DNS</code></pre><pre><code class="linux">cat /etc/resolv.conf</code></pre>
-<blockquote>
-</blockquote>
-<p><img src="/2020/10/24/ubuntu/2_1.png" alt></p>
-<ul>
-<li><a href="https://www.jb51.net/article/158414.htm" target="_blank" rel="noopener">Linux网络配置</a></li>
-</ul>
-<h2 id="ifconig无法使用"><a href="#ifconig无法使用" class="headerlink" title="ifconig无法使用"></a>ifconig无法使用</h2><pre><code>* sudo apt install net-tools
-* sudo apt update: 升级apt</code></pre><ul>
-<li><a href="https://blog.csdn.net/i_spirit/article/details/109182493" target="_blank" rel="noopener">command “ifconfig” not found</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Unbuntu</tag>
       </tags>
   </entry>
   <entry>
@@ -1423,10 +1423,10 @@ URL重写：
 <p><img src="/2020/09/18/ssm/ssm_transaction.png" alt="事务管理"></p>
 ]]></content>
       <categories>
-        <category>Spring</category>
+        <category>SpringFramework</category>
       </categories>
       <tags>
-        <tag>Spring</tag>
+        <tag>SSM</tag>
       </tags>
   </entry>
   <entry>
@@ -1852,14 +1852,14 @@ interceptor和filter的区别
 
 * afterCompletion: 页面执行结束后，执行这个方法</code></pre>]]></content>
       <categories>
-        <category>Spring</category>
+        <category>SpringFramework</category>
       </categories>
       <tags>
         <tag>SpringMVC</tag>
       </tags>
   </entry>
   <entry>
-    <title>Java Reflection（java反射机制）</title>
+    <title>Java Reflection</title>
     <url>/2020/09/10/reflection/</url>
     <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><pre><code>1. 反射（reflection）：动态语言的关键
     * 反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性和方法
@@ -2713,7 +2713,7 @@ public IAccountService getAccountService(){
 <h3 id="使用纯注解的事务配置"><a href="#使用纯注解的事务配置" class="headerlink" title="使用纯注解的事务配置"></a>使用纯注解的事务配置</h3><p><img src="/2020/09/09/spring/tx_without_xml.png" alt="纯注解的声明式事务"></p>
 ]]></content>
       <categories>
-        <category>Spring</category>
+        <category>SpringFramework</category>
       </categories>
       <tags>
         <tag>Spring</tag>
@@ -3377,10 +3377,10 @@ User findById(Integer id);</code></pre></blockquote>
 <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><pre><code>1. mybatis-config 的properties配置属性</code></pre><p><img src="/2020/05/15/mybatis/error_1.png" alt="配置文件无法找到"></p>
 ]]></content>
       <categories>
-        <category>Java</category>
+        <category>SpringFramework</category>
       </categories>
       <tags>
-        <tag>Java</tag>
+        <tag>MyBatis</tag>
       </tags>
   </entry>
   <entry>
@@ -3388,9 +3388,9 @@ User findById(Integer id);</code></pre></blockquote>
     <url>/2020/05/12/%E4%B8%83%E7%89%9B%E4%BA%91-Hexo/</url>
     <content><![CDATA[<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h2><pre><code>1. 注册七牛云,完成之后就可以进行创建空间，
 2. 注意我们添加的资源为对象存储，访问控制为公开空间
-3. 点击右上角进入密钥管理，复制当前使用的AK和SK，配置的时候会用得到</code></pre><h2 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2. 步骤"></a>2. 步骤</h2><h3 id="2-1-安装插件，进入Hexo主目录，执行："><a href="#2-1-安装插件，进入Hexo主目录，执行：" class="headerlink" title="2.1. 安装插件，进入Hexo主目录，执行："></a>2.1. 安装插件，进入Hexo主目录，执行：</h3><pre><code>`npm install hexo-qiniu-sync --save`</code></pre><h3 id="2-2-配置站点文件-config-yml"><a href="#2-2-配置站点文件-config-yml" class="headerlink" title="2.2. 配置站点文件_config.yml:"></a>2.2. 配置站点文件_config.yml:</h3><blockquote>
-<p>  #plugins:<br>      #- hexo-qiniu-sync<br>    qiniu:<br>      offline: false<br>      sync: true<br>      bucket: bucket_name<br>      access_key: AccessKey<br>      secret_key: SecretKey<br>      dirPrefix:<br>      urlPrefix: <a href="http://7xqb0u.com1.z0.glb.clouddn.com" target="_blank" rel="noopener">http://7xqb0u.com1.z0.glb.clouddn.com</a><br>      local_dir: cdn<br>      update_exist: true<br>      image:<br>        folder: images<br>        extend:<br>      js:<br>        folder: js<br>      css:<br>        folder: css</p>
-</blockquote>
+3. 点击右上角进入密钥管理，复制当前使用的AK和SK，配置的时候会用得到</code></pre><h2 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2. 步骤"></a>2. 步骤</h2><h3 id="2-1-安装插件，进入Hexo主目录，执行："><a href="#2-1-安装插件，进入Hexo主目录，执行：" class="headerlink" title="2.1. 安装插件，进入Hexo主目录，执行："></a>2.1. 安装插件，进入Hexo主目录，执行：</h3><p><code>npm install hexo-qiniu-sync --save</code></p>
+<h3 id="2-2-配置站点文件-config-yml"><a href="#2-2-配置站点文件-config-yml" class="headerlink" title="2.2. 配置站点文件_config.yml:"></a>2.2. 配置站点文件_config.yml:</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#plugins:</span></span><br><span class="line"> 	<span class="comment">#- hexo-qiniu-sync</span></span><br><span class="line"><span class="attr">qiniu:</span></span><br><span class="line">  <span class="attr">offline:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">sync:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">bucket:</span> <span class="string">bucket_name</span></span><br><span class="line">  <span class="attr">access_key:</span> <span class="string">AccessKey</span></span><br><span class="line">  <span class="attr">secret_key:</span> <span class="string">SecretKey</span></span><br><span class="line">  <span class="attr">dirPrefix:</span></span><br><span class="line">  <span class="attr">urlPrefix:</span> <span class="string">http://7xqb0u.com1.z0.glb.clouddn.com</span></span><br><span class="line">  <span class="attr">local_dir:</span> <span class="string">cdn</span></span><br><span class="line">  <span class="attr">update_exist:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">image:</span></span><br><span class="line">    <span class="attr">folder:</span> <span class="string">images</span></span><br><span class="line">    <span class="attr">extend:</span></span><br><span class="line">  <span class="attr">js:</span></span><br><span class="line">    <span class="attr">folder:</span> <span class="string">js</span></span><br><span class="line">  <span class="attr">css:</span></span><br><span class="line">    <span class="attr">folder:</span> <span class="string">css</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="2-3-参数"><a href="#2-3-参数" class="headerlink" title="2.3. 参数"></a>2.3. 参数</h3><ul>
 <li><p>bucket ：修改为你刚才申请的七牛空间名称</p>
 </li>
@@ -3482,10 +3482,10 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
     * executeUpdate();
     * executeQuery();        </code></pre>]]></content>
       <categories>
-        <category>SQL</category>
+        <category>MySQL</category>
       </categories>
       <tags>
-        <tag>SQL</tag>
+        <tag>SQL注入</tag>
       </tags>
   </entry>
   <entry>
@@ -3499,7 +3499,7 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
 <h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
 ]]></content>
       <categories>
-        <category>Spring</category>
+        <category>SpringFramework</category>
       </categories>
       <tags>
         <tag>Spring</tag>
@@ -3616,7 +3616,7 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
 
     下载：git pull &quot;变量名&quot; -u master</code></pre>]]></content>
       <categories>
-        <category>Git</category>
+        <category>Tools</category>
       </categories>
       <tags>
         <tag>Git</tag>
@@ -3867,10 +3867,10 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
         JDBCTemplate template = new JDBCTemplate(ds)
     3. 调用方法完成CRUD的操作</code></pre>]]></content>
       <categories>
-        <category>SQL</category>
+        <category>MySQL</category>
       </categories>
       <tags>
-        <tag>SQL</tag>
+        <tag>SQL_JDBC</tag>
       </tags>
   </entry>
 </search>
