@@ -20,33 +20,36 @@
   <entry>
     <title>变量初始化</title>
     <url>/2020/12/05/Initialization/</url>
-    <content><![CDATA[<h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>在创建类对象、调用静态成员变量的时候，会创建静态成员变量完成初始化，对于非静态成员变量，或者说“实例变量”，会在创建对象的时候，分配内存空间，完成初始化。</p>
+    <content><![CDATA[<h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>在创建类对象、调用静态成员变量的时候，会对静态成员变量进行加载和初始化，对于非静态成员变量，或者说“实例变量”，会在创建对象的时候，分配内存空间，完成初始化。</p>
 <p>一般来说，类成员变量的加载顺序由上到下，依次加载</p>
 <ul>
-<li><p>如果类对象中包含父类、静态成员变量、静态代码块、非静态成员变量、非静态代码块和构造函数等多种成分的时候：</p>
-</li>
-<li><p><code>静态成员变量 &gt; 静态代码块 &gt; 非静态成员变量 &gt; 非静态代码块 &gt; 构造函数</code></p>
-</li>
-<li><p>如果每种类型的变量有多个，则按照定义顺序，加载和初始化</p>
-</li>
+<li>如果类对象中包含父类、静态成员变量、静态代码块、实例成员变量、实例代码块和构造函数等多种成分的时候：</li>
+<li><code>静态成员变量、静态代码块 &gt; 实例成员变量、实例代码块 &gt; 构造函数</code>，如果有父类，先执行父类的代码</li>
+<li>如果每种类型的成员变量有多个，则按照定义顺序，从上到下依次执行</li>
+<li>静态代码块和静态变量都在类加载时进行初始化，只能依靠定义顺序来保证初始化顺序</li>
+<li>实例代码块和实例变量在创建对象时初始化，在构造方法执行之前执行，同时有多个实例变量，根据定义顺序执行</li>
 </ul>
-<h2 id="成员变量初始化"><a href="#成员变量初始化" class="headerlink" title="成员变量初始化"></a>成员变量初始化</h2><h3 id="父类成员变量"><a href="#父类成员变量" class="headerlink" title="父类成员变量"></a>父类成员变量</h3><p>​    如果当前类对象继承了某个基类，在进行初始化的时候，会先初始化父类，静态成员、非静态成员变量，然后是子类的静态成员变量、非静态成员变量。</p>
+<h2 id="代码执行顺序"><a href="#代码执行顺序" class="headerlink" title="代码执行顺序"></a>代码执行顺序</h2><h3 id="父类成员变量"><a href="#父类成员变量" class="headerlink" title="父类成员变量"></a>父类成员变量</h3><p>​    如果当前类对象继承了某个基类，在进行初始化的时候，会先初始化基类，静态成员、非静态成员变量，然后是子类的静态成员变量、非静态成员变量。</p>
 <p>​    如果使用构造函数创建类对象，会首先调用基类的构造函数，然后在调用子类的构造函数，完成类对象的创建工作。</p>
-<h3 id="静态成员变量"><a href="#静态成员变量" class="headerlink" title="静态成员变量"></a>静态成员变量</h3><p>​    静态成员变量，只占据一块存储区域，无论创建多少个对象。如果一个变量是静态变量{基本类型}，而且没有进行初始化，会获得默认标准初值，如果是一个对象引用，那么初始化为null。</p>
+<h3 id="静态成员变量"><a href="#静态成员变量" class="headerlink" title="静态成员变量"></a>静态成员变量</h3><p>​    静态成员变量，只占据一块存储区域，无论创建多少个对象。如果一个变量是静态变量{基本类型}，而且没有进行初始化，会获得默认初值，如果是一个对象引用，那么初始化为null。</p>
 <p><strong>静态成员变量在首次加载class字节码文件时或首次访问该变量的时候</strong>，进行加载和初始化，有且只有一次。</p>
 <h3 id="静态代码块"><a href="#静态代码块" class="headerlink" title="静态代码块"></a>静态代码块</h3><p>将多个静态代码块组合在一起，形成的子句叫做静态子句，或者叫做静态块</p>
 <p>静态块和静态变量一样，仅执行一次，<strong>在首次生成类对象或者首次访问类的静态变量的时候</strong></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 案例</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">static</span>&#123;</span><br><span class="line">	<span class="keyword">int</span> = <span class="number">100</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="非静态成员变量"><a href="#非静态成员变量" class="headerlink" title="非静态成员变量"></a>非静态成员变量</h3><p>没有使用static修饰符修饰的成员变量，在构造方法执行时进行初始化</p>
-<h3 id="非静态代码块"><a href="#非静态代码块" class="headerlink" title="非静态代码块"></a>非静态代码块</h3><p>和非静态成员变量一样，每次创建不同的类对象的时候都会进行一次初始化</p>
+<h3 id="实例成员变量"><a href="#实例成员变量" class="headerlink" title="实例成员变量"></a>实例成员变量</h3><p>没有使用static修饰符修饰的成员变量，在构造方法执行时进行初始化，可以默认隐藏在构造方法第一行，首先执行</p>
+<h3 id="实例代码块"><a href="#实例代码块" class="headerlink" title="实例代码块"></a>实例代码块</h3><p>和非静态成员变量一样，每次创建不同的类对象的时候都会进行一次初始化，<strong>在main方法之后执行，在构造方法执行之前执行</strong></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> i;</span><br><span class="line">&#123;</span><br><span class="line">	i = <span class="number">10</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
+<h3 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h3><ul>
+<li>构造方法最后执行,在父类构造方法执行之后执行子类的构造方法 </li>
+<li>构造方法的第一行默认执行<strong>实例变量初始化,实例代码块的执行</strong></li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
 <li>由于不同类型的成员变量的初始化顺序不同，可能后面初始化的成员变量会将前面初始化的成员变量的值覆盖</li>
+<li>如果继承了父类，则会首先初始化父类，在初始化子类</li>
 <li>静态类型初始化，在首次生成类对象的时候，或者在首次调用静态成员变量的时候进行初始化，只有一次</li>
-<li>非静态类型，只有使用new关键字进行类对象生成的时候，使用构造方法创建对象时，才会进行初始化</li>
-<li>如果继承了父类，则会首先初始化父类的静态成员变量，在调用子类构造函数之前，会先调用父类构造函数</li>
+<li>实例类型，只有使用new关键字进行类对象生成的时候，使用构造方法创建对象时，才会进行初始化。<strong>实例变量和实例代码块总是在构造方法执行完毕前执行，可以把实例变量和实例代码块默认在构造方法第一行执行，只有实例变量和实例代码块执行结束之后，才继续执行构造方法内部代码</strong></li>
 </ul>
 <h2 id="数组的初始化"><a href="#数组的初始化" class="headerlink" title="数组的初始化"></a>数组的初始化</h2><p>数组是引用数据类型，分配空间和进行初始化不是一回事</p>
 <h3 id="在定义的同时进行初始化"><a href="#在定义的同时进行初始化" class="headerlink" title="在定义的同时进行初始化"></a>在定义的同时进行初始化</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 初始化数组</span></span><br><span class="line"><span class="keyword">int</span>[] arr = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;</span><br><span class="line">Integer[] arr2 = &#123;</span><br><span class="line">	<span class="keyword">new</span> Integer(<span class="number">1</span>),</span><br><span class="line">	<span class="keyword">new</span> Integer(<span class="number">2</span>)</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
