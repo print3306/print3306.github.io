@@ -117,7 +117,7 @@
 <meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/inter_1.png">
 <meta property="og:image" content="http://print3306.github.io/2020/09/18/springMVC/inter_2.png">
 <meta property="article:published_time" content="2020-09-18T09:22:55.000Z">
-<meta property="article:modified_time" content="2020-11-29T07:27:50.276Z">
+<meta property="article:modified_time" content="2021-03-14T14:24:33.564Z">
 <meta property="article:author" content="浊酒一杯">
 <meta property="article:tag" content="SpringMVC">
 <meta name="twitter:card" content="summary">
@@ -393,8 +393,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-11-29T15:27:50+08:00">
-                2020-11-29
+              <time title="更新于" itemprop="dateModified" datetime="2021-03-14T22:24:33+08:00">
+                2021-03-14
               </time>
             
           </span>
@@ -512,7 +512,7 @@
 <pre><code>3. 配置视图解析器
     在项目配置文件中配置视图解析器，配置前缀路径以及后缀文件名</code></pre><h3 id="SpringMVC实例解析"><a href="#SpringMVC实例解析" class="headerlink" title="SpringMVC实例解析"></a>SpringMVC实例解析</h3><pre><code>1. SpringMVC的流程的说明
     * 启动服务器，加载配置文件
-        1. DispacherServet被创建
+        1. DispacherServlet被创建
         2. springmvc.xml被加载
         3. HelloController被加载到容器
         4. 开启注解扫描的包，配置视图解析器，开启MVC注解
@@ -532,7 +532,7 @@
     * 放在类上，类上的路径为一级目录，可以先访问一级目录再访问二级目录的方法</code></pre><p><img src="/2020/09/18/springMVC/requestmapping.png" alt></p>
 <pre><code>3. RequestMapping的属性: 任意两个属性之间是&amp;&amp;的关系
     1. value,path: 互为别名，都是指定请求的路径,请求的URL
-    2. mathod: 用于指定请求的方法，method={RequestMethod.GTE,RequestMethod.POST}等
+    2. mathod: 用于指定请求的方法，method={RequestMethod.GET,RequestMethod.POST}等
     3. params: 指定限制请求参数的条件，支持简单的表达式，要求请求参数中的key和value必须和配置一样
         * params={&quot;accountName&quot;},请求参数中必须要有accountName
         * params={&quot;money!100&quot;},请求参数money不能是100
@@ -1041,7 +1041,7 @@ interceptor和filter的区别
             
               <div class="site-state-item site-state-posts">
                 <a href="/archives">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1063,7 +1063,7 @@ interceptor和filter的区别
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1140,7 +1140,7 @@ interceptor和filter的区别
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">59k</span>
+    <span title="Site words total count">80.2k</span>
   
 </div>
 
