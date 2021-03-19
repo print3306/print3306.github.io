@@ -2744,8 +2744,8 @@ MyISAM存储引擎的写锁优先，拿到写锁之后，其他线程处于阻�
         <category>mysql</category>
       </categories>
       <tags>
-        <tag>linux</tag>
         <tag>mysql</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -3143,7 +3143,7 @@ MyISAM存储引擎的写锁优先，拿到写锁之后，其他线程处于阻�
 <p><img src="/2020/10/12/maven/maven_pom.png" alt></p>
 <pre><code>2. 注意
     1. 项目,工程和模块之间的区别
-        工程不等于一个完整的项目，模块也不等于一个完整的项目，一个完整的项目看的是代&lt;br&gt;码，代码完整，才说明是一个完整的项目，和此项目是工程或模块没有关联
+        工程不等于一个完整的项目，模块也不等于一个完整的项目，一个完整的项目看的是代码，代码完整，才说明是一个完整的项目，和此项目是工程或模块没有关联
 
         1. 工程天生只能使用自己的内部资源，天生是独立的，后期可以和其他的工程或模块建立关联关系
         2. 模块天生属于父工程的，天生不是独立的，模块一旦创建，所有的父工程的资源模块都可以使用
@@ -3496,9 +3496,10 @@ MyISAM存储引擎的写锁优先，拿到写锁之后，其他线程处于阻�
 </li>
 </ul>
 <h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><h3 id="产生原因？"><a href="#产生原因？" class="headerlink" title="产生原因？"></a>产生原因？</h3><ul>
-<li>多线程并发</li>
-<li>共享资源</li>
-<li>相互等待</li>
+<li>占有并等待</li>
+<li>非抢占资源</li>
+<li>互斥</li>
+<li>循环等待</li>
 </ul>
 <p>两个或多个线程为了访问共享资源，由于资源的访问顺序不一样，synchronized的共享对象加锁顺序不一样，可能会导致线程相互等待，程序无法进行下去，形成死锁</p>
 <h3 id="代码演示？"><a href="#代码演示？" class="headerlink" title="代码演示？"></a>代码演示？</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadLock</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Object o1 = <span class="keyword">new</span> Object();</span><br><span class="line">        Object o2 = <span class="keyword">new</span> Object();</span><br><span class="line"></span><br><span class="line">        MThread thread = <span class="keyword">new</span> MThread(o1, o2);</span><br><span class="line">        MThread2 thread2 = <span class="keyword">new</span> MThread2(o1, o2);</span><br><span class="line"></span><br><span class="line">        thread.start();</span><br><span class="line">        thread2.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Object o1;</span><br><span class="line">    <span class="keyword">private</span> Object o2;</span><br><span class="line"></span><br><span class="line">    MThread(Object o1,Object o2)&#123;</span><br><span class="line">        <span class="keyword">this</span>.o1 = o1;</span><br><span class="line">        <span class="keyword">this</span>.o2 = o2;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    MThread()&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 由于共享资源加锁的时机不一样，可能会导致死锁</span></span><br><span class="line">        <span class="keyword">synchronized</span> (o2)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">synchronized</span> (o1)&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MThread2</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Object o1;</span><br><span class="line">    <span class="keyword">private</span> Object o2;</span><br><span class="line"></span><br><span class="line">    MThread2(Object o1,Object o2)&#123;</span><br><span class="line">        <span class="keyword">this</span>.o1 = o1;</span><br><span class="line">        <span class="keyword">this</span>.o2 = o2;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    MThread2()&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 由于共享资源加锁的时机不一样，可能会导致死锁</span></span><br><span class="line">        <span class="keyword">synchronized</span> (o1)&#123;</span><br><span class="line">            <span class="comment">// 阻塞当前线程</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">synchronized</span> (o2)&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -3932,7 +3933,7 @@ public class MyServlet3 extends HttpServlet {
 注解和web.xml之间没有冲突</code></pre><h2 id="Servlet应用"><a href="#Servlet应用" class="headerlink" title="Servlet应用"></a>Servlet应用</h2><h3 id="Request对象"><a href="#Request对象" class="headerlink" title="Request对象"></a>Request对象</h3><pre><code>获取客户端请求，所有的客户端的请求数据都存在于Request对象里</code></pre><h4 id="get请求"><a href="#get请求" class="headerlink" title="get请求"></a>get请求</h4><pre><code>1. get提交的数据会放在URL之后，以?分隔，URL和数据，参数之间以&amp;连接
 2. get方式明文传递，数据量小，不安全
 3. 效率高，浏览器默认为GET请求
-4. 对应的方法为GET</code></pre><h4 id="post请求"><a href="#post请求" class="headerlink" title="post请求"></a>post请求</h4><pre><code>1. post请求把提交的数据放在HTTP的Body中
+4. 对应的方法为doGet</code></pre><h4 id="post请求"><a href="#post请求" class="headerlink" title="post请求"></a>post请求</h4><pre><code>1. post请求把提交的数据放在HTTP的Body中
 2. post密文传输，数据量大，安全
 3. 效率相对不高
 4. 对应的Servlet方法是doPost</code></pre><h4 id="Request的常用方法"><a href="#Request的常用方法" class="headerlink" title="Request的常用方法"></a>Request的常用方法</h4><pre><code>1. 方法</code></pre><table>
@@ -3989,16 +3990,7 @@ public class MyServlet3 extends HttpServlet {
     String username = req.getParameter(&quot;username&quot;);
     String password = req.getParameter(&quot;password&quot;);
     System.out.println(&quot;username:&quot;+username+&quot;  --&gt; &quot;+&quot;password:&quot;+password);
-}
-&lt;form action=&quot;register&quot; method=&quot;get&quot;&gt;
-    用户名:&lt;label&gt;
-    &lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;
-&lt;/label&gt;&lt;br/&gt;
-    密码:&lt;label&gt;
-    &lt;input type=&quot;password&quot; name=&quot;password&quot;/&gt;
-&lt;/label&gt;&lt;br/&gt;
-    &lt;input type=&quot;submit&quot; value=&quot;注册&quot;/&gt;
-&lt;/form&gt;</code></pre></blockquote>
+}</code></pre></blockquote>
 <pre><code>通过浏览器的内容可看出，使用post方法提交的数据没有出现数据信息,只有接受的路径名称，更安全
 
 问题：post中文乱码
@@ -4038,20 +4030,20 @@ public class MyServlet3 extends HttpServlet {
     * 使用setCharacterEncoding(&quot;UTF-8&quot;)方法来进行服务端编码格式设置
     * 使用setHeader(&quot;Content-type&quot;,&quot;text/html;charset=UTF-8&quot;);
     2. 方法二
-    * setContentType(&quot;text/html;charset=UTF-8&quot;),同时设置文件类型和编码格式，必须在获取输出流之前使用</code></pre><h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><pre><code>问题
+    * setContentType(&quot;text/html;charset=UTF-8&quot;),同时设置文件类型和编码格式，必须在获取输出流之前使用</code></pre><h3 id="案例-数据传递"><a href="#案例-数据传递" class="headerlink" title="案例 数据传递"></a>案例 数据传递</h3><pre><code>问题
 1. 在servlet中，调用业务逻辑和显示页面都在同一个servlet中，职能不单一，不利于后期维护
 2. 可以将业务逻辑和显示信息分离
 
-单独写类进行业务逻辑，和显示信息的打印
+单独写类进行业务逻辑、显示信息的打印
 XxxController extend HttpServlet
 XxxJsp extend HttpServlet
 
 如何跳转到JSP
-如何将查询到的数据传送给展示的servlet</code></pre><h3 id="转发（request）"><a href="#转发（request）" class="headerlink" title="转发（request）"></a>转发（request）</h3><pre><code>转发的作用在服务器端，将请求发送给服务器的其他资源，共同完后一次请求</code></pre><h4 id="页面跳转"><a href="#页面跳转" class="headerlink" title="页面跳转"></a>页面跳转</h4><pre><code>1. 页面跳转实现
+如何将查询到的数据传送给展示的servlet</code></pre><h4 id="转发（request）"><a href="#转发（request）" class="headerlink" title="转发（request）"></a>转发（request）</h4><pre><code>转发的作用在服务器端，将请求发送给服务器的其他资源，共同完后一次请求</code></pre><h5 id="页面跳转"><a href="#页面跳转" class="headerlink" title="页面跳转"></a>页面跳转</h5><pre><code>1. 页面跳转实现
     在调用业务逻辑的servlet中，编写
         request.getRequestDispatcher(&quot;/目标url-patten&quot;).forward(request,respone)
 
-    页面跳转属于同一次请求，客户端察觉不到转发的过程，在服务器内部进行跳转，地址栏不发生改变</code></pre><h4 id="数据传递"><a href="#数据传递" class="headerlink" title="数据传递"></a>数据传递</h4><pre><code>1. forword表示同一次请求，在服务器内部内部跳转，可以共享同一次request作用域的数据
+    页面跳转属于同一次请求，客户端察觉不到转发的过程，在服务器内部进行跳转，地址栏不发生改变</code></pre><h5 id="数据传递"><a href="#数据传递" class="headerlink" title="数据传递"></a>数据传递</h5><pre><code>1. forword表示同一次请求，在服务器内部内部跳转，可以共享同一次request作用域的数据
 
 2. request作用域: 拥有存储数据的空间，作用范围是一次请求(可以进行多次转发)
     * 可以将数据存储到request内部，在一次请求的内部进行数据传递，任意位置获取数据
@@ -4064,15 +4056,15 @@ XxxJsp extend HttpServlet
 4. 获取数据
     * request.getAttribute(key)
     * 通过String类型的key访问value
-    * 需要转换数据类型</code></pre><h4 id="转发的注意事项"><a href="#转发的注意事项" class="headerlink" title="转发的注意事项"></a>转发的注意事项</h4><pre><code>1. 转发是服务器的行为
+    * 需要转换数据类型</code></pre><h5 id="转发的注意事项"><a href="#转发的注意事项" class="headerlink" title="转发的注意事项"></a>转发的注意事项</h5><pre><code>1. 转发是服务器的行为
 2. 转发浏览器只有一次请求
 3. 浏览器地址不变
 4. 转发两次的跳转信息不会丢失，可以使用request作用域传递数据
-5. 转发只能将请求转发给同一个web中的组件</code></pre><h3 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h3><pre><code>重定向作用在客户端，客户端将请求发送给服务器之后，服务器响应给客户端一个新的请求地址，客户端重新发送请求</code></pre><h4 id="页面跳转-1"><a href="#页面跳转-1" class="headerlink" title="页面跳转"></a>页面跳转</h4><pre><code>1. 实现
+5. 转发只能将请求转发给同一个web中的组件</code></pre><h4 id="重定向-（respone）"><a href="#重定向-（respone）" class="headerlink" title="重定向 （respone）"></a>重定向 （respone）</h4><pre><code>重定向作用在客户端，客户端将请求发送给服务器之后，服务器响应给客户端一个新的请求地址，客户端重新发送请求</code></pre><h5 id="页面跳转-1"><a href="#页面跳转-1" class="headerlink" title="页面跳转"></a>页面跳转</h5><pre><code>1. 实现
     * respone.sendRedirect(&quot;目标URI&quot;)
     * 表示服务器中的一个资源，资源在服务器中的路径(/项目/资源)
 
-    客户端做了两次请求，地址栏发生了改变</code></pre><h4 id="数据传递-1"><a href="#数据传递-1" class="headerlink" title="数据传递"></a>数据传递</h4><pre><code>1. sendRedirect跳转时，地址栏发生改变，代表客户端重新发送的请求，属于两次请求
+    客户端做了两次请求，地址栏发生了改变</code></pre><h5 id="数据传递-1"><a href="#数据传递-1" class="headerlink" title="数据传递"></a>数据传递</h5><pre><code>1. sendRedirect跳转时，地址栏发生改变，代表客户端重新发送的请求，属于两次请求
 
 2. respone没有作用域，两次的request数据无法共享
 
@@ -4080,7 +4072,7 @@ XxxJsp extend HttpServlet
     使用拼接字符串进行数据传递(&quot;/webproject/b&quot;+&quot;?name=1&amp;password=1&quot;)
 
 4. 获取数据
-    使用request.getParameters,只能是string的数据类型</code></pre><h4 id="重定向注意实项"><a href="#重定向注意实项" class="headerlink" title="重定向注意实项"></a>重定向注意实项</h4><pre><code>1. 客户端的行为
+    使用request.getParameters,只能是string的数据类型</code></pre><h5 id="重定向注意实项"><a href="#重定向注意实项" class="headerlink" title="重定向注意实项"></a>重定向注意实项</h5><pre><code>1. 客户端的行为
 2. 浏览器有两次请求
 3. 浏览器地址栏发生改变
 4. 两次跳转的传输信息会丢失(request范围)
@@ -4196,7 +4188,7 @@ URL重写：
 * ServletContext在服务器启动的时候创建，服务器关闭的时候销毁</code></pre><h3 id="获取ServletContext"><a href="#获取ServletContext" class="headerlink" title="获取ServletContext"></a>获取ServletContext</h3><pre><code>1. 使用GenericServlet对象
     * getServletContext(),HttpServlet继承了GenericServlet,可以使用this.getServletContext()获取对象
 
-2. HttPServletRequest对象
+2. HttpServletRequest对象
     * getServletContext()
 
 3. HttpSession
@@ -4371,7 +4363,7 @@ URL重写：
 
 2. MVC?
     MVC(Model View Controller):模型视图控制器，一种设计模式
-    * Model: javabean,通常代指数据模型，用于封装数据
+    * Model: javaBean,通常代指数据模型，用于封装数据
     * View:  jsp,jsp或者html,用于展示数据
     * Controller: servlet,处理用户交互的部分，处理程序逻辑的部分</code></pre><h3 id="SpringMVC的入门案例"><a href="#SpringMVC的入门案例" class="headerlink" title="SpringMVC的入门案例"></a>SpringMVC的入门案例</h3><pre><code>1. 项目环境搭建
     1. 选择maven工程的archetype
@@ -4749,8 +4741,8 @@ mapping: 表示以/static开头的所有的请求路径</code></pre><h4 id="响�
 </blockquote>
 <p><img src="/2020/09/18/springMVC/filedown.png" alt="文件下载演示代码"></p>
 <h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><pre><code>Controller调用service,service调用dao,异常向上抛出，最终由DispatcherServlet找异常处理器进行处理。</code></pre><blockquote>
-</blockquote>
 <p><img src="/2020/09/18/springMVC/error_process.png" alt="异常处理流程"><br><img src="/2020/09/18/springMVC/exception_1.png" alt="异常抛出演示"></p>
+</blockquote>
 <h3 id="springMVC的异常处理"><a href="#springMVC的异常处理" class="headerlink" title="springMVC的异常处理"></a>springMVC的异常处理</h3><pre><code>1. 步骤
     * 编写自定义异常处理类 （提示信息）
     * 编写异常处理器，必须实现异常处理器接口，HandlerExceptionResolver
@@ -5143,8 +5135,8 @@ method.invoke(p,&quot;HHHHH&quot;);   //p.show(&quot;HHHHH&quot;)</code></pre></
 
 3. 依赖注入的数据类型：
     1. 基本数据类型和String类型
-    2. 其他bean对象
-    3. 复杂类型（集合类型）
+    2. 其他bean对象（引用数据类型）
+    3. 复杂类型（集合类型，list array set map pros）
 
 4. 依赖注入的方式：
     1. 通过默认构造函数注入依赖
@@ -5192,15 +5184,15 @@ method.invoke(p,&quot;HHHHH&quot;);   //p.show(&quot;HHHHH&quot;)</code></pre></
 &lt;bean id=&quot;now&quot; class=&quot;java.util.Date&quot;/&gt;</code></pre></blockquote>
 <h5 id="3-使用注解进行依赖注入"><a href="#3-使用注解进行依赖注入" class="headerlink" title="3. 使用注解进行依赖注入"></a>3. 使用注解进行依赖注入</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// annocation依赖注入</span></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier</span></span><br><span class="line"><span class="meta">@Resource</span></span><br><span class="line"><span class="meta">@Value</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="4-注入复杂数据类型"><a href="#4-注入复杂数据类型" class="headerlink" title="4. 注入复杂数据类型"></a>4. 注入复杂数据类型</h5><pre><code>List Set      
+<h5 id="4-注入复杂数据类型"><a href="#4-注入复杂数据类型" class="headerlink" title="4. 注入复杂数据类型"></a>4. 注入复杂数据类型</h5><pre><code>List Set Array    
 Map Properties
 
 标签：property
 位置：property内部
 其中：只要数据集合的结构相同，可以使用同一种标签进行依赖注入
-    list set arrsy: 都可以使用&lt;list&gt;,&lt;array&gt;,&lt;set&gt;，序列格式
+    list set array: 都可以使用&lt;list&gt;,&lt;array&gt;,&lt;set&gt;，序列格式
     map property:&lt;map&gt;,&lt;pros&gt;，键值对格式</code></pre><blockquote>
-<pre><code>  private String[] myStr;
+<pre><code>    private String[] myStr;
 private List&lt;String&gt; myList;
 private Set&lt;String&gt; mySet;
 private Map&lt;String,String&gt; myMap;
@@ -5370,7 +5362,8 @@ private Properties myProp;</code></pre></blockquote>
     * Proxy.newProxyInstance()
 
 3. 要求
-    * 被代理对象至少要实现一个接口，如果没有，不能使用
+    * 被代理对象至少要实现一个接口，如果没有，不能使用，代理对象返回的是接口类型数据
+    JDK动态代理的原理是根据定义好的规则，用传入的接口创建一个新类，这就是为什么采用动态代理时为什么只能用接口引用指向代理，而不能用传入的类引用执行动态类。
 
 4. newProxyInstance()的参数
     * ClassLoader:类加载器
@@ -5384,6 +5377,10 @@ private Properties myProp;</code></pre></blockquote>
         让我们写任何实现代理，一般在某个实现方法上进行改变
         一般情况下，为匿名内部类，但是不是必须的
         此接口的实现类，都是谁用谁写
+
+    * 返回值
+        返回代理类的接口实例
+        Proxy.newProxyInstance返回的是接口类型
 
 5. InvacationHandler的实现方法的参数</code></pre><blockquote>
 <pre><code>实现类中需要重写invoke方法,执行被代理对象的任何方法都会经过该方法
@@ -5496,6 +5493,7 @@ public Object intercept(Object o, Method method, Object[] objects, MethodProxy m
 3. 实现方式
     动态代理
     spring会根据是否实现了接口，动态的选择实现代理的方式
+    实现接口，使用Proxy.newProxyInstance()动态代理
 
 4. AOP的相关术语
     * Joinpoint(连接点)：
@@ -5516,7 +5514,7 @@ public Object intercept(Object o, Method method, Object[] objects, MethodProxy m
 
     * Weaving(织入)：
         把增强应用到目标对象来创建新的代理对象的过程。
-        spring采用动态代理技术进行织入
+        spring采用动态代理技术进行织入，动态代理产生新的对象
 
     * Proxy(代理)：
         一个类被AOP织入后，产生一个代理对象
@@ -5635,7 +5633,7 @@ public Object intercept(Object o, Method method, Object[] objects, MethodProxy m
     4. 建立事务通知和切入点表达式的关联
     5. 配置事务的属性：事务的通知tx:advice的内部
         * isolation: 指定事务的隔离级别，默认值式DEFAULT,可重复读
-        * propagation: 事务的传播行为REQUESTED 表示一定会有事务，增删改的选择，查询可以选择SUPPORTS
+        * propagation: 事务的传播行为REQUESTED表示一定会有事务，增删改的选择，查询可以选择SUPPORTS
         * read-only: 事务是否只读，默认为false
         * time-out: 事务的超时时间,默认-1，表示永不超时，如果指定，以秒为单位
         * rollback-for: 指定一个异常，当产生该异常时，事务回滚，产生其他异常，事务不回滚，没有默认值，表示任何异常都会回滚
@@ -6768,6 +6766,1014 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
       </categories>
       <tags>
         <tag>SQL_JDBC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mysql基础</title>
+    <url>/2019/09/06/mysql%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h2 id="MySQL的语法规范"><a href="#MySQL的语法规范" class="headerlink" title="MySQL的语法规范"></a>MySQL的语法规范</h2><pre><code>1.不区分大小写，但建议关键字大写，列名，表名小写
+2.每条命令最好以分号区分
+3.每条命令可以根据需要分割
+4.注释
+    单行注释：#，-- （双下划线加上空格）
+    多行注释：/* 多行注释 */</code></pre><h2 id="数据查询语言（DQL）"><a href="#数据查询语言（DQL）" class="headerlink" title="数据查询语言（DQL）"></a>数据查询语言（DQL）</h2><h3 id="基础查询"><a href="#基础查询" class="headerlink" title="基础查询"></a>基础查询</h3><pre><code>1.基础语法
+    select 查询列表 【as】【别名】
+    from 表名;
+
+    查询列表：
+        表中的字段：
+            查询表中的单个字段
+                SELECT Tname FROM teacher;
+
+            查询表中的多个字段
+                SELECT Tno,Tname FROM teacher;
+
+            查询表中所有字段
+                SELECT * FROM teacher WHERE Depart=&apos;电子工程系&apos;;
+
+    常量值
+    表达式
+    函数
+
+2.别名：
+    1.提高查询结果可读性
+    2.如果要查询的字段有重名的情况
+
+    SELECT Tno 编号,Tname 姓名
+        FROM teacher;
+
+        SELECT Tno AS 编号 
+        FROM teacher ;
+
+        案例，别名为 out put
+        SELECT Tno AS &quot;out put&quot;
+        FROM teacher;    
+
+3.结果去重：
+    关键字：distinct
+    在列名前加上关键字DINTINCT，对查询结果去重
+
+4.+号的作用：
+    只有运算符的功能
+    1.两个操作数都为数值型，做加法运算
+    2.其中一方是字符型，则试图将字符型转换为数值型，如果转换成功，做加法运算，如果转换失败，字符型数据转换成0
+    3.只要其中一方为NULL,结果就是NULL</code></pre><h3 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h3><pre><code>1.基础语法
+    select 查询列表
+    from  表名
+    where 筛选条件；
+
+2.分类
+    1.按照条件表达式进行筛选
+        条件运算符：&gt; &lt; = != &lt;&gt;
+
+    2.按照逻辑表达式进行筛选
+        逻辑运算符：AND OR NOT
+
+    3.模糊查询
+        like:字符串匹配
+            %：任意个字符均可匹配
+            -：单个字符匹配通配符
+
+            字符的转义：
+                \ , ESCAPE &apos;转义标识&apos;;
+
+        between and：
+            结果包含临界值
+            临界值的顺序不可调换
+
+        in：集合中的元素查询
+
+        is null：空值的查询
+            安全等于：&lt;=&gt;,可以查询空值，也可以查询普通的值</code></pre><h3 id="排序查询"><a href="#排序查询" class="headerlink" title="排序查询"></a>排序查询</h3><pre><code>1.基础语法
+    select 查询列表
+    from 表名
+    where 筛选条件
+    order by 列表 asc|desc；//数据默认按照ASC排序，升序    
+
+2.排序的列表类型
+    按照数值进行排序
+        属性列的值
+    按照表达式（表达式的别名）
+        可以使用数据的计算
+    按照函数排序    
+
+    按照多个字段排序
+        主要字段在前，次要字段在后，主要字段数值相同的按照次要字段的排序顺序排序。
+
+3.特点
+    asc按照升序排序，desc按照降序排序
+    子句后支持单个字段，多个字段，表达式，函数，别名
+    子句一般是放在查询语句的最后面，limit子句除外</code></pre><h3 id="常见函数"><a href="#常见函数" class="headerlink" title="常见函数"></a>常见函数</h3><pre><code>1.函数的概念
+    类似Java中函数的方法，将一组逻辑语句封装在方法体中，只要调用方法名
+
+2.函数的调用
+    select 函数名（实参列表）【from 表名】；
+
+3.函数的分类
+    单行函数：
+        concat,length,ifnull等
+    多行函数
+        sum,avg,min,max,count
+
+4.函数：函数可以嵌套调用
+    一.字符函数
+    length(str):字的长度
+    concat(str1,str2....):字符串的连接
+    upper(),lower():字符的大小写
+    substr(),substring():截取指定 【字符长度】的字符串，函数有多个重载
+    instr(str,substr):字串在字符串的【第一次出现的位置索引】，找不到，返回0
+    trim():去除字符串的【前后指定的字符】
+    lpad(),rpad():使用指定字符【左|右】填充
+    replace():替换字符
+
+    二.数学函数
+    round():四舍五入
+    ceil(),floor():向上，下取整
+    truncate():截断
+    mod():求余
+
+    三.日期函数
+    now():当前的日期和时间
+    curdate(),curtime():当前的日期，时间
+    year(date),mouth(date),day(date):指定的年月日
+    str_to_date(date_str,format):将指定的日期字符串转化成相应格式的日期
+    date_format():格式化日期为字符串
+
+    四.其他函数
+    select database();当前的数据库
+
+    五.流程控制函数
+    if();相当于三元运算符
+    case():1.相当于switch case函数,【判断具体的值】
+                case 变量或表达式 
+                when 常量1 then 语句1
+                ...
+                else 
+                语句n 
+                end
+           2.相当于多重选择结构,【判断取值区间】
+                case 
+                when 常量1 then 语句1
+                    ...
+                else 语句n 
+                end
+
+    六.分组函数：null值不参与运算
+     参数的类型：
+        sum(),avg()，数值型，null值不参与运算
+        max(),min(),可比较的数据类型均可使用，null值不参与运算
+        count(),非空类型的数据，null值不参与运算
+
+     与分组函数一同查询的字段：是group by后的函数</code></pre><h3 id="分组查询"><a href="#分组查询" class="headerlink" title="分组查询"></a>分组查询</h3><pre><code>1.基础语法
+    select 查询列表【cloumn】,【出现在group by之后】
+    from 表名
+    where 筛选条件
+    group by 分组条件（表达式）having 【筛选，分组后的条件筛选】
+    order by cloumn;
+
+2.查询列表
+    要求是分组函数和group by之后的列
+
+3.筛选条件的使用
+    在分组之前的筛选条件：
+        原始表中有的字段，使用where子句
+
+    在分组之后的筛选条件:
+        分组后的结果集，使用having子句
+
+    能使用分组前筛选的就使用分组前筛选，提高性能
+
+4.group by子句的使用
+    按照表达式或函数分组</code></pre><h3 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a>连接查询</h3><pre><code>1.笛卡儿积的基础上对条件进行筛选，选择出来对应的结果
+
+sql92标准:
+    1.语法    
+        select 查询列表
+        from 表1，表2...表n
+        where 连接条件；
+
+    2.等值连接
+        多表连接的结果是多个表的交集部分
+        n表连接，至少需要n-1个连接条件
+        一般需要为表起别名
+        可以搭配其他子句使用
+
+    3.非等值连接
+        连接条件不是等号
+
+    4.自连接
+        连接的表是自己，在连接时对表起别名
+
+sql99标准
+    1.语法
+        select 查询列表
+        from 表1 别名 【连接类型】
+        join 表2 别名
+        on 连接条件
+        【where 筛选条件】
+        【group by 分组条件】
+        【order by 排序条件】；
+
+    2.连接类型
+        内连接：
+            inner
+
+        外连接:查询结果是主表的所有值，匹配，显示匹配的值；不匹配，显示null
+            左外连接：left [outer]
+            全外连接：full [outer]
+
+        交叉连接：
+            cross </code></pre><h3 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h3><pre><code>1.定义
+    出现在其他语句中的查询语句，称为子查询或内查询
+    外部的查询语句，称为主查询或外查询
+
+2.分类
+    位置：
+        select后面：
+            只支持标量子查询
+
+        from后面：
+            支持表子查询,【相当于虚拟的表】
+
+        where，having后面：【新的筛选条件】
+            标量子查询（单行）：
+                使用小括号括起来
+                使用单行操作符，&lt; &gt; =
+
+            列子查询（多行）：
+                使用小括号括起来
+                使用多行操作符
+                    in any all
+
+            行子查询
+                筛选条件都是【=】连接条件
+
+        exists（相关子查询，返回0或1，逻辑值）：与in 类似
+            表子查询
+
+    结果集的行列数不同：
+        标量子查询（结果集只有一行一列）
+        列子查询（结果集只有一列多行）
+        行子查询（一行多列或多行多列）
+        表子查询（一般多行多列）</code></pre><h3 id="分页查询"><a href="#分页查询" class="headerlink" title="分页查询"></a>分页查询</h3><pre><code>要显示的数据一页显示不全，分页提交sql请求
+
+1.语法
+    select 查询列表
+    from 表
+    【join type 表2
+    on 连接条件
+    where 筛选条件
+    group by 分组条件
+    order by 排序的字段】
+    limit 【offset,】size;
+
+    offset：要显示条目的起始索引（从0开始）
+    size：要显示的条目个数
+
+2.特点
+    limit语句在查询语句的最后
+
+    分页查询的请求:
+    公式：
+        要显示的页数page，每页的条目数size
+
+        select 查询列表
+        from 表
+        limit （page-1）* size,size;</code></pre><h3 id="联合查询"><a href="#联合查询" class="headerlink" title="联合查询"></a>联合查询</h3><pre><code>1.基本语法
+    union
+
+2.联合查询的特点
+    要求多条查询语句的查询列数一致
+    要求多条查询语句的每一行的类型和顺序一致
+    联合查询的结果默认去重，追加all显示所有的结果</code></pre><h2 id="数据操纵语言（DML）"><a href="#数据操纵语言（DML）" class="headerlink" title="数据操纵语言（DML）"></a>数据操纵语言（DML）</h2><h3 id="插入语句"><a href="#插入语句" class="headerlink" title="插入语句"></a>插入语句</h3><pre><code>1.基本语法
+    方式一：
+    insert into 表名（字段名，，，） 
+    values (与字段数据对应);
+
+    支持一次插入多行，批量操作
+    支持子查询
+
+    方式二：
+    insert into 表名
+    values 列名=值，列名=值....
+
+2.特点
+    - 插入的数据类型要与列的类型一致或兼容
+    - 不可以为null的列必须有值
+    - 列的顺序可以调换，值的信息匹配
+    - 列数与插入数据的列数一致
+    - 省略列名默认全体元素</code></pre><h3 id="修改语句"><a href="#修改语句" class="headerlink" title="修改语句"></a>修改语句</h3><pre><code>1.修改单表的记录
+    update 表名
+    set 列=值，列2=值，...
+    where 筛选条件；
+
+2.修改多表的记录
+    sql92:
+        update 表1 as 别名，表2 as 别名
+        set 列=值
+        where 连接条件
+        and 筛选条件;
+
+    sql99:
+        update 表1 别名
+        inner|outer join 表2 别名
+        on 连接条件
+        set 列=值,...
+        where 筛选条件;</code></pre><h3 id="删除语句"><a href="#删除语句" class="headerlink" title="删除语句"></a>删除语句</h3><pre><code>1.delete语句
+    删除满足条件的行的所有值
+
+    delete from 表名
+    where 筛选条件;
+
+    多表的删除：【cascade:级联删除】
+        sql92:
+        delete 别名【要删除的表名的别名】
+        from 表1 别名,表2 别名
+        where 连接条件
+        and 筛选条件;
+
+        sql99：
+        delete 别名【要删除的表名的别名】
+        from 表1 别名
+        inner|outer join 表2 别名 
+        on 连接条件
+        where 筛选条件;
+
+2.truncate关键字：【清空】
+    删除整个表
+
+    truncate table 表名;
+
+3.delete与truncate的区别
+    -delete可以加筛选条件
+
+    -truncate的效率稍高
+
+    -加入要删除的表中有自增长列：
+    使用delete删除，插入新的数据，自增长列的值从断点开始
+    使用truncate删除，插入新的数据，自增长列的值从1开始
+
+    -truncate删除没有返回值，delete删除有返回值
+    -truncate删除不能回滚，delete删除能回滚</code></pre><h2 id="数据定义语言（DDL）"><a href="#数据定义语言（DDL）" class="headerlink" title="数据定义语言（DDL）"></a>数据定义语言（DDL）</h2><h3 id="库"><a href="#库" class="headerlink" title="库"></a>库</h3><pre><code>1.库的创建
+    create database 库名；
+
+    容错性处理:如果库存在不创建，否则创建库
+        create database if not exists 库名;
+
+2.库的修改
+    1.更改数据字符集
+    alter database 库名 character set ();
+
+3.库的删除
+    drop database if exists 库名；</code></pre><h3 id="表"><a href="#表" class="headerlink" title="表"></a>表</h3><pre><code>1.表的创建
+    语法：
+        create table if not exists 表名（
+            列名 列的类型 【（长度）约束】，
+            列名 列的类型 【（长度）约束】，
+            列名 列的类型 【（长度）约束】
+        ）；
+
+2.表的修改
+    修改列名
+        alter table 表名 change column 旧列名 新列名 列类型；
+
+    修改列的类型或约束
+        alter table 表名 modify column 列名 列类型；
+
+    添加新列
+        alter table 表名 add column 新列名 类型；
+
+    删除列
+        alter table 表名 drop column 列名；
+
+    修改表名
+        alter table 表名 rename to 新表名；
+
+3.表的删除
+    drop table 【if exists】表名；
+
+4.表的复制
+    复制表的结构与数据
+
+    -仅复制表的结构
+        create table 新表名 like 旧表名;
+
+    -复制表的所有数据与结构
+        create table 新表名 select * from 旧表名;
+
+    -仅复制部分数据
+         create table 新表名 select 列表 from 旧表名 where 条件;
+
+    -仅复制部分结构
+        create table 新表名 select 列表 from 旧表名 where 0;</code></pre><h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><pre><code>1.视图的含义
+    虚拟表，和普通表一样使用，通过表动态生成的数据。（临时表）
+    只保存逻辑，不保存查询结果。        
+
+2.视图的创建
+    语法：
+        create view 视图名
+        as
+        select 查询列表
+        from 表名；
+
+    使用：
+        select 查询列表 from 视图名；（将结果集看成新表）
+
+3.视图的修改
+    1.方式一
+        视图存在则修改，不存在则创建
+        create or replace view 视图名
+        as
+        查询语句；
+
+    2.方式二
+        alter view 视图名
+        as
+        查询语句;
+
+4.视图的查看和删除
+    drop view 视图名1，视图名2...;
+
+    视图的查看:
+        desc 视图名；
+        show cteate view 视图名;(在命令行下，显示创建视图的细节)
+
+5.视图的更新
+    更新视图的数据，则原始表的数据也会发生改变。
+
+    1.插入数据
+        insert into view_name values();
+
+    2.更新数据
+        update view_name set () ;
+
+    3.删除数据
+        delete from view_name ();
+
+    具备以下关键字的SQL语句不允许更新
+        &gt; 分组函数，distinct,group by,having,union
+        &gt; 常量视图
+        &gt; select有子查询
+        &gt; join（查询数据在多个表中，连接查询）
+        &gt; from一个不能更新的视图
+        &gt; where子句的子查询引用了from子句中的表（相关子查询）
+
+6.视图的用处
+    提高sql语句的重用
+    简化查询的sql操作
+    保护数据，提高了安全性（只能看到自己操作的部分，看不到原始表）</code></pre><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><pre><code>1.整型数据
+       tinyint 9-255 (一个字节)
+       smallint 0-65535 (两个字节)
+       mediumint
+       int，integer
+       bigint </code></pre><p>​<br>​<br>        特点:<br>            -数据默认是有符号的，显式使用unsigned，数据是无符号的</p>
+<pre><code>        -如果数据插入超出范围，报异常，插入元素是临界值
+
+        -如果不设置长度，会有默认长度，长度表示的是显示的宽度，与数据的范围无关。（zerofill进行填充，填充后默认是有符号的数据）
+
+2.小数
+    浮点型：
+        float(m,d)  (四个字节)
+        double(m,d)  (八个字节)
+
+    定点数:
+        dec(m,d)
+        decimal(m,d) 省略（m,d）默认m=10,d=0
+
+        m:整数部分+小数部分的长度
+        d:小数部分的长度
+
+        插入数据超出，插入临界值
+
+
+3.字符型
+    较短的文本：
+        char(m)    m-----&gt;0-255 定长 
+        varchar(m) m-----&gt;0-65535 可变
+
+        m：保存的字符数
+
+    较长的文本:
+        text
+        blob(较大的二进制)
+
+    enum:插入的值必须是枚举中的一个
+        1-255，一个字节
+        255-65535，两个字节 
+        不区分大小写
+
+    set:插入的数据是任意的数据集合
+
+    特点:
+        char比较耗费空间，但是效率较高，m可以省略，默认值为1
+        varchar节省空间，效率比较低
+
+4.日期型
+    类型:
+        date 4个字节 只表示日期
+
+        datetime 8 
+
+        timestamp 4 范围较小，反映时区</code></pre><h3 id="约束条件"><a href="#约束条件" class="headerlink" title="约束条件"></a>约束条件</h3><pre><code>1.约束：
+    一种限制，保证表中的数据的准确性和可靠性
+
+2.约束分类:
+    not null:非空
+        保证该字段的值不能为空
+
+    default:默认
+        保证该字段的值具有默认值
+
+    primary key:主键
+        该字段的值具有唯一性，非空
+
+    unique：唯一
+        该字段的值具有唯一性，可以空
+
+    check：【mysql不支持】
+
+    foreign key:外键
+        限制两个表的关系，用于保证该字段的值必须来自主表的关联列的值
+        在从表中加外键约束，用于引用主表的值
+
+3.添加约束:在数据添加之前
+    -创建表时
+    -修改表时
+
+4.约束的添加分类:
+    表级约束：
+        default not null除外，都支持            
+
+    列级约束：
+        都可以写，语法支持，但【外键约束】没有效果
+
+5.创建表时添加约束
+    添加列级约束：
+        CREATE TABLE stuinfo(
+            id INT PRIMARY KEY,#主键
+            stuName VARCHAR(20) NOT NULL,#非空
+            gender CHAR(1) CHECK(gender IN (&apos;男&apos;,&apos;女&apos;)),
+            seat INT UNIQUE,#唯一
+            sge INT DEFAULT 18#默认
+        );
+
+    添加表级约束:
+        CREATE TABLE stuinfo(
+            id INT,
+            stuName VARCHAR(20),
+            gender CHAR,
+            seat INT,
+            age INT,
+
+            [CONSTRAINT pk] PRIMARY KEY(id),#主键
+            [CONSTRAINT uq] UNIQUE(seat),#唯一
+            [CONSTRAINT ck] CHECK(gender IN (&apos;男&apos;,&apos;女&apos;))
+        );
+
+    外键:fk_表名_主表名
+
+6.主键与唯一的对比
+    主键只能有一个为null，主键可以组合（多个属性列共同组成）
+    唯一可以有多个null，可以组合
+
+7.外键（on delete cascade级联删除on set null级联置空）
+    -要求在从表中设置外键关系
+    -从表的外键列的类型和主表的关联列的类型要求一致或兼容，名称无要求
+    -主表的关联列必须是一个key(一般是主键或唯一)
+    -插入时，要求先插入主表再插入从表；删除数据时，先删除从表，再删除主表
+
+8.修改表时添加约束
+    添加列级约束:
+        modify column
+    添加表级约束:
+        add 
+
+    alter table 表名 modify column 列名 类型；
+
+9.修改表时删除约束
+
+10.标识列
+    又称为自增长列
+    不用手动的插入值，系统提供默认的序列值
+
+    &gt; 标识列不需要一定与主键对应，但是必须是key
+    &gt; 一个表中至多只能有一个自增长列
+    &gt; 标识列的类型只能是数值型的
+    &gt; 标识列可以通过 set auto_increment_increment设置步长</code></pre><h2 id="事务控制语言（TCL）"><a href="#事务控制语言（TCL）" class="headerlink" title="事务控制语言（TCL）"></a>事务控制语言（TCL）</h2><h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><pre><code>1.定义
+    一个或一组sql语句组成一个执行单元，这个执行单元要么全执行，要么全不执行。
+    每个sql语句是相互依赖的
+
+2.mysql中的存储引擎
+    show engines;来查看支持的引擎
+
+    innoDB 支持事务
+    myisam memory 不支持事务
+
+3.事务的ACID属性
+    A（Atomicity）:原子性
+        事务是一个不可分割的工作单位，要么全发生，要么都不发生
+
+    C（Consistency）:一致性
+        事务会使数据库的一致性状态变换到另一个一致性状态
+
+    I（Isolation）:隔离性
+        一个事务的执行不能被其他事务干扰，即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能相互干扰
+
+    D（Durability）:持久性
+        事务一旦提交，对数据库的数据改变就是永久性的，接下来的其他操作和故障不应该对其有任何影响
+
+4.事务的创建
+    隐式事务:
+        insert update delete
+
+    显式的事务:
+        事务具有明显的开启和结束
+
+        前提：
+            先设置自动提交功能禁用
+            set autocommit=0;
+
+    1.开启事务
+        set autocommit = 0;
+        【start trancsaction;】
+
+    2.书写语句
+        sql语句
+
+    3.结束事务
+        commit;事务提交
+        rollback；事务回滚
+
+5.事务的并发处理（访问数据库中相应的数据）
+    脏读：（数据未被提交就被访问）
+        两个事务T1,t2,t1读取了已经被t2更新但是还【没有被提交】的字段，若t2回滚，t1读取的数据就是临时且无效的。
+
+    不可重复读:（数据被读取后值发生改变）
+        两个事务T1,t2,t1读取了一个字段，然后t2【更新】了数据，t1再次读取的同一字段，值改变了。
+
+    幻读:
+        两个事务T1,t2,t1读取了一个字段，然后t2在该表【插入】一些新的行，t1再次读取时，就会多出几行。
+
+6.事务的隔离级别
+    read uncommited:会出现脏读，幻读，不可重复读
+
+    read commited:幻读，不可重复读
+
+    repeatable read：不可重复读，mysql默认的隔离级别
+
+    serializable：均能解决
+
+        查看当前的隔离级别:            
+            select @@tx_isolation;
+
+        设置当前的隔离级别:
+            set transaction isolation level [隔离级别];
+
+        设置数据库的全局的隔离级别:
+            set global transaction isolation level 级别;
+
+7.回滚点的设置
+    savepoint 节点名；
+    rollback to 节点名;
+        在回滚点之间的数据不发生改变</code></pre><h2 id="函数与控制过程"><a href="#函数与控制过程" class="headerlink" title="函数与控制过程"></a>函数与控制过程</h2><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><pre><code>1.分类
+    系统变量：
+        全局变量：
+            服务器每次使用将为所有的全局变量赋初值，针对于所有的会话，但不能跨重启
+
+        会话变量：
+            仅仅对于当前的会话（连接）有效
+
+    自定义变量：
+        用户变量：
+            针对当前会话的变量，类似会话变量
+
+        局部变量：
+            仅仅在局部有效，在定义的begin end范围内
+
+2.系统变量：
+    变量是由系统提供的，属于服务器层面
+
+    使用的语法：
+        查看全局变量和会话变量：
+            show global|session varibles;
+
+        查看满足条件的部分系统变量：
+            show global|session variables like &apos;% %&apos;;
+
+        查看某个确定的系统变量:
+            select @@global|session.系统变量名；
+
+        变量赋值：
+            set global|session 系统变量 = value;
+            set @@global|session.系统变量 = value;
+
+        Ps:session可以不写，不写默认是会话变量
+
+3.自定义变量
+    使用步骤：
+        声明，赋值，使用
+
+    用户变量：
+        1.声明并初始化：
+            set @用户变量名 = 值；
+            set @用户变量名 ：= 值；
+            select @用户变量名 ：=值；
+
+        2.赋值：
+            方式一：
+            set 或 select
+            set @用户变量名 = 值；
+            set @用户变量名 ：= 值；
+            select @用户变量名 ：=值；
+
+            方式二：
+            select 字段 into 变量 from 表名；
+
+        3.使用
+            select @用户变量名；
+
+    局部变量：
+        1.声明
+            declare 变量名 类型；
+            declare 变量名 类型 default 值；
+
+        2.赋值
+            set 局部变量名 = 值；
+            set 局部变量名 ：= 值；
+            select @局部变量名 := 值；
+
+            select 字段 into 局部变量名 from 表名；
+
+        3.使用
+            select 局部变量名；
+
+        4.使用位置
+            必须是在begin end 内，是第一句话
+
+    用户变量与局部变量的区别：
+             作用域     定义和使用的位置        语法
+    用户变量  当前会话      会话的任何位置        一般加@
+
+    局部变量  begin end  只能在begin end      一般不加@,限定类型</code></pre><h3 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h3><pre><code>1.含义
+    一组与先编译好的sql语句的集合，理解成批处理语句
+
+2.好处
+    &gt; 提高代码的重用性
+    &gt; 简化操作
+    &gt; 减少了编译次数，减少了和服务器的连接次数，提高了效率
+
+3.语法
+    1.创建存储过程
+        create procedure 存储过程名(参数列表)
+        begin
+            存储过程体
+        end 
+
+        注意：
+            1.参数列表包含三个部分：
+                参数模式 参数名 参数类型
+
+                参数模式：
+                    in :输入，调用方将参数传入
+                    out ：输出，返回值
+                    inout ：既可以传入又可以输出
+
+            2.如果存储过程体只有一句sql语句，begin end可以不写
+
+            3.存储过程体的每条语句必须加上分号，在结尾加上 delimiter 设置结束标志
+                delimiter 结束标志 
+
+    2.调用存储过程
+        带in的存储过程调用：
+            call 存储过程名(实参列表);
+
+        带out的存储过程调用：
+            【首先需要定义参数接收返回值，将变量进行赋值】
+            call 存储过程名（@参数）；
+
+        带inout参数的存储过程：
+            传入变量
+
+4.存储过程的删除
+    drop procedure 存储过程名；
+
+5.查看存储过程
+    show create procedure 存储过程名；</code></pre><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><pre><code>1.语法
+    一组预先编译好的sql语句集合，理解成批处理语句
+
+2.函数与存储过程的区别
+    函数有且仅有一个返回值
+
+    存储过程：批量插入，批量更新
+    函数：数据处理后返回一个结果
+
+3.函数的创建和调用语法
+    创建：
+        create function 函数名(参数列表) returns 返回类型
+        begin
+            函数体
+        end 
+
+    注意:
+        &gt; 返回列表：参数名 参数类型
+        &gt; 函数体。肯定会有return语句，如果没有会报错，如果return语句没有放在最后也不会报错
+        &gt; 函数体中只有一句话，可以省略begin end
+        &gt; 使用delimiter设置结束标记
+
+    调用：
+        select 函数名();
+
+4.函数的查看
+    show create function 函数名;
+
+5.函数的删除
+    drop function 函数名;</code></pre><h3 id="流程控制结构"><a href="#流程控制结构" class="headerlink" title="流程控制结构"></a>流程控制结构</h3><pre><code>&gt; 顺序结构：程序从上到下依次执行
+
+&gt; 循环结构：在满足一定条件的基础上，重复执行一段代码
+
+&gt; 分支结构：程序从两条或多条路径之间选择一条执行
+
+1.分支结构
+    1.if函数
+        if(表达式1，表达式2，表达式3)；
+
+        如果表达式1为真，执行表达式2，否则执行表达式3
+
+    2.case函数
+        1.类似于switch语句，实现等值判断
+            case 表达式|字段|变量
+            when 值1 then 返回值1或语句1；
+            else 语句n；
+            end case;
+
+        2.类似于多重if分支，实现区间判断
+            case 
+            when 值1 then 返回值1或语句1;
+            else 语句n;
+            end case;
+
+        特点：
+            &gt; 可以作为表达式，嵌套使用，在任何地方
+            &gt; 可以作为独立的语句，只能在begin end中
+            &gt; 条件满足执行语句并返回，不满足，执行else中语句
+            &gt; 没有else语句，返回null
+
+    3.if结构
+        实现多重分支
+
+        语法：
+            if 条件1 then 语句1;
+            elseif 条件2 then 语句2;
+            【else 语句n】;
+            end if;
+
+2.循环结构
+    1.分类
+        while,loop,repeat
+
+    2.循环控制语句
+        &gt; iterate:继续，结束本次循环，进行下一次
+        &gt; leave:退出循环
+
+    3.while语法
+        【标签:】while 循环条件 do
+            循环体；
+        end while 【标签】;
+
+    4.loop语法------&gt;模拟死循环
+        【标签:】loop
+            循环体
+        end loop 【标签】；
+
+    5.repeat语法
+        【标签:】repeat
+            循环体；
+        until 结束条件；
+        end repeat 【标签】；</code></pre>]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>thread基础</title>
+    <url>/2010/04/06/thread%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h2 id="线程简介"><a href="#线程简介" class="headerlink" title="线程简介"></a>线程简介</h2><pre><code>1.线程
+        高可用
+        高性能
+        高并发    
+    分类：
+        用户线程
+        守护线程（Daemon）
+
+2.多线程的使用场景
+    多线程：多条路径完成任务，多任务的要求促进了多线程的产生
+
+3.进程和线程
+    进程: 操作系统的资源分配单元
+    线程：CPU的调度器进行调度
+
+4.线程创建的三种方式
+    1.继承Thread类
+        重写run方法
+        使用start()方法调用    
+
+    2.实现Runnable接口
+        重写run方法
+        使用new Thread().start()调用
+
+    3.实现Callable接口
+        重写call方法，实现高并发，call()可以抛出异常和返回值
+
+5.代理模式
+    静态代理：记录日志
+        一个公共接口，两个角色
+                    真实角色，代理角色 
+                    代理角色内含有真实角色，管理真实角色，具体行为由真实角色产生
+
+    在使用时，可以谁使用，来谁产生具体内容
+
+6.Lambda表达式
+    实现函数式编程        
+
+    实现接口，内部使用方法体
+    只能推导一个方法
+
+    只需要关注方法的内容 （）-&gt; {方法体}
+    含有一个参数 a -&gt; {方法体}
+    单行代码 可以省略{}
+    含有返回值
+
+7.线程的状态
+    新生 ：创建线程对象时
+
+    就绪 ：调用start()方法，只有获得CPU控制权，才能运行，处于就绪队列
+        1.start()
+        2.释放阻塞
+        3.yield 让出CPU控制
+        4.JVM线程调度
+
+    运行 ：获得CPU控制权，run()
+
+    阻塞 ：线程不在往下执行
+        1.sleep()：当前线程阻塞的毫秒数，sleep不会释放锁
+        2.wait()
+        3.join()
+        4.I/O
+
+    死亡 ：run()方法结束,线程被强制退出
+            外部干涉
+
+        yield() 由运行状态直接转到就绪状态 CPU重新调度线程
+        join() 合并线程 先执行join()的线程 在执行顺序的线程
+
+
+8.线程优先级
+    priority 优先级高的线程执行概率更大，但优先级低的线程也有执行的机会,优先级并不代表执行的次序
+    setPriority()设置线程的优先级 1 - 10，设置必须在线程启动之前
+        NOME_PRIORITY    1
+        MIN_PRIORITY    5
+        MAX_PRIORITY    10
+
+9.守护线程
+    守护线程(Daemon)
+        JVM必须完成用户线程，可以不用等待守护线程结束
+
+    默认状态下所有的线程都是守护线程，使用方法setDaemon(true)设置成守护线程
+
+10.其他方法
+    isAlive()线程是否存活
+    Thread.currentThread()当前线程
+    setName()设置线程名称
+
+11.线程同步
+    synchronized
+    保证数据的准确性，线程的执行次序,又称为并发控制 -&gt; 线程安全
+
+    并发控制：同一个对象多个线程同时进行操作，对共享资源的使用 
+
+    实现线程同步：队列和锁
+
+    锁机制（synchronized）: 锁住对象的资源,锁定所有者
+        synchronized方法：使用关键字synchornized控制对方法的访问，使用private限定方法对变量的访问，将所有的变量对应一把锁，每个synchronized方法都必须获得调用该方法的对象的锁才能执行，否则线程被阻塞
+        缺陷：将一个大的方法声明为synchronized方法，会导致性能的降低
+
+        synchronized块：
+            synchronized(obj){},obj称为同步监视器
+                obj可以为任何对象，但是推荐使用共享资源作为同步监视器
+                同步方法中可以不指定同步监视器，同步方法的同步监视器默认为this即对象本身，或class类即类的模子
+
+            同步监视器的执行过程：
+                第一个线程访问，锁定同步监视器，执行代码
+                第二个线程访问，同步监视器被锁定，无法执行
+                第一个线程访问结束，解锁同步监视器</code></pre>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java-SE</tag>
       </tags>
   </entry>
 </search>

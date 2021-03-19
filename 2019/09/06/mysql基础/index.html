@@ -1,0 +1,1333 @@
+<!DOCTYPE html><html class="theme-next pisces use-motion" lang=zh-Hans><head><meta charset=UTF-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1"><meta name=theme-color content=#222><script src="/lib/pace/pace.min.js?v=1.0.2"></script><link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel=stylesheet><meta http-equiv=Cache-Control content=no-transform><meta http-equiv=Cache-Control content=no-siteapp><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel=stylesheet type=text/css><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel=stylesheet type=text/css><link href="/css/main.css?v=5.1.4" rel=stylesheet type=text/css><link rel=apple-touch-icon sizes=180x180 href="/images/avatar1.png?v=5.1.4"><link rel=icon type=image/png sizes=32x32 href="/images/avatar1.png?v=5.1.4"><link rel=icon type=image/png sizes=16x16 href="/images/avatar1.png?v=5.1.4"><link rel=mask-icon href="/images/logo.svg?v=5.1.4" color=#222><meta name=keywords content=mysql,><meta name=description content="MySQL的语法规范1.不区分大小写，但建议关键字大写，列名，表名小写 2.每条命令最好以分号区分 3.每条命令可以根据需要分割 4.注释 单行注释：#，-- （双下划线加上空格） 多行注释：&#x2F;* 多行注释 *&#x2F;数据查询语言（DQL）基础查询1.基础语法 select 查询列表 【as】【别名】 from 表名; 查询列表： 表中的字段："><meta property=og:type content=article><meta property=og:title content=mysql基础><meta property=og:url content=http://print3306.github.io/2019/09/06/mysql%E5%9F%BA%E7%A1%80/index.html><meta property=og:site_name content=浊酒一杯><meta property=og:description content="MySQL的语法规范1.不区分大小写，但建议关键字大写，列名，表名小写 2.每条命令最好以分号区分 3.每条命令可以根据需要分割 4.注释 单行注释：#，-- （双下划线加上空格） 多行注释：&#x2F;* 多行注释 *&#x2F;数据查询语言（DQL）基础查询1.基础语法 select 查询列表 【as】【别名】 from 表名; 查询列表： 表中的字段："><meta property=article:published_time content=2019-09-06T07:58:43.000Z><meta property=article:modified_time content=2021-03-19T11:32:55.707Z><meta property=article:author content=浊酒一杯><meta property=article:tag content=mysql><meta name=twitter:card content=summary><script type=text/javascript id=hexo.configurations>
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script><link rel=canonical href="http://print3306.github.io/2019/09/06/mysql基础/"><title>mysql基础 | 浊酒一杯</title><meta name=generator content="Hexo 4.2.1"></head><body itemscope itemtype=http://schema.org/WebPage lang=zh-Hans><div class="container sidebar-position-left page-post-detail"><div class=headband></div><header id=header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-wrapper><div class=site-meta><div class=custom-logo-site-title><a href="/" class=brand rel=start><span class=logo-line-before><i></i></span> <span class=site-title>浊酒一杯</span> <span class=logo-line-after><i></i></span></a></div><p class=site-subtitle></p></div><div class=site-nav-toggle><button><span class=btn-bar></span> <span class=btn-bar></span> <span class=btn-bar></span></button></div></div><nav class=site-nav><ul id=menu class=menu><li class="menu-item menu-item-home"><a href="/" rel=section><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel=section><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel=section><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel=section><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类</a></li><li class="menu-item menu-item-about"><a href="/about/" rel=section><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于</a></li><li class="menu-item menu-item-search"><a href=javascript:; class=popup-trigger><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class=site-search><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class=search-icon><i class="fa fa-search"></i></span> <span class=popup-btn-close><i class="fa fa-times-circle"></i></span><div class=local-search-input-wrapper><input autocomplete=off placeholder=搜索... spellcheck=false type=text id=local-search-input></div></div><div id=local-search-result></div></div></div></nav><script>
+    
+    window.onload = function(){
+        var path = 'https://malizhi.cn'; //这里要改成你博客的地址
+        var localhostItem = String(window.location).split(path)[1];
+        var LiNode = document.querySelectorAll('#menu > li > a')
+        
+        for(var i = 0; i< LiNode.length;i++){
+            var item = String(LiNode[i].href).split(path)[1];
+            if(item == localhostItem && item != undefined){
+                LiNode[i].setAttribute('style','border-bottom:1px solid black');
+            }
+        }
+    };
+
+ </script></div></header><main id=main class=main><div class=main-inner><div class=content-wrap><div id=content class=content><div id=posts class=posts-expand><article class="post post-type-normal" itemscope itemtype=http://schema.org/Article><div class=post-block><link itemprop=mainEntityOfPage href="http://print3306.github.io/2019/09/06/mysql%E5%9F%BA%E7%A1%80/"><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=name content=浊酒一杯><meta itemprop=description><meta itemprop=image content=/images/avatar1.jpg></span> <span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content=浊酒一杯></span><header class=post-header><h1 class=post-title itemprop="name headline">mysql基础</h1><div class=post-meta><span class=post-time><span class=post-meta-item-icon><i class="fa fa-calendar-o"></i></span> <span class=post-meta-item-text>发表于</span><time title=创建于 itemprop="dateCreated datePublished" datetime=2019-09-06T15:58:43+08:00>2019-09-06</time><span class=post-meta-divider>|</span> <span class=post-meta-item-icon><i class="fa fa-calendar-check-o"></i></span> <span class=post-meta-item-text>更新于&#58;</span><time title=更新于 itemprop=dateModified datetime=2021-03-19T19:32:55+08:00>2021-03-19</time></span> <span class=post-category><span class=post-meta-divider>|</span> <span class=post-meta-item-icon><i class="fa fa-folder-o"></i></span> <span class=post-meta-item-text>分类于</span> <span itemprop=about itemscope itemtype=http://schema.org/Thing><a href="/categories/mysql/" itemprop=url rel=index><span itemprop=name>mysql</span></a></span></span><div class=post-wordcount><span class=post-meta-item-icon><i class="fa fa-file-word-o"></i></span> <span class=post-meta-item-text>字数统计&#58;</span> <span title=字数统计>6.1k</span></div></div></header><div class=post-body itemprop=articleBody><h2 id=MySQL的语法规范><a href=#MySQL的语法规范 class=headerlink title=MySQL的语法规范></a>MySQL的语法规范</h2><pre><code>1.不区分大小写，但建议关键字大写，列名，表名小写
+2.每条命令最好以分号区分
+3.每条命令可以根据需要分割
+4.注释
+    单行注释：#，-- （双下划线加上空格）
+    多行注释：/* 多行注释 */</code></pre><h2 id=数据查询语言（DQL）><a href=#数据查询语言（DQL） class=headerlink title=数据查询语言（DQL）></a>数据查询语言（DQL）</h2><h3 id=基础查询><a href=#基础查询 class=headerlink title=基础查询></a>基础查询</h3><pre><code>1.基础语法
+    select 查询列表 【as】【别名】
+    from 表名;
+
+    查询列表：
+        表中的字段：
+            查询表中的单个字段
+                SELECT Tname FROM teacher;
+
+            查询表中的多个字段
+                SELECT Tno,Tname FROM teacher;
+
+            查询表中所有字段
+                SELECT * FROM teacher WHERE Depart=&apos;电子工程系&apos;;
+
+    常量值
+    表达式
+    函数
+
+2.别名：
+    1.提高查询结果可读性
+    2.如果要查询的字段有重名的情况
+
+    SELECT Tno 编号,Tname 姓名
+        FROM teacher;
+
+        SELECT Tno AS 编号 
+        FROM teacher ;
+
+        案例，别名为 out put
+        SELECT Tno AS &quot;out put&quot;
+        FROM teacher;    
+
+3.结果去重：
+    关键字：distinct
+    在列名前加上关键字DINTINCT，对查询结果去重
+
+4.+号的作用：
+    只有运算符的功能
+    1.两个操作数都为数值型，做加法运算
+    2.其中一方是字符型，则试图将字符型转换为数值型，如果转换成功，做加法运算，如果转换失败，字符型数据转换成0
+    3.只要其中一方为NULL,结果就是NULL</code></pre><h3 id=条件查询><a href=#条件查询 class=headerlink title=条件查询></a>条件查询</h3><pre><code>1.基础语法
+    select 查询列表
+    from  表名
+    where 筛选条件；
+
+2.分类
+    1.按照条件表达式进行筛选
+        条件运算符：&gt; &lt; = != &lt;&gt;
+
+    2.按照逻辑表达式进行筛选
+        逻辑运算符：AND OR NOT
+
+    3.模糊查询
+        like:字符串匹配
+            %：任意个字符均可匹配
+            -：单个字符匹配通配符
+
+            字符的转义：
+                \ , ESCAPE &apos;转义标识&apos;;
+
+        between and：
+            结果包含临界值
+            临界值的顺序不可调换
+
+        in：集合中的元素查询
+
+        is null：空值的查询
+            安全等于：&lt;=&gt;,可以查询空值，也可以查询普通的值</code></pre><h3 id=排序查询><a href=#排序查询 class=headerlink title=排序查询></a>排序查询</h3><pre><code>1.基础语法
+    select 查询列表
+    from 表名
+    where 筛选条件
+    order by 列表 asc|desc；//数据默认按照ASC排序，升序    
+
+2.排序的列表类型
+    按照数值进行排序
+        属性列的值
+    按照表达式（表达式的别名）
+        可以使用数据的计算
+    按照函数排序    
+
+    按照多个字段排序
+        主要字段在前，次要字段在后，主要字段数值相同的按照次要字段的排序顺序排序。
+
+3.特点
+    asc按照升序排序，desc按照降序排序
+    子句后支持单个字段，多个字段，表达式，函数，别名
+    子句一般是放在查询语句的最后面，limit子句除外</code></pre><h3 id=常见函数><a href=#常见函数 class=headerlink title=常见函数></a>常见函数</h3><pre><code>1.函数的概念
+    类似Java中函数的方法，将一组逻辑语句封装在方法体中，只要调用方法名
+
+2.函数的调用
+    select 函数名（实参列表）【from 表名】；
+
+3.函数的分类
+    单行函数：
+        concat,length,ifnull等
+    多行函数
+        sum,avg,min,max,count
+
+4.函数：函数可以嵌套调用
+    一.字符函数
+    length(str):字的长度
+    concat(str1,str2....):字符串的连接
+    upper(),lower():字符的大小写
+    substr(),substring():截取指定 【字符长度】的字符串，函数有多个重载
+    instr(str,substr):字串在字符串的【第一次出现的位置索引】，找不到，返回0
+    trim():去除字符串的【前后指定的字符】
+    lpad(),rpad():使用指定字符【左|右】填充
+    replace():替换字符
+
+    二.数学函数
+    round():四舍五入
+    ceil(),floor():向上，下取整
+    truncate():截断
+    mod():求余
+
+    三.日期函数
+    now():当前的日期和时间
+    curdate(),curtime():当前的日期，时间
+    year(date),mouth(date),day(date):指定的年月日
+    str_to_date(date_str,format):将指定的日期字符串转化成相应格式的日期
+    date_format():格式化日期为字符串
+
+    四.其他函数
+    select database();当前的数据库
+
+    五.流程控制函数
+    if();相当于三元运算符
+    case():1.相当于switch case函数,【判断具体的值】
+                case 变量或表达式 
+                when 常量1 then 语句1
+                ...
+                else 
+                语句n 
+                end
+           2.相当于多重选择结构,【判断取值区间】
+                case 
+                when 常量1 then 语句1
+                    ...
+                else 语句n 
+                end
+
+    六.分组函数：null值不参与运算
+     参数的类型：
+        sum(),avg()，数值型，null值不参与运算
+        max(),min(),可比较的数据类型均可使用，null值不参与运算
+        count(),非空类型的数据，null值不参与运算
+
+     与分组函数一同查询的字段：是group by后的函数</code></pre><h3 id=分组查询><a href=#分组查询 class=headerlink title=分组查询></a>分组查询</h3><pre><code>1.基础语法
+    select 查询列表【cloumn】,【出现在group by之后】
+    from 表名
+    where 筛选条件
+    group by 分组条件（表达式）having 【筛选，分组后的条件筛选】
+    order by cloumn;
+
+2.查询列表
+    要求是分组函数和group by之后的列
+
+3.筛选条件的使用
+    在分组之前的筛选条件：
+        原始表中有的字段，使用where子句
+
+    在分组之后的筛选条件:
+        分组后的结果集，使用having子句
+
+    能使用分组前筛选的就使用分组前筛选，提高性能
+
+4.group by子句的使用
+    按照表达式或函数分组</code></pre><h3 id=连接查询><a href=#连接查询 class=headerlink title=连接查询></a>连接查询</h3><pre><code>1.笛卡儿积的基础上对条件进行筛选，选择出来对应的结果
+
+sql92标准:
+    1.语法    
+        select 查询列表
+        from 表1，表2...表n
+        where 连接条件；
+
+    2.等值连接
+        多表连接的结果是多个表的交集部分
+        n表连接，至少需要n-1个连接条件
+        一般需要为表起别名
+        可以搭配其他子句使用
+
+    3.非等值连接
+        连接条件不是等号
+
+    4.自连接
+        连接的表是自己，在连接时对表起别名
+
+sql99标准
+    1.语法
+        select 查询列表
+        from 表1 别名 【连接类型】
+        join 表2 别名
+        on 连接条件
+        【where 筛选条件】
+        【group by 分组条件】
+        【order by 排序条件】；
+
+    2.连接类型
+        内连接：
+            inner
+
+        外连接:查询结果是主表的所有值，匹配，显示匹配的值；不匹配，显示null
+            左外连接：left [outer]
+            全外连接：full [outer]
+
+        交叉连接：
+            cross </code></pre><h3 id=子查询><a href=#子查询 class=headerlink title=子查询></a>子查询</h3><pre><code>1.定义
+    出现在其他语句中的查询语句，称为子查询或内查询
+    外部的查询语句，称为主查询或外查询
+
+2.分类
+    位置：
+        select后面：
+            只支持标量子查询
+
+        from后面：
+            支持表子查询,【相当于虚拟的表】
+
+        where，having后面：【新的筛选条件】
+            标量子查询（单行）：
+                使用小括号括起来
+                使用单行操作符，&lt; &gt; =
+
+            列子查询（多行）：
+                使用小括号括起来
+                使用多行操作符
+                    in any all
+
+            行子查询
+                筛选条件都是【=】连接条件
+
+        exists（相关子查询，返回0或1，逻辑值）：与in 类似
+            表子查询
+
+    结果集的行列数不同：
+        标量子查询（结果集只有一行一列）
+        列子查询（结果集只有一列多行）
+        行子查询（一行多列或多行多列）
+        表子查询（一般多行多列）</code></pre><h3 id=分页查询><a href=#分页查询 class=headerlink title=分页查询></a>分页查询</h3><pre><code>要显示的数据一页显示不全，分页提交sql请求
+
+1.语法
+    select 查询列表
+    from 表
+    【join type 表2
+    on 连接条件
+    where 筛选条件
+    group by 分组条件
+    order by 排序的字段】
+    limit 【offset,】size;
+
+    offset：要显示条目的起始索引（从0开始）
+    size：要显示的条目个数
+
+2.特点
+    limit语句在查询语句的最后
+
+    分页查询的请求:
+    公式：
+        要显示的页数page，每页的条目数size
+
+        select 查询列表
+        from 表
+        limit （page-1）* size,size;</code></pre><h3 id=联合查询><a href=#联合查询 class=headerlink title=联合查询></a>联合查询</h3><pre><code>1.基本语法
+    union
+
+2.联合查询的特点
+    要求多条查询语句的查询列数一致
+    要求多条查询语句的每一行的类型和顺序一致
+    联合查询的结果默认去重，追加all显示所有的结果</code></pre><h2 id=数据操纵语言（DML）><a href=#数据操纵语言（DML） class=headerlink title=数据操纵语言（DML）></a>数据操纵语言（DML）</h2><h3 id=插入语句><a href=#插入语句 class=headerlink title=插入语句></a>插入语句</h3><pre><code>1.基本语法
+    方式一：
+    insert into 表名（字段名，，，） 
+    values (与字段数据对应);
+
+    支持一次插入多行，批量操作
+    支持子查询
+
+    方式二：
+    insert into 表名
+    values 列名=值，列名=值....
+
+2.特点
+    - 插入的数据类型要与列的类型一致或兼容
+    - 不可以为null的列必须有值
+    - 列的顺序可以调换，值的信息匹配
+    - 列数与插入数据的列数一致
+    - 省略列名默认全体元素</code></pre><h3 id=修改语句><a href=#修改语句 class=headerlink title=修改语句></a>修改语句</h3><pre><code>1.修改单表的记录
+    update 表名
+    set 列=值，列2=值，...
+    where 筛选条件；
+
+2.修改多表的记录
+    sql92:
+        update 表1 as 别名，表2 as 别名
+        set 列=值
+        where 连接条件
+        and 筛选条件;
+
+    sql99:
+        update 表1 别名
+        inner|outer join 表2 别名
+        on 连接条件
+        set 列=值,...
+        where 筛选条件;</code></pre><h3 id=删除语句><a href=#删除语句 class=headerlink title=删除语句></a>删除语句</h3><pre><code>1.delete语句
+    删除满足条件的行的所有值
+
+    delete from 表名
+    where 筛选条件;
+
+    多表的删除：【cascade:级联删除】
+        sql92:
+        delete 别名【要删除的表名的别名】
+        from 表1 别名,表2 别名
+        where 连接条件
+        and 筛选条件;
+
+        sql99：
+        delete 别名【要删除的表名的别名】
+        from 表1 别名
+        inner|outer join 表2 别名 
+        on 连接条件
+        where 筛选条件;
+
+2.truncate关键字：【清空】
+    删除整个表
+
+    truncate table 表名;
+
+3.delete与truncate的区别
+    -delete可以加筛选条件
+
+    -truncate的效率稍高
+
+    -加入要删除的表中有自增长列：
+    使用delete删除，插入新的数据，自增长列的值从断点开始
+    使用truncate删除，插入新的数据，自增长列的值从1开始
+
+    -truncate删除没有返回值，delete删除有返回值
+    -truncate删除不能回滚，delete删除能回滚</code></pre><h2 id=数据定义语言（DDL）><a href=#数据定义语言（DDL） class=headerlink title=数据定义语言（DDL）></a>数据定义语言（DDL）</h2><h3 id=库><a href=#库 class=headerlink title=库></a>库</h3><pre><code>1.库的创建
+    create database 库名；
+
+    容错性处理:如果库存在不创建，否则创建库
+        create database if not exists 库名;
+
+2.库的修改
+    1.更改数据字符集
+    alter database 库名 character set ();
+
+3.库的删除
+    drop database if exists 库名；</code></pre><h3 id=表><a href=#表 class=headerlink title=表></a>表</h3><pre><code>1.表的创建
+    语法：
+        create table if not exists 表名（
+            列名 列的类型 【（长度）约束】，
+            列名 列的类型 【（长度）约束】，
+            列名 列的类型 【（长度）约束】
+        ）；
+
+2.表的修改
+    修改列名
+        alter table 表名 change column 旧列名 新列名 列类型；
+
+    修改列的类型或约束
+        alter table 表名 modify column 列名 列类型；
+
+    添加新列
+        alter table 表名 add column 新列名 类型；
+
+    删除列
+        alter table 表名 drop column 列名；
+
+    修改表名
+        alter table 表名 rename to 新表名；
+
+3.表的删除
+    drop table 【if exists】表名；
+
+4.表的复制
+    复制表的结构与数据
+
+    -仅复制表的结构
+        create table 新表名 like 旧表名;
+
+    -复制表的所有数据与结构
+        create table 新表名 select * from 旧表名;
+
+    -仅复制部分数据
+         create table 新表名 select 列表 from 旧表名 where 条件;
+
+    -仅复制部分结构
+        create table 新表名 select 列表 from 旧表名 where 0;</code></pre><h3 id=视图><a href=#视图 class=headerlink title=视图></a>视图</h3><pre><code>1.视图的含义
+    虚拟表，和普通表一样使用，通过表动态生成的数据。（临时表）
+    只保存逻辑，不保存查询结果。        
+
+2.视图的创建
+    语法：
+        create view 视图名
+        as
+        select 查询列表
+        from 表名；
+
+    使用：
+        select 查询列表 from 视图名；（将结果集看成新表）
+
+3.视图的修改
+    1.方式一
+        视图存在则修改，不存在则创建
+        create or replace view 视图名
+        as
+        查询语句；
+
+    2.方式二
+        alter view 视图名
+        as
+        查询语句;
+
+4.视图的查看和删除
+    drop view 视图名1，视图名2...;
+
+    视图的查看:
+        desc 视图名；
+        show cteate view 视图名;(在命令行下，显示创建视图的细节)
+
+5.视图的更新
+    更新视图的数据，则原始表的数据也会发生改变。
+
+    1.插入数据
+        insert into view_name values();
+
+    2.更新数据
+        update view_name set () ;
+
+    3.删除数据
+        delete from view_name ();
+
+    具备以下关键字的SQL语句不允许更新
+        &gt; 分组函数，distinct,group by,having,union
+        &gt; 常量视图
+        &gt; select有子查询
+        &gt; join（查询数据在多个表中，连接查询）
+        &gt; from一个不能更新的视图
+        &gt; where子句的子查询引用了from子句中的表（相关子查询）
+
+6.视图的用处
+    提高sql语句的重用
+    简化查询的sql操作
+    保护数据，提高了安全性（只能看到自己操作的部分，看不到原始表）</code></pre><h3 id=数据类型><a href=#数据类型 class=headerlink title=数据类型></a>数据类型</h3><pre><code>1.整型数据
+       tinyint 9-255 (一个字节)
+       smallint 0-65535 (两个字节)
+       mediumint
+       int，integer
+       bigint </code></pre><p>​<br>​<br>特点:<br>-数据默认是有符号的，显式使用unsigned，数据是无符号的</p><pre><code>        -如果数据插入超出范围，报异常，插入元素是临界值
+
+        -如果不设置长度，会有默认长度，长度表示的是显示的宽度，与数据的范围无关。（zerofill进行填充，填充后默认是有符号的数据）
+
+2.小数
+    浮点型：
+        float(m,d)  (四个字节)
+        double(m,d)  (八个字节)
+
+    定点数:
+        dec(m,d)
+        decimal(m,d) 省略（m,d）默认m=10,d=0
+
+        m:整数部分+小数部分的长度
+        d:小数部分的长度
+
+        插入数据超出，插入临界值
+
+
+3.字符型
+    较短的文本：
+        char(m)    m-----&gt;0-255 定长 
+        varchar(m) m-----&gt;0-65535 可变
+
+        m：保存的字符数
+
+    较长的文本:
+        text
+        blob(较大的二进制)
+
+    enum:插入的值必须是枚举中的一个
+        1-255，一个字节
+        255-65535，两个字节 
+        不区分大小写
+
+    set:插入的数据是任意的数据集合
+
+    特点:
+        char比较耗费空间，但是效率较高，m可以省略，默认值为1
+        varchar节省空间，效率比较低
+
+4.日期型
+    类型:
+        date 4个字节 只表示日期
+
+        datetime 8 
+
+        timestamp 4 范围较小，反映时区</code></pre><h3 id=约束条件><a href=#约束条件 class=headerlink title=约束条件></a>约束条件</h3><pre><code>1.约束：
+    一种限制，保证表中的数据的准确性和可靠性
+
+2.约束分类:
+    not null:非空
+        保证该字段的值不能为空
+
+    default:默认
+        保证该字段的值具有默认值
+
+    primary key:主键
+        该字段的值具有唯一性，非空
+
+    unique：唯一
+        该字段的值具有唯一性，可以空
+
+    check：【mysql不支持】
+
+    foreign key:外键
+        限制两个表的关系，用于保证该字段的值必须来自主表的关联列的值
+        在从表中加外键约束，用于引用主表的值
+
+3.添加约束:在数据添加之前
+    -创建表时
+    -修改表时
+
+4.约束的添加分类:
+    表级约束：
+        default not null除外，都支持            
+
+    列级约束：
+        都可以写，语法支持，但【外键约束】没有效果
+
+5.创建表时添加约束
+    添加列级约束：
+        CREATE TABLE stuinfo(
+            id INT PRIMARY KEY,#主键
+            stuName VARCHAR(20) NOT NULL,#非空
+            gender CHAR(1) CHECK(gender IN (&apos;男&apos;,&apos;女&apos;)),
+            seat INT UNIQUE,#唯一
+            sge INT DEFAULT 18#默认
+        );
+
+    添加表级约束:
+        CREATE TABLE stuinfo(
+            id INT,
+            stuName VARCHAR(20),
+            gender CHAR,
+            seat INT,
+            age INT,
+
+            [CONSTRAINT pk] PRIMARY KEY(id),#主键
+            [CONSTRAINT uq] UNIQUE(seat),#唯一
+            [CONSTRAINT ck] CHECK(gender IN (&apos;男&apos;,&apos;女&apos;))
+        );
+
+    外键:fk_表名_主表名
+
+6.主键与唯一的对比
+    主键只能有一个为null，主键可以组合（多个属性列共同组成）
+    唯一可以有多个null，可以组合
+
+7.外键（on delete cascade级联删除on set null级联置空）
+    -要求在从表中设置外键关系
+    -从表的外键列的类型和主表的关联列的类型要求一致或兼容，名称无要求
+    -主表的关联列必须是一个key(一般是主键或唯一)
+    -插入时，要求先插入主表再插入从表；删除数据时，先删除从表，再删除主表
+
+8.修改表时添加约束
+    添加列级约束:
+        modify column
+    添加表级约束:
+        add 
+
+    alter table 表名 modify column 列名 类型；
+
+9.修改表时删除约束
+
+10.标识列
+    又称为自增长列
+    不用手动的插入值，系统提供默认的序列值
+
+    &gt; 标识列不需要一定与主键对应，但是必须是key
+    &gt; 一个表中至多只能有一个自增长列
+    &gt; 标识列的类型只能是数值型的
+    &gt; 标识列可以通过 set auto_increment_increment设置步长</code></pre><h2 id=事务控制语言（TCL）><a href=#事务控制语言（TCL） class=headerlink title=事务控制语言（TCL）></a>事务控制语言（TCL）</h2><h3 id=事务><a href=#事务 class=headerlink title=事务></a>事务</h3><pre><code>1.定义
+    一个或一组sql语句组成一个执行单元，这个执行单元要么全执行，要么全不执行。
+    每个sql语句是相互依赖的
+
+2.mysql中的存储引擎
+    show engines;来查看支持的引擎
+
+    innoDB 支持事务
+    myisam memory 不支持事务
+
+3.事务的ACID属性
+    A（Atomicity）:原子性
+        事务是一个不可分割的工作单位，要么全发生，要么都不发生
+
+    C（Consistency）:一致性
+        事务会使数据库的一致性状态变换到另一个一致性状态
+
+    I（Isolation）:隔离性
+        一个事务的执行不能被其他事务干扰，即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能相互干扰
+
+    D（Durability）:持久性
+        事务一旦提交，对数据库的数据改变就是永久性的，接下来的其他操作和故障不应该对其有任何影响
+
+4.事务的创建
+    隐式事务:
+        insert update delete
+
+    显式的事务:
+        事务具有明显的开启和结束
+
+        前提：
+            先设置自动提交功能禁用
+            set autocommit=0;
+
+    1.开启事务
+        set autocommit = 0;
+        【start trancsaction;】
+
+    2.书写语句
+        sql语句
+
+    3.结束事务
+        commit;事务提交
+        rollback；事务回滚
+
+5.事务的并发处理（访问数据库中相应的数据）
+    脏读：（数据未被提交就被访问）
+        两个事务T1,t2,t1读取了已经被t2更新但是还【没有被提交】的字段，若t2回滚，t1读取的数据就是临时且无效的。
+
+    不可重复读:（数据被读取后值发生改变）
+        两个事务T1,t2,t1读取了一个字段，然后t2【更新】了数据，t1再次读取的同一字段，值改变了。
+
+    幻读:
+        两个事务T1,t2,t1读取了一个字段，然后t2在该表【插入】一些新的行，t1再次读取时，就会多出几行。
+
+6.事务的隔离级别
+    read uncommited:会出现脏读，幻读，不可重复读
+
+    read commited:幻读，不可重复读
+
+    repeatable read：不可重复读，mysql默认的隔离级别
+
+    serializable：均能解决
+
+        查看当前的隔离级别:            
+            select @@tx_isolation;
+
+        设置当前的隔离级别:
+            set transaction isolation level [隔离级别];
+
+        设置数据库的全局的隔离级别:
+            set global transaction isolation level 级别;
+
+7.回滚点的设置
+    savepoint 节点名；
+    rollback to 节点名;
+        在回滚点之间的数据不发生改变</code></pre><h2 id=函数与控制过程><a href=#函数与控制过程 class=headerlink title=函数与控制过程></a>函数与控制过程</h2><h3 id=变量><a href=#变量 class=headerlink title=变量></a>变量</h3><pre><code>1.分类
+    系统变量：
+        全局变量：
+            服务器每次使用将为所有的全局变量赋初值，针对于所有的会话，但不能跨重启
+
+        会话变量：
+            仅仅对于当前的会话（连接）有效
+
+    自定义变量：
+        用户变量：
+            针对当前会话的变量，类似会话变量
+
+        局部变量：
+            仅仅在局部有效，在定义的begin end范围内
+
+2.系统变量：
+    变量是由系统提供的，属于服务器层面
+
+    使用的语法：
+        查看全局变量和会话变量：
+            show global|session varibles;
+
+        查看满足条件的部分系统变量：
+            show global|session variables like &apos;% %&apos;;
+
+        查看某个确定的系统变量:
+            select @@global|session.系统变量名；
+
+        变量赋值：
+            set global|session 系统变量 = value;
+            set @@global|session.系统变量 = value;
+
+        Ps:session可以不写，不写默认是会话变量
+
+3.自定义变量
+    使用步骤：
+        声明，赋值，使用
+
+    用户变量：
+        1.声明并初始化：
+            set @用户变量名 = 值；
+            set @用户变量名 ：= 值；
+            select @用户变量名 ：=值；
+
+        2.赋值：
+            方式一：
+            set 或 select
+            set @用户变量名 = 值；
+            set @用户变量名 ：= 值；
+            select @用户变量名 ：=值；
+
+            方式二：
+            select 字段 into 变量 from 表名；
+
+        3.使用
+            select @用户变量名；
+
+    局部变量：
+        1.声明
+            declare 变量名 类型；
+            declare 变量名 类型 default 值；
+
+        2.赋值
+            set 局部变量名 = 值；
+            set 局部变量名 ：= 值；
+            select @局部变量名 := 值；
+
+            select 字段 into 局部变量名 from 表名；
+
+        3.使用
+            select 局部变量名；
+
+        4.使用位置
+            必须是在begin end 内，是第一句话
+
+    用户变量与局部变量的区别：
+             作用域     定义和使用的位置        语法
+    用户变量  当前会话      会话的任何位置        一般加@
+
+    局部变量  begin end  只能在begin end      一般不加@,限定类型</code></pre><h3 id=存储过程><a href=#存储过程 class=headerlink title=存储过程></a>存储过程</h3><pre><code>1.含义
+    一组与先编译好的sql语句的集合，理解成批处理语句
+
+2.好处
+    &gt; 提高代码的重用性
+    &gt; 简化操作
+    &gt; 减少了编译次数，减少了和服务器的连接次数，提高了效率
+
+3.语法
+    1.创建存储过程
+        create procedure 存储过程名(参数列表)
+        begin
+            存储过程体
+        end 
+
+        注意：
+            1.参数列表包含三个部分：
+                参数模式 参数名 参数类型
+
+                参数模式：
+                    in :输入，调用方将参数传入
+                    out ：输出，返回值
+                    inout ：既可以传入又可以输出
+
+            2.如果存储过程体只有一句sql语句，begin end可以不写
+
+            3.存储过程体的每条语句必须加上分号，在结尾加上 delimiter 设置结束标志
+                delimiter 结束标志 
+
+    2.调用存储过程
+        带in的存储过程调用：
+            call 存储过程名(实参列表);
+
+        带out的存储过程调用：
+            【首先需要定义参数接收返回值，将变量进行赋值】
+            call 存储过程名（@参数）；
+
+        带inout参数的存储过程：
+            传入变量
+
+4.存储过程的删除
+    drop procedure 存储过程名；
+
+5.查看存储过程
+    show create procedure 存储过程名；</code></pre><h3 id=函数><a href=#函数 class=headerlink title=函数></a>函数</h3><pre><code>1.语法
+    一组预先编译好的sql语句集合，理解成批处理语句
+
+2.函数与存储过程的区别
+    函数有且仅有一个返回值
+
+    存储过程：批量插入，批量更新
+    函数：数据处理后返回一个结果
+
+3.函数的创建和调用语法
+    创建：
+        create function 函数名(参数列表) returns 返回类型
+        begin
+            函数体
+        end 
+
+    注意:
+        &gt; 返回列表：参数名 参数类型
+        &gt; 函数体。肯定会有return语句，如果没有会报错，如果return语句没有放在最后也不会报错
+        &gt; 函数体中只有一句话，可以省略begin end
+        &gt; 使用delimiter设置结束标记
+
+    调用：
+        select 函数名();
+
+4.函数的查看
+    show create function 函数名;
+
+5.函数的删除
+    drop function 函数名;</code></pre><h3 id=流程控制结构><a href=#流程控制结构 class=headerlink title=流程控制结构></a>流程控制结构</h3><pre><code>&gt; 顺序结构：程序从上到下依次执行
+
+&gt; 循环结构：在满足一定条件的基础上，重复执行一段代码
+
+&gt; 分支结构：程序从两条或多条路径之间选择一条执行
+
+1.分支结构
+    1.if函数
+        if(表达式1，表达式2，表达式3)；
+
+        如果表达式1为真，执行表达式2，否则执行表达式3
+
+    2.case函数
+        1.类似于switch语句，实现等值判断
+            case 表达式|字段|变量
+            when 值1 then 返回值1或语句1；
+            else 语句n；
+            end case;
+
+        2.类似于多重if分支，实现区间判断
+            case 
+            when 值1 then 返回值1或语句1;
+            else 语句n;
+            end case;
+
+        特点：
+            &gt; 可以作为表达式，嵌套使用，在任何地方
+            &gt; 可以作为独立的语句，只能在begin end中
+            &gt; 条件满足执行语句并返回，不满足，执行else中语句
+            &gt; 没有else语句，返回null
+
+    3.if结构
+        实现多重分支
+
+        语法：
+            if 条件1 then 语句1;
+            elseif 条件2 then 语句2;
+            【else 语句n】;
+            end if;
+
+2.循环结构
+    1.分类
+        while,loop,repeat
+
+    2.循环控制语句
+        &gt; iterate:继续，结束本次循环，进行下一次
+        &gt; leave:退出循环
+
+    3.while语法
+        【标签:】while 循环条件 do
+            循环体；
+        end while 【标签】;
+
+    4.loop语法------&gt;模拟死循环
+        【标签:】loop
+            循环体
+        end loop 【标签】；
+
+    5.repeat语法
+        【标签:】repeat
+            循环体；
+        until 结束条件；
+        end repeat 【标签】；</code></pre></div><div><div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读 ------</div></div><footer class=post-footer><div class=post-tags><a href="/tags/mysql/" rel=tag><i class="fa fa-tag"></i> mysql</a></div><div class=post-widgets><div id=needsharebutton-postbottom><span class=btn><i class="fa fa-share-alt" aria-hidden=true></i></span></div></div><div class=post-nav><div class="post-nav-next post-nav-item"><a href="/2010/04/06/thread%E5%9F%BA%E7%A1%80/" rel=next title=thread基础><i class="fa fa-chevron-left"></i> thread基础</a></div><span class=post-nav-divider></span><div class="post-nav-prev post-nav-item"><a href="/2019/12/09/SQLjdbc/" rel=prev title="SQL JDBC">SQL JDBC <i class="fa fa-chevron-right"></i></a></div></div><div><p id=div-border-left-red><b>本文基于<a target=_blank title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0</a>国际许可协议发布</b><br><span><b>本文地址:</b><a href="/2019/09/06/mysql%E5%9F%BA%E7%A1%80/" title=mysql基础>http://print3306.github.io/2019/09/06/mysql%E5%9F%BA%E7%A1%80/</a><br><b>转载请注明出处, 谢谢！</b></span></p></div></footer></div></article><div class=post-spread></div></div></div></div><div class=sidebar-toggle><div class=sidebar-toggle-line-wrap><span class="sidebar-toggle-line sidebar-toggle-line-first"></span> <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span> <span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id=sidebar class=sidebar><div class=sidebar-inner><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target=post-toc-wrap>文章目录</li><li class=sidebar-nav-overview data-target=site-overview-wrap>站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class=site-overview><div class="site-author motion-element" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image src=/images/avatar1.jpg alt=浊酒一杯><p class=site-author-name itemprop=name>浊酒一杯</p><p class="site-description motion-element" itemprop=description>砥砺前行</p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href=/archives><span class=site-state-item-count>35</span> <span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/index.html><span class=site-state-item-count>14</span> <span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/index.html><span class=site-state-item-count>23</span> <span class=site-state-item-name>标签</span></a></div></nav><div class="links-of-author motion-element"><span class=links-of-author-item><a href=mailto:3230372879qq.com target=_blank title=E-Mail><i class="fa fa-fw fa-globe"></i>E-Mail</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class=post-toc><div class=post-toc-content><ol class=nav><li class="nav-item nav-level-2"><a class=nav-link href=#MySQL的语法规范><span class=nav-number>1.</span> <span class=nav-text>MySQL的语法规范</span></a></li><li class="nav-item nav-level-2"><a class=nav-link href=#数据查询语言（DQL）><span class=nav-number>2.</span> <span class=nav-text>数据查询语言（DQL）</span></a><ol class=nav-child><li class="nav-item nav-level-3"><a class=nav-link href=#基础查询><span class=nav-number>2.1.</span> <span class=nav-text>基础查询</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#条件查询><span class=nav-number>2.2.</span> <span class=nav-text>条件查询</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#排序查询><span class=nav-number>2.3.</span> <span class=nav-text>排序查询</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#常见函数><span class=nav-number>2.4.</span> <span class=nav-text>常见函数</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#分组查询><span class=nav-number>2.5.</span> <span class=nav-text>分组查询</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#连接查询><span class=nav-number>2.6.</span> <span class=nav-text>连接查询</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#子查询><span class=nav-number>2.7.</span> <span class=nav-text>子查询</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#分页查询><span class=nav-number>2.8.</span> <span class=nav-text>分页查询</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#联合查询><span class=nav-number>2.9.</span> <span class=nav-text>联合查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class=nav-link href=#数据操纵语言（DML）><span class=nav-number>3.</span> <span class=nav-text>数据操纵语言（DML）</span></a><ol class=nav-child><li class="nav-item nav-level-3"><a class=nav-link href=#插入语句><span class=nav-number>3.1.</span> <span class=nav-text>插入语句</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#修改语句><span class=nav-number>3.2.</span> <span class=nav-text>修改语句</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#删除语句><span class=nav-number>3.3.</span> <span class=nav-text>删除语句</span></a></li></ol></li><li class="nav-item nav-level-2"><a class=nav-link href=#数据定义语言（DDL）><span class=nav-number>4.</span> <span class=nav-text>数据定义语言（DDL）</span></a><ol class=nav-child><li class="nav-item nav-level-3"><a class=nav-link href=#库><span class=nav-number>4.1.</span> <span class=nav-text>库</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#表><span class=nav-number>4.2.</span> <span class=nav-text>表</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#视图><span class=nav-number>4.3.</span> <span class=nav-text>视图</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#数据类型><span class=nav-number>4.4.</span> <span class=nav-text>数据类型</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#约束条件><span class=nav-number>4.5.</span> <span class=nav-text>约束条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class=nav-link href=#事务控制语言（TCL）><span class=nav-number>5.</span> <span class=nav-text>事务控制语言（TCL）</span></a><ol class=nav-child><li class="nav-item nav-level-3"><a class=nav-link href=#事务><span class=nav-number>5.1.</span> <span class=nav-text>事务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class=nav-link href=#函数与控制过程><span class=nav-number>6.</span> <span class=nav-text>函数与控制过程</span></a><ol class=nav-child><li class="nav-item nav-level-3"><a class=nav-link href=#变量><span class=nav-number>6.1.</span> <span class=nav-text>变量</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#存储过程><span class=nav-number>6.2.</span> <span class=nav-text>存储过程</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#函数><span class=nav-number>6.3.</span> <span class=nav-text>函数</span></a></li><li class="nav-item nav-level-3"><a class=nav-link href=#流程控制结构><span class=nav-number>6.4.</span> <span class=nav-text>流程控制结构</span></a></li></ol></li></ol></div></div></section></div></aside></div></main><footer id=footer class=footer><div class=footer-inner><div class=copyright>&copy; <span itemprop=copyrightYear>2021</span> <span class=with-love><i class="fa fa-user"></i></span> <span class=author itemprop=copyrightHolder>浊酒一杯</span> <span class=post-meta-divider>|</span> <span class=post-meta-item-icon><i class="fa fa-area-chart"></i></span> <span class=post-meta-item-text>Site words total count&#58;</span> <span title="Site words total count">87.4k</span></div></div></footer><div class=back-to-top><i class="fa fa-arrow-up"></i> <span id=scrollpercent><span>0</span>%</span></div><div id=needsharebutton-float><span class=btn><i class="fa fa-share-alt" aria-hidden=true></i></span></div></div><script type=text/javascript>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script><script type=text/javascript src="/lib/jquery/index.js?v=2.1.3"></script><script type=text/javascript src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type=text/javascript src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type=text/javascript src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type=text/javascript src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type=text/javascript src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type=text/javascript src="/js/src/utils.js?v=5.1.4"></script><script type=text/javascript src="/js/src/motion.js?v=5.1.4"></script><script type=text/javascript src="/js/src/affix.js?v=5.1.4"></script><script type=text/javascript src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type=text/javascript src="/js/src/scrollspy.js?v=5.1.4"></script><script type=text/javascript src="/js/src/post-details.js?v=5.1.4"></script><script type=text/javascript src="/js/src/bootstrap.js?v=5.1.4"></script><script type=text/javascript>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><link rel=stylesheet href=/lib/needsharebutton/needsharebutton.css><script src=/lib/needsharebutton/needsharebutton.js></script><script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "vertical";
+      
+          flOptions.position = "topRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script><script type=text/javascript src=/js/src/clicklove.js></script><script type=text/javascript>
+    //微信二维码点击背景关闭
+    $('body').delegate('.-mob-share-weixin-qrcode-bg','click', function(){
+         $(".-mob-share-weixin-qrcode-close").trigger("click");
+    }); 
+</script><script type=text/javascript color=192,192,192 opacity=0.6 zindex=-1 count=150 src=//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js>
+  </script><style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style><script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script><script src=/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
