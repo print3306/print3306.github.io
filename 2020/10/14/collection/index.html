@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://print3306.github.io/2020/10/14/collection/collection.png">
 <meta property="og:image" content="http://print3306.github.io/2020/10/14/collection/map.png">
 <meta property="article:published_time" content="2020-10-14T06:38:36.000Z">
-<meta property="article:modified_time" content="2021-03-14T14:31:28.210Z">
+<meta property="article:modified_time" content="2021-03-24T07:18:02.900Z">
 <meta property="article:author" content="浊酒一杯">
 <meta property="article:tag" content="Java-SE">
 <meta name="twitter:card" content="summary">
@@ -371,8 +371,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-03-14T22:31:28+08:00">
-                2021-03-14
+              <time title="更新于" itemprop="dateModified" datetime="2021-03-24T15:18:02+08:00">
+                2021-03-24
               </time>
             
           </span>
@@ -540,7 +540,7 @@
 
 <p>Map.Entry是Map中的内部类，使用getKey()获取键，使用getValue()获取值，在大量数据遍历的时候，需要使Map.Entry&lt;K,V&gt;来进行遍历</p>
 <h3 id="HashMap实现类"><a href="#HashMap实现类" class="headerlink" title="HashMap实现类"></a>HashMap实现类</h3><h4 id="底层实现"><a href="#底层实现" class="headerlink" title="底层实现"></a>底层实现</h4><ul>
-<li>HashMap底层是：<strong>数组+单向链表</strong>，又叫<strong>哈希表或者散列表</strong></li>
+<li>HashMap底层是：<strong>数组+单向链表+红黑树</strong>，又叫<strong>哈希表或者散列表</strong></li>
 <li>数组：检索效率比较高，但是随机增删效率较低；单向链表：随机增删效率较高，但是检索效率比较高。哈希表综合两个数据结构的优点，通过hash算法将key映射到数组下标，然后再从下标开始检索数据，缩小检索范围，提高效率</li>
 <li>无论数据的存取，都需要先根据key，将key的哈希值映射到数组下标中</li>
 <li>HashMap的键可以为null，但是由于键的不可重复，只能有一个为null</li>
@@ -567,20 +567,20 @@
 <li>第二步：通过hash值，使用哈希算法获取数组下标，如果下标位置没有元素，返回null；如果下标位置有链表，将k与每个节点的key进行equals，如果都为false，返回true；如果有一个为true，返回该节点的value。</li>
 </ul>
 <p>​    说明：同一个下标上的所有节点的hash值可能不一样，但是经过hash算法之后可以得到相同的数组下标，和hash算法的实现有关，可能是取余，会造成“哈希碰撞”</p>
-<h4 id="为什么哈希表的随机增删和检索效率都比较高？"><a href="#为什么哈希表的随机增删和检索效率都比较高？" class="headerlink" title="为什么哈希表的随机增删和检索效率都比较高？"></a>为什么哈希表的随机增删和检索效率都比较高？</h4><p>​    随即增删在链表上进行；检索也不需要全部扫描</p>
+<h4 id="为什么哈希表的随机增删和检索效率都比较高？"><a href="#为什么哈希表的随机增删和检索效率都比较高？" class="headerlink" title="为什么哈希表的随机增删和检索效率都比较高？"></a>为什么哈希表的随机增删和检索效率都比较高？</h4><p>​    随机增删在链表上进行；检索也不需要全部扫描</p>
 <h5 id="重写hashCode和equals？"><a href="#重写hashCode和equals？" class="headerlink" title="重写hashCode和equals？"></a>重写hashCode和equals？</h5><p>​    HashMap中增加元素和获取元素，都需要获取key的hash值，以及进行元素比较，在自定义类时，需要重写这两个方法</p>
 <h4 id="再次理解HashMap的无序不可重复？"><a href="#再次理解HashMap的无序不可重复？" class="headerlink" title="再次理解HashMap的无序不可重复？"></a>再次理解HashMap的无序不可重复？</h4><p>​    无序：增加元素的时候，根据hash码来进行定位，不知道该元素的放置位置，存储顺序和取出顺序可能不一样</p>
 <p>​    不可重复：重写了equals方法，一旦重复，会覆盖原来节点上的value</p>
 <h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>​    存放在HashMap集合的Key部分的，以及HashSet上的元素，需要重写hashCode和equals方法</p>
 <h3 id="Hashtable实现类"><a href="#Hashtable实现类" class="headerlink" title="Hashtable实现类"></a>Hashtable实现类</h3><h4 id="特点：-3"><a href="#特点：-3" class="headerlink" title="特点："></a>特点：</h4><ul>
-<li>底层的数据结构哈希表，线程安全，由于保证线程安全已经具有更好的方法，Hashtable使用的较少</li>
+<li>底层的数据结构哈希表，线程安全，由于保证线程安全（不使用synchronized关键字）已经具有更好的方法，Hashtable使用的较少</li>
 <li>Hashtable的键和值都不能为null</li>
 <li>初始默认容量11，默认加载因子为0.75，扩容2 * capacity + 1</li>
 </ul>
 <h4 id="Properties类"><a href="#Properties类" class="headerlink" title="Properties类"></a>Properties类</h4><ul>
 <li>Hashtable的子类，线程安全，键和值只能为String，又称为配置类</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Properties propertits = <span class="keyword">new</span> Properties();</span><br><span class="line"><span class="comment">// 存储键值对</span></span><br><span class="line">properties.setProperty(<span class="string">"1"</span>,<span class="string">"2"</span>);</span><br><span class="line"><span class="comment">// 根据key获取value</span></span><br><span class="line">properties.tetProperty(<span class="string">"1"</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Properties propertits = <span class="keyword">new</span> Properties();</span><br><span class="line"><span class="comment">// 存储键值对</span></span><br><span class="line">properties.setProperty(<span class="string">"1"</span>,<span class="string">"2"</span>);</span><br><span class="line"><span class="comment">// 根据key获取value</span></span><br><span class="line">properties.getProperty(<span class="string">"1"</span>);</span><br></pre></td></tr></table></figure>
 
 <h3 id="TreeMap实现类"><a href="#TreeMap实现类" class="headerlink" title="TreeMap实现类"></a>TreeMap实现类</h3><h4 id="特点：-4"><a href="#特点：-4" class="headerlink" title="特点："></a>特点：</h4><ul>
 <li>TreeMap：可排序集合，存储在TreeMap中的元素按照大小自动排序</li>
@@ -655,7 +655,7 @@
 <td>HashMap</td>
 <td>16</td>
 <td>0.75</td>
-<td>32</td>
+<td>2 * capacity</td>
 <td>哈希表</td>
 <td>是</td>
 </tr>
