@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="theme-next pisces use-motion" lang=zh-Hans><head><meta charset=UTF-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1"><meta name=theme-color content=#222><script src="/lib/pace/pace.min.js?v=1.0.2"></script><link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel=stylesheet><meta http-equiv=Cache-Control content=no-transform><meta http-equiv=Cache-Control content=no-siteapp><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel=stylesheet type=text/css><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel=stylesheet type=text/css><link href="/css/main.css?v=5.1.4" rel=stylesheet type=text/css><link rel=apple-touch-icon sizes=180x180 href="/images/avatar1.png?v=5.1.4"><link rel=icon type=image/png sizes=32x32 href="/images/avatar1.png?v=5.1.4"><link rel=icon type=image/png sizes=16x16 href="/images/avatar1.png?v=5.1.4"><link rel=mask-icon href="/images/logo.svg?v=5.1.4" color=#222><meta name=keywords content=Java-SE,><meta name=description content="线程简介1.线程 高可用 高性能 高并发 分类： 用户线程 守护线程（Daemon） 2.多线程的使用场景 多线程：多条路径完成任务，多任务的要求促进了多线程的产生 3.进程和线程 进程: 操作系统的资源分配单元 线程：CPU的调度器进行调度 4.线程创建的三种方式"><meta property=og:type content=article><meta property=og:title content=thread基础><meta property=og:url content=http://print3306.github.io/2010/04/06/thread%E5%9F%BA%E7%A1%80/index.html><meta property=og:site_name content=浊酒一杯><meta property=og:description content="线程简介1.线程 高可用 高性能 高并发 分类： 用户线程 守护线程（Daemon） 2.多线程的使用场景 多线程：多条路径完成任务，多任务的要求促进了多线程的产生 3.进程和线程 进程: 操作系统的资源分配单元 线程：CPU的调度器进行调度 4.线程创建的三种方式"><meta property=article:published_time content=2010-04-06T07:58:43.000Z><meta property=article:modified_time content=2021-03-19T11:38:54.098Z><meta property=article:author content=浊酒一杯><meta property=article:tag content=Java-SE><meta name=twitter:card content=summary><script type=text/javascript id=hexo.configurations>
+<!DOCTYPE html><html class="theme-next pisces use-motion" lang=zh-Hans><head><meta charset=UTF-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1"><meta name=theme-color content=#222><script src="/lib/pace/pace.min.js?v=1.0.2"></script><link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel=stylesheet><meta http-equiv=Cache-Control content=no-transform><meta http-equiv=Cache-Control content=no-siteapp><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel=stylesheet type=text/css><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel=stylesheet type=text/css><link href="/css/main.css?v=5.1.4" rel=stylesheet type=text/css><link rel=apple-touch-icon sizes=180x180 href="/images/avatar1.png?v=5.1.4"><link rel=icon type=image/png sizes=32x32 href="/images/avatar1.png?v=5.1.4"><link rel=icon type=image/png sizes=16x16 href="/images/avatar1.png?v=5.1.4"><link rel=mask-icon href="/images/logo.svg?v=5.1.4" color=#222><meta name=keywords content="Hexo, NexT"><meta name=description content=砥砺前行><meta property=og:type content=website><meta property=og:title content=浊酒一杯><meta property=og:url content=http://print3306.github.io/archives/2020/04/index.html><meta property=og:site_name content=浊酒一杯><meta property=og:description content=砥砺前行><meta property=article:author content=浊酒一杯><meta property=article:tag content=Java><meta property=article:tag content=IT><meta property=article:tag content=学习><meta name=twitter:card content=summary><script type=text/javascript id=hexo.configurations>
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
@@ -20,7 +20,7 @@
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
   };
-</script><link rel=canonical href="http://print3306.github.io/2010/04/06/thread基础/"><title>thread基础 | 浊酒一杯</title><meta name=generator content="Hexo 4.2.1"></head><body itemscope itemtype=http://schema.org/WebPage lang=zh-Hans><div class="container sidebar-position-left page-post-detail"><div class=headband></div><header id=header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-wrapper><div class=site-meta><div class=custom-logo-site-title><a href="/" class=brand rel=start><span class=logo-line-before><i></i></span> <span class=site-title>浊酒一杯</span> <span class=logo-line-after><i></i></span></a></div><p class=site-subtitle></p></div><div class=site-nav-toggle><button><span class=btn-bar></span> <span class=btn-bar></span> <span class=btn-bar></span></button></div></div><nav class=site-nav><ul id=menu class=menu><li class="menu-item menu-item-home"><a href="/" rel=section><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel=section><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel=section><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel=section><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类</a></li><li class="menu-item menu-item-about"><a href="/about/" rel=section><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于</a></li><li class="menu-item menu-item-search"><a href=javascript:; class=popup-trigger><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class=site-search><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class=search-icon><i class="fa fa-search"></i></span> <span class=popup-btn-close><i class="fa fa-times-circle"></i></span><div class=local-search-input-wrapper><input autocomplete=off placeholder=搜索... spellcheck=false type=text id=local-search-input></div></div><div id=local-search-result></div></div></div></nav><script>
+</script><link rel=canonical href="http://print3306.github.io/archives/2020/04/"><title>归档 | 浊酒一杯</title><meta name=generator content="Hexo 4.2.1"></head><body itemscope itemtype=http://schema.org/WebPage lang=zh-Hans><div class="container sidebar-position-left page-archive"><div class=headband></div><header id=header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-wrapper><div class=site-meta><div class=custom-logo-site-title><a href="/" class=brand rel=start><span class=logo-line-before><i></i></span> <span class=site-title>浊酒一杯</span> <span class=logo-line-after><i></i></span></a></div><p class=site-subtitle></p></div><div class=site-nav-toggle><button><span class=btn-bar></span> <span class=btn-bar></span> <span class=btn-bar></span></button></div></div><nav class=site-nav><ul id=menu class=menu><li class="menu-item menu-item-home"><a href="/" rel=section><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel=section><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel=section><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel=section><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类</a></li><li class="menu-item menu-item-about"><a href="/about/" rel=section><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于</a></li><li class="menu-item menu-item-search"><a href=javascript:; class=popup-trigger><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class=site-search><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class=search-icon><i class="fa fa-search"></i></span> <span class=popup-btn-close><i class="fa fa-times-circle"></i></span><div class=local-search-input-wrapper><input autocomplete=off placeholder=搜索... spellcheck=false type=text id=local-search-input></div></div><div id=local-search-result></div></div></div></nav><script>
     
     window.onload = function(){
         var path = 'https://malizhi.cn'; //这里要改成你博客的地址
@@ -35,119 +35,11 @@
         }
     };
 
- </script></div></header><main id=main class=main><div class=main-inner><div class=content-wrap><div id=content class=content><div id=posts class=posts-expand><article class="post post-type-normal" itemscope itemtype=http://schema.org/Article><div class=post-block><link itemprop=mainEntityOfPage href="http://print3306.github.io/2010/04/06/thread%E5%9F%BA%E7%A1%80/"><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=name content=浊酒一杯><meta itemprop=description><meta itemprop=image content=/images/avatar1.jpg></span> <span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content=浊酒一杯></span><header class=post-header><h1 class=post-title itemprop="name headline">thread基础</h1><div class=post-meta><span class=post-time><span class=post-meta-item-icon><i class="fa fa-calendar-o"></i></span> <span class=post-meta-item-text>发表于</span><time title=创建于 itemprop="dateCreated datePublished" datetime=2010-04-06T15:58:43+08:00>2010-04-06</time><span class=post-meta-divider>|</span> <span class=post-meta-item-icon><i class="fa fa-calendar-check-o"></i></span> <span class=post-meta-item-text>更新于&#58;</span><time title=更新于 itemprop=dateModified datetime=2021-03-19T19:38:54+08:00>2021-03-19</time></span> <span class=post-category><span class=post-meta-divider>|</span> <span class=post-meta-item-icon><i class="fa fa-folder-o"></i></span> <span class=post-meta-item-text>分类于</span> <span itemprop=about itemscope itemtype=http://schema.org/Thing><a href="/categories/Java/" itemprop=url rel=index><span itemprop=name>Java</span></a></span></span><div class=post-wordcount><span class=post-meta-item-icon><i class="fa fa-file-word-o"></i></span> <span class=post-meta-item-text>字数统计&#58;</span> <span title=字数统计>955</span></div></div></header><div class=post-body itemprop=articleBody><h2 id=线程简介><a href=#线程简介 class=headerlink title=线程简介></a>线程简介</h2><pre><code>1.线程
-        高可用
-        高性能
-        高并发    
-    分类：
-        用户线程
-        守护线程（Daemon）
-
-2.多线程的使用场景
-    多线程：多条路径完成任务，多任务的要求促进了多线程的产生
-
-3.进程和线程
-    进程: 操作系统的资源分配单元
-    线程：CPU的调度器进行调度
-
-4.线程创建的三种方式
-    1.继承Thread类
-        重写run方法
-        使用start()方法调用    
-
-    2.实现Runnable接口
-        重写run方法
-        使用new Thread().start()调用
-
-    3.实现Callable接口
-        重写call方法，实现高并发，call()可以抛出异常和返回值
-
-5.代理模式
-    静态代理：记录日志
-        一个公共接口，两个角色
-                    真实角色，代理角色 
-                    代理角色内含有真实角色，管理真实角色，具体行为由真实角色产生
-
-    在使用时，可以谁使用，来谁产生具体内容
-
-6.Lambda表达式
-    实现函数式编程        
-
-    实现接口，内部使用方法体
-    只能推导一个方法
-
-    只需要关注方法的内容 （）-&gt; {方法体}
-    含有一个参数 a -&gt; {方法体}
-    单行代码 可以省略{}
-    含有返回值
-
-7.线程的状态
-    新生 ：创建线程对象时
-
-    就绪 ：调用start()方法，只有获得CPU控制权，才能运行，处于就绪队列
-        1.start()
-        2.释放阻塞
-        3.yield 让出CPU控制
-        4.JVM线程调度
-
-    运行 ：获得CPU控制权，run()
-
-    阻塞 ：线程不在往下执行
-        1.sleep()：当前线程阻塞的毫秒数，sleep不会释放锁
-        2.wait()
-        3.join()
-        4.I/O
-
-    死亡 ：run()方法结束,线程被强制退出
-            外部干涉
-
-        yield() 由运行状态直接转到就绪状态 CPU重新调度线程
-        join() 合并线程 先执行join()的线程 在执行顺序的线程
-
-
-8.线程优先级
-    priority 优先级高的线程执行概率更大，但优先级低的线程也有执行的机会,优先级并不代表执行的次序
-    setPriority()设置线程的优先级 1 - 10，设置必须在线程启动之前
-        NOME_PRIORITY    1
-        MIN_PRIORITY    5
-        MAX_PRIORITY    10
-
-9.守护线程
-    守护线程(Daemon)
-        JVM必须完成用户线程，可以不用等待守护线程结束
-
-    默认状态下所有的线程都是守护线程，使用方法setDaemon(true)设置成守护线程
-
-10.其他方法
-    isAlive()线程是否存活
-    Thread.currentThread()当前线程
-    setName()设置线程名称
-
-11.线程同步
-    synchronized
-    保证数据的准确性，线程的执行次序,又称为并发控制 -&gt; 线程安全
-
-    并发控制：同一个对象多个线程同时进行操作，对共享资源的使用 
-
-    实现线程同步：队列和锁
-
-    锁机制（synchronized）: 锁住对象的资源,锁定所有者
-        synchronized方法：使用关键字synchornized控制对方法的访问，使用private限定方法对变量的访问，将所有的变量对应一把锁，每个synchronized方法都必须获得调用该方法的对象的锁才能执行，否则线程被阻塞
-        缺陷：将一个大的方法声明为synchronized方法，会导致性能的降低
-
-        synchronized块：
-            synchronized(obj){},obj称为同步监视器
-                obj可以为任何对象，但是推荐使用共享资源作为同步监视器
-                同步方法中可以不指定同步监视器，同步方法的同步监视器默认为this即对象本身，或class类即类的模子
-
-            同步监视器的执行过程：
-                第一个线程访问，锁定同步监视器，执行代码
-                第二个线程访问，同步监视器被锁定，无法执行
-                第一个线程访问结束，解锁同步监视器</code></pre></div><div><div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读 ------</div></div><footer class=post-footer><div class=post-tags><a href="/tags/Java-SE/" rel=tag><i class="fa fa-tag"></i> Java-SE</a></div><div class=post-widgets><div id=needsharebutton-postbottom><span class=btn><i class="fa fa-share-alt" aria-hidden=true></i></span></div></div><div class=post-nav><div class="post-nav-next post-nav-item"></div><span class=post-nav-divider></span><div class="post-nav-prev post-nav-item"><a href="/2019/09/06/mysql%E5%9F%BA%E7%A1%80/" rel=prev title=mysql基础>mysql基础 <i class="fa fa-chevron-right"></i></a></div></div><div><p id=div-border-left-red><b>本文基于<a target=_blank title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0</a>国际许可协议发布</b><br><span><b>本文地址:</b><a href="/2010/04/06/thread%E5%9F%BA%E7%A1%80/" title=thread基础>http://print3306.github.io/2010/04/06/thread%E5%9F%BA%E7%A1%80/</a><br><b>转载请注明出处, 谢谢！</b></span></p></div></footer></div></article><div class=post-spread></div></div></div></div><div class=sidebar-toggle><div class=sidebar-toggle-line-wrap><span class="sidebar-toggle-line sidebar-toggle-line-first"></span> <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span> <span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id=sidebar class=sidebar><div class=sidebar-inner><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target=post-toc-wrap>文章目录</li><li class=sidebar-nav-overview data-target=site-overview-wrap>站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class=site-overview><div class="site-author motion-element" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image src=/images/avatar1.jpg alt=浊酒一杯><p class=site-author-name itemprop=name>浊酒一杯</p><p class="site-description motion-element" itemprop=description>砥砺前行</p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href=/archives><span class=site-state-item-count>35</span> <span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/index.html><span class=site-state-item-count>14</span> <span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/index.html><span class=site-state-item-count>23</span> <span class=site-state-item-name>标签</span></a></div></nav><div class="links-of-author motion-element"><span class=links-of-author-item><a href=mailto:3230372879qq.com target=_blank title=E-Mail><i class="fa fa-fw fa-globe"></i>E-Mail</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class=post-toc><div class=post-toc-content><ol class=nav><li class="nav-item nav-level-2"><a class=nav-link href=#线程简介><span class=nav-number>1.</span> <span class=nav-text>线程简介</span></a></li></ol></div></div></section></div></aside></div></main><footer id=footer class=footer><div class=footer-inner><div class=copyright>&copy; <span itemprop=copyrightYear>2021</span> <span class=with-love><i class="fa fa-user"></i></span> <span class=author itemprop=copyrightHolder>浊酒一杯</span> <span class=post-meta-divider>|</span> <span class=post-meta-item-icon><i class="fa fa-area-chart"></i></span> <span class=post-meta-item-text>Site words total count&#58;</span> <span title="Site words total count">87.4k</span></div></div></footer><div class=back-to-top><i class="fa fa-arrow-up"></i> <span id=scrollpercent><span>0</span>%</span></div><div id=needsharebutton-float><span class=btn><i class="fa fa-share-alt" aria-hidden=true></i></span></div></div><script type=text/javascript>
+ </script></div></header><main id=main class=main><div class=main-inner><div class=content-wrap><div id=content class=content><div class="post-block archive"><div id=posts class=posts-collapse><span class=archive-move-on></span> <span class=archive-page-counter>OK! 目前共计 35 篇日志。 继续努力。</span><div class=collection-title><h1 class=archive-year id=archive-year-2020>2020</h1></div><article class="post post-type-normal" itemscope itemtype=http://schema.org/Article><header class=post-header><h2 class=post-title><a class=post-title-link href="/2020/04/06/thread%E5%9F%BA%E7%A1%80/" itemprop=url><span itemprop=name>thread基础</span></a></h2><div class=post-meta><time class=post-time itemprop=dateCreated datetime=2020-04-06T15:58:43+08:00 content=2020-04-06>04-06</time></div></header></article></div></div></div></div><div class=sidebar-toggle><div class=sidebar-toggle-line-wrap><span class="sidebar-toggle-line sidebar-toggle-line-first"></span> <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span> <span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id=sidebar class=sidebar><div class=sidebar-inner><section class="site-overview-wrap sidebar-panel sidebar-panel-active"><div class=site-overview><div class="site-author motion-element" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image src=/images/avatar1.jpg alt=浊酒一杯><p class=site-author-name itemprop=name>浊酒一杯</p><p class="site-description motion-element" itemprop=description>砥砺前行</p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href=/archives><span class=site-state-item-count>35</span> <span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/index.html><span class=site-state-item-count>14</span> <span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/index.html><span class=site-state-item-count>23</span> <span class=site-state-item-name>标签</span></a></div></nav><div class="links-of-author motion-element"><span class=links-of-author-item><a href=mailto:3230372879qq.com target=_blank title=E-Mail><i class="fa fa-fw fa-globe"></i>E-Mail</a></span></div></div></section></div></aside></div></main><footer id=footer class=footer><div class=footer-inner><div class=copyright>&copy; <span itemprop=copyrightYear>2021</span> <span class=with-love><i class="fa fa-user"></i></span> <span class=author itemprop=copyrightHolder>浊酒一杯</span> <span class=post-meta-divider>|</span> <span class=post-meta-item-icon><i class="fa fa-area-chart"></i></span> <span class=post-meta-item-text>Site words total count&#58;</span> <span title="Site words total count">87.4k</span></div></div></footer><div class=back-to-top><i class="fa fa-arrow-up"></i> <span id=scrollpercent><span>0</span>%</span></div><div id=needsharebutton-float><span class=btn><i class="fa fa-share-alt" aria-hidden=true></i></span></div></div><script type=text/javascript>
   if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
     window.Promise = null;
   }
-</script><script type=text/javascript src="/lib/jquery/index.js?v=2.1.3"></script><script type=text/javascript src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type=text/javascript src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type=text/javascript src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type=text/javascript src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type=text/javascript src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type=text/javascript src="/js/src/utils.js?v=5.1.4"></script><script type=text/javascript src="/js/src/motion.js?v=5.1.4"></script><script type=text/javascript src="/js/src/affix.js?v=5.1.4"></script><script type=text/javascript src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type=text/javascript src="/js/src/scrollspy.js?v=5.1.4"></script><script type=text/javascript src="/js/src/post-details.js?v=5.1.4"></script><script type=text/javascript src="/js/src/bootstrap.js?v=5.1.4"></script><script type=text/javascript>
+</script><script type=text/javascript src="/lib/jquery/index.js?v=2.1.3"></script><script type=text/javascript src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type=text/javascript src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type=text/javascript src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type=text/javascript src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type=text/javascript src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type=text/javascript src="/js/src/utils.js?v=5.1.4"></script><script type=text/javascript src="/js/src/motion.js?v=5.1.4"></script><script type=text/javascript src="/js/src/affix.js?v=5.1.4"></script><script type=text/javascript src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type=text/javascript src="/js/src/bootstrap.js?v=5.1.4"></script><script type=text/javascript>
     // Popup Window;
     var isfetched = false;
     var isXml = true;

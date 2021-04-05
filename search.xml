@@ -6336,6 +6336,23 @@ User findById(Integer id);</code></pre></blockquote>
       </tags>
   </entry>
   <entry>
+    <title>Spring Load</title>
+    <url>/2020/05/09/SpringLoad/</url>
+    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
+<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
+<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
+<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
+<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
+<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
+]]></content>
+      <categories>
+        <category>SpringFramework</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SQL Inject</title>
     <url>/2020/05/09/SQL%E6%B3%A8%E5%85%A5/</url>
     <content><![CDATA[<h1 id="SQL注入问题"><a href="#SQL注入问题" class="headerlink" title="SQL注入问题"></a>SQL注入问题</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>在拼接sql语句时，有一些特殊的SQL关键字参于字符串的拼接，导致SQL语句的逻辑发生变化，可能会造成安全性问题</code></pre><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre><code>1. 输入 a&apos;or&apos;a&apos;=&apos;a,条件改变
@@ -6396,20 +6413,122 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
       </tags>
   </entry>
   <entry>
-    <title>Spring Load</title>
-    <url>/2020/05/09/SpringLoad/</url>
-    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><pre><code>在下载Spring时，碰到很多问题，在此记录下载流程，方便以后再次下载！</code></pre><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-搜索Spring官网-https-spring-io"><a href="#1-搜索Spring官网-https-spring-io" class="headerlink" title="1. 搜索Spring官网: https://spring.io/"></a>1. 搜索Spring官网: <a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_1.png" alt></p>
-<h3 id="2-点击Projects"><a href="#2-点击Projects" class="headerlink" title="2. 点击Projects"></a>2. 点击Projects</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_2.png" alt></p>
-<h3 id="3-点击Spring-Framework"><a href="#3-点击Spring-Framework" class="headerlink" title="3. 点击Spring Framework"></a>3. 点击Spring Framework</h3><h3 id="4-下拉界面，找到并点击-Spring-Framework-Artifacts"><a href="#4-下拉界面，找到并点击-Spring-Framework-Artifacts" class="headerlink" title="4. 下拉界面，找到并点击 Spring Framework Artifacts"></a>4. 下拉界面，找到并点击 Spring Framework Artifacts</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_3.png" alt></p>
-<h3 id="5-找到并点击，http-repo-spring-io"><a href="#5-找到并点击，http-repo-spring-io" class="headerlink" title="5. 找到并点击，http://repo.spring.io"></a>5. 找到并点击，<a href="http://repo.spring.io" target="_blank" rel="noopener">http://repo.spring.io</a></h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_4.png" alt></p>
-<h3 id="6-左边第二个图标，依次点击"><a href="#6-左边第二个图标，依次点击" class="headerlink" title="6.左边第二个图标，依次点击"></a>6.左边第二个图标，依次点击</h3><pre><code>libs-release-local ---&gt; org ---&gt; springframework ---&gt; spring</code></pre><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_5.png" alt><br><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_6.png" alt></p>
-<h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
-]]></content>
+    <title>thread基础</title>
+    <url>/2020/04/06/thread%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h2 id="线程简介"><a href="#线程简介" class="headerlink" title="线程简介"></a>线程简介</h2><pre><code>1.线程
+        高可用
+        高性能
+        高并发    
+    分类：
+        用户线程
+        守护线程（Daemon）
+
+2.多线程的使用场景
+    多线程：多条路径完成任务，多任务的要求促进了多线程的产生
+
+3.进程和线程
+    进程: 操作系统的资源分配单元
+    线程：CPU的调度器进行调度
+
+4.线程创建的三种方式
+    1.继承Thread类
+        重写run方法
+        使用start()方法调用    
+
+    2.实现Runnable接口
+        重写run方法
+        使用new Thread().start()调用
+
+    3.实现Callable接口
+        重写call方法，实现高并发，call()可以抛出异常和返回值
+
+5.代理模式
+    静态代理：记录日志
+        一个公共接口，两个角色
+                    真实角色，代理角色 
+                    代理角色内含有真实角色，管理真实角色，具体行为由真实角色产生
+
+    在使用时，可以谁使用，来谁产生具体内容
+
+6.Lambda表达式
+    实现函数式编程        
+
+    实现接口，内部使用方法体
+    只能推导一个方法
+
+    只需要关注方法的内容 （）-&gt; {方法体}
+    含有一个参数 a -&gt; {方法体}
+    单行代码 可以省略{}
+    含有返回值
+
+7.线程的状态
+    新生 ：创建线程对象时
+
+    就绪 ：调用start()方法，只有获得CPU控制权，才能运行，处于就绪队列
+        1.start()
+        2.释放阻塞
+        3.yield 让出CPU控制
+        4.JVM线程调度
+
+    运行 ：获得CPU控制权，run()
+
+    阻塞 ：线程不在往下执行
+        1.sleep()：当前线程阻塞的毫秒数，sleep不会释放锁
+        2.wait()
+        3.join()
+        4.I/O
+
+    死亡 ：run()方法结束,线程被强制退出
+            外部干涉
+
+        yield() 由运行状态直接转到就绪状态 CPU重新调度线程
+        join() 合并线程 先执行join()的线程 在执行顺序的线程
+
+
+8.线程优先级
+    priority 优先级高的线程执行概率更大，但优先级低的线程也有执行的机会,优先级并不代表执行的次序
+    setPriority()设置线程的优先级 1 - 10，设置必须在线程启动之前
+        NOME_PRIORITY    1
+        MIN_PRIORITY    5
+        MAX_PRIORITY    10
+
+9.守护线程
+    守护线程(Daemon)
+        JVM必须完成用户线程，可以不用等待守护线程结束
+
+    默认状态下所有的线程都是守护线程，使用方法setDaemon(true)设置成守护线程
+
+10.其他方法
+    isAlive()线程是否存活
+    Thread.currentThread()当前线程
+    setName()设置线程名称
+
+11.线程同步
+    synchronized
+    保证数据的准确性，线程的执行次序,又称为并发控制 -&gt; 线程安全
+
+    并发控制：同一个对象多个线程同时进行操作，对共享资源的使用 
+
+    实现线程同步：队列和锁
+
+    锁机制（synchronized）: 锁住对象的资源,锁定所有者
+        synchronized方法：使用关键字synchornized控制对方法的访问，使用private限定方法对变量的访问，将所有的变量对应一把锁，每个synchronized方法都必须获得调用该方法的对象的锁才能执行，否则线程被阻塞
+        缺陷：将一个大的方法声明为synchronized方法，会导致性能的降低
+
+        synchronized块：
+            synchronized(obj){},obj称为同步监视器
+                obj可以为任何对象，但是推荐使用共享资源作为同步监视器
+                同步方法中可以不指定同步监视器，同步方法的同步监视器默认为this即对象本身，或class类即类的模子
+
+            同步监视器的执行过程：
+                第一个线程访问，锁定同步监视器，执行代码
+                第二个线程访问，同步监视器被锁定，无法执行
+                第一个线程访问结束，解锁同步监视器</code></pre>]]></content>
       <categories>
-        <category>SpringFramework</category>
+        <category>Java</category>
       </categories>
       <tags>
-        <tag>Spring</tag>
+        <tag>Java-SE</tag>
       </tags>
   </entry>
   <entry>
@@ -7657,125 +7776,6 @@ sql99标准
       </categories>
       <tags>
         <tag>mysql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>thread基础</title>
-    <url>/2010/04/06/thread%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h2 id="线程简介"><a href="#线程简介" class="headerlink" title="线程简介"></a>线程简介</h2><pre><code>1.线程
-        高可用
-        高性能
-        高并发    
-    分类：
-        用户线程
-        守护线程（Daemon）
-
-2.多线程的使用场景
-    多线程：多条路径完成任务，多任务的要求促进了多线程的产生
-
-3.进程和线程
-    进程: 操作系统的资源分配单元
-    线程：CPU的调度器进行调度
-
-4.线程创建的三种方式
-    1.继承Thread类
-        重写run方法
-        使用start()方法调用    
-
-    2.实现Runnable接口
-        重写run方法
-        使用new Thread().start()调用
-
-    3.实现Callable接口
-        重写call方法，实现高并发，call()可以抛出异常和返回值
-
-5.代理模式
-    静态代理：记录日志
-        一个公共接口，两个角色
-                    真实角色，代理角色 
-                    代理角色内含有真实角色，管理真实角色，具体行为由真实角色产生
-
-    在使用时，可以谁使用，来谁产生具体内容
-
-6.Lambda表达式
-    实现函数式编程        
-
-    实现接口，内部使用方法体
-    只能推导一个方法
-
-    只需要关注方法的内容 （）-&gt; {方法体}
-    含有一个参数 a -&gt; {方法体}
-    单行代码 可以省略{}
-    含有返回值
-
-7.线程的状态
-    新生 ：创建线程对象时
-
-    就绪 ：调用start()方法，只有获得CPU控制权，才能运行，处于就绪队列
-        1.start()
-        2.释放阻塞
-        3.yield 让出CPU控制
-        4.JVM线程调度
-
-    运行 ：获得CPU控制权，run()
-
-    阻塞 ：线程不在往下执行
-        1.sleep()：当前线程阻塞的毫秒数，sleep不会释放锁
-        2.wait()
-        3.join()
-        4.I/O
-
-    死亡 ：run()方法结束,线程被强制退出
-            外部干涉
-
-        yield() 由运行状态直接转到就绪状态 CPU重新调度线程
-        join() 合并线程 先执行join()的线程 在执行顺序的线程
-
-
-8.线程优先级
-    priority 优先级高的线程执行概率更大，但优先级低的线程也有执行的机会,优先级并不代表执行的次序
-    setPriority()设置线程的优先级 1 - 10，设置必须在线程启动之前
-        NOME_PRIORITY    1
-        MIN_PRIORITY    5
-        MAX_PRIORITY    10
-
-9.守护线程
-    守护线程(Daemon)
-        JVM必须完成用户线程，可以不用等待守护线程结束
-
-    默认状态下所有的线程都是守护线程，使用方法setDaemon(true)设置成守护线程
-
-10.其他方法
-    isAlive()线程是否存活
-    Thread.currentThread()当前线程
-    setName()设置线程名称
-
-11.线程同步
-    synchronized
-    保证数据的准确性，线程的执行次序,又称为并发控制 -&gt; 线程安全
-
-    并发控制：同一个对象多个线程同时进行操作，对共享资源的使用 
-
-    实现线程同步：队列和锁
-
-    锁机制（synchronized）: 锁住对象的资源,锁定所有者
-        synchronized方法：使用关键字synchornized控制对方法的访问，使用private限定方法对变量的访问，将所有的变量对应一把锁，每个synchronized方法都必须获得调用该方法的对象的锁才能执行，否则线程被阻塞
-        缺陷：将一个大的方法声明为synchronized方法，会导致性能的降低
-
-        synchronized块：
-            synchronized(obj){},obj称为同步监视器
-                obj可以为任何对象，但是推荐使用共享资源作为同步监视器
-                同步方法中可以不指定同步监视器，同步方法的同步监视器默认为this即对象本身，或class类即类的模子
-
-            同步监视器的执行过程：
-                第一个线程访问，锁定同步监视器，执行代码
-                第二个线程访问，同步监视器被锁定，无法执行
-                第一个线程访问结束，解锁同步监视器</code></pre>]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java-SE</tag>
       </tags>
   </entry>
 </search>
