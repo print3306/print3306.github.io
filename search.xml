@@ -18,7 +18,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java-SE</title>
+    <title>Java-SE-V1.0</title>
     <url>/2020/12/07/Java-SE/</url>
     <content><![CDATA[<h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>Java SE的基础知识，复习Java基础知识的整理笔记。</p>
 <p>基于Java JDK 1.8</p>
@@ -954,7 +954,7 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Java SE</tag>
+        <tag>Java-SE</tag>
       </tags>
   </entry>
   <entry>
@@ -1291,7 +1291,8 @@ Plugins -&gt; 搜索Lombok</code></pre><h2 id="lombok概述"><a href="#lombok概
 <p><img src="/2020/10/24/ubuntu/2_error.png" alt="无法解析域名"></p>
 <pre><code>2. 解决方法
     1. 查看DNS的配置文件
-        重新配置网络DNS</code></pre><pre><code class="linux">cat /etc/resolv.conf</code></pre>
+        重新配置网络DNS</code></pre><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat &#x2F;etc&#x2F;resolv.conf</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 </blockquote>
 <p><img src="/2020/10/24/ubuntu/2_1.png" alt></p>
@@ -1355,6 +1356,55 @@ Plugins -&gt; 搜索Lombok</code></pre><h2 id="lombok概述"><a href="#lombok概
       </categories>
       <tags>
         <tag>Error</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL 5.7.29 下载安装</title>
+    <url>/2020/06/18/mysql57/</url>
+    <content><![CDATA[<h2 id="下载安装MySQL-5-7-29版本"><a href="#下载安装MySQL-5-7-29版本" class="headerlink" title="下载安装MySQL-5.7.29版本"></a>下载安装MySQL-5.7.29版本</h2><h3 id="1-下载安装包"><a href="#1-下载安装包" class="headerlink" title="1.下载安装包"></a>1.下载安装包</h3><pre><code>官网下载安装包，离线安装方式</code></pre><ul>
+<li><a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="noopener">mysql数据库下载地址</a><blockquote>
+</blockquote>
+<img src="/2020/06/18/mysql57/0.png" alt></li>
+</ul>
+<h3 id="2-my-ini"><a href="#2-my-ini" class="headerlink" title="2.my.ini"></a>2.my.ini</h3><pre><code>下载的安装包解压后，安装目录如果没有*my.ini*文件，新建该文件，内容：
+其中，文件安装和data目录可以自定义</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/06/18/mysql57/5.png" alt></p>
+<h3 id="3-创建服务"><a href="#3-创建服务" class="headerlink" title="3.创建服务"></a>3.创建服务</h3><blockquote>
+</blockquote>
+<p><img src="/2020/06/18/mysql57/6.png" alt></p>
+<pre><code>mysql57为服务名</code></pre><h3 id="4-初始化"><a href="#4-初始化" class="headerlink" title="4.初始化"></a>4.初始化</h3><p><code>mysqld --initialize</code></p>
+<h3 id="5-启动服务"><a href="#5-启动服务" class="headerlink" title="5.启动服务"></a>5.启动服务</h3><p><code>net start mysql</code></p>
+<h3 id="6-连接数据库"><a href="#6-连接数据库" class="headerlink" title="6.连接数据库"></a>6.连接数据库</h3><ul>
+<li>临时密码：在***.err下<blockquote>
+</blockquote>
+<img src="/2020/06/18/mysql57/4.png" alt><br><img src="/2020/06/18/mysql57/9.png" alt><br><img src="/2020/06/18/mysql57/11.png" alt></li>
+</ul>
+<h3 id="7-更改密码"><a href="#7-更改密码" class="headerlink" title="7.更改密码"></a>7.更改密码</h3><blockquote>
+</blockquote>
+<p><img src="/2020/06/18/mysql57/12.png" alt></p>
+<h3 id="8-断开连接"><a href="#8-断开连接" class="headerlink" title="8.断开连接"></a>8.断开连接</h3><p><code>exit</code></p>
+<h3 id="9-退出服务"><a href="#9-退出服务" class="headerlink" title="9.退出服务"></a>9.退出服务</h3><blockquote>
+</blockquote>
+<p><img src="/2020/06/18/mysql57/13.png" alt></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="1-存在data文件夹"><a href="#1-存在data文件夹" class="headerlink" title="1.存在data文件夹"></a>1.存在data文件夹</h3><ul>
+<li>删除原本data，初始化命令自动生成新的data文件夹</li>
+<li>data文件夹自己手动创建可能报错，最好还是由系统自动创建<blockquote>
+</blockquote>
+<img src="/2020/06/18/mysql57/7.png" alt></li>
+</ul>
+<h3 id="2-无法启动服务"><a href="#2-无法启动服务" class="headerlink" title="2.无法启动服务"></a>2.无法启动服务</h3><blockquote>
+</blockquote>
+<p><img src="/2020/06/18/mysql57/1.png" alt><br><img src="/2020/06/18/mysql57/8.png" alt></p>
+<pre><code>更改注册表信息</code></pre><blockquote>
+</blockquote>
+<p><img src="/2020/06/18/mysql57/2.png" alt><br><img src="/2020/06/18/mysql57/3.png" alt></p>
+]]></content>
+      <categories>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -2742,11 +2792,11 @@ MyISAM存储引擎的写锁优先，拿到写锁之后，其他线程处于阻�
 <p>4、<code>truncate table</code>在功能上与不带<code>WHERE</code>子句的<code>DELETE</code>语句相同：二者均删除表中的全部行。但<code>TRUNCATE TABLE</code>比<code>DELETE</code>速度快，且使用的系统和事务日志资源少。<code>DELETE</code>语句每次删除一行，并在事务日志中为所删除的每行记录一项。<code>TRUNCATE TABLE</code>通过释放存储表数据所用的数据页来删除数据，并且只在事务日志中记录页的释放。 </p>
 ]]></content>
       <categories>
-        <category>mysql</category>
+        <category>MySQL</category>
       </categories>
       <tags>
-        <tag>linux</tag>
         <tag>mysql</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -4348,7 +4398,7 @@ URL重写：
 <p><img src="/2020/09/18/ssm/ssm_transaction.png" alt="事务管理"></p>
 ]]></content>
       <categories>
-        <category>SpringFramework</category>
+        <category>SSM</category>
       </categories>
       <tags>
         <tag>SSM</tag>
@@ -4777,7 +4827,7 @@ interceptor和filter的区别
 
 * afterCompletion: 页面执行结束后，执行这个方法</code></pre>]]></content>
       <categories>
-        <category>SpringFramework</category>
+        <category>SpringMVC</category>
       </categories>
       <tags>
         <tag>SpringMVC</tag>
@@ -5018,7 +5068,7 @@ method.invoke(p,&quot;HHHHH&quot;);   //p.show(&quot;HHHHH&quot;)</code></pre></
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Java</tag>
+        <tag>Java-SE</tag>
       </tags>
   </entry>
   <entry>
@@ -5654,59 +5704,10 @@ public Object intercept(Object o, Method method, Object[] objects, MethodProxy m
 <h3 id="使用纯注解的事务配置"><a href="#使用纯注解的事务配置" class="headerlink" title="使用纯注解的事务配置"></a>使用纯注解的事务配置</h3><p><img src="/2020/09/09/spring/tx_without_xml.png" alt="纯注解的声明式事务"></p>
 ]]></content>
       <categories>
-        <category>SpringFramework</category>
+        <category>Spring</category>
       </categories>
       <tags>
         <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MYSQL 5.7.29</title>
-    <url>/2020/06/18/mysql57/</url>
-    <content><![CDATA[<h2 id="下载安装MySQL-5-7-29版本"><a href="#下载安装MySQL-5-7-29版本" class="headerlink" title="下载安装MySQL-5.7.29版本"></a>下载安装MySQL-5.7.29版本</h2><h3 id="1-下载安装包"><a href="#1-下载安装包" class="headerlink" title="1.下载安装包"></a>1.下载安装包</h3><pre><code>官网下载安装包，离线安装方式</code></pre><ul>
-<li><a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="noopener">mysql数据库下载地址</a><blockquote>
-</blockquote>
-<img src="/2020/06/18/mysql57/0.png" alt></li>
-</ul>
-<h3 id="2-my-ini"><a href="#2-my-ini" class="headerlink" title="2.my.ini"></a>2.my.ini</h3><pre><code>下载的安装包解压后，安装目录如果没有*my.ini*文件，新建该文件，内容：
-其中，文件安装和data目录可以自定义</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/06/18/mysql57/5.png" alt></p>
-<h3 id="3-创建服务"><a href="#3-创建服务" class="headerlink" title="3.创建服务"></a>3.创建服务</h3><blockquote>
-</blockquote>
-<p><img src="/2020/06/18/mysql57/6.png" alt></p>
-<pre><code>mysql57为服务名</code></pre><h3 id="4-初始化"><a href="#4-初始化" class="headerlink" title="4.初始化"></a>4.初始化</h3><p><code>mysqld --initialize</code></p>
-<h3 id="5-启动服务"><a href="#5-启动服务" class="headerlink" title="5.启动服务"></a>5.启动服务</h3><p><code>net start mysql</code></p>
-<h3 id="6-连接数据库"><a href="#6-连接数据库" class="headerlink" title="6.连接数据库"></a>6.连接数据库</h3><ul>
-<li>临时密码：在***.err下<blockquote>
-</blockquote>
-<img src="/2020/06/18/mysql57/4.png" alt><br><img src="/2020/06/18/mysql57/9.png" alt><br><img src="/2020/06/18/mysql57/11.png" alt></li>
-</ul>
-<h3 id="7-更改密码"><a href="#7-更改密码" class="headerlink" title="7.更改密码"></a>7.更改密码</h3><blockquote>
-</blockquote>
-<p><img src="/2020/06/18/mysql57/12.png" alt></p>
-<h3 id="8-断开连接"><a href="#8-断开连接" class="headerlink" title="8.断开连接"></a>8.断开连接</h3><p><code>exit</code></p>
-<h3 id="9-退出服务"><a href="#9-退出服务" class="headerlink" title="9.退出服务"></a>9.退出服务</h3><blockquote>
-</blockquote>
-<p><img src="/2020/06/18/mysql57/13.png" alt></p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="1-存在data文件夹"><a href="#1-存在data文件夹" class="headerlink" title="1.存在data文件夹"></a>1.存在data文件夹</h3><ul>
-<li>删除原本data，初始化命令自动生成新的data文件夹</li>
-<li>data文件夹自己手动创建可能报错，最好还是由系统自动创建<blockquote>
-</blockquote>
-<img src="/2020/06/18/mysql57/7.png" alt></li>
-</ul>
-<h3 id="2-无法启动服务"><a href="#2-无法启动服务" class="headerlink" title="2.无法启动服务"></a>2.无法启动服务</h3><blockquote>
-</blockquote>
-<p><img src="/2020/06/18/mysql57/1.png" alt><br><img src="/2020/06/18/mysql57/8.png" alt></p>
-<pre><code>更改注册表信息</code></pre><blockquote>
-</blockquote>
-<p><img src="/2020/06/18/mysql57/2.png" alt><br><img src="/2020/06/18/mysql57/3.png" alt></p>
-]]></content>
-      <categories>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>SQL</tag>
       </tags>
   </entry>
   <entry>
@@ -6287,7 +6288,7 @@ User findById(Integer id);</code></pre></blockquote>
 <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><pre><code>1. mybatis-config 的properties配置属性</code></pre><p><img src="/2020/05/15/mybatis/error_1.png" alt="配置文件无法找到"></p>
 ]]></content>
       <categories>
-        <category>SpringFramework</category>
+        <category>SSM</category>
       </categories>
       <tags>
         <tag>MyBatis</tag>
@@ -6346,7 +6347,7 @@ User findById(Integer id);</code></pre></blockquote>
 <h3 id="7-鼠标右键-Nature-Browser"><a href="#7-鼠标右键-Nature-Browser" class="headerlink" title="7.鼠标右键 Nature Browser"></a>7.鼠标右键 Nature Browser</h3><p><img src="http://qa4ck0m4g.bkt.clouddn.com/images/Spring_load/Spring_load_7.png" alt></p>
 ]]></content>
       <categories>
-        <category>SpringFramework</category>
+        <category>Spring</category>
       </categories>
       <tags>
         <tag>Spring</tag>
@@ -6886,7 +6887,7 @@ select id from db where username=&apos;1111&apos; and password=a&apos;or&apos;a&
         <category>MySQL</category>
       </categories>
       <tags>
-        <tag>SQL_JDBC</tag>
+        <tag>SQL-JDBC</tag>
       </tags>
   </entry>
   <entry>
